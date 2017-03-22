@@ -1,0 +1,10 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+}
+
+.navegacion {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
