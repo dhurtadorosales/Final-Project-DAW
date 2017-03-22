@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set ruta = app.request.get('_route') %}
+    {% block header %}
+        {% block nav %}
+        {% endblock %}
+    {% endblock %}
+    {% block content %}
+        {% block aside %}
+        {% endblock %}
+        {% block section %}
+        {% endblock %}
+    {% endblock %}
+{% endblock %}
