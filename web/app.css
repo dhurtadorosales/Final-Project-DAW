@@ -1,10 +1,27 @@
-body {
-    padding-top: 70px;
-    padding-bottom: 30px;
+header {
+    display: flex;
+    padding: 5%;
 }
 
-.navegacion {
+header img {
+    width: 200px;
+}
+
+#logotipo {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+}
+
+#conexion {
+    display: flex;
+    border-bottom: solid 3px cadetblue;
+    padding: 1%;
+}
+
+#conexion {
+    display: flex;
+    align-content: space-between;
+}
+
+#conexion form {
+
 }

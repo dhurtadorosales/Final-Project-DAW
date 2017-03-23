@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{% trans_default_domain 'nav' %}
 {% block body %}
     {% set ruta = app.request.get('_route') %}
     {% block header %}
         <div id="conexion">
-            <h6>Conexión</h6>
+            <a href="#">Conexión</a>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -12,9 +12,8 @@
         </div>
         <header>
             <div id="logotipo">
-
-
-
+                <img src="{{ asset('logo.png') }}" alt="logo">
+                <h1>Sociedad Cooperativa</h1>
             </div>
             <nav class="navbar">
                 <div class="container">
@@ -28,8 +27,8 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li><a href="#">Quiénes somos</a></li>
-                            <li><a href="#">Nuestos productos</a></li>
+                            <li><a href="#">{{ 'nav.quienessomos'|trans }}</a></li>
+                            <li><a href="#">{{ 'nav.productos'|trans }}</a></li>
                             <li><a href="#">Venta online</a></li>
                             <li><a href="#">Contacto</a></li>
                         </ul>
