@@ -43,15 +43,20 @@
                         <h3>Sociedad Cooperativa</h3>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-main">
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right" id="menu">
                             <li {% if ruta == 'inicio' %} class="active" {% endif %}>
                                 <a href="#">Inicio</a>
                             </li>
                             <li>
                                 <a href="#">{{ 'nav.quienessomos'|trans }}</a>
                             </li>
-                            <li>
-                                <a href="#">Nuestros productos</a>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Nuestros productos</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">hola</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">hola2</a></li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#">Venta online</a>
