@@ -1,27 +1,8 @@
-header {
+nav h3{
+    color: white;
+}
+
+#navegacion {
     display: flex;
-    padding: 5%;
-}
-
-header img {
-    width: 200px;
-}
-
-#logotipo {
-    display: flex;
-}
-
-#conexion {
-    display: flex;
-    border-bottom: solid 3px cadetblue;
-    padding: 1%;
-}
-
-#conexion {
-    display: flex;
-    align-content: space-between;
-}
-
-#conexion form {
-
+    margin-bottom: 0;
 }
