@@ -13,7 +13,7 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right menuOculto">
                         <li>
                             <button class="btn btn-outline-success my-2 my-sm-0" type="button" title="facebook">
                                 <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -62,7 +62,7 @@
                         <h3>Sociedad Cooperativa</h3>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-main">
-                        <ul class="nav navbar-nav navbar-right" id="menu">
+                        <ul class="nav navbar-nav navbar-right">
                             <li {% if ruta == 'inicio' %} class="active" {% endif %}>
                                 <a href="#">Inicio</a>
                             </li>
@@ -90,6 +90,41 @@
                             </li>
                             <li>
                                 <a href="#">Dónde encontrarnos</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right navOculto">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-language"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Español</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Inglés</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <input class="form-control mr-sm-2" type="text" placeholder="Buscar" id="tbBuscar">
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

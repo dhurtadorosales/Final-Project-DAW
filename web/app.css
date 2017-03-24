@@ -15,3 +15,17 @@ nav h3{
     flex-wrap: nowrap;
     margin-bottom: 0;
 }
+
+.navOculto {
+    display: none;
+}
+
+@media screen and (max-width: 480px) {
+    .menuOculto {
+        display: none;
+    }
+
+    .navOculto {
+        display: block;
+    }
+}
