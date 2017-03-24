@@ -1,11 +1,16 @@
 body {
     font-family: Arial;
 }
+
 nav h3{
     color: white;
 }
 
-#navegacion {
+.presentación {
+    width: 100%;
+}
+
+.navegacion {
     display: flex;
     flex-wrap: nowrap;
     margin-bottom: 0;
