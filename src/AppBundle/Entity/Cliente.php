@@ -101,4 +101,10 @@ class Cliente
      * @ORM\Column(type="string", nullable=true)
      */
     private $email;
+
+    /**
+     * @var Factura[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Factura", mappedBy="cliente")
+     */
+    private $facturas;
 }

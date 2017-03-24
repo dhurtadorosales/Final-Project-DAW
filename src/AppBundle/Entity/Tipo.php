@@ -29,4 +29,10 @@ class Tipo
      * @ORM\Column(type="float", precision=2)
      */
     private $penalizacion;
+
+    /**
+     * @var Pesaje[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="tipo")
+     */
+    private $pesajes;
 }

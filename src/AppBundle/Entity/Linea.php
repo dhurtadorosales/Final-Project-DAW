@@ -23,4 +23,24 @@ class Linea
      * @ORM\Column(type="integer")
      */
     private $cantidad;
+
+    /**
+     * @var Factura
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Factura", inversedBy="lineas")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $factura;
+
+    /**
+     * @var Retirada
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Retirada", inversedBy="lineas")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $retirada;
+
+    /**
+     * @var Deposito
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Deposito", inversedBy="lineas")
+     */
+    private $aceite;
 }

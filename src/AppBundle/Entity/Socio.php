@@ -119,4 +119,24 @@ class Socio
      * @ORM\Column(type="date")
      */
     private $fechaBaja;
+
+    /**
+     * @var Finca[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Finca", mappedBy="propietario")
+     */
+    private $fincasPropiedad;
+
+    /**
+     * @var Finca[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Finca", mappedBy="arrendatario")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $fincasArrendadas;
+
+    /**
+     * @var Retirada[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Retirada", mappedBy="socio")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $retiradas;
 }

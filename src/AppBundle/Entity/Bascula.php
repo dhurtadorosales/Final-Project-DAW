@@ -17,4 +17,11 @@ class Bascula
      * @ORM\GeneratedValue()
      */
     private $id;
+
+    /**
+     * @var Pesaje[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="bascula")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $pesajes;
 }

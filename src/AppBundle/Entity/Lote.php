@@ -30,4 +30,21 @@ class Lote
      */
     private $cantidad;
 
+    /**
+     * @var Pesaje[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="lote")
+     */
+    private $pesajes;
+
+    /**
+     * @var Aceite
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceite", inversedBy="lotes")
+     */
+    private $aceite;
+
+    /**
+     * @var Deposito
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Deposito", inversedBy="lotes")
+     */
+    private $deposito;
 }

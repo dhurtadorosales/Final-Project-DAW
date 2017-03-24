@@ -23,4 +23,16 @@ class Retirada
      * @ORM\Column(type="date")
      */
     private $fecha;
+
+    /**
+     * @var Socio
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="retiradas")
+     */
+    private $socio;
+
+    /**
+     * @var Linea[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="retirada")
+     */
+    private $lineas;
 }

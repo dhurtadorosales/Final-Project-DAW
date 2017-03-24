@@ -59,4 +59,29 @@ class Pesaje
      * @ORM\Column(type="text")
      */
     private $observaciones;
+
+    /**
+     * @var Tipo
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tipo", inversedBy="pesajes")
+     */
+    private $tipo;
+
+    /**
+     * @var Temporada
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="pesajes")
+     */
+    private $temporada;
+
+    /**
+     * @var Bascula
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Bascula, inversedBy="pesajes")
+     */
+    private $bascula;
+
+    /**
+     * @var Finca
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Finca", inversedBy="pesajes")
+     */
+    private $finca;
+
 }

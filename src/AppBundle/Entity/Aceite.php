@@ -35,4 +35,11 @@ class Aceite
      * @ORM\Column(type="float", precision=2)
      */
     private $precioClientes;
+
+    /**
+     * @var Lote[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lote", mappedBy="aceite")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $lotes;
 }

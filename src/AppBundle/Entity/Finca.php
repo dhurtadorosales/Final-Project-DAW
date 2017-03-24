@@ -89,4 +89,30 @@ class Finca
      * @ORM\Column(type="integer", nullable=true)
      */
     private $partArrend;
+
+    /**
+     * @var Aceituna
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceituna", inversedBy="fincas")
+     */
+    private $variedad;
+
+    /**
+     * @var Pesaje[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="finca")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $pesajes;
+
+    /**
+     * @var Socio
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="fincasPropiedad")
+     */
+    private $propietario;
+
+    /**
+     * @var Socio
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="fincasArrendadas")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $arrendatario;
 }

@@ -28,11 +28,18 @@ class Deposito
      * @var integer
      * @ORM\Column(type="integer")
      */
-    private $contendido;
+    private $contenido;
 
     /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
+     * @var Lote[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lote", mappedBy="deposito")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $precioClientes;
+    private $lotes;
+
+    /**
+     * @var Linea[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="aceite")
+     */
+    private $lineas;
 }

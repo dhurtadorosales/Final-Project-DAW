@@ -23,4 +23,16 @@ class Factura
      * @ORM\Column(type="date")
      */
     private $fecha;
+
+    /**
+     * @var Cliente
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cliente", inversedBy="facturas")
+     */
+    private $cliente;
+
+    /**
+     * @var Linea[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="factura")
+     */
+    private $lineas;
 }

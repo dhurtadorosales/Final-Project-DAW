@@ -45,13 +45,19 @@ class Usuario implements UserInterface
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    private $gerente;
+    private $comercial;
 
     /**
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    private $comercial;
+    private $dependiente;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $encargado;
 
     /**
      * @var boolean
