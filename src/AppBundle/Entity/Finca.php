@@ -77,4 +77,16 @@ class Finca
      * @ORM\Column(type="boolean")
      */
     private $cultivoEcologico;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer")
+     */
+    private $partPropietario;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $partArrend;
 }
