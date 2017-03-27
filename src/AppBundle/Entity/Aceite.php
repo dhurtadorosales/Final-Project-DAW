@@ -37,6 +37,12 @@ class Aceite
     private $precioClientes;
 
     /**
+     * @var float
+     * @ORM\Column(type="float", precision=2)
+     */
+    private $precioEmpleados;
+
+    /**
      * @var Lote[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lote", mappedBy="aceite")
      * @ORM\JoinColumn(nullable=true)
@@ -164,5 +170,29 @@ class Aceite
     public function getLotes()
     {
         return $this->lotes;
+    }
+
+    /**
+     * Set precioEmpleados
+     *
+     * @param float $precioEmpleados
+     *
+     * @return Aceite
+     */
+    public function setPrecioEmpleados($precioEmpleados)
+    {
+        $this->precioEmpleados = $precioEmpleados;
+
+        return $this;
+    }
+
+    /**
+     * Get precioEmpleados
+     *
+     * @return float
+     */
+    public function getPrecioEmpleados()
+    {
+        return $this->precioEmpleados;
     }
 }

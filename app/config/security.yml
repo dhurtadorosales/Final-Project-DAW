@@ -4,8 +4,19 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        usuarios:
+          entity:
+            class: AppBundle\Entity\Usuario
+            property: nif
+
+    encoders:
+      AppBundle\Entity\Usuario: bcrypt
+
+    role_hierarchy:
+      ROLE_ADMINISTRADOR: [ROLE_COMERCIAL, ROLE_SOCIO]
+      ROLE_DEPENDIENTE: [ROLE_CLIENTE]
+      ROLE_COMERCIAL: [ROLE_CLIENTE]
+      ROLE_ENCARGADO: [ROLE_CLIENTE]
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,6 +26,15 @@ security:
 
         main:
             anonymous: ~
+
+            form_login:
+              login_path: entrar
+              check_path: comprobar
+
+            logout:
+              path: salir
+              target: entrar
+
             # activate different ways to authenticate
 
             # http_basic: ~
