@@ -31,6 +31,12 @@ class Deposito
     private $contenido;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $tipoAceite;
+
+    /**
      * @var Lote[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lote", mappedBy="deposito")
      * @ORM\JoinColumn(nullable=true)
@@ -42,6 +48,8 @@ class Deposito
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="aceite")
      */
     private $lineas;
+
+
     /**
      * Constructor
      */
@@ -107,6 +115,30 @@ class Deposito
     public function getContenido()
     {
         return $this->contenido;
+    }
+
+    /**
+     * Set tipoAceite
+     *
+     * @param string $tipoAceite
+     *
+     * @return Deposito
+     */
+    public function setTipoAceite($tipoAceite)
+    {
+        $this->tipoAceite = $tipoAceite;
+
+        return $this;
+    }
+
+    /**
+     * Get tipoAceite
+     *
+     * @return string
+     */
+    public function getTipoAceite()
+    {
+        return $this->tipoAceite;
     }
 
     /**

@@ -28,19 +28,19 @@ class Aceite
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $precioSocios;
+    private $precio;
 
     /**
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $precioClientes;
+    private $descuentoSocios;
 
     /**
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $precioEmpleados;
+    private $descuentoEmpleados;
 
     /**
      * @var Lote[]
@@ -48,6 +48,8 @@ class Aceite
      * @ORM\JoinColumn(nullable=true)
      */
     private $lotes;
+
+
     /**
      * Constructor
      */
@@ -91,51 +93,75 @@ class Aceite
     }
 
     /**
-     * Set precioSocios
+     * Set precio
      *
-     * @param float $precioSocios
+     * @param float $precio
      *
      * @return Aceite
      */
-    public function setPrecioSocios($precioSocios)
+    public function setPrecio($precio)
     {
-        $this->precioSocios = $precioSocios;
+        $this->precio = $precio;
 
         return $this;
     }
 
     /**
-     * Get precioSocios
+     * Get precio
      *
      * @return float
      */
-    public function getPrecioSocios()
+    public function getPrecio()
     {
-        return $this->precioSocios;
+        return $this->precio;
     }
 
     /**
-     * Set precioClientes
+     * Set descuentoSocios
      *
-     * @param float $precioClientes
+     * @param float $descuentoSocios
      *
      * @return Aceite
      */
-    public function setPrecioClientes($precioClientes)
+    public function setDescuentoSocios($descuentoSocios)
     {
-        $this->precioClientes = $precioClientes;
+        $this->descuentoSocios = $descuentoSocios;
 
         return $this;
     }
 
     /**
-     * Get precioClientes
+     * Get descuentoSocios
      *
      * @return float
      */
-    public function getPrecioClientes()
+    public function getDescuentoSocios()
     {
-        return $this->precioClientes;
+        return $this->descuentoSocios;
+    }
+
+    /**
+     * Set descuentoEmpleados
+     *
+     * @param float $descuentoEmpleados
+     *
+     * @return Aceite
+     */
+    public function setDescuentoEmpleados($descuentoEmpleados)
+    {
+        $this->descuentoEmpleados = $descuentoEmpleados;
+
+        return $this;
+    }
+
+    /**
+     * Get descuentoEmpleados
+     *
+     * @return float
+     */
+    public function getDescuentoEmpleados()
+    {
+        return $this->descuentoEmpleados;
     }
 
     /**
@@ -170,29 +196,5 @@ class Aceite
     public function getLotes()
     {
         return $this->lotes;
-    }
-
-    /**
-     * Set precioEmpleados
-     *
-     * @param float $precioEmpleados
-     *
-     * @return Aceite
-     */
-    public function setPrecioEmpleados($precioEmpleados)
-    {
-        $this->precioEmpleados = $precioEmpleados;
-
-        return $this;
-    }
-
-    /**
-     * Get precioEmpleados
-     *
-     * @return float
-     */
-    public function getPrecioEmpleados()
-    {
-        return $this->precioEmpleados;
     }
 }

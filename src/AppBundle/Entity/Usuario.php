@@ -45,6 +45,12 @@ class Usuario
      * @var boolean
      * @ORM\Column(type="boolean")
      */
+    private $empleado;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
     private $comercial;
 
     /**
@@ -70,6 +76,8 @@ class Usuario
      * @ORM\Column(type="boolean")
      */
     private $cliente;
+
+
 
     /**
      * Get id
@@ -151,6 +159,30 @@ class Usuario
     public function getAdministrador()
     {
         return $this->administrador;
+    }
+
+    /**
+     * Set empleado
+     *
+     * @param boolean $empleado
+     *
+     * @return Usuario
+     */
+    public function setEmpleado($empleado)
+    {
+        $this->empleado = $empleado;
+
+        return $this;
+    }
+
+    /**
+     * Get empleado
+     *
+     * @return boolean
+     */
+    public function getEmpleado()
+    {
+        return $this->empleado;
     }
 
     /**

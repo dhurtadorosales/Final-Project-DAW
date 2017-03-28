@@ -28,13 +28,15 @@ class Tipo
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $penalizacion;
+    private $incremento;
 
     /**
      * @var Pesaje[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="tipo")
      */
     private $pesajes;
+
+
     /**
      * Constructor
      */
@@ -78,27 +80,27 @@ class Tipo
     }
 
     /**
-     * Set penalizacion
+     * Set incremento
      *
-     * @param float $penalizacion
+     * @param float $incremento
      *
      * @return Tipo
      */
-    public function setPenalizacion($penalizacion)
+    public function setIncremento($incremento)
     {
-        $this->penalizacion = $penalizacion;
+        $this->incremento = $incremento;
 
         return $this;
     }
 
     /**
-     * Get penalizacion
+     * Get incremento
      *
      * @return float
      */
-    public function getPenalizacion()
+    public function getIncremento()
     {
-        return $this->penalizacion;
+        return $this->incremento;
     }
 
     /**

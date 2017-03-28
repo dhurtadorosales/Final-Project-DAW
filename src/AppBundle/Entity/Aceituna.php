@@ -31,12 +31,6 @@ class Aceituna
     private $precio;
 
     /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
-     */
-    private $precioEcologico;
-
-    /**
      * @var Finca[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Finca", mappedBy="variedad")
      */
@@ -113,30 +107,6 @@ class Aceituna
     public function getPrecio()
     {
         return $this->precio;
-    }
-
-    /**
-     * Set precioEcologico
-     *
-     * @param float $precioEcologico
-     *
-     * @return Aceituna
-     */
-    public function setPrecioEcologico($precioEcologico)
-    {
-        $this->precioEcologico = $precioEcologico;
-
-        return $this;
-    }
-
-    /**
-     * Get precioEcologico
-     *
-     * @return float
-     */
-    public function getPrecioEcologico()
-    {
-        return $this->precioEcologico;
     }
 
     /**

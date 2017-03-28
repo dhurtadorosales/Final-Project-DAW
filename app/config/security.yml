@@ -14,9 +14,7 @@ security:
 
     role_hierarchy:
       ROLE_ADMINISTRADOR: [ROLE_COMERCIAL, ROLE_SOCIO]
-      ROLE_DEPENDIENTE: [ROLE_CLIENTE]
-      ROLE_COMERCIAL: [ROLE_CLIENTE]
-      ROLE_ENCARGADO: [ROLE_CLIENTE]
+      ROLE_EMPLEADO: [ROLE_DEPENDIENTE, ROLE_COMERCIAL, ROLE_ENCARGADO, ROLE_CLIENTE]
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
