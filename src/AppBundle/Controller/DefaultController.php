@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,25 @@ class DefaultController extends Controller
             'titulos' => $titulos,
             'subtitulos' => $subtitulos,
             'fotos' => $fotos
+        ]);
+    }
+
+    /**
+     * @Route("/1", name="inicio2")
+     */
+    public function layoutAction()
+    {
+        /** @var EntityManager $em */
+        $em=$this->getDoctrine()->getManager();
+
+        $aceites = $em->createQueryBuilder()
+            ->select('a')
+            ->from('AppBundle:Aceite', 'a')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('layout.html.twig', [
+            'aceites' => $aceites
         ]);
     }
 }

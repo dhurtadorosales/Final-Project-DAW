@@ -196,4 +196,9 @@ class Aceite
     {
         return $this->amasadas;
     }
+
+    public function __toString()
+    {
+        return $this->getDenominacion();
+    }
 }

@@ -24,9 +24,9 @@ class DatosIniciales extends ContainerAwareFixture
     {
         //Aceite
         $aceites = [
-            ["aceite virgen extra", 0.0, 0.0, 0.0],
-            ["aceite virgen", 0.0, 0.0, 0.0],
-            ["aceite lampante", 0.0, 0.0, 0.0]
+            ["Aceite Virgen Extra", 0.0, 0.0, 0.0],
+            ["Aceite Virgen", 0.0, 0.0, 0.0],
+            ["Aceite Lampante", 0.0, 0.0, 0.0]
         ];
 
         foreach ($aceites as $item) {
