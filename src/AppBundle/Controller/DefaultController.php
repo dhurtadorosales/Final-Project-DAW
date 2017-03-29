@@ -13,7 +13,34 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig');
+        $titulos = [
+            "Aceite Virgen Extra",
+            "Aceite Virgen",
+            "Aceite Lampante",
+            "Aceituna Picual",
+            "Un mar de olivos..."
+        ];
+
+        $subtitulos = [
+            "La joya de la corona",
+            "El segundo de a bordo",
+            "El gran subestimado",
+            "Nuestra principal materia prima",
+            "La tierra que nos da sus frutos"
+        ];
+
+        $fotos = [
+            "virgen_extra.jpg",
+            "virgen.jpg",
+            "lampante.jpg",
+            "picual.jpg",
+            "paisaje2.jpg"
+        ];
+
+        return $this->render('default/index.html.twig', [
+            'titulos' => $titulos,
+            'subtitulos' => $subtitulos,
+            'fotos' => $fotos
+        ]);
     }
 }

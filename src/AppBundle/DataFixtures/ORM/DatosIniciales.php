@@ -8,21 +8,17 @@ use AppBundle\Entity\Bascula;
 use AppBundle\Entity\Cliente;
 use AppBundle\Entity\Deposito;
 use AppBundle\Entity\Finca;
+use AppBundle\Entity\Socio;
 use AppBundle\Entity\Tipo;
 use AppBundle\Entity\Usuario;
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
-class DatosIniciales implements FixtureInterface, ContainerInterface
+class DatosIniciales extends ContainerAwareFixture
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
     public function load(ObjectManager $manager)
     {
@@ -30,9 +26,7 @@ class DatosIniciales implements FixtureInterface, ContainerInterface
         $aceites = [
             ["aceite virgen extra", 0.0, 0.0, 0.0],
             ["aceite virgen", 0.0, 0.0, 0.0],
-            ["aceite de orujo", 0.0, 0.0, 0.0],
-            ["aceite lampante", 0.0, 0.0, 0.0],
-            ["aceite ecológico", 0.0, 0.0, 0.0]
+            ["aceite lampante", 0.0, 0.0, 0.0]
         ];
 
         foreach ($aceites as $item) {
@@ -117,9 +111,9 @@ class DatosIniciales implements FixtureInterface, ContainerInterface
 
         //Finca
         $fincas = [
-            ["13", "077", "A", "018", "00039", "0000", "FP", 200, true, false, 30, 70, 5, 1, 2],
-            ["13", "077", "A", "018", "00040", "0001", "FP", 300, true, true, 100, 0, 5, 1, null],
-            ["13", "077", "A", "018", "00041", "0002", "FP", 600, true, false, 100, 0, 5, 3, null]
+            ["13", "077", "A", "018", "00039", "0000", "FP", 200, true, 30, 70, 5, 1, 2],
+            ["13", "077", "A", "018", "00040", "0001", "FP", 300, true, 100, 0, 5, 1, null],
+            ["13", "077", "A", "018", "00041", "0002", "FP", 600, true, 100, 0, 5, 3, null]
         ];
 
         foreach ($fincas as $item) {
@@ -133,26 +127,25 @@ class DatosIniciales implements FixtureInterface, ContainerInterface
                 ->setCaracterControl($item[7])
                 ->setNumPlantas($item[8])
                 ->setRegadio($item[9])
-                ->setCultivoEcologico($item[10])
-                ->setPartPropietario($item[11])
-                ->setPartArrend($item[12])
-                ->setVariedad($item[13])
-                ->setPropietario($item[14])
-                ->setArrendatario($item);
+                ->setPartPropietario($item[10])
+                ->setPartArrend($item[11])
+                ->setVariedad($item[12])
+                ->setPropietario($item[13])
+                ->setArrendatario($item[14]);
 
             $manager->persist($finca);
         }
 
         //Socio
-        $clientes = [
+        $socios = [
             ["75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "953777057", "dhurtadorosales@gmail.com", "2017-03-27", true, null],
             ["75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "953777057", "dhurtadorosales@gmail.com", "2017-03-27", true, null],
             ["75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "953777057", "dhurtadorosales@gmail.com", "2017-03-27", true, null],
         ];
 
-        foreach ($clientes as $item) {
-            $cliente = new Cliente();
-            $cliente->setNif($item[1])
+        foreach ($socios as $item) {
+            $socio = new Socio();
+            $socio->setNif($item[1])
                 ->setNombre($item[2])
                 ->setApellidos($item[3])
                 ->setCalle($item[4])
@@ -165,22 +158,23 @@ class DatosIniciales implements FixtureInterface, ContainerInterface
                 ->setLocalidad($item[11])
                 ->setProvincia($item[12])
                 ->setTelefono($item[13])
-                ->setEmail($item[14]);
+                ->setEmail($item[14])
+                ->setFechaAlta($item[15])
+                ->setActivo($item[16]);
 
-            $manager->persist($cliente);
+            $manager->persist($socio);
         }
 
         //Tipo
         $tipos = [
             ["vuelo", 0.0],
-            ["suelo", 0.0],
-            ["ecológico", 0.0]
+            ["suelo", 0.0]
         ];
 
         foreach ($tipos as $item) {
             $tipo = new Tipo();
             $tipo->setDenominacion($item[1])
-                ->setIncremento($item[2]);
+                ->setBonificacion($item[2]);
 
             $manager->persist($tipo);
         }
@@ -294,15 +288,5 @@ class DatosIniciales implements FixtureInterface, ContainerInterface
         }
 
         $manager->flush();
-    }
-
-    /**
-     * Sets the container.
-     *
-     * @param ContainerInterface|null $container A ContainerInterface instance or null
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
     }
 }
