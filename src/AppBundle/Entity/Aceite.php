@@ -43,19 +43,18 @@ class Aceite
     private $descuentoEmpleados;
 
     /**
-     * @var Lote[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lote", mappedBy="aceite")
+     * @var Amasada[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Amasada", mappedBy="aceite")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $lotes;
-
+    private $amasadas;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->lotes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->amasadas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -165,36 +164,36 @@ class Aceite
     }
 
     /**
-     * Add lote
+     * Add amasada
      *
-     * @param \AppBundle\Entity\Lote $lote
+     * @param \AppBundle\Entity\Amasada $amasada
      *
      * @return Aceite
      */
-    public function addLote(\AppBundle\Entity\Lote $lote)
+    public function addAmasada(\AppBundle\Entity\Amasada $amasada)
     {
-        $this->lotes[] = $lote;
+        $this->amasadas[] = $amasada;
 
         return $this;
     }
 
     /**
-     * Remove lote
+     * Remove amasada
      *
-     * @param \AppBundle\Entity\Lote $lote
+     * @param \AppBundle\Entity\Amasada $amasada
      */
-    public function removeLote(\AppBundle\Entity\Lote $lote)
+    public function removeAmasada(\AppBundle\Entity\Amasada $amasada)
     {
-        $this->lotes->removeElement($lote);
+        $this->amasadas->removeElement($amasada);
     }
 
     /**
-     * Get lotes
+     * Get amasadas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getLotes()
+    public function getAmasadas()
     {
-        return $this->lotes;
+        return $this->amasadas;
     }
 }

@@ -103,16 +103,17 @@ class Cliente
     private $email;
 
     /**
-     * @var Factura[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Factura", mappedBy="cliente")
+     * @var Venta[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Venta", mappedBy="cliente")
      */
-    private $facturas;
+    private $ventas;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->facturas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ventas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -462,36 +463,36 @@ class Cliente
     }
 
     /**
-     * Add factura
+     * Add venta
      *
-     * @param \AppBundle\Entity\Factura $factura
+     * @param \AppBundle\Entity\Venta $venta
      *
      * @return Cliente
      */
-    public function addFactura(\AppBundle\Entity\Factura $factura)
+    public function addVenta(\AppBundle\Entity\Venta $venta)
     {
-        $this->facturas[] = $factura;
+        $this->ventas[] = $venta;
 
         return $this;
     }
 
     /**
-     * Remove factura
+     * Remove venta
      *
-     * @param \AppBundle\Entity\Factura $factura
+     * @param \AppBundle\Entity\Venta $venta
      */
-    public function removeFactura(\AppBundle\Entity\Factura $factura)
+    public function removeVenta(\AppBundle\Entity\Venta $venta)
     {
-        $this->facturas->removeElement($factura);
+        $this->ventas->removeElement($venta);
     }
 
     /**
-     * Get facturas
+     * Get ventas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFacturas()
+    public function getVentas()
     {
-        return $this->facturas;
+        return $this->ventas;
     }
 }

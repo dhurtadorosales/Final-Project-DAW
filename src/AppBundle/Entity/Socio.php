@@ -139,6 +139,7 @@ class Socio
      * @ORM\JoinColumn(nullable=true)
      */
     private $retiradas;
+
     /**
      * Constructor
      */

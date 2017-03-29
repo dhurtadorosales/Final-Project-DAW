@@ -19,17 +19,18 @@ class Bascula
     private $id;
 
     /**
-     * @var Pesaje[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="bascula")
+     * @var Entrega[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="bascula")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $pesajes;
+    private $entregas;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->pesajes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -43,36 +44,36 @@ class Bascula
     }
 
     /**
-     * Add pesaje
+     * Add entrega
      *
-     * @param \AppBundle\Entity\Pesaje $pesaje
+     * @param \AppBundle\Entity\Entrega $entrega
      *
      * @return Bascula
      */
-    public function addPesaje(\AppBundle\Entity\Pesaje $pesaje)
+    public function addEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->pesajes[] = $pesaje;
+        $this->entregas[] = $entrega;
 
         return $this;
     }
 
     /**
-     * Remove pesaje
+     * Remove entrega
      *
-     * @param \AppBundle\Entity\Pesaje $pesaje
+     * @param \AppBundle\Entity\Entrega $entrega
      */
-    public function removePesaje(\AppBundle\Entity\Pesaje $pesaje)
+    public function removeEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->pesajes->removeElement($pesaje);
+        $this->entregas->removeElement($entrega);
     }
 
     /**
-     * Get pesajes
+     * Get entregas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPesajes()
+    public function getEntregas()
     {
-        return $this->pesajes;
+        return $this->entregas;
     }
 }

@@ -37,26 +37,24 @@ class Deposito
     private $tipoAceite;
 
     /**
-     * @var Lote[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lote", mappedBy="deposito")
+     * @var Amasada[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Amasada", mappedBy="deposito")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $lotes;
+    private $amasadas;
 
     /**
-     * @var Linea[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="aceite")
+     * @var Lote[]
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="deposito")
      */
-    private $lineas;
-
+    private $lotes;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->lotes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->lineas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->amasadas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -142,70 +140,60 @@ class Deposito
     }
 
     /**
-     * Add lote
+     * Add amasada
      *
-     * @param \AppBundle\Entity\Lote $lote
+     * @param \AppBundle\Entity\Amasada $amasada
      *
      * @return Deposito
      */
-    public function addLote(\AppBundle\Entity\Lote $lote)
+    public function addAmasada(\AppBundle\Entity\Amasada $amasada)
     {
-        $this->lotes[] = $lote;
+        $this->amasadas[] = $amasada;
 
         return $this;
     }
 
     /**
-     * Remove lote
+     * Remove amasada
      *
-     * @param \AppBundle\Entity\Lote $lote
+     * @param \AppBundle\Entity\Amasada $amasada
      */
-    public function removeLote(\AppBundle\Entity\Lote $lote)
+    public function removeAmasada(\AppBundle\Entity\Amasada $amasada)
     {
-        $this->lotes->removeElement($lote);
+        $this->amasadas->removeElement($amasada);
+    }
+
+    /**
+     * Get amasadas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAmasadas()
+    {
+        return $this->amasadas;
+    }
+
+    /**
+     * Set lotes
+     *
+     * @param \AppBundle\Entity\Lote $lotes
+     *
+     * @return Deposito
+     */
+    public function setLotes(\AppBundle\Entity\Lote $lotes = null)
+    {
+        $this->lotes = $lotes;
+
+        return $this;
     }
 
     /**
      * Get lotes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\Lote
      */
     public function getLotes()
     {
         return $this->lotes;
-    }
-
-    /**
-     * Add linea
-     *
-     * @param \AppBundle\Entity\Linea $linea
-     *
-     * @return Deposito
-     */
-    public function addLinea(\AppBundle\Entity\Linea $linea)
-    {
-        $this->lineas[] = $linea;
-
-        return $this;
-    }
-
-    /**
-     * Remove linea
-     *
-     * @param \AppBundle\Entity\Linea $linea
-     */
-    public function removeLinea(\AppBundle\Entity\Linea $linea)
-    {
-        $this->lineas->removeElement($linea);
-    }
-
-    /**
-     * Get lineas
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLineas()
-    {
-        return $this->lineas;
     }
 }

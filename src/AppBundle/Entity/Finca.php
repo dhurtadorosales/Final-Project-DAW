@@ -73,12 +73,6 @@ class Finca
     private $regadio;
 
     /**
-     * @var boolean
-     * @ORM\Column(type="boolean")
-     */
-    private $cultivoEcologico;
-
-    /**
      * @var integer
      * @ORM\Column(type="integer")
      */
@@ -97,11 +91,11 @@ class Finca
     private $variedad;
 
     /**
-     * @var Pesaje[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="finca")
+     * @var Entrega[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="finca")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $pesajes;
+    private $entregas;
 
     /**
      * @var Socio
@@ -115,12 +109,13 @@ class Finca
      * @ORM\JoinColumn(nullable=true)
      */
     private $arrendatario;
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->pesajes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -350,30 +345,6 @@ class Finca
     }
 
     /**
-     * Set cultivoEcologico
-     *
-     * @param boolean $cultivoEcologico
-     *
-     * @return Finca
-     */
-    public function setCultivoEcologico($cultivoEcologico)
-    {
-        $this->cultivoEcologico = $cultivoEcologico;
-
-        return $this;
-    }
-
-    /**
-     * Get cultivoEcologico
-     *
-     * @return boolean
-     */
-    public function getCultivoEcologico()
-    {
-        return $this->cultivoEcologico;
-    }
-
-    /**
      * Set partPropietario
      *
      * @param integer $partPropietario
@@ -446,37 +417,37 @@ class Finca
     }
 
     /**
-     * Add pesaje
+     * Add entrega
      *
-     * @param \AppBundle\Entity\Pesaje $pesaje
+     * @param \AppBundle\Entity\Entrega $entrega
      *
      * @return Finca
      */
-    public function addPesaje(\AppBundle\Entity\Pesaje $pesaje)
+    public function addEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->pesajes[] = $pesaje;
+        $this->entregas[] = $entrega;
 
         return $this;
     }
 
     /**
-     * Remove pesaje
+     * Remove entrega
      *
-     * @param \AppBundle\Entity\Pesaje $pesaje
+     * @param \AppBundle\Entity\Entrega $entrega
      */
-    public function removePesaje(\AppBundle\Entity\Pesaje $pesaje)
+    public function removeEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->pesajes->removeElement($pesaje);
+        $this->entregas->removeElement($entrega);
     }
 
     /**
-     * Get pesajes
+     * Get entregas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPesajes()
+    public function getEntregas()
     {
-        return $this->pesajes;
+        return $this->entregas;
     }
 
     /**

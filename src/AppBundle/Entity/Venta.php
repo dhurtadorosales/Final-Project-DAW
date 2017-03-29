@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Factura
+ * Class Venta
  * @ORM\Entity()
  */
-class Factura
+class Venta
 {
     /**
      * @var int
@@ -26,15 +26,16 @@ class Factura
 
     /**
      * @var Cliente
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cliente", inversedBy="facturas")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cliente", inversedBy="ventas")
      */
     private $cliente;
 
     /**
      * @var Linea[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="factura")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="venta")
      */
     private $lineas;
+
     /**
      * Constructor
      */
@@ -58,7 +59,7 @@ class Factura
      *
      * @param \DateTime $fecha
      *
-     * @return Factura
+     * @return Venta
      */
     public function setFecha($fecha)
     {
@@ -82,7 +83,7 @@ class Factura
      *
      * @param \AppBundle\Entity\Cliente $cliente
      *
-     * @return Factura
+     * @return Venta
      */
     public function setCliente(\AppBundle\Entity\Cliente $cliente = null)
     {
@@ -106,7 +107,7 @@ class Factura
      *
      * @param \AppBundle\Entity\Linea $linea
      *
-     * @return Factura
+     * @return Venta
      */
     public function addLinea(\AppBundle\Entity\Linea $linea)
     {

@@ -25,8 +25,8 @@ class Linea
     private $cantidad;
 
     /**
-     * @var Factura
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Factura", inversedBy="lineas")
+     * @var Venta
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Venta", inversedBy="lineas")
      * @ORM\JoinColumn(nullable=true)
      */
     private $factura;
@@ -81,11 +81,11 @@ class Linea
     /**
      * Set factura
      *
-     * @param \AppBundle\Entity\Factura $factura
+     * @param \AppBundle\Entity\Venta $factura
      *
      * @return Linea
      */
-    public function setFactura(\AppBundle\Entity\Factura $factura = null)
+    public function setFactura(\AppBundle\Entity\Venta $factura = null)
     {
         $this->factura = $factura;
 
@@ -95,7 +95,7 @@ class Linea
     /**
      * Get factura
      *
-     * @return \AppBundle\Entity\Factura
+     * @return \AppBundle\Entity\Venta
      */
     public function getFactura()
     {

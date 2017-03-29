@@ -35,6 +35,7 @@ class Retirada
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="retirada")
      */
     private $lineas;
+
     /**
      * Constructor
      */

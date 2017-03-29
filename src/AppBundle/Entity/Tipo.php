@@ -28,21 +28,20 @@ class Tipo
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $incremento;
+    private $bonificacion;
 
     /**
-     * @var Pesaje[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Pesaje", mappedBy="tipo")
+     * @var Entrega[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="tipo")
      */
-    private $pesajes;
-
+    private $entregas;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->pesajes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -80,60 +79,60 @@ class Tipo
     }
 
     /**
-     * Set incremento
+     * Set bonificacion
      *
-     * @param float $incremento
+     * @param float $bonificacion
      *
      * @return Tipo
      */
-    public function setIncremento($incremento)
+    public function setBonificacion($bonificacion)
     {
-        $this->incremento = $incremento;
+        $this->bonificacion = $bonificacion;
 
         return $this;
     }
 
     /**
-     * Get incremento
+     * Get bonificacion
      *
      * @return float
      */
-    public function getIncremento()
+    public function getBonificacion()
     {
-        return $this->incremento;
+        return $this->bonificacion;
     }
 
     /**
-     * Add pesaje
+     * Add entrega
      *
-     * @param \AppBundle\Entity\Pesaje $pesaje
+     * @param \AppBundle\Entity\Entrega $entrega
      *
      * @return Tipo
      */
-    public function addPesaje(\AppBundle\Entity\Pesaje $pesaje)
+    public function addEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->pesajes[] = $pesaje;
+        $this->entregas[] = $entrega;
 
         return $this;
     }
 
     /**
-     * Remove pesaje
+     * Remove entrega
      *
-     * @param \AppBundle\Entity\Pesaje $pesaje
+     * @param \AppBundle\Entity\Entrega $entrega
      */
-    public function removePesaje(\AppBundle\Entity\Pesaje $pesaje)
+    public function removeEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->pesajes->removeElement($pesaje);
+        $this->entregas->removeElement($entrega);
     }
 
     /**
-     * Get pesajes
+     * Get entregas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPesajes()
+    public function getEntregas()
     {
-        return $this->pesajes;
+        return $this->entregas;
     }
 }

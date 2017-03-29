@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Pesaje
+ * Class Entrega
  * @ORM\Entity()
  */
-class Pesaje
+class Entrega
 {
     /**
      * @var int
@@ -67,23 +67,22 @@ class Pesaje
     private $tipo;
 
     /**
-     * @var Lote
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="pesaje")
+     * @var Amasada
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Amasada", inversedBy="entregas")
      */
-    private $lote;
+    private $amasada;
 
     /**
      * @var Bascula
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Bascula", inversedBy="pesajes")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Bascula", inversedBy="entregas")
      */
     private $bascula;
 
     /**
      * @var Finca
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Finca", inversedBy="pesajes")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Finca", inversedBy="entregas")
      */
     private $finca;
-
 
     /**
      * Get id
@@ -100,7 +99,7 @@ class Pesaje
      *
      * @param \DateTime $fecha
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setFecha($fecha)
     {
@@ -124,7 +123,7 @@ class Pesaje
      *
      * @param \DateTime $horaInicio
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setHoraInicio($horaInicio)
     {
@@ -148,7 +147,7 @@ class Pesaje
      *
      * @param \DateTime $horaFin
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setHoraFin($horaFin)
     {
@@ -172,7 +171,7 @@ class Pesaje
      *
      * @param integer $peso
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setPeso($peso)
     {
@@ -196,7 +195,7 @@ class Pesaje
      *
      * @param float $rendimiento
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setRendimiento($rendimiento)
     {
@@ -220,7 +219,7 @@ class Pesaje
      *
      * @param integer $sancion
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setSancion($sancion)
     {
@@ -244,7 +243,7 @@ class Pesaje
      *
      * @param string $observaciones
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setObservaciones($observaciones)
     {
@@ -268,7 +267,7 @@ class Pesaje
      *
      * @param \AppBundle\Entity\Tipo $tipo
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setTipo(\AppBundle\Entity\Tipo $tipo = null)
     {
@@ -288,27 +287,27 @@ class Pesaje
     }
 
     /**
-     * Set lote
+     * Set amasada
      *
-     * @param \AppBundle\Entity\Lote $lote
+     * @param \AppBundle\Entity\Amasada $amasada
      *
-     * @return Pesaje
+     * @return Entrega
      */
-    public function setLote(\AppBundle\Entity\Lote $lote = null)
+    public function setAmasada(\AppBundle\Entity\Amasada $amasada = null)
     {
-        $this->lote = $lote;
+        $this->amasada = $amasada;
 
         return $this;
     }
 
     /**
-     * Get lote
+     * Get amasada
      *
-     * @return \AppBundle\Entity\Lote
+     * @return \AppBundle\Entity\Amasada
      */
-    public function getLote()
+    public function getAmasada()
     {
-        return $this->lote;
+        return $this->amasada;
     }
 
     /**
@@ -316,7 +315,7 @@ class Pesaje
      *
      * @param \AppBundle\Entity\Bascula $bascula
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setBascula(\AppBundle\Entity\Bascula $bascula = null)
     {
@@ -340,7 +339,7 @@ class Pesaje
      *
      * @param \AppBundle\Entity\Finca $finca
      *
-     * @return Pesaje
+     * @return Entrega
      */
     public function setFinca(\AppBundle\Entity\Finca $finca = null)
     {
