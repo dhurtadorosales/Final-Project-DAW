@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class Usuario
  * @ORM\Entity()
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var int
@@ -77,6 +77,11 @@ class Usuario
      */
     private $cliente;
 
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $usuario;
 
 
     /**
@@ -156,7 +161,7 @@ class Usuario
      *
      * @return boolean
      */
-    public function getAdministrador()
+    public function isAdministrador()
     {
         return $this->administrador;
     }
@@ -180,7 +185,7 @@ class Usuario
      *
      * @return boolean
      */
-    public function getEmpleado()
+    public function isEmpleado()
     {
         return $this->empleado;
     }
@@ -204,7 +209,7 @@ class Usuario
      *
      * @return boolean
      */
-    public function getComercial()
+    public function isComercial()
     {
         return $this->comercial;
     }
@@ -228,7 +233,7 @@ class Usuario
      *
      * @return boolean
      */
-    public function getDependiente()
+    public function isDependiente()
     {
         return $this->dependiente;
     }
@@ -252,7 +257,7 @@ class Usuario
      *
      * @return boolean
      */
-    public function getEncargado()
+    public function isEncargado()
     {
         return $this->encargado;
     }
@@ -276,7 +281,7 @@ class Usuario
      *
      * @return boolean
      */
-    public function getSocio()
+    public function isSocio()
     {
         return $this->socio;
     }
@@ -300,8 +305,129 @@ class Usuario
      *
      * @return boolean
      */
-    public function getCliente()
+    public function isCliente()
     {
         return $this->cliente;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param boolean $usuario
+     *
+     * @return Usuario
+     */
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return boolean
+     */
+    public function isUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        $roles = ['ROLE_USUARIO'];
+
+        if ($this->isAdministrador()) {
+            $roles[] = 'ROLE_ADMINISTRADOR';
+        }
+
+        if ($this->isEmpleado()) {
+            $roles[] = 'ROLE_EMPLEADO';
+        }
+
+        if ($this->isComercial()) {
+            $roles[] = 'ROLE_COMERCIAL';
+        }
+
+        if ($this->isDependiente()) {
+            $roles[] = 'ROLE_DEPENDIENTE';
+        }
+
+        if ($this->isEncargado()) {
+            $roles[] = 'ROLE_ENCARGADO';
+        }
+
+        if ($this->isSocio()) {
+            $roles[] = 'ROLE_SOCIO';
+        }
+
+        if ($this->isCliente()) {
+            $roles[] = 'ROLE_CLIENTE';
+        }
+
+        return $roles;
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->getClave();
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        return null;
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getNif();
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

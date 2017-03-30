@@ -38,18 +38,6 @@ class DefaultController extends Controller
             "paisaje2.jpg"
         ];
 
-        return $this->render('default/index.html.twig', [
-            'titulos' => $titulos,
-            'subtitulos' => $subtitulos,
-            'fotos' => $fotos
-        ]);
-    }
-
-    /**
-     * @Route("/1", name="inicio2")
-     */
-    public function layoutAction()
-    {
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
@@ -59,7 +47,10 @@ class DefaultController extends Controller
             ->getQuery()
             ->getResult();
 
-        return $this->render('layout.html.twig', [
+        return $this->render('default/index.html.twig', [
+            'titulos' => $titulos,
+            'subtitulos' => $subtitulos,
+            'fotos' => $fotos,
             'aceites' => $aceites
         ]);
     }

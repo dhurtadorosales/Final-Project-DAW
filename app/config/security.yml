@@ -13,8 +13,12 @@ security:
       AppBundle\Entity\Usuario: bcrypt
 
     role_hierarchy:
-      ROLE_ADMINISTRADOR: [ROLE_COMERCIAL, ROLE_SOCIO]
+      ROLE_ADMINISTRADOR: [ROLE_COMERCIAL, ROLE_SOCIO, ROLE_USUARIO]
       ROLE_EMPLEADO: [ROLE_DEPENDIENTE, ROLE_COMERCIAL, ROLE_ENCARGADO, ROLE_CLIENTE]
+      ROLE_DEPENDIENTE: [ROLE_USUARIO]
+      ROLE_COMERCIAL: [ROLE_USUARIO]
+      ROLE_ENCARGADO: [ROLE_USUARIO]
+      ROLE_CLIENTE: [ROLE_USUARIO]
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

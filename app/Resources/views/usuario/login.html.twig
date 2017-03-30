@@ -1,0 +1,24 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Conexión
+{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    <form method="post" action="{{ path('comprobar') }}">
+        <input type="text" name="_username" required="required" placeholder="Introduce NIF" value="{{ ultimo_usuario }}"
+               {% if not ultimo_usuario %}
+                    autofocus="autofocus"
+                {% endif %}>
+        <input type="password" name="_password" required="required" placeholder="Introduce contraseña"
+               {% if ultimo_usuario %}
+                    autofocus="autofocus"
+                {% endif %}>
+        <button type="submit">Entrar en la aplicación</button>
+    </form>
+{% endblock %}

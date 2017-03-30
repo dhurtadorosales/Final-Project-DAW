@@ -7,11 +7,19 @@
             <nav class="navbar navbar-default navegacion">
                 <div class="container">
                     <ul class="nav navbar-nav navbar-left">
+                        {% if app.user %}
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-sign-user"></i> Iniciar Sesión
+                                </a>
+                            </li>
+                        {% else %}
                         <li>
-                            <a href="#" title="Entrar en la aplicación">
-                                <i class="fa fa-user"></i> Entrar
+                            <a href="#">
+                                <i class="fa fa-sign-in"></i> Iniciar Sesión
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right menuOculto">
                         <li>
@@ -136,10 +144,8 @@
         </header>
     {% endblock %}
     {% block content %}
-        {% block aside %}
-        {% endblock %}
-        {% block section %}
-        {% endblock %}
+        {% block aside %}{% endblock %}
+        {% block section %}{% endblock %}
     {% endblock %}
     {% block footer %}
         <footer class="navbar navbar-default">
