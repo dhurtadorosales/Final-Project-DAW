@@ -177,4 +177,9 @@ class Aceituna
     {
         return $this->entregas;
     }
+
+    public function __toString()
+    {
+        return $this->getDenominacion();
+    }
 }

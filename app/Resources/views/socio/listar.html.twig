@@ -1,0 +1,67 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Socios{% endblock %}
+
+{% block section %}
+    <h1>Listado de socios</h1>
+    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
+
+
+
+
+    -->
+    <p></p>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Nº Socio</th>
+            <th>NIF</th>
+            <th>Socio</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Nº Plantas</th>
+            <th>Fecha de alta</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for socio in socios %}
+            <tr>
+                <td>{{ socio.id }}</td>
+                <td>{{ socio.nif }}</td>
+                <td>{{ socio.apellidos }}, {{ socio.nombre }}</td>
+                <td>{{ socio.calle }}, {{ socio.numero }}
+                    {% if socio.bloque != null %}
+                        -bloq {{ socio.bloque }}
+                    {% endif %}
+                    {% if socio.escalera != null %}
+                        -esc {{ socio.escalera }}
+                    {% endif %}
+                    {% if socio.piso != null %}
+                        -{{ socio.piso }}º
+                    {% endif %}
+                    {% if socio.letra != null %}
+                        {{ socio.letra }}
+                    {% endif %} - {{socio.localidad}} ({{ socio.provincia }})
+                </td>
+                <td>{{ socio.telefono}}</td>
+                <td>{{ socio.email }}</td>
+                <td>0</td>
+                <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
+                <td>
+                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

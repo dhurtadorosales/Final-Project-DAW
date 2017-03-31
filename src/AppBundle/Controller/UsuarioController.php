@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\UsuarioType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -40,7 +41,7 @@ class UsuarioController extends Controller
         $usuario = $this->getUser();
 
         $form = $this->createForm(UsuarioType::class, $usuario, [
-            'es_admin' => $this->isGranted('ROLE_ADMINISTRADOR')
+            'es_administrador' => $this->isGranted('ROLE_ADMINISTRADOR')
         ]);
 
         $form->handleRequest($request);

@@ -2,11 +2,15 @@ body {
     font-family: Arial;
 }
 
-nav h3{
+nav h3 {
     color: white;
 }
 
-.presentación {
+.tituloResponsive {
+    display: none;
+}
+
+.presentacion {
     width: 100%;
 }
 
@@ -20,12 +24,74 @@ nav h3{
     display: none;
 }
 
-@media screen and (max-width: 480px) {
+.logotipo {
+    display: flex;
+    align-items: center;
+}
+
+.listaEnlacesExteriores {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.listaEnlacesExteriores img {
+    margin-left: 25%;
+    max-width: 200px;
+}
+
+.menu {
+    display: flex;
+}
+
+#logo {
+    width: 10%;
+}
+
+@media screen and (max-width: 480px)  {
+    .tituloResponsive {
+        display: block;
+    }
+
+    .eslogan {
+        display: none;
+    }
+
     .menuOculto {
         display: none;
     }
 
     .navOculto {
         display: block;
+    }
+
+    .listaEnlacesExteriores img {
+        margin-left: 25%;
+        max-width: 50px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .tituloResponsive {
+            display: block;
+        }
+
+        .eslogan {
+            display: none;
+        }
+
+        .menuOculto {
+            display: none;
+        }
+
+        .navOculto {
+            display: block;
+        }
+
+        .listaEnlacesExteriores img {
+            margin-left: 25%;
+            max-width: 50px;
+        }
     }
 }

@@ -9,19 +9,24 @@
                     <ul class="nav navbar-nav navbar-left">
                         {% if app.user %}
                             <li>
+                                <a href="{{ path('perfil') }}">
+                                    <i class="fa fa-sign-user"></i> {{ app.user }}: {{ app.user.nif }}
+                                </a>
+                            </li>
+                            <li>
                                 <a href="#">
-                                    <i class="fa fa-sign-user"></i> Iniciar Sesión
+                                    <i class="fa fa-sign-out"></i> Finalizar Sesión
                                 </a>
                             </li>
                         {% else %}
                         <li>
-                            <a href="#">
+                            <a href="{{ path('entrar') }}">
                                 <i class="fa fa-sign-in"></i> Iniciar Sesión
                             </a>
                         </li>
                         {% endif %}
                     </ul>
-                    <ul class="nav navbar-nav navbar-right menuOculto">
+                    <ul class="nav navbar-nav navbar-right menuOculto" id="enlaceRedes">
                         <li>
                             <button class="btn btn-outline-success my-2 my-sm-0" type="button" title="facebook">
                                 <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -69,7 +74,11 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <h3>Sociedad Cooperativa</h3>
+                        <div class="logotipo">
+                            <img src="icon.png" alt="logotipo" id="logo">
+                            <h3 class="eslogan"> Sociedad Cooperativa</h3>
+                            <h3 class="tituloResponsive"></h3>
+                        </div>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-main">
                         <ul class="nav navbar-nav navbar-right">
@@ -87,10 +96,10 @@
                             <li class="dropdown desplegable">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Nuestros productos</a>
                                 <ul class="dropdown-menu">
-                                    {% for item in aceites %}
-                                        <li><a href="#">{{ item }}</a></li>
+                                   {# {% for item in aceites %} #}
+                                        <li><a href="#">{#{{ item }}#} Producto</a></li>
                                         <li class="divider"></li>
-                                    {% endfor %}
+                                    {#{% endfor %}#}
                                 </ul>
                             </li>
                             <li>
