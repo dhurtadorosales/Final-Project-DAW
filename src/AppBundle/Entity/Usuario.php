@@ -358,10 +358,6 @@ class Usuario implements UserInterface
             $roles[] = 'ROLE_ADMINISTRADOR';
         }
 
-        if ($this->isEmpleado()) {
-            $roles[] = 'ROLE_EMPLEADO';
-        }
-
         if ($this->isComercial()) {
             $roles[] = 'ROLE_COMERCIAL';
         }
