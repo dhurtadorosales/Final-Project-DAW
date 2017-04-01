@@ -19,9 +19,14 @@ class Lote
     private $id;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $temporada;
+
+    /**
      * @var Deposito
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Deposito", mappedBy="lotes")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $deposito;
 
@@ -30,6 +35,7 @@ class Lote
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="lote")
      */
     private $lineas;
+
 
     /**
      * Constructor
@@ -48,6 +54,30 @@ class Lote
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set temporada
+     *
+     * @param string $temporada
+     *
+     * @return Lote
+     */
+    public function setTemporada($temporada)
+    {
+        $this->temporada = $temporada;
+
+        return $this;
+    }
+
+    /**
+     * Get temporada
+     *
+     * @return string
+     */
+    public function getTemporada()
+    {
+        return $this->temporada;
     }
 
     /**

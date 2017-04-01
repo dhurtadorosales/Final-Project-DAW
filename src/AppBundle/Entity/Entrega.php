@@ -61,6 +61,12 @@ class Entrega
     private $observaciones;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $bascula;
+
+    /**
      * @var Tipo
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tipo", inversedBy="pesajes")
      */
@@ -73,16 +79,12 @@ class Entrega
     private $amasada;
 
     /**
-     * @var Bascula
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Bascula", inversedBy="entregas")
-     */
-    private $bascula;
-
-    /**
      * @var Finca
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Finca", inversedBy="entregas")
      */
     private $finca;
+
+
 
     /**
      * Get id
@@ -263,6 +265,30 @@ class Entrega
     }
 
     /**
+     * Set bascula
+     *
+     * @param string $bascula
+     *
+     * @return Entrega
+     */
+    public function setBascula($bascula)
+    {
+        $this->bascula = $bascula;
+
+        return $this;
+    }
+
+    /**
+     * Get bascula
+     *
+     * @return string
+     */
+    public function getBascula()
+    {
+        return $this->bascula;
+    }
+
+    /**
      * Set tipo
      *
      * @param \AppBundle\Entity\Tipo $tipo
@@ -308,30 +334,6 @@ class Entrega
     public function getAmasada()
     {
         return $this->amasada;
-    }
-
-    /**
-     * Set bascula
-     *
-     * @param \AppBundle\Entity\Bascula $bascula
-     *
-     * @return Entrega
-     */
-    public function setBascula(\AppBundle\Entity\Bascula $bascula = null)
-    {
-        $this->bascula = $bascula;
-
-        return $this;
-    }
-
-    /**
-     * Get bascula
-     *
-     * @return \AppBundle\Entity\Bascula
-     */
-    public function getBascula()
-    {
-        return $this->bascula;
     }
 
     /**

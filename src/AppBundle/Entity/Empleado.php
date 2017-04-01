@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Socio
+ * Class Empleado
  * @ORM\Entity()
  */
-class Socio
+class Empleado
 {
     /**
      * @var int
@@ -142,7 +142,7 @@ class Socio
 
     /**
      * @var Descuento
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Descuento", inversedBy="socios")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Descuento", inversedBy="empleados")
      * @ORM\JoinColumn(nullable=true)
      */
     private $descuento;
@@ -174,7 +174,7 @@ class Socio
      *
      * @param string $nif
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setNif($nif)
     {
@@ -198,7 +198,7 @@ class Socio
      *
      * @param string $nombre
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setNombre($nombre)
     {
@@ -222,7 +222,7 @@ class Socio
      *
      * @param string $apellidos
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setApellidos($apellidos)
     {
@@ -246,7 +246,7 @@ class Socio
      *
      * @param string $calle
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setCalle($calle)
     {
@@ -270,7 +270,7 @@ class Socio
      *
      * @param string $numero
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setNumero($numero)
     {
@@ -294,7 +294,7 @@ class Socio
      *
      * @param string $bloque
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setBloque($bloque)
     {
@@ -318,7 +318,7 @@ class Socio
      *
      * @param string $escalera
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setEscalera($escalera)
     {
@@ -342,7 +342,7 @@ class Socio
      *
      * @param string $piso
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setPiso($piso)
     {
@@ -366,7 +366,7 @@ class Socio
      *
      * @param string $letra
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setLetra($letra)
     {
@@ -390,7 +390,7 @@ class Socio
      *
      * @param string $codigoPostal
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setCodigoPostal($codigoPostal)
     {
@@ -414,7 +414,7 @@ class Socio
      *
      * @param string $localidad
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setLocalidad($localidad)
     {
@@ -438,7 +438,7 @@ class Socio
      *
      * @param string $provincia
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setProvincia($provincia)
     {
@@ -462,7 +462,7 @@ class Socio
      *
      * @param string $telefono
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setTelefono($telefono)
     {
@@ -486,7 +486,7 @@ class Socio
      *
      * @param string $email
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setEmail($email)
     {
@@ -510,7 +510,7 @@ class Socio
      *
      * @param \DateTime $fechaAlta
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setFechaAlta($fechaAlta)
     {
@@ -534,7 +534,7 @@ class Socio
      *
      * @param boolean $activo
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setActivo($activo)
     {
@@ -558,7 +558,7 @@ class Socio
      *
      * @param \DateTime $fechaBaja
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setFechaBaja($fechaBaja)
     {
@@ -582,7 +582,7 @@ class Socio
      *
      * @param \AppBundle\Entity\Finca $fincasPropiedad
      *
-     * @return Socio
+     * @return Empleado
      */
     public function addFincasPropiedad(\AppBundle\Entity\Finca $fincasPropiedad)
     {
@@ -616,7 +616,7 @@ class Socio
      *
      * @param \AppBundle\Entity\Finca $fincasArrendada
      *
-     * @return Socio
+     * @return Empleado
      */
     public function addFincasArrendada(\AppBundle\Entity\Finca $fincasArrendada)
     {
@@ -650,7 +650,7 @@ class Socio
      *
      * @param \AppBundle\Entity\Retirada $retirada
      *
-     * @return Socio
+     * @return Empleado
      */
     public function addRetirada(\AppBundle\Entity\Retirada $retirada)
     {
@@ -684,7 +684,7 @@ class Socio
      *
      * @param \AppBundle\Entity\Descuento $descuento
      *
-     * @return Socio
+     * @return Empleado
      */
     public function setDescuento(\AppBundle\Entity\Descuento $descuento = null)
     {
