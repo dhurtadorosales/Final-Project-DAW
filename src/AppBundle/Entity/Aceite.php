@@ -31,23 +31,19 @@ class Aceite
     private $precio;
 
     /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
-     */
-    private $descuentoSocios;
-
-    /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
-     */
-    private $descuentoEmpleados;
-
-    /**
      * @var Amasada[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Amasada", mappedBy="aceite")
      * @ORM\JoinColumn(nullable=true)
      */
     private $amasadas;
+
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getDenominacion();
+    }
 
     /**
      * Constructor
@@ -116,54 +112,6 @@ class Aceite
     }
 
     /**
-     * Set descuentoSocios
-     *
-     * @param float $descuentoSocios
-     *
-     * @return Aceite
-     */
-    public function setDescuentoSocios($descuentoSocios)
-    {
-        $this->descuentoSocios = $descuentoSocios;
-
-        return $this;
-    }
-
-    /**
-     * Get descuentoSocios
-     *
-     * @return float
-     */
-    public function getDescuentoSocios()
-    {
-        return $this->descuentoSocios;
-    }
-
-    /**
-     * Set descuentoEmpleados
-     *
-     * @param float $descuentoEmpleados
-     *
-     * @return Aceite
-     */
-    public function setDescuentoEmpleados($descuentoEmpleados)
-    {
-        $this->descuentoEmpleados = $descuentoEmpleados;
-
-        return $this;
-    }
-
-    /**
-     * Get descuentoEmpleados
-     *
-     * @return float
-     */
-    public function getDescuentoEmpleados()
-    {
-        return $this->descuentoEmpleados;
-    }
-
-    /**
      * Add amasada
      *
      * @param \AppBundle\Entity\Amasada $amasada
@@ -195,10 +143,5 @@ class Aceite
     public function getAmasadas()
     {
         return $this->amasadas;
-    }
-
-    public function __toString()
-    {
-        return $this->getDenominacion();
     }
 }

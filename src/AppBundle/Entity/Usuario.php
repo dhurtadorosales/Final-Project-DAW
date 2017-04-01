@@ -77,12 +77,6 @@ class Usuario implements UserInterface
      */
     private $cliente;
 
-    /**
-     * @var boolean
-     * @ORM\Column(type="boolean")
-     */
-    private $usuario;
-
 
     /**
      * Get id
@@ -310,29 +304,6 @@ class Usuario implements UserInterface
         return $this->cliente;
     }
 
-    /**
-     * Set usuario
-     *
-     * @param boolean $usuario
-     *
-     * @return Usuario
-     */
-    public function setUsuario($usuario)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return boolean
-     */
-    public function isUsuario()
-    {
-        return $this->usuario;
-    }
 
     /**
      * Returns the roles granted to the user.
@@ -425,5 +396,85 @@ class Usuario implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * Get administrador
+     *
+     * @return boolean
+     */
+    public function getAdministrador()
+    {
+        return $this->administrador;
+    }
+
+    /**
+     * Get empleado
+     *
+     * @return boolean
+     */
+    public function getEmpleado()
+    {
+        return $this->empleado;
+    }
+
+    /**
+     * Get comercial
+     *
+     * @return boolean
+     */
+    public function getComercial()
+    {
+        return $this->comercial;
+    }
+
+    /**
+     * Get dependiente
+     *
+     * @return boolean
+     */
+    public function getDependiente()
+    {
+        return $this->dependiente;
+    }
+
+    /**
+     * Get encargado
+     *
+     * @return boolean
+     */
+    public function getEncargado()
+    {
+        return $this->encargado;
+    }
+
+    /**
+     * Get socio
+     *
+     * @return boolean
+     */
+    public function getSocio()
+    {
+        return $this->socio;
+    }
+
+    /**
+     * Get cliente
+     *
+     * @return boolean
+     */
+    public function getCliente()
+    {
+        return $this->cliente;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return boolean
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

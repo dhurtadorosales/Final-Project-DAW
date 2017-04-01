@@ -116,7 +116,7 @@ class Socio
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $fechaBaja;
 
@@ -147,7 +147,13 @@ class Socio
      */
     private $descuento;
 
-
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getNombre() . " " . $this->getApellidos();
+    }
 
     /**
      * Constructor

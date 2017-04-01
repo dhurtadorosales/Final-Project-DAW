@@ -37,6 +37,14 @@ class Tipo
     private $entregas;
 
     /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getDenominacion();
+    }
+
+    /**
      * Constructor
      */
     public function __construct()

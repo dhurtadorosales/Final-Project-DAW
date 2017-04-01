@@ -39,12 +39,14 @@ class Amasada
     /**
      * @var Aceite
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceite", inversedBy="amasadas")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $aceite;
 
     /**
      * @var Deposito
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Deposito", inversedBy="amasadas")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $deposito;
 

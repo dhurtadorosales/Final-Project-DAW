@@ -20,6 +20,12 @@ class Finca
 
     /**
      * @var string
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $denominacion;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", length=2)
      */
     private $provincia;
@@ -87,6 +93,7 @@ class Finca
     /**
      * @var Aceituna
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceituna", inversedBy="fincas")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $variedad;
 
@@ -100,6 +107,7 @@ class Finca
     /**
      * @var Socio
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="fincasPropiedad")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $propietario;
 
@@ -109,6 +117,14 @@ class Finca
      * @ORM\JoinColumn(nullable=true)
      */
     private $arrendatario;
+
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getDenominacion();
+    }
 
     /**
      * Constructor
@@ -126,6 +142,30 @@ class Finca
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set denominacion
+     *
+     * @param string $denominacion
+     *
+     * @return Finca
+     */
+    public function setDenominacion($denominacion)
+    {
+        $this->denominacion = $denominacion;
+
+        return $this;
+    }
+
+    /**
+     * Get denominacion
+     *
+     * @return string
+     */
+    public function getDenominacion()
+    {
+        return $this->denominacion;
     }
 
     /**
@@ -399,7 +439,7 @@ class Finca
      *
      * @return Finca
      */
-    public function setVariedad(\AppBundle\Entity\Aceituna $variedad = null)
+    public function setVariedad(\AppBundle\Entity\Aceituna $variedad)
     {
         $this->variedad = $variedad;
 
@@ -457,7 +497,7 @@ class Finca
      *
      * @return Finca
      */
-    public function setPropietario(\AppBundle\Entity\Socio $propietario = null)
+    public function setPropietario(\AppBundle\Entity\Socio $propietario)
     {
         $this->propietario = $propietario;
 

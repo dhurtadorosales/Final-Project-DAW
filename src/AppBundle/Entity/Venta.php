@@ -27,6 +27,7 @@ class Venta
     /**
      * @var Cliente
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cliente", inversedBy="ventas")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $cliente;
 

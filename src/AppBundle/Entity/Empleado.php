@@ -116,22 +116,9 @@ class Empleado
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $fechaBaja;
-
-    /**
-     * @var Finca[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Finca", mappedBy="propietario")
-     */
-    private $fincasPropiedad;
-
-    /**
-     * @var Finca[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Finca", mappedBy="arrendatario")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $fincasArrendadas;
 
     /**
      * @var Retirada[]
@@ -147,7 +134,13 @@ class Empleado
      */
     private $descuento;
 
-
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getNombre() . " ". $this->getApellidos();
+    }
 
     /**
      * Constructor

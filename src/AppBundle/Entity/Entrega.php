@@ -69,18 +69,21 @@ class Entrega
     /**
      * @var Tipo
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tipo", inversedBy="pesajes")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $tipo;
 
     /**
      * @var Amasada
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Amasada", inversedBy="entregas")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $amasada;
 
     /**
      * @var Finca
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Finca", inversedBy="entregas")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $finca;
 

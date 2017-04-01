@@ -24,46 +24,37 @@ class DatosIniciales extends ContainerAwareFixture
     {
         //Aceite
         $aceites = [
-            ["Aceite Virgen Extra", 0.0, 0.0, 0.0],
-            ["Aceite Virgen", 0.0, 0.0, 0.0],
-            ["Aceite Lampante", 0.0, 0.0, 0.0]
+            ["Aceite Virgen Extra", 0.0],
+            ["Aceite Virgen", 0.0],
+            ["Aceite Lampante", 0.0]
         ];
 
         foreach ($aceites as $item) {
             $aceite = new Aceite();
-            $aceite->setDenominacion($item[1])
-                ->setPrecio($item[2])
-                ->setDescuentoSocios($item[3])
-                ->setDescuentoEmpleados($item[4]);
+            $aceite
+                ->setDenominacion($item[1])
+                ->setPrecio($item[2]);
+
 
             $manager->persist($aceite);
         }
 
         //Aceituna
         $variedades = [
-            ["alberquina", 0.0],
-            ["gordal", 0.0],
-            ["hojiblanca", 0.0],
-            ["lechín", 0.0],
-            ["picual", 0.0],
-            ["picudo", 0.0]
+            ["alberquina"],
+            ["gordal"],
+            ["hojiblanca"],
+            ["lechín"],
+            ["picual"],
+            ["alberquina"]
         ];
 
         foreach ($variedades as $item) {
             $variedad = new Aceituna();
-            $variedad->setDenominacion($item[1])
-                ->setPrecio($item[2]);
+            $variedad
+                ->setDenominacion($item[1]);
 
             $manager->persist($variedad);
-        }
-
-        //Bascula
-        $numBasculas = 10;
-
-        for ($i = 0; $i < $numBasculas; $i++) {
-            $bascula = new Bascula();
-
-            $manager->persist($bascula);
         }
 
         //Cliente
@@ -76,7 +67,8 @@ class DatosIniciales extends ContainerAwareFixture
 
         foreach ($clientes as $item) {
             $cliente = new Cliente();
-            $cliente->setNif($item[1])
+            $cliente
+                ->setNif($item[1])
                 ->setNombre($item[2])
                 ->setApellidos($item[3])
                 ->setCalle($item[4])

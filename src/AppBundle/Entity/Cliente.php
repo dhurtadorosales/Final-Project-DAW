@@ -103,10 +103,24 @@ class Cliente
     private $email;
 
     /**
+     * @var float
+     * @ORM\Column(type="float", precision=2, nullable=true)
+     */
+    private $descuento;
+
+    /**
      * @var Venta[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Venta", mappedBy="cliente")
      */
     private $ventas;
+
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getNombre() . " " . $this->getApellidos();
+    }
 
     /**
      * Constructor
@@ -460,6 +474,30 @@ class Cliente
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set descuento
+     *
+     * @param float $descuento
+     *
+     * @return Cliente
+     */
+    public function setDescuento($descuento)
+    {
+        $this->descuento = $descuento;
+
+        return $this;
+    }
+
+    /**
+     * Get descuento
+     *
+     * @return float
+     */
+    public function getDescuento()
+    {
+        return $this->descuento;
     }
 
     /**

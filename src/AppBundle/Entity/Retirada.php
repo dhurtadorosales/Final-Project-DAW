@@ -27,6 +27,7 @@ class Retirada
     /**
      * @var Socio
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="retiradas")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $socio;
 

@@ -17,7 +17,11 @@ class SocioController extends Controller
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
-        $socios = $em->getRepository('AppBundle\Repository\SocioRepository');
+        $socios = $em->g()
+            ->select('s')
+            ->from('AppBundle:Socio', 's')
+            ->getQuery()
+            ->getResult();
 
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios

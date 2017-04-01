@@ -25,12 +25,6 @@ class Aceituna
     private $denominacion;
 
     /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
-     */
-    private $precio;
-
-    /**
      * @var Finca[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Finca", mappedBy="variedad")
      */
@@ -42,6 +36,14 @@ class Aceituna
      * @ORM\JoinColumn(nullable=true)
      */
     private $entregas;
+
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getDenominacion();
+    }
 
     /**
      * Constructor
@@ -84,30 +86,6 @@ class Aceituna
     public function getDenominacion()
     {
         return $this->denominacion;
-    }
-
-    /**
-     * Set precio
-     *
-     * @param float $precio
-     *
-     * @return Aceituna
-     */
-    public function setPrecio($precio)
-    {
-        $this->precio = $precio;
-
-        return $this;
-    }
-
-    /**
-     * Get precio
-     *
-     * @return float
-     */
-    public function getPrecio()
-    {
-        return $this->precio;
     }
 
     /**
@@ -176,10 +154,5 @@ class Aceituna
     public function getEntregas()
     {
         return $this->entregas;
-    }
-
-    public function __toString()
-    {
-        return $this->getDenominacion();
     }
 }

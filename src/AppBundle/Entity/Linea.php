@@ -29,7 +29,7 @@ class Linea
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Venta", inversedBy="lineas")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $factura;
+    private $venta;
 
     /**
      * @var Retirada
@@ -43,6 +43,8 @@ class Linea
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Deposito", inversedBy="lineas")
      */
     private $aceite;
+
+
 
     /**
      * Get id
@@ -79,27 +81,27 @@ class Linea
     }
 
     /**
-     * Set factura
+     * Set venta
      *
-     * @param \AppBundle\Entity\Venta $factura
+     * @param \AppBundle\Entity\Venta $venta
      *
      * @return Linea
      */
-    public function setFactura(\AppBundle\Entity\Venta $factura = null)
+    public function setVenta(\AppBundle\Entity\Venta $venta = null)
     {
-        $this->factura = $factura;
+        $this->venta = $venta;
 
         return $this;
     }
 
     /**
-     * Get factura
+     * Get venta
      *
      * @return \AppBundle\Entity\Venta
      */
-    public function getFactura()
+    public function getVenta()
     {
-        return $this->factura;
+        return $this->venta;
     }
 
     /**

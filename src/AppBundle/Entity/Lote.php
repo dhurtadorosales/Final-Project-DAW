@@ -36,6 +36,13 @@ class Lote
      */
     private $lineas;
 
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getId() . "-" . $this->getTemporada();
+    }
 
     /**
      * Constructor
