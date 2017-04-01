@@ -140,12 +140,6 @@ class Socio
      */
     private $retiradas;
 
-    /**
-     * @var Descuento
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Descuento", inversedBy="socios")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $descuento;
 
     /**
      * Convierte a string
@@ -154,6 +148,7 @@ class Socio
     {
         return $this->getNombre() . " " . $this->getApellidos();
     }
+
 
     /**
      * Constructor
@@ -683,29 +678,5 @@ class Socio
     public function getRetiradas()
     {
         return $this->retiradas;
-    }
-
-    /**
-     * Set descuento
-     *
-     * @param \AppBundle\Entity\Descuento $descuento
-     *
-     * @return Socio
-     */
-    public function setDescuento(\AppBundle\Entity\Descuento $descuento = null)
-    {
-        $this->descuento = $descuento;
-
-        return $this;
-    }
-
-    /**
-     * Get descuento
-     *
-     * @return \AppBundle\Entity\Descuento
-     */
-    public function getDescuento()
-    {
-        return $this->descuento;
     }
 }

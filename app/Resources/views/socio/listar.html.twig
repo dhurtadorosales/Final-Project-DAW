@@ -19,7 +19,6 @@
             <th>Socio</th>
             <th>Dirección</th>
             <th>Teléfono</th>
-            <th>Email</th>
             <th>Nº Plantas</th>
             <th>Fecha de alta</th>
             <th></th>
@@ -27,7 +26,11 @@
         </thead>
         <tbody>
         {% for socio in socios %}
-            <tr>
+            <tr {% if socio.email != null %}
+                    title="{{ socio.email }}"
+                    {% else %}
+                    title="No tiene email"
+                {% endif %}>
                 <td>{{ socio.id }}</td>
                 <td>{{ socio.nif }}</td>
                 <td>{{ socio.apellidos }}, {{ socio.nombre }}</td>
@@ -46,7 +49,6 @@
                     {% endif %} - {{socio.localidad}} ({{ socio.provincia }})
                 </td>
                 <td>{{ socio.telefono}}</td>
-                <td>{{ socio.email }}</td>
                 <td>0</td>
                 <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
                 <td>

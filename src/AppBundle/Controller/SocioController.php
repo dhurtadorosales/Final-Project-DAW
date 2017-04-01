@@ -17,14 +17,21 @@ class SocioController extends Controller
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
-        $socios = $em->g()
+        $socios = $em->createQueryBuilder()
             ->select('s')
             ->from('AppBundle:Socio', 's')
             ->getQuery()
             ->getResult();
-
+/*
+        $numPlantas = $em->createQueryBuilder()
+            ->select('sum(f.numPlantas')
+            ->from('AppBundle:Finca', 'f')
+            ->groupBy('f.propietario')
+            ->getQuery()
+            ->getResult();
+*/
         return $this->render('socio/listar.html.twig', [
-            'socios' => $socios
+            'socios' => $socios,
         ]);
     }
 }
