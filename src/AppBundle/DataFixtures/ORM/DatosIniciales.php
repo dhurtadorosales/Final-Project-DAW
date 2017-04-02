@@ -31,9 +31,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
     {
         //Aceite
         $aceites = [
-            ["Aceite Virgen Extra", 2.98],
-            ["Aceite Virgen", 2.84],
-            ["Aceite Lampante", 2.75]
+            [0, "Aceite Virgen Extra", 2.98],
+            [0, "Aceite Virgen", 2.84],
+            [0, "Aceite Lampante", 2.75]
         ];
 
         foreach ($aceites as $item) {
@@ -47,11 +47,11 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Aceituna
         $variedades = [
-            ["Alberquina"],
-            ["Gordal"],
-            ["Hojiblanca"],
-            ["Lechín"],
-            ["Picual"],
+            [0, "Alberquina"],
+            [0, "Gordal"],
+            [0, "Hojiblanca"],
+            [0, "Lechín"],
+            [0, "Picual"],
         ];
 
         foreach ($variedades as $item) {
@@ -64,10 +64,10 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Cliente
         $clientes = [
-            ["A23548796", "Koipe, S.A.", "", "Ctra/ Arjona", "s/n", "", "", "", "", "24740", "Andújar", "Jaén", "953510065", "atencion.cliente@koipe.com", 10],
-            ["A23548756", "Carbonell, S.A.", "", "C/ Marie Curie", "20", "", "", "", "", "28521", "Rivas Vaciamacrid", "Madrid", "902202107", "atencion.cliente@carbonell.com", 15],
-            ["B41584732", "Grupo Ybarra, S.L.", "", "Ctra/ Isla Menorca", "s/n", "", "", "", "", "41703", "Dos Hermanas", "Sevilla", "902014555", "consumidor@grupoybarra.com", 10],
-            ["A23846985", "Coosur, S.A.", "", "Ctra/ La Carolina", "s/n", "", "", "", "", "23220", "Vilches", "Jaén", "953631165", "info@coosur.com", 0]
+            [0, "A23548796", "Koipe, S.A.", "", "Ctra/ Arjona", "s/n", "", "", "", "", "24740", "Andújar", "Jaén", "953510065", "atencion.cliente@koipe.com", 10],
+            [0, "A23548756", "Carbonell, S.A.", "", "C/ Marie Curie", "20", "", "", "", "", "28521", "Rivas Vaciamacrid", "Madrid", "902202107", "atencion.cliente@carbonell.com", 15],
+            [0, "B41584732", "Grupo Ybarra, S.L.", "", "Ctra/ Isla Menorca", "s/n", "", "", "", "", "41703", "Dos Hermanas", "Sevilla", "902014555", "consumidor@grupoybarra.com", 10],
+            [0, "A23846985", "Coosur, S.A.", "", "Ctra/ La Carolina", "s/n", "", "", "", "", "23220", "Vilches", "Jaén", "953631165", "info@coosur.com", 0]
         ];
 
         foreach ($clientes as $item) {
@@ -106,41 +106,11 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             $manager->persist($deposito);
         }
 
-        //Finca
-        $fincas = [
-            ["Fontarrón", "13", "077", "A", "018", "00039", "0000", "FP", 200, true, 30, 70, 5, 1, 2],
-            ["Fuente del Ciervo", "13", "077", "A", "018", "00040", "0001", "FP", 300, true, 100, 0, 5, 1, null],
-            ["Montesina", "13", "077", "A", "018", "00041", "0002", "FP", 600, true, 100, 0, 5, 3, null]
-        ];
-
-        foreach ($fincas as $item) {
-            $finca = new Finca();
-            $finca
-                ->setDenominacion($item[1])
-                ->setProvincia($item[2])
-                ->setDenominacion($item[3])
-                ->setMunicipio($item[4])
-                ->setSector($item[5])
-                ->setPoligono($item[6])
-                ->setParcela($item[7])
-                ->setIdInmueble($item[8])
-                ->setCaracterControl($item[9])
-                ->setNumPlantas($item[10])
-                ->setRegadio($item[11])
-                ->setPartPropietario($item[12])
-                ->setPartArrend($item[13])
-                ->setVariedad($item[14])
-                ->setPropietario($item[15])
-                ->setArrendatario($item[16]);
-
-            $manager->persist($finca);
-        }
-
         //Socio
         $socios = [
-            ["75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "651378790", "dhurtadorosales@gmail.com", "2017-03-27", true, null],
-            ["26354843H", "Valentín", "González Molina", "C/ Cervantes", "9", "", "", "", "", "23700", "Linares", "Jaén", "625782462", null, "2017-03-27", true, null],
-            ["29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti", "15", "", "", "2", "B", "23700", "Linares", "Jaén", "614783565", null, "2017-03-27", true, null],
+            [0, "75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "651378790", "dhurtadorosales@gmail.com", "2017-03-27", true, null],
+            [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes", "9", "", "", "", "", "23700", "Linares", "Jaén", "625782462", null, "2017-03-27", true, null],
+            [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti", "15", "", "", "2", "B", "23700", "Linares", "Jaén", "614783565", null, "2017-03-27", true, null],
         ];
 
         foreach ($socios as $item) {
@@ -166,10 +136,39 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             $manager->persist($socio);
         }
 
+        //Finca
+        $fincas = [
+            [0, "Fontarrón", "13", "077", "A", "018", "00039", "0000", "FP", 200, true, 30, 70, $variedades[2], $socios[0], $socios[1]],
+            [0, "Fuente del Ciervo", "13", "077", "A", "018", "00040", "0001", "FP", 300, true, 100, 0, $variedades[2], $socios[0], null],
+            [0, "Montesina", "13", "077", "A", "018", "00041", "0002", "FP", 600, true, 100, 0, $variedades[0], $socios[2], null]
+        ];
+
+        foreach ($fincas as $item) {
+            $finca = new Finca();
+            $finca
+                ->setDenominacion($item[1])
+                ->setProvincia($item[2])
+                ->setMunicipio($item[3])
+                ->setSector($item[4])
+                ->setPoligono($item[5])
+                ->setParcela($item[6])
+                ->setIdInmueble($item[7])
+                ->setCaracterControl($item[8])
+                ->setNumPlantas($item[9])
+                ->setRegadio($item[10])
+                ->setPartPropietario($item[11])
+                ->setPartArrend($item[12])
+                ->setVariedad($item[13])
+                ->setPropietario($item[14])
+                ->setArrendatario($item[15]);
+
+            $manager->persist($finca);
+        }
+
         //Tipo
         $tipos = [
-            ["vuelo", 5],
-            ["suelo", 0.0]
+            [0, "vuelo", 5],
+            [0, "suelo", 0.0]
         ];
 
         foreach ($tipos as $item) {
@@ -180,40 +179,6 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
             $manager->persist($tipo);
         }
-
-
-        /////////////////////////////////
-
-
-        //Entrega
-        $entregas = [
-            ["2017-03-28", "16:15", "16:20", 1500, 18, 0, null, 1, 1, 1],
-            ["2017-03-28", "16:20", "16:25", 500, 23, 10, "Muy sucia", 1, 2, 3, 1],
-            ["2017-03-28", "16:25", "16:30", 200, 25, 0, null, 2, 2, 3, 3],
-            ["2017-03-28", "16:30", "17:03", 1000, 22, 10, "Atasco de tolva", 3, 2, 3, 2],
-            ["2017-03-28", "17:07", "17:20", 900, 18, 0, null, 3, 1, 3]
-        ];
-
-        foreach ($entregas as $item) {
-            $entrega = new Entrega();
-            $entrega
-                ->setFecha($item[1])
-                ->setHoraInicio($item[2])
-                ->setHoraFin($item[3])
-                ->setPeso($item[4])
-                ->setRendimiento($item[5])
-                ->setSancion($item[6])
-                ->setObservaciones($item[7])
-                ->setBascula($item[8])
-                ->setTipo($item[9])
-                ->setAmasada($item[10])
-                ->setFinca($item[11]);
-
-            $manager->persist($entrega);
-        }
-
-
-        ////////////////////////////////
 
         //Administrador
         $usuario = new Usuario();

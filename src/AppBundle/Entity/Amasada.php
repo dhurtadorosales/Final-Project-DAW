@@ -26,13 +26,14 @@ class Amasada
 
     /**
      * @var integer
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $cantidad;
 
     /**
      * @var Entrega[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="amasada")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $entregas;
 

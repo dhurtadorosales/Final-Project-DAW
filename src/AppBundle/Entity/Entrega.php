@@ -50,13 +50,13 @@ class Entrega
 
     /**
      * @var integer
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $sancion;
 
     /**
      * @var string
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $observaciones;
 
@@ -86,7 +86,6 @@ class Entrega
      * @ORM\JoinColumn(nullable=false)
      */
     private $finca;
-
 
 
     /**

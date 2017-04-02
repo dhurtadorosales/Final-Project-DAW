@@ -38,20 +38,10 @@ class DefaultController extends Controller
             "paisaje2.jpg"
         ];
 
-        /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
-
-        $aceites = $em->createQueryBuilder()
-            ->select('a')
-            ->from('AppBundle:Aceite', 'a')
-            ->getQuery()
-            ->getResult();
-
         return $this->render('default/index.html.twig', [
             'titulos' => $titulos,
             'subtitulos' => $subtitulos,
-            'fotos' => $fotos,
-            'aceites' => $aceites
+            'fotos' => $fotos
         ]);
     }
 }
