@@ -39,11 +39,10 @@ class Linea
     private $retirada;
 
     /**
-     * @var Deposito
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Deposito", inversedBy="lineas")
+     * @var Lote
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="lineas")
      */
-    private $aceite;
-
+    private $lote;
 
 
     /**
@@ -129,26 +128,26 @@ class Linea
     }
 
     /**
-     * Set aceite
+     * Set lote
      *
-     * @param \AppBundle\Entity\Deposito $aceite
+     * @param \AppBundle\Entity\Lote $lote
      *
      * @return Linea
      */
-    public function setAceite(\AppBundle\Entity\Deposito $aceite = null)
+    public function setLote(\AppBundle\Entity\Lote $lote = null)
     {
-        $this->aceite = $aceite;
+        $this->lote = $lote;
 
         return $this;
     }
 
     /**
-     * Get aceite
+     * Get lote
      *
-     * @return \AppBundle\Entity\Deposito
+     * @return \AppBundle\Entity\Lote
      */
-    public function getAceite()
+    public function getLote()
     {
-        return $this->aceite;
+        return $this->lote;
     }
 }

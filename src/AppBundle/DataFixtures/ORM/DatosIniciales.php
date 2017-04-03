@@ -4,16 +4,15 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Aceituna;
-use AppBundle\Entity\Amasada;
 use AppBundle\Entity\Cliente;
-use AppBundle\Entity\Deposito;
-use AppBundle\Entity\Entrega;
 use AppBundle\Entity\Finca;
+use AppBundle\Entity\Lote;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Tipo;
 use AppBundle\Entity\Usuario;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
@@ -53,6 +52,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             [0, "Lechín"],
             [0, "Picual"],
         ];
+        $variedades2 = [];
 
         foreach ($variedades as $item) {
             $variedad = new Aceituna();
@@ -60,6 +60,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setDenominacion($item[1]);
 
             $manager->persist($variedad);
+            array_push($variedades2, $variedad);
         }
 
         //Cliente
@@ -92,18 +93,20 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             $manager->persist($cliente);
         }
 
-        //Deposito
-        $numDepositos = 90;
+        //Lote
+        $numLotes = 90;
         $capacidad = 50000;
         $contenidoInicial = 0;
+        $temporada = '16/17';
 
-        for ($i = 0; $i < $numDepositos; $i++) {
-            $deposito = new Deposito();
-            $deposito
+        for ($i = 0; $i < $numLotes; $i++) {
+            $lote = new Lote();
+            $lote
                 ->setCapacidad($capacidad)
-                ->setContenido($contenidoInicial);
+                ->setContenido($contenidoInicial)
+                ->setTemporada($temporada);
 
-            $manager->persist($deposito);
+            $manager->persist($lote);
         }
 
         //Socio
@@ -112,6 +115,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes", "9", "", "", "", "", "23700", "Linares", "Jaén", "625782462", null, "2017-03-27", true, null],
             [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti", "15", "", "", "2", "B", "23700", "Linares", "Jaén", "614783565", null, "2017-03-27", true, null],
         ];
+        $socios2 = [];
 
         foreach ($socios as $item) {
             $socio = new Socio();
@@ -134,13 +138,14 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setActivo($item[16]);
 
             $manager->persist($socio);
+            array_push($socios2, $socio);
         }
 
         //Finca
         $fincas = [
-            [0, "Fontarrón", "13", "077", "A", "018", "00039", "0000", "FP", 200, true, 30, 70, $variedades[2], $socios[0], $socios[1]],
-            [0, "Fuente del Ciervo", "13", "077", "A", "018", "00040", "0001", "FP", 300, true, 100, 0, $variedades[2], $socios[0], null],
-            [0, "Montesina", "13", "077", "A", "018", "00041", "0002", "FP", 600, true, 100, 0, $variedades[0], $socios[2], null]
+            [0, "Fontarrón", "13", "077", "A", "018", "00039", "0000", "FP", 200, true, 30, 70, $variedades2[4], $socios2[0], $socios2[1]],
+            [0, "Fuente del Ciervo", "13", "077", "A", "018", "00040", "0001", "FP", 300, true, 100, 0, $variedades2[4], $socios2[0], null],
+            [0, "Montesina", "13", "077", "A", "018", "00041", "0002", "FP", 600, true, 100, 0, $variedades2[4], $socios2[2], null]
         ];
 
         foreach ($fincas as $item) {

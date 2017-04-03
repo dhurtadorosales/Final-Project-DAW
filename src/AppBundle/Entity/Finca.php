@@ -123,7 +123,7 @@ class Finca
      */
     public function __toString()
     {
-        return $this->getDenominacion();
+        return $this->getProvincia() . " " . $this->$this->getMunicipio() . " " . $this->getSector() . " " . $this->getPoligono() . " " . $this->getParcela() . " " . $this->getIdInmueble() . " " . $this->getCaracterControl();
     }
 
     /**

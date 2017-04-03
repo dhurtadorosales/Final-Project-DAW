@@ -26,8 +26,10 @@
                 <td>{{ lote.id }}-{{ lote.temporada }}</td>
                 <td><select name="slAmasadas" id="slAmasadas">
                         <option value="0"></option>
-                        {% for finca in lote.deposito %}
-                            <option value="{{ finca.deposito.amasadas.id }}">{{ finca.deposito.amasadas[0].denominacion }}</option>
+                        {% for amasada in lote.amasadas %}
+                            {% for entrega in amasada.entregas %}
+                                <option value="{{ entrega.finca.id }}" title="Propietario: {{ entrega.finca.propietario }}">{{ entrega.finca.provincia }} {{ entrega.finca.municipio }} {{ entrega.finca.sector }} {{ entrega.finca.poligono }} {{ entrega.finca.parcela }} {{ entrega.finca.idInmueble }} {{ entrega.finca.caracterControl }}</option>
+                            {% endfor %}
                         {% endfor %}
                     </select></td>
                 <td>

@@ -3,7 +3,7 @@
 {% block title %}Ventas{% endblock %}
 
 {% block section %}
-    <h1>Venta Nº</h1>
+    <h1>Venta Nº {{ venta.id }}</h1>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -25,9 +25,14 @@
         {% for linea in lineas %}
             <tr>
                 <td>{{ linea.cantidad }}</td>
-                <td>{{ linea.aceite }}</td>
+                <td>{{ linea.lote.amasadas[0].aceite }}</td>
                 <td>0</td>
-                <td>0</td>
+                <td>{% if linea.lote.id < 10 %}
+                        0{{ linea.lote.id }}-{{ linea.lote.temporada }}
+                    {% else %}
+                        {{ linea.lote.id }}-{{ linea.lote.temporada }}
+                    {% endif %}
+                </td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

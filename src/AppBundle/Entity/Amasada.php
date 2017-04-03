@@ -45,11 +45,12 @@ class Amasada
     private $aceite;
 
     /**
-     * @var Deposito
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Deposito", inversedBy="amasadas")
+     * @var Lote
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="amasadas")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $deposito;
+    private $lote;
+
 
     /**
      * Constructor
@@ -158,7 +159,7 @@ class Amasada
      *
      * @return Amasada
      */
-    public function setAceite(\AppBundle\Entity\Aceite $aceite = null)
+    public function setAceite(\AppBundle\Entity\Aceite $aceite)
     {
         $this->aceite = $aceite;
 
@@ -176,26 +177,26 @@ class Amasada
     }
 
     /**
-     * Set deposito
+     * Set lote
      *
-     * @param \AppBundle\Entity\Deposito $deposito
+     * @param \AppBundle\Entity\Lote $lote
      *
      * @return Amasada
      */
-    public function setDeposito(\AppBundle\Entity\Deposito $deposito = null)
+    public function setLote(\AppBundle\Entity\Lote $lote)
     {
-        $this->deposito = $deposito;
+        $this->lote = $lote;
 
         return $this;
     }
 
     /**
-     * Get deposito
+     * Get lote
      *
-     * @return \AppBundle\Entity\Deposito
+     * @return \AppBundle\Entity\Lote
      */
-    public function getDeposito()
+    public function getLote()
     {
-        return $this->deposito;
+        return $this->lote;
     }
 }

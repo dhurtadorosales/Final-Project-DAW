@@ -45,16 +45,16 @@ class AmasadaController extends Controller
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
-        $depositos = $em->createQueryBuilder()
-            ->select('d')
-            ->from('AppBundle:Deposito', 'd')
+        $lotes = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Lote', 'l')
             ->getQuery()
             ->getResult();
 
         $amasadas = [
-            [0, "2017-03-28", $aceites[0], $depositos[0]],
-            [0, "2017-03-28", $aceites[1], $depositos[1]],
-            [0, "2017-03-28", $aceites[0], $depositos[1]]
+            [0, "2017-03-28", $aceites[0], $lotes[0]],
+            [0, "2017-03-28", $aceites[1], $lotes[1]],
+            [0, "2017-03-28", $aceites[0], $lotes[1]]
         ];
 
         /** @var EntityManager $em */
@@ -66,7 +66,7 @@ class AmasadaController extends Controller
             $amasada
                 ->setFechaFabricacion($item[1])
                 ->setAceite($item[2])
-                ->setDeposito($item[3]);
+                ->setLote($item[3]);
 
             $em->flush();
         }

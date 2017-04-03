@@ -19,16 +19,29 @@ class Lote
     private $id;
 
     /**
+     * @var integer
+     * @ORM\Column(type="integer")
+     */
+    private $capacidad;
+
+    /**
+     * @var integer
+     * @ORM\Column(type="integer")
+     */
+    private $contenido;
+
+    /**
      * @var string
      * @ORM\Column(type="string")
      */
     private $temporada;
 
     /**
-     * @var Deposito
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Deposito", mappedBy="lotes")
+     * @var Amasada[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Amasada", mappedBy="lote")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $deposito;
+    private $amasadas;
 
     /**
      * @var Linea[]
@@ -36,20 +49,21 @@ class Lote
      */
     private $lineas;
 
-    /**
+    /*
      * Convierte a string
      */
-    public function __toString()
+  /*  public function __toString()
     {
         return $this->getId() . "-" . $this->getTemporada();
-    }
+    }*/
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->deposito = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->amasadas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->lineas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -61,6 +75,54 @@ class Lote
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set capacidad
+     *
+     * @param integer $capacidad
+     *
+     * @return Lote
+     */
+    public function setCapacidad($capacidad)
+    {
+        $this->capacidad = $capacidad;
+
+        return $this;
+    }
+
+    /**
+     * Get capacidad
+     *
+     * @return integer
+     */
+    public function getCapacidad()
+    {
+        return $this->capacidad;
+    }
+
+    /**
+     * Set contenido
+     *
+     * @param integer $contenido
+     *
+     * @return Lote
+     */
+    public function setContenido($contenido)
+    {
+        $this->contenido = $contenido;
+
+        return $this;
+    }
+
+    /**
+     * Get contenido
+     *
+     * @return integer
+     */
+    public function getContenido()
+    {
+        return $this->contenido;
     }
 
     /**
@@ -88,37 +150,37 @@ class Lote
     }
 
     /**
-     * Add deposito
+     * Add amasada
      *
-     * @param \AppBundle\Entity\Deposito $deposito
+     * @param \AppBundle\Entity\Amasada $amasada
      *
      * @return Lote
      */
-    public function addDeposito(\AppBundle\Entity\Deposito $deposito)
+    public function addAmasada(\AppBundle\Entity\Amasada $amasada)
     {
-        $this->deposito[] = $deposito;
+        $this->amasadas[] = $amasada;
 
         return $this;
     }
 
     /**
-     * Remove deposito
+     * Remove amasada
      *
-     * @param \AppBundle\Entity\Deposito $deposito
+     * @param \AppBundle\Entity\Amasada $amasada
      */
-    public function removeDeposito(\AppBundle\Entity\Deposito $deposito)
+    public function removeAmasada(\AppBundle\Entity\Amasada $amasada)
     {
-        $this->deposito->removeElement($deposito);
+        $this->amasadas->removeElement($amasada);
     }
 
     /**
-     * Get deposito
+     * Get amasadas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getDeposito()
+    public function getAmasadas()
     {
-        return $this->deposito;
+        return $this->amasadas;
     }
 
     /**
