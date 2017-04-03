@@ -22,16 +22,39 @@ class SocioController extends Controller
             ->from('AppBundle:Socio', 's')
             ->getQuery()
             ->getResult();
-/*
+
         $numPlantas = $em->createQueryBuilder()
-            ->select('sum(f.numPlantas')
+            ->select('SUM(f.numPlantas)')
             ->from('AppBundle:Finca', 'f')
             ->groupBy('f.propietario')
             ->getQuery()
-            ->getResult();
-*/
+            ->getScalarResult();
+
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,
+            'numPlantas' => $numPlantas
+        ]);
+    }
+
+
+    /**
+     * @Route("/nuevo", name="nuevo")
+     */
+    public function nuevoAction()
+    {
+        /** @var EntityManager $em */
+        $em=$this->getDoctrine()->getManager();
+
+        $numPlantas = $em->createQueryBuilder()
+           ->select('sum(f.numPlantas)')
+           //->select('COUNT(f)')
+           ->from('AppBundle:Finca', 'f')
+           ->groupBy('f.propietario')
+           ->getQuery()
+           ->getScalarResult();
+
+        return $this->render('socio/plantas.html.twig', [
+            'numPlantas' => $numPlantas
         ]);
     }
 }

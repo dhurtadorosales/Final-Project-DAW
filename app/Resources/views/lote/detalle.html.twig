@@ -1,9 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Fincas{% endblock %}
+{% block title %}Lotes{% endblock %}
 
 {% block section %}
-    <h1>Listado de fincas</h1>
+    <h1>Fincas del lote</h1>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -14,31 +14,23 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
-            <th>Referencia catastral</th>
-            <th>Propietario</th>
-            <th>% prop.</th>
-            <th>Arrendatario</th>
-            <th>% arr.</th>
-            <th>Variedad</th>
-            <th>Nº Plantas</th>
-            <th>Regadío</th>
+            <th>Nº Finca</th>
+            <th>Referencia Catastral</th>
+            <th>Denominación</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         {% for finca in fincas %}
             <tr>
-                <td>{{ finca.provincia }} {{ finca.municipio }} {{ finca.sector }} {{ finca.poligono }} {{ finca.parcela }} {{ finca.idInmueble }} {{ finca.caracterControl }}</td>
-                <td>{{ finca.propietario }}</td>
-                <td>{{ finca.partPropietario }} %</td>
-                <td>{% if finca.arrendatario != null %}
-                        {{ finca.arrendatario }}
-                    {% endif %}
-                </td>
-                <td>{{ finca.partArrend }} %</td>
-                <td>{{ finca.variedad }}</td>
-                <td>{{ finca.numPlantas }}</td>
-                <td>{{ finca.regadio }}</td>
+                <td>{{ finca.deposito }}-{{ lote.temporada }}</td>
+                <td><select name="slAmasadas" id="slAmasadas">
+                        <option value="0"></option>
+                        {% for finca in lote.deposito %}
+                            <option value="{{ finca.deposito.amasadas.id }}">{{ finca.deposito.amasadas[0].denominacion }}</option>
+                        {% endfor %}
+                    </select></td>
+                <td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

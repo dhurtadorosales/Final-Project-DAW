@@ -1,9 +1,10 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Fincas{% endblock %}
+{% block title %}Entregas{% endblock %}
 
 {% block section %}
-    <h1>Listado de fincas</h1>
+    <h1>Entrega Nº {{ resultado[0].id }}</h1>
+    <h1>Socio {{ socio }}</h1>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -14,31 +15,28 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
-            <th>Referencia catastral</th>
-            <th>Propietario</th>
-            <th>% prop.</th>
-            <th>Arrendatario</th>
-            <th>% arr.</th>
-            <th>Variedad</th>
-            <th>Nº Plantas</th>
-            <th>Regadío</th>
+            <th>Nº</th>
+            <th>Kg Aceituna</th>
+            <th>% Rendimiento</th>
+            <th>Kg Aceite</th>
+            <th>Sanción</th>
+            <th>Total</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        {% for finca in fincas %}
             <tr>
-                <td>{{ finca.provincia }} {{ finca.municipio }} {{ finca.sector }} {{ finca.poligono }} {{ finca.parcela }} {{ finca.idInmueble }} {{ finca.caracterControl }}</td>
-                <td>{{ finca.propietario }}</td>
-                <td>{{ finca.partPropietario }} %</td>
-                <td>{% if finca.arrendatario != null %}
-                        {{ finca.arrendatario }}
+                <td>{{ resultado[0].id }}</td>
+                <td>{% if socio.id == resultado[0].finca.propietario.id %}
+                        {{ resultado[0].peso * (resultado[0].finca.partPropietario / 100) }}
+                    {% else %}
+                        {{ resultado[0].peso * (resultado[0].finca.partArrend) }}
                     {% endif %}
                 </td>
-                <td>{{ finca.partArrend }} %</td>
-                <td>{{ finca.variedad }}</td>
-                <td>{{ finca.numPlantas }}</td>
-                <td>{{ finca.regadio }}</td>
+                <td>{{ resultado[0].rendimiento }}</td>
+                <td>{{ resultado[0].peso * (resultado[0].rendimiento / 100) }}</td>
+                <td>{{ (resultado[0].peso * (resultado[0].rendimiento / 100)) * (resultado[0].sancion /100) }}</td>
+                <td>{{ resultado[0].peso * (resultado[0].rendimiento / 100) - (resultado[0].peso * (resultado[0].rendimiento / 100)) * (resultado[0].sancion /100) }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -51,7 +49,6 @@
                     </a>
                 </td>
             </tr>
-        {% endfor %}
         </tbody>
     </table>
 {% endblock %}

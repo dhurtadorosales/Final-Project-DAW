@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Socios{% endblock %}
+{% block title %}Socios[is{% endblock %}
 
 {% block section %}
     <h1>Listado de socios</h1>
@@ -16,7 +16,7 @@
         <tr>
             <th>Nº Socio</th>
             <th>NIF</th>
-            <th>Socio</th>
+            <th>Socios</th>
             <th>Dirección</th>
             <th>Teléfono</th>
             <th>Nº Plantas</th>
@@ -28,7 +28,7 @@
         {% for socio in socios %}
             <tr {% if socio.email != null %}
                     title="{{ socio.email }}"
-                    {% else %}
+                {% else %}
                     title="No tiene email"
                 {% endif %}>
                 <td>{{ socio.id }}</td>
@@ -52,10 +52,10 @@
                 <td>0</td>
                 <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
                 <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
+                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socios[i">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                     </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
+                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socios[i">
                         <i class="fa fa-pencil"></i>
                     </a>
                     <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
@@ -65,5 +65,12 @@
             </tr>
         {% endfor %}
         </tbody>
+    </table>
+
+    <table>
+        <tr>
+        <th>socio</th>
+        <th>numero</th>
+        <tr></tr>
     </table>
 {% endblock %}

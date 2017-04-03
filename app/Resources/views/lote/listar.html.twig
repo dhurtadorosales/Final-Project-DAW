@@ -17,6 +17,7 @@
             <th>Lote</th>
             <th>Amasadas</th>
             <th>Fincas</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -26,7 +27,7 @@
                 <td><select name="slAmasadas" id="slAmasadas">
                         <option value="0"></option>
                         {% for finca in lote.deposito %}
-                            <option value="{{ finca.deposito.amasadas.id }}">{{ finca.deposito.amasadas.id }}</option>
+                            <option value="{{ finca.deposito.amasadas.id }}">{{ finca.deposito.amasadas[0].denominacion }}</option>
                         {% endfor %}
                     </select></td>
                 <td>

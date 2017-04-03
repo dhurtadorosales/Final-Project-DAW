@@ -123,6 +123,7 @@ class Socio
     /**
      * @var Finca[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Finca", mappedBy="propietario")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $fincasPropiedad;
 

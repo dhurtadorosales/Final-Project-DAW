@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Lote;
 use AppBundle\Entity\Socio;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -26,6 +27,27 @@ class LoteController extends Controller
 
         return $this->render('lote/listar.html.twig', [
             'lotes' => $lotes
+        ]);
+    }
+
+    /**
+     * @Route("/lotes/listar/{lote}", name="lotes_listar_lote")
+     */
+    public function listarFincasAction(Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em=$this->getDoctrine()->getManager();
+
+        $resultados = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Lote', 'l')
+            ->where('l.id = :lot')
+            ->setParameter('lot', $lote)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('lote/detalle.html.twig', [
+            'resultados' => $resultados
         ]);
     }
 }

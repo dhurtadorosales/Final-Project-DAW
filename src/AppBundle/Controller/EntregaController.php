@@ -41,6 +41,36 @@ class EntregaController extends Controller
     }
 
     /**
+     * @Route("/entregas/detalle/{entrega}/{socio}", name="entregas_detalle")
+     */
+    public function detalleAction(Entrega $entrega, Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em=$this->getDoctrine()->getManager();
+
+        $resultado = $em->createQueryBuilder()
+            ->select('e')
+            ->addSelect('f')
+            ->addSelect('p')
+            ->from('AppBundle:Entrega', 'e')
+            ->join('e.finca', 'f')
+            ->join('f.propietario', 'p')
+            ->join('f.arrendatario', 'a')
+            ->where('e.id = :ent')
+            ->andwhere('p = :socio')
+            ->orwhere('a = :socio')
+            ->setParameter('ent', $entrega)
+            ->setParameter('socio', $socio)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('entrega/detalle.html.twig', [
+            'resultado' => $resultado,
+            'socio' => $socio
+        ]);
+    }
+
+    /**
      * @Route("/entregas/insertar", name="entregas_insertar")
      */
     public function insertarAction()
