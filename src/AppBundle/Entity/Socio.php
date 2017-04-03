@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Socio
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SocioRepository")
  */
 class Socio
 {
