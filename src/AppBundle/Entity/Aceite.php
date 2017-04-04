@@ -26,16 +26,22 @@ class Aceite
 
     /**
      * @var float
-     * @ORM\Column(type="float", precision=2)
+     * @ORM\Column(type="float", precision=3)
      */
-    private $precio;
+    private $densidadKgLitro;
 
     /**
-     * @var Amasada[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Amasada", mappedBy="aceite")
+     * @var float
+     * @ORM\Column(type="float", precision=2)
+     */
+    private $precioKg;
+
+    /**
+     * @var Lote[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Lote", mappedBy="aceite")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $amasadas;
+    private $lotes;
 
     /**
      * Convierte a string
@@ -50,7 +56,7 @@ class Aceite
      */
     public function __construct()
     {
-        $this->amasadas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lotes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -88,60 +94,84 @@ class Aceite
     }
 
     /**
-     * Set precio
+     * Set densidadKgLitro
      *
-     * @param float $precio
+     * @param float $densidadKgLitro
      *
      * @return Aceite
      */
-    public function setPrecio($precio)
+    public function setDensidadKgLitro($densidadKgLitro)
     {
-        $this->precio = $precio;
+        $this->densidadKgLitro = $densidadKgLitro;
 
         return $this;
     }
 
     /**
-     * Get precio
+     * Get densidadKgLitro
      *
      * @return float
      */
-    public function getPrecio()
+    public function getDensidadKgLitro()
     {
-        return $this->precio;
+        return $this->densidadKgLitro;
     }
 
     /**
-     * Add amasada
+     * Set precioKg
      *
-     * @param \AppBundle\Entity\Amasada $amasada
+     * @param float $precioKg
      *
      * @return Aceite
      */
-    public function addAmasada(\AppBundle\Entity\Amasada $amasada)
+    public function setPrecioKg($precioKg)
     {
-        $this->amasadas[] = $amasada;
+        $this->precioKg = $precioKg;
 
         return $this;
     }
 
     /**
-     * Remove amasada
+     * Get precioKg
      *
-     * @param \AppBundle\Entity\Amasada $amasada
+     * @return float
      */
-    public function removeAmasada(\AppBundle\Entity\Amasada $amasada)
+    public function getPrecioKg()
     {
-        $this->amasadas->removeElement($amasada);
+        return $this->precioKg;
     }
 
     /**
-     * Get amasadas
+     * Add lote
+     *
+     * @param \AppBundle\Entity\Lote $lote
+     *
+     * @return Aceite
+     */
+    public function addLote(\AppBundle\Entity\Lote $lote)
+    {
+        $this->lotes[] = $lote;
+
+        return $this;
+    }
+
+    /**
+     * Remove lote
+     *
+     * @param \AppBundle\Entity\Lote $lote
+     */
+    public function removeLote(\AppBundle\Entity\Lote $lote)
+    {
+        $this->lotes->removeElement($lote);
+    }
+
+    /**
+     * Get lotes
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAmasadas()
+    public function getLotes()
     {
-        return $this->amasadas;
+        return $this->lotes;
     }
 }

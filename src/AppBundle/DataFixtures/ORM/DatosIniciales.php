@@ -30,16 +30,17 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
     {
         //Aceite
         $aceites = [
-            [0, "Aceite Virgen Extra", 2.98],
-            [0, "Aceite Virgen", 2.84],
-            [0, "Aceite Lampante", 2.75]
+            [0, "Aceite Virgen Extra", 0.916, 2.98],
+            [0, "Aceite Virgen", 0.916, 2.84],
+            [0, "Aceite Lampante", 0.916, 2.75]
         ];
 
         foreach ($aceites as $item) {
             $aceite = new Aceite();
             $aceite
                 ->setDenominacion($item[1])
-                ->setPrecio($item[2]);
+                ->setDensidadKgLitro($item[2])
+                ->setPrecioKg($item[3]);
 
             $manager->persist($aceite);
         }
