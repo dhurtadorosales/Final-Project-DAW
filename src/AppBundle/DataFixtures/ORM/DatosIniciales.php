@@ -122,7 +122,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setProvincia($item[12])
                 ->setTelefono($item[13])
                 ->setEmail($item[14])
-                ->setFechaAlta($item[15])
+                ->setFechaAlta(new \DateTime($item[15]))
                 ->setActivo($item[16]);
 
             $manager->persist($socio);
@@ -131,9 +131,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Finca
         $fincas = [
-            [0, "Fontarrón", "13", "077", "A", "018", "00039", "0000", "FP", 200, true, 30, 70, $variedades2[4], $socios2[0], $socios2[1]],
-            [0, "Fuente del Ciervo", "13", "077", "A", "018", "00040", "0001", "FP", 300, true, 100, 0, $variedades2[4], $socios2[0], null],
-            [0, "Montesina", "13", "077", "A", "018", "00041", "0002", "FP", 600, true, 100, 0, $variedades2[4], $socios2[2], null]
+            [0, "Fontarrón", "13", "077", "A", "018", "00039", "0000", "FP", 200, true, 0.30, 0.70, $variedades2[4], $socios2[0], $socios2[1]],
+            [0, "Fuente del Ciervo", "13", "077", "A", "018", "00040", "0001", "FP", 300, true, 1, 0, $variedades2[4], $socios2[0], null],
+            [0, "Montesina", "13", "077", "A", "018", "00041", "0002", "FP", 600, true, 1, 0, $variedades2[4], $socios2[2], null]
         ];
 
         foreach ($fincas as $item) {
