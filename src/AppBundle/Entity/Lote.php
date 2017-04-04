@@ -19,22 +19,16 @@ class Lote
     private $id;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
-     */
-    private $capacidad;
-
-    /**
-     * @var integer
-     * @ORM\Column(type="integer")
-     */
-    private $contenido;
-
-    /**
      * @var string
      * @ORM\Column(type="string")
      */
     private $temporada;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float", precision=2)
+     */
+    private $cantidad;
 
     /**
      * @var Amasada[]
@@ -44,18 +38,24 @@ class Lote
     private $amasadas;
 
     /**
-     * @var Linea[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="lote")
+     * @var Aceite
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceite", inversedBy="lotes")
      */
-    private $lineas;
+    private $aceite;
 
-    /*
+    /**
+     * @var Producto[]
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Producto", mappedBy="lotes")
+     */
+    private $productos;
+
+    /**
      * Convierte a string
      */
-  /*  public function __toString()
+    public function __toString()
     {
         return $this->getId() . "-" . $this->getTemporada();
-    }*/
+    }
 
 
     /**
@@ -64,7 +64,7 @@ class Lote
     public function __construct()
     {
         $this->amasadas = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->lineas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -75,54 +75,6 @@ class Lote
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set capacidad
-     *
-     * @param integer $capacidad
-     *
-     * @return Lote
-     */
-    public function setCapacidad($capacidad)
-    {
-        $this->capacidad = $capacidad;
-
-        return $this;
-    }
-
-    /**
-     * Get capacidad
-     *
-     * @return integer
-     */
-    public function getCapacidad()
-    {
-        return $this->capacidad;
-    }
-
-    /**
-     * Set contenido
-     *
-     * @param integer $contenido
-     *
-     * @return Lote
-     */
-    public function setContenido($contenido)
-    {
-        $this->contenido = $contenido;
-
-        return $this;
-    }
-
-    /**
-     * Get contenido
-     *
-     * @return integer
-     */
-    public function getContenido()
-    {
-        return $this->contenido;
     }
 
     /**
@@ -147,6 +99,30 @@ class Lote
     public function getTemporada()
     {
         return $this->temporada;
+    }
+
+    /**
+     * Set cantidad
+     *
+     * @param float $cantidad
+     *
+     * @return Lote
+     */
+    public function setCantidad($cantidad)
+    {
+        $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidad
+     *
+     * @return float
+     */
+    public function getCantidad()
+    {
+        return $this->cantidad;
     }
 
     /**
@@ -184,36 +160,60 @@ class Lote
     }
 
     /**
-     * Add linea
+     * Set aceite
      *
-     * @param \AppBundle\Entity\Linea $linea
+     * @param \AppBundle\Entity\Aceite $aceite
      *
      * @return Lote
      */
-    public function addLinea(\AppBundle\Entity\Linea $linea)
+    public function setAceite(\AppBundle\Entity\Aceite $aceite = null)
     {
-        $this->lineas[] = $linea;
+        $this->aceite = $aceite;
 
         return $this;
     }
 
     /**
-     * Remove linea
+     * Get aceite
      *
-     * @param \AppBundle\Entity\Linea $linea
+     * @return \AppBundle\Entity\Aceite
      */
-    public function removeLinea(\AppBundle\Entity\Linea $linea)
+    public function getAceite()
     {
-        $this->lineas->removeElement($linea);
+        return $this->aceite;
     }
 
     /**
-     * Get lineas
+     * Add producto
+     *
+     * @param \AppBundle\Entity\Producto $producto
+     *
+     * @return Lote
+     */
+    public function addProducto(\AppBundle\Entity\Producto $producto)
+    {
+        $this->productos[] = $producto;
+
+        return $this;
+    }
+
+    /**
+     * Remove producto
+     *
+     * @param \AppBundle\Entity\Producto $producto
+     */
+    public function removeProducto(\AppBundle\Entity\Producto $producto)
+    {
+        $this->productos->removeElement($producto);
+    }
+
+    /**
+     * Get productos
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getLineas()
+    public function getProductos()
     {
-        return $this->lineas;
+        return $this->productos;
     }
 }

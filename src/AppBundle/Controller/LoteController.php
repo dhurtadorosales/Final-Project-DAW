@@ -50,4 +50,30 @@ class LoteController extends Controller
             'resultados' => $resultados
         ]);
     }
+
+    /**
+     * @Route("/lotes/insertar", name="lotes_insertar")
+     */
+    public function insertarAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $numLotes = 90;
+        $cantidad = 0;
+        $temporada = '16/17';
+
+        for ($i = 0; $i < $numLotes; $i++) {
+            $lote = new Lote();
+            $em->persist($lote);
+            $lote
+                ->setTemporada($temporada)
+                ->setCantidad($cantidad);
+        }
+        $mensaje = 'Entradas insertadas correctamente';
+
+        return $this->render('lote/operaciones.html.twig', [
+            'mensaje' => $mensaje
+        ]);
+    }
 }

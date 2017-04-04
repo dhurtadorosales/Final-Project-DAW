@@ -27,15 +27,23 @@ class Venta
     /**
      * @var Cliente
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cliente", inversedBy="ventas")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $cliente;
+
+    /**
+     * @var Socio
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="ventas")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $socio;
 
     /**
      * @var Linea[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="venta")
      */
     private $lineas;
+
 
     /**
      * Constructor
@@ -101,6 +109,30 @@ class Venta
     public function getCliente()
     {
         return $this->cliente;
+    }
+
+    /**
+     * Set socio
+     *
+     * @param \AppBundle\Entity\Socio $socio
+     *
+     * @return Venta
+     */
+    public function setSocio(\AppBundle\Entity\Socio $socio = null)
+    {
+        $this->socio = $socio;
+
+        return $this;
+    }
+
+    /**
+     * Get socio
+     *
+     * @return \AppBundle\Entity\Socio
+     */
+    public function getSocio()
+    {
+        return $this->socio;
     }
 
     /**

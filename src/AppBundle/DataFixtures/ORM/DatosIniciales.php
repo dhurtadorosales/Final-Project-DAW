@@ -5,8 +5,11 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Aceituna;
 use AppBundle\Entity\Cliente;
+use AppBundle\Entity\Envase;
 use AppBundle\Entity\Finca;
 use AppBundle\Entity\Lote;
+use AppBundle\Entity\Porcentaje;
+use AppBundle\Entity\Procedencia;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Tipo;
 use AppBundle\Entity\Usuario;
@@ -66,9 +69,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Cliente
         $clientes = [
-            [0, "A23548796", "Koipe, S.A.", "", "Ctra/ Arjona", "s/n", "", "", "", "", "24740", "Andújar", "Jaén", "953510065", "atencion.cliente@koipe.com", 10],
-            [0, "A23548756", "Carbonell, S.A.", "", "C/ Marie Curie", "20", "", "", "", "", "28521", "Rivas Vaciamacrid", "Madrid", "902202107", "atencion.cliente@carbonell.com", 15],
-            [0, "B41584732", "Grupo Ybarra, S.L.", "", "Ctra/ Isla Menorca", "s/n", "", "", "", "", "41703", "Dos Hermanas", "Sevilla", "902014555", "consumidor@grupoybarra.com", 10],
+            [0, "A23548796", "Koipe, S.A.", "", "Ctra/ Arjona", "s/n", "", "", "", "", "24740", "Andújar", "Jaén", "953510065", "atencion.cliente@koipe.com", 0.10],
+            [0, "A23548756", "Carbonell, S.A.", "", "C/ Marie Curie", "20", "", "", "", "", "28521", "Rivas Vaciamacrid", "Madrid", "902202107", "atencion.cliente@carbonell.com", 0.15],
+            [0, "B41584732", "Grupo Ybarra, S.L.", "", "Ctra/ Isla Menorca", "s/n", "", "", "", "", "41703", "Dos Hermanas", "Sevilla", "902014555", "consumidor@grupoybarra.com", 0.10],
             [0, "A23846985", "Coosur, S.A.", "", "Ctra/ La Carolina", "s/n", "", "", "", "", "23220", "Vilches", "Jaén", "953631165", "info@coosur.com", 0]
         ];
 
@@ -89,25 +92,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setProvincia($item[12])
                 ->setTelefono($item[13])
                 ->setEmail($item[14])
-                ->setDescuento(15);
+                ->setDescuentoPersonalizado($item[15]);
 
             $manager->persist($cliente);
-        }
-
-        //Lote
-        $numLotes = 90;
-        $capacidad = 50000;
-        $contenidoInicial = 0;
-        $temporada = '16/17';
-
-        for ($i = 0; $i < $numLotes; $i++) {
-            $lote = new Lote();
-            $lote
-                ->setCapacidad($capacidad)
-                ->setContenido($contenidoInicial)
-                ->setTemporada($temporada);
-
-            $manager->persist($lote);
         }
 
         //Socio
@@ -171,19 +158,53 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             $manager->persist($finca);
         }
 
-        //Tipo
-        $tipos = [
-            [0, "vuelo", 5],
+        //Procedencia
+        $procedencias = [
+            [0, "vuelo", 0.05],
             [0, "suelo", 0.0]
         ];
 
-        foreach ($tipos as $item) {
-            $tipo = new Tipo();
-            $tipo
+        foreach ($procedencias as $item) {
+            $procedencia = new Procedencia();
+            $procedencia
                 ->setDenominacion($item[1])
                 ->setBonificacion($item[2]);
 
-            $manager->persist($tipo);
+            $manager->persist($procedencia);
+        }
+
+        //Procedencia
+        $porcentajes = [
+            [0, "iva", 0.21],
+            [0, "iva reducido", 0.10],
+            [0, "retencion", 0.02],
+            [0, "índice corrector", 0.02]
+        ];
+
+        foreach ($porcentajes as $item) {
+            $porcentaje = new Porcentaje();
+            $porcentaje
+                ->setDenominacion($item[1])
+                ->setCantidad($item[2]);
+
+            $manager->persist($porcentaje);
+        }
+
+        //Envase
+        $envases = [
+            [0, "granel", 0.0],
+            [0, "botella pvc 1L", 0.15],
+            [0, "bidón pvc 5L", 0.10],
+            [0, "botella vidrio 1L", 0.20],
+        ];
+
+        foreach ($envases as $item) {
+            $envase = new Envase();
+            $envase
+                ->setDenominacion($item[1])
+                ->setIncremento($item[2]);
+
+            $manager->persist($envase);
         }
 
         //Administrador

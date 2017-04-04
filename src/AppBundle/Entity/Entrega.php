@@ -67,11 +67,11 @@ class Entrega
     private $bascula;
 
     /**
-     * @var Tipo
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tipo", inversedBy="pesajes")
+     * @var Procedencia
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Procedencia", inversedBy="entregas")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $tipo;
+    private $procedencia;
 
     /**
      * @var Amasada
@@ -86,6 +86,7 @@ class Entrega
      * @ORM\JoinColumn(nullable=false)
      */
     private $finca;
+
 
 
     /**
@@ -291,27 +292,27 @@ class Entrega
     }
 
     /**
-     * Set tipo
+     * Set procedencia
      *
-     * @param \AppBundle\Entity\Tipo $tipo
+     * @param \AppBundle\Entity\Procedencia $procedencia
      *
      * @return Entrega
      */
-    public function setTipo(\AppBundle\Entity\Tipo $tipo = null)
+    public function setProcedencia(\AppBundle\Entity\Procedencia $procedencia)
     {
-        $this->tipo = $tipo;
+        $this->procedencia = $procedencia;
 
         return $this;
     }
 
     /**
-     * Get tipo
+     * Get procedencia
      *
-     * @return \AppBundle\Entity\Tipo
+     * @return \AppBundle\Entity\Procedencia
      */
-    public function getTipo()
+    public function getProcedencia()
     {
-        return $this->tipo;
+        return $this->procedencia;
     }
 
     /**
@@ -321,7 +322,7 @@ class Entrega
      *
      * @return Entrega
      */
-    public function setAmasada(\AppBundle\Entity\Amasada $amasada = null)
+    public function setAmasada(\AppBundle\Entity\Amasada $amasada)
     {
         $this->amasada = $amasada;
 
@@ -345,7 +346,7 @@ class Entrega
      *
      * @return Entrega
      */
-    public function setFinca(\AppBundle\Entity\Finca $finca = null)
+    public function setFinca(\AppBundle\Entity\Finca $finca)
     {
         $this->finca = $finca;
 

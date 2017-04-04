@@ -106,11 +106,12 @@ class Cliente
      * @var float
      * @ORM\Column(type="float", precision=2, nullable=true)
      */
-    private $descuento;
+    private $descuentoPersonalizado;
 
     /**
      * @var Venta[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Venta", mappedBy="cliente")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $ventas;
 
@@ -483,9 +484,9 @@ class Cliente
      *
      * @return Cliente
      */
-    public function setDescuento($descuento)
+    public function setDescuentoPersonalizado($descuentoPersonalizado)
     {
-        $this->descuento = $descuento;
+        $this->descuentoPersonalizado = $descuentoPersonalizado;
 
         return $this;
     }

@@ -78,9 +78,9 @@ class EntregaController extends Controller
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
-        $tipos = $em->createQueryBuilder()
-            ->select('t')
-            ->from('AppBundle:Tipo', 't')
+        $procedencias = $em->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Procedencia', 'p')
             ->getQuery()
             ->getResult();
 
@@ -103,11 +103,11 @@ class EntregaController extends Controller
             ->getResult();
 
         $entregas = [
-            [0, "2017-03-28", "16:15", "16:20", 1500, 18, 0, null, 1, $tipos[0], $amasadas[0], $fincas[0]],
-            [0, "2017-03-28", "16:20", "16:25", 500, 23, 10, "Muy sucia", 1, $tipos[1], $amasadas[2], $fincas[0]],
-            [0, "2017-03-28", "16:25", "16:30", 200, 25, 0, null, 2, $tipos[1], $amasadas[2], $fincas[2]],
-            [0, "2017-03-28", "16:30", "17:03", 1000, 22, 10, "Atasco de tolva", 3, $tipos[1], $amasadas[2], $fincas[1]],
-            [0, "2017-03-28", "17:07", "17:20", 900, 18, 0, null, 3, $tipos[0], $amasadas[0], $fincas[2]]
+            [0, "2017-03-28", "16:15", "16:20", 1500, 18, 0, null, 1, $procedencias[0], $amasadas[0], $fincas[0]],
+            [0, "2017-03-28", "16:20", "16:25", 500, 23, 10, "Muy sucia", 1, $procedencias[1], $amasadas[2], $fincas[0]],
+            [0, "2017-03-28", "16:25", "16:30", 200, 25, 0, null, 2, $procedencias[1], $amasadas[2], $fincas[2]],
+            [0, "2017-03-28", "16:30", "17:03", 1000, 22, 10, "Atasco de tolva", 3, $procedencias[1], $amasadas[2], $fincas[1]],
+            [0, "2017-03-28", "17:07", "17:20", 900, 18, 0, null, 3, $procedencias[0], $amasadas[0], $fincas[2]]
         ];
 
         /** @var EntityManager $em */
@@ -125,7 +125,7 @@ class EntregaController extends Controller
                 ->setSancion($item[6])
                 ->setObservaciones($item[7])
                 ->setBascula($item[8])
-                ->setTipo($item[9])
+                ->setProcedencia($item[9])
                 ->setAmasada($item[10])
                 ->setFinca($item[11]);
 

@@ -38,13 +38,6 @@ class Amasada
     private $entregas;
 
     /**
-     * @var Aceite
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceite", inversedBy="amasadas")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $aceite;
-
-    /**
      * @var Lote
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="amasadas")
      * @ORM\JoinColumn(nullable=false)
@@ -150,30 +143,6 @@ class Amasada
     public function getEntregas()
     {
         return $this->entregas;
-    }
-
-    /**
-     * Set aceite
-     *
-     * @param \AppBundle\Entity\Aceite $aceite
-     *
-     * @return Amasada
-     */
-    public function setAceite(\AppBundle\Entity\Aceite $aceite)
-    {
-        $this->aceite = $aceite;
-
-        return $this;
-    }
-
-    /**
-     * Get aceite
-     *
-     * @return \AppBundle\Entity\Aceite
-     */
-    public function getAceite()
-    {
-        return $this->aceite;
     }
 
     /**

@@ -27,22 +27,22 @@ class Linea
     /**
      * @var Venta
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Venta", inversedBy="lineas")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $venta;
 
     /**
-     * @var Retirada
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Retirada", inversedBy="lineas")
-     * @ORM\JoinColumn(nullable=true)
+     * @var Producto
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Producto", inversedBy="producto")
      */
-    private $retirada;
+    private $producto;
 
     /**
-     * @var Lote
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="lineas")
+     * @var Porcentaje
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Porcentaje", inversedBy="lineas")
      */
-    private $lote;
+    private $porcentaje;
+
 
 
     /**
@@ -86,7 +86,7 @@ class Linea
      *
      * @return Linea
      */
-    public function setVenta(\AppBundle\Entity\Venta $venta = null)
+    public function setVenta(\AppBundle\Entity\Venta $venta)
     {
         $this->venta = $venta;
 
@@ -104,50 +104,50 @@ class Linea
     }
 
     /**
-     * Set retirada
+     * Set producto
      *
-     * @param \AppBundle\Entity\Retirada $retirada
+     * @param \AppBundle\Entity\Producto $producto
      *
      * @return Linea
      */
-    public function setRetirada(\AppBundle\Entity\Retirada $retirada = null)
+    public function setProducto(\AppBundle\Entity\Producto $producto = null)
     {
-        $this->retirada = $retirada;
+        $this->producto = $producto;
 
         return $this;
     }
 
     /**
-     * Get retirada
+     * Get producto
      *
-     * @return \AppBundle\Entity\Retirada
+     * @return \AppBundle\Entity\Producto
      */
-    public function getRetirada()
+    public function getProducto()
     {
-        return $this->retirada;
+        return $this->producto;
     }
 
     /**
-     * Set lote
+     * Set porcentaje
      *
-     * @param \AppBundle\Entity\Lote $lote
+     * @param \AppBundle\Entity\Porcentaje $porcentaje
      *
      * @return Linea
      */
-    public function setLote(\AppBundle\Entity\Lote $lote = null)
+    public function setPorcentaje(\AppBundle\Entity\Porcentaje $porcentaje = null)
     {
-        $this->lote = $lote;
+        $this->porcentaje = $porcentaje;
 
         return $this;
     }
 
     /**
-     * Get lote
+     * Get porcentaje
      *
-     * @return \AppBundle\Entity\Lote
+     * @return \AppBundle\Entity\Porcentaje
      */
-    public function getLote()
+    public function getPorcentaje()
     {
-        return $this->lote;
+        return $this->porcentaje;
     }
 }

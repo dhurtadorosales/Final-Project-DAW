@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Tipo
+ * Class Envase
  * @ORM\Entity()
  */
-class Tipo
+class Envase
 {
     /**
      * @var int
@@ -28,13 +28,14 @@ class Tipo
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $bonificacion;
+    private $incremento;
 
     /**
-     * @var Entrega[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="tipo")
+     * @var Producto[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Producto", mappedBy="envase")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $entregas;
+    private $productos;
 
     /**
      * Convierte a string
@@ -49,7 +50,7 @@ class Tipo
      */
     public function __construct()
     {
-        $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->productos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -67,7 +68,7 @@ class Tipo
      *
      * @param string $denominacion
      *
-     * @return Tipo
+     * @return Envase
      */
     public function setDenominacion($denominacion)
     {
@@ -87,60 +88,60 @@ class Tipo
     }
 
     /**
-     * Set bonificacion
+     * Set incremento
      *
-     * @param float $bonificacion
+     * @param float $incremento
      *
-     * @return Tipo
+     * @return Envase
      */
-    public function setBonificacion($bonificacion)
+    public function setIncremento($incremento)
     {
-        $this->bonificacion = $bonificacion;
+        $this->incremento = $incremento;
 
         return $this;
     }
 
     /**
-     * Get bonificacion
+     * Get incremento
      *
      * @return float
      */
-    public function getBonificacion()
+    public function getIncremento()
     {
-        return $this->bonificacion;
+        return $this->incremento;
     }
 
     /**
-     * Add entrega
+     * Add producto
      *
-     * @param \AppBundle\Entity\Entrega $entrega
+     * @param \AppBundle\Entity\Producto $producto
      *
-     * @return Tipo
+     * @return Envase
      */
-    public function addEntrega(\AppBundle\Entity\Entrega $entrega)
+    public function addProducto(\AppBundle\Entity\Producto $producto)
     {
-        $this->entregas[] = $entrega;
+        $this->productos[] = $producto;
 
         return $this;
     }
 
     /**
-     * Remove entrega
+     * Remove producto
      *
-     * @param \AppBundle\Entity\Entrega $entrega
+     * @param \AppBundle\Entity\Producto $producto
      */
-    public function removeEntrega(\AppBundle\Entity\Entrega $entrega)
+    public function removeProducto(\AppBundle\Entity\Producto $producto)
     {
-        $this->entregas->removeElement($entrega);
+        $this->productos->removeElement($producto);
     }
 
     /**
-     * Get entregas
+     * Get productos
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getEntregas()
+    public function getProductos()
     {
-        return $this->entregas;
+        return $this->productos;
     }
 }

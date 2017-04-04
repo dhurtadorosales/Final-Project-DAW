@@ -135,12 +135,18 @@ class Socio
     private $fincasArrendadas;
 
     /**
-     * @var Retirada[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Retirada", mappedBy="socio")
+     * @var Venta[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Venta", mappedBy="socio")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $retiradas;
+    private $ventas;
 
+    /**
+     * @var Liquidacion[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Liquidacion", mappedBy="socio")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $liquidaciones;
 
     /**
      * Convierte a string
@@ -158,7 +164,8 @@ class Socio
     {
         $this->fincasPropiedad = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fincasArrendadas = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->retiradas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ventas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->liquidaciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -648,36 +655,70 @@ class Socio
     }
 
     /**
-     * Add retirada
+     * Add venta
      *
-     * @param \AppBundle\Entity\Retirada $retirada
+     * @param \AppBundle\Entity\Venta $venta
      *
      * @return Socio
      */
-    public function addRetirada(\AppBundle\Entity\Retirada $retirada)
+    public function addVenta(\AppBundle\Entity\Venta $venta)
     {
-        $this->retiradas[] = $retirada;
+        $this->ventas[] = $venta;
 
         return $this;
     }
 
     /**
-     * Remove retirada
+     * Remove venta
      *
-     * @param \AppBundle\Entity\Retirada $retirada
+     * @param \AppBundle\Entity\Venta $venta
      */
-    public function removeRetirada(\AppBundle\Entity\Retirada $retirada)
+    public function removeVenta(\AppBundle\Entity\Venta $venta)
     {
-        $this->retiradas->removeElement($retirada);
+        $this->ventas->removeElement($venta);
     }
 
     /**
-     * Get retiradas
+     * Get ventas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRetiradas()
+    public function getVentas()
     {
-        return $this->retiradas;
+        return $this->ventas;
+    }
+
+    /**
+     * Add liquidacione
+     *
+     * @param \AppBundle\Entity\Liquidacion $liquidacione
+     *
+     * @return Socio
+     */
+    public function addLiquidacione(\AppBundle\Entity\Liquidacion $liquidacione)
+    {
+        $this->liquidaciones[] = $liquidacione;
+
+        return $this;
+    }
+
+    /**
+     * Remove liquidacione
+     *
+     * @param \AppBundle\Entity\Liquidacion $liquidacione
+     */
+    public function removeLiquidacione(\AppBundle\Entity\Liquidacion $liquidacione)
+    {
+        $this->liquidaciones->removeElement($liquidacione);
+    }
+
+    /**
+     * Get liquidaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLiquidaciones()
+    {
+        return $this->liquidaciones;
     }
 }
