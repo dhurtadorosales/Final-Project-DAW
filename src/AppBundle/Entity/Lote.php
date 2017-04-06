@@ -31,11 +31,11 @@ class Lote
     private $cantidad;
 
     /**
-     * @var Amasada[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Amasada", mappedBy="lote")
+     * @var Partida[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partida", mappedBy="lote")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $amasadas;
+    private $partidas;
 
     /**
      * @var Aceite
@@ -63,7 +63,7 @@ class Lote
      */
     public function __construct()
     {
-        $this->amasadas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->partidas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->productos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -126,37 +126,37 @@ class Lote
     }
 
     /**
-     * Add amasada
+     * Add partida
      *
-     * @param \AppBundle\Entity\Amasada $amasada
+     * @param \AppBundle\Entity\Partida $partida
      *
      * @return Lote
      */
-    public function addAmasada(\AppBundle\Entity\Amasada $amasada)
+    public function addPartida(\AppBundle\Entity\Partida $partida)
     {
-        $this->amasadas[] = $amasada;
+        $this->partidas[] = $partida;
 
         return $this;
     }
 
     /**
-     * Remove amasada
+     * Remove partida
      *
-     * @param \AppBundle\Entity\Amasada $amasada
+     * @param \AppBundle\Entity\Partida $partida
      */
-    public function removeAmasada(\AppBundle\Entity\Amasada $amasada)
+    public function removePartida(\AppBundle\Entity\Partida $partida)
     {
-        $this->amasadas->removeElement($amasada);
+        $this->partidas->removeElement($partida);
     }
 
     /**
-     * Get amasadas
+     * Get partidas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAmasadas()
+    public function getPartidas()
     {
-        return $this->amasadas;
+        return $this->partidas;
     }
 
     /**

@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Amasada
+ * Class Partida
  * @ORM\Entity()
  */
-class Amasada
+class Partida
 {
     /**
      * @var int
@@ -32,14 +32,14 @@ class Amasada
 
     /**
      * @var Entrega[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="amasada")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="partida")
      * @ORM\JoinColumn(nullable=true)
      */
     private $entregas;
 
     /**
      * @var Lote
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="amasadas")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="partidas")
      * @ORM\JoinColumn(nullable=false)
      */
     private $lote;
@@ -68,7 +68,7 @@ class Amasada
      *
      * @param \DateTime $fechaFabricacion
      *
-     * @return Amasada
+     * @return Partida
      */
     public function setFechaFabricacion($fechaFabricacion)
     {
@@ -92,7 +92,7 @@ class Amasada
      *
      * @param integer $cantidad
      *
-     * @return Amasada
+     * @return Partida
      */
     public function setCantidad($cantidad)
     {
@@ -116,7 +116,7 @@ class Amasada
      *
      * @param \AppBundle\Entity\Entrega $entrega
      *
-     * @return Amasada
+     * @return Partida
      */
     public function addEntrega(\AppBundle\Entity\Entrega $entrega)
     {
@@ -150,7 +150,7 @@ class Amasada
      *
      * @param \AppBundle\Entity\Lote $lote
      *
-     * @return Amasada
+     * @return Partida
      */
     public function setLote(\AppBundle\Entity\Lote $lote)
     {

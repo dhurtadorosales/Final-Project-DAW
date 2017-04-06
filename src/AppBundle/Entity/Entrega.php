@@ -74,11 +74,11 @@ class Entrega
     private $procedencia;
 
     /**
-     * @var Amasada
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Amasada", inversedBy="entregas")
+     * @var Partida
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Partida", inversedBy="entregas")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $amasada;
+    private $partida;
 
     /**
      * @var Finca
@@ -86,8 +86,6 @@ class Entrega
      * @ORM\JoinColumn(nullable=false)
      */
     private $finca;
-
-
 
     /**
      * Get id
@@ -316,27 +314,27 @@ class Entrega
     }
 
     /**
-     * Set amasada
+     * Set partida
      *
-     * @param \AppBundle\Entity\Amasada $amasada
+     * @param \AppBundle\Entity\Partida $partida
      *
      * @return Entrega
      */
-    public function setAmasada(\AppBundle\Entity\Amasada $amasada)
+    public function setPartida(\AppBundle\Entity\Partida $partida)
     {
-        $this->amasada = $amasada;
+        $this->partida = $partida;
 
         return $this;
     }
 
     /**
-     * Get amasada
+     * Get partida
      *
-     * @return \AppBundle\Entity\Amasada
+     * @return \AppBundle\Entity\Partida
      */
-    public function getAmasada()
+    public function getPartida()
     {
-        return $this->amasada;
+        return $this->partida;
     }
 
     /**
