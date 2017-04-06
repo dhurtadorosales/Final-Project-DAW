@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% trans_default_domain 'nav' %}
+{% trans_default_domain 'layout' %}
 {% block body %}
     {% set ruta = app.request.get('_route') %}
     {% block header %}
@@ -15,13 +15,13 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    <i class="fa fa-sign-out"></i> Finalizar Sesión
+                                    <i class="fa fa-sign-out"></i> {{ 'layout.finalizaSesion'|trans }}
                                 </a>
                             </li>
                         {% else %}
                         <li>
                             <a href="{{ path('entrar') }}">
-                                <i class="fa fa-sign-in"></i> Iniciar Sesión
+                                <i class="fa fa-sign-in"></i> {{ 'layout.iniciarSesion'|trans }}
                             </a>
                         </li>
                         {% endif %}
@@ -44,10 +44,10 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">Español</a>
+                                    <a href="#">{{ 'layout.espanol'|trans }}</a>
                                 </li>
                                 <li>
-                                    <a href="#">Inglés</a>
+                                    <a href="#">{{ 'layout.ingles'|trans }}</a>
                                 </li>
                             </ul>
                         </li>
@@ -58,7 +58,7 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <input class="form-control mr-sm-2" type="text" placeholder="Buscar" id="tbBuscar">
+                                    <input class="form-control mr-sm-2" type="text" placeholder="{{ 'layout.buscar'|trans }}" id="tbBuscar">
                                 </li>
                             </ul>
                         </li>
@@ -83,33 +83,45 @@
                     <div class="collapse navbar-collapse" id="navbar-main">
                         <ul class="nav navbar-nav navbar-right">
                             <li {% if ruta == 'inicio' %} class="active" {% endif %}>
-                                <a href="#">Inicio</a>
+                                <a href="#">{{ 'layout.inicio'|trans }}</a>
                             </li>
                             <li class="dropdown desplegable">
-                                <a href="#">{{ 'nav.quienessomos'|trans }}</a>
+                                <a href="#">{{ 'layout.quienesSomos'|trans }}</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <p>Descripción del proyecto</p>
+                                        <p>{{ 'layout.descripcion'|trans }}</p>
                                     </li>
                                 </ul>
                             </li>
                             <li class="dropdown desplegable">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Nuestros productos</a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
                                 <ul class="dropdown-menu">
-                                   {# {% for item in aceites %} #}
-                                        <li><a href="#">{#{{ item }}#} Producto</a></li>
+                                        <li><a href="#">{{ 'layout.extra'|trans }}</a></li>
                                         <li class="divider"></li>
-                                    {#{% endfor %}#}
+                                        <li><a href="#">{{ 'layout.virgen'|trans }}</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">{{ 'layout.lampante'|trans }}</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown desplegable">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.variedades'|trans }}</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Picual</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Alberquina</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Gordal</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Hojiblanca</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Lechín</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="#">Venta online</a>
+                                <a href="#">{{ 'layout.venta'|trans }}</a>
                             </li>
                             <li>
-                                <a href="#">Contacto</a>
-                            </li>
-                            <li>
-                                <a href="#">Dónde encontrarnos</a>
+                                <a href="#">{{ 'layout.contacto'|trans }}</a>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right navOculto">
@@ -129,10 +141,10 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="#">Español</a>
+                                        <a href="#">{{ 'layout.espanol'|trans }}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Inglés</a>
+                                        <a href="#">{{ 'layout.ingles'|trans }}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -142,7 +154,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <input class="form-control mr-sm-2" type="text" placeholder="Buscar" id="tbBuscar">
+                                        <input class="form-control mr-sm-2" type="text" id="tbBuscar">
                                     </li>
                                 </ul>
                             </li>
@@ -162,12 +174,12 @@
             <ul class="nav navbar-nav navbar-left">
                 <li>
                     <div>IES ORETANIA</div>
-                    <div>Autor: Diego Hurtado Rosales</div>
+                    <div>{{ 'layout.autor'|trans }}: Diego Hurtado Rosales</div>
                 </li>
             </ul>
             <ul class="nav navbar navbar-right">
                 <li>
-                    <a href="#">Ir arriba</a>
+                    <a href="#">{{ 'layout.arriba'|trans }}</a>
                 </li>
             </ul>
             </div>

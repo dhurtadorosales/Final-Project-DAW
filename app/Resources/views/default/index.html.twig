@@ -1,9 +1,9 @@
 {% extends 'layout.html.twig' %}
-
+{% trans_default_domain 'layout' %}
 {% block title %}Inicio{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="/carrusel.css">
+    <link rel="stylesheet" href="{{ asset('carrusel.css') }}">
 {% endblock %}
 
 {% block aside %}
@@ -24,11 +24,11 @@
                         <div class="header-text hidden-xs">
                             <div class="col-md-12 text-center">
                                 <h2>
-                                    <span>El aceite de oliva es... <strong>VIDA</strong></span>
+                                    <span>{{ 'inicio.titulo'|trans }} <strong>{{ 'inicio.strong'|trans }}</strong></span>
                                 </h2>
                                 <br>
                                 <h3>
-                                    <span>Recomendado en todas las dietas</span>
+                                    <span>{{ 'inicio.subtitulo'|trans }}</span>
                                 </h3>
                                 <br>
                             </div>
@@ -68,21 +68,21 @@
     <ul class="listaEnlacesExteriores">
         <li>
             <a href="http://www.asaja.com/" target="_blank">
-                <img src="{{ asset('images/asaja.png') }}" alt="Asaja" title="ir a la página de Asaja">
+                <img src="{{ asset('images/asaja.png') }}" alt="Asaja" title="{{ 'inicio.asaja'|trans }}">
             </a>
         </li>
         <li>
             <a href="http://www.juntadeandalucia.es/organismos/agriculturapescaydesarrollorural.html" target="_blank">
                 <img src="{{ asset('images/consejeria.png') }}"
                      alt="Consejería de Agricultura, Pesca y Desarrollo Rural"
-                     title="ir a la página de Consejería de Agricultura, Pesca y Desarrollo Rural">
+                     title="{{ 'inicio.junta'|trans }}">
             </a>
         </li>
         <li>
             <a href="http://www.mapama.gob.es/es/" target="_blank">
                 <img src="{{ asset('images/ministerio.gif') }}"
                      alt="Ministerio de Agricultura, Pesca y Alimentación"
-                     title="ir a la página de Ministerio de Agricultura, Pesca y Alimentación">
+                     title="{{ 'inicio.ministerio'|trans }}">
             </a>
         </li>
     </ul>

@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Socios[is{% endblock %}
+{% block title %}Socios{% endblock %}
 
 {% block section %}
     <h1>Listado de socios</h1>
@@ -49,13 +49,17 @@
                     {% endif %} - {{socio.localidad}} ({{ socio.provincia }})
                 </td>
                 <td>{{ socio.telefono}}</td>
-                <td>0</td>
+                <td>{% set sum = 0 %}
+                    {% for i in socio.fincasPropiedad %}
+                        {% set sum = sum + i.numPlantas %}
+                    {% endfor %}{{ sum }}
+            </td>
                 <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
                 <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socios[i">
+                    <a href="https://www1.sedecatastro.gob.es/OVCFrames.aspx?TIPO=consulta" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socios">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                     </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socios[i">
+                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socios">
                         <i class="fa fa-pencil"></i>
                     </a>
                     <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
@@ -65,12 +69,5 @@
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-    <table>
-        <tr>
-        <th>socio</th>
-        <th>numero</th>
-        <tr></tr>
     </table>
 {% endblock %}
