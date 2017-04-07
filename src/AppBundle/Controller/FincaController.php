@@ -28,7 +28,7 @@ class FincaController extends Controller
     }
 
     /**
-     * @Route("/fincas/listar/{lote}", name="fincas_listar_lote")
+     * @Route("/fincas/listar/lotes/{lote}", name="fincas_listar_lote")
      */
     public function listarPorLoteAction(Lote $lote)
     {

@@ -16,7 +16,7 @@
         <tr>
             <th>Nº</th>
             <th>Fecha</th>
-            <th>Cantidad</th>
+            <th>kg aceite</th>
             <th>Procedencia</th>
             <th>Entregas</th>
             <th></th>
@@ -28,7 +28,7 @@
                 <td>{{ partida.id }}</td>
                 <td>{{ partida.fechaFabricacion|date('d/m/Y') }}</td>
                 <td>{{ partida.cantidad }}</td>
-                <td>{{ partida.entregas[1].procedencia.denominacion }}</td>
+                <td>{{ partida.entregas[0].procedencia.denominacion }}</td>
                 <td>
                     <select name="slProcedencias" id="slProcedencias">
                         <option value="0"></option>
