@@ -77,11 +77,11 @@ class EntregaController extends Controller
             ->getFincas();
 
         $entregas = [
-            [0, "2017-03-28", "16:15", "16:20", 1500, 18, 0, null, 1, $procedencias[0], null, $fincas[0]],
-            [0, "2017-03-28", "16:20", "16:25", 500, 23, 0.10, "Muy sucia", 1, $procedencias[1], null, $fincas[0]],
-            [0, "2017-03-28", "16:25", "16:30", 200, 25, 0, null, 2, $procedencias[1], null, $fincas[2]],
-            [0, "2017-03-28", "16:30", "17:03", 1000, 22, 0.10, "Atasco de tolva", 3, $procedencias[1], null, $fincas[1]],
-            [0, "2017-03-28", "17:07", "17:20", 900, 18, 0, null, 3, $procedencias[0], null, $fincas[2]]
+            [0, "2017-03-28", "16:15", "16:20", 1500, 0.18, 0, null, 1, $procedencias[0], null, $fincas[0]],
+            [0, "2017-03-28", "16:20", "16:25", 500, 0.23, 0.10, "Muy sucia", 1, $procedencias[1], null, $fincas[0]],
+            [0, "2017-03-28", "16:25", "16:30", 200, 0.25, 0, null, 2, $procedencias[1], null, $fincas[2]],
+            [0, "2017-03-28", "16:30", "17:03", 1000, 0.22, 0.10, "Atasco de tolva", 3, $procedencias[1], null, $fincas[1]],
+            [0, "2017-03-28", "17:07", "17:20", 900, 0.18, 0, null, 3, $procedencias[0], null, $fincas[2]]
         ];
 
         /** @var EntityManager $em */
@@ -135,6 +135,9 @@ class EntregaController extends Controller
             $partidas[0],
         ];
 
+        //array de sumas
+        $sumas = [];
+
         //Asigna partida a cada entrega
         for ($i = 0; $i < sizeof($asignaciones); $i++) {
             $em->persist($entregas[$i]);
@@ -144,25 +147,20 @@ class EntregaController extends Controller
             $em->flush();
         }
 
-        //Suma cantidad a cada partida
+        //Rellena array de sumas
         foreach ($entregas as $item) {
-            $entrega = new Entrega();
-            $em->persist($entrega);
-            $entrega
-                ->setFecha(new \DateTime($item[1]))
-                ->setHoraInicio(new \DateTime($item[2]))
-                ->setHoraFin(new \DateTime($item[3]))
-                ->setPeso($item[4])
-                ->setRendimiento($item[5])
-                ->setSancion($item[6])
-                ->setObservaciones($item[7])
-                ->setBascula($item[8])
-                ->setProcedencia($item[9])
-                ->setFinca($item[11]);
+            $suma = ($item->getPeso()) * ($item->getRendimiento());
+            array_push($sumas, $suma);
+        }
+
+        //Suma cantidad a cada partida
+        for ($i = 0; $i < sizeof($partidas); $i++) {
+            $em->persist($partidas[$i]);
+            $partidas[$i]
+                ->setCantidad($sumas[$i]);
 
             $em->flush();
         }
-
         $mensaje = 'Partidas asignadas correctamente';
 
         return $this->render('entrega/confirma.html.twig', [

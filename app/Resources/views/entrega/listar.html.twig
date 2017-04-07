@@ -33,7 +33,7 @@
                     {% else %}
                         {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
                     {% endif %}
-                    {{ pesoAceituna }}propietario:{{ entrega.finca.propietario }}   arrend:{{ entrega.finca.arrendatario }}
+                    {{ pesoAceituna }}
                 </td>
                 <td>{{ entrega.rendimiento }}</td>
                 <td>{{ pesoAceituna * entrega.rendimiento }}</td>

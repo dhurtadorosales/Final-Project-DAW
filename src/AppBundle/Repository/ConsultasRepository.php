@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Entrega;
 use AppBundle\Entity\Lote;
+use AppBundle\Entity\Partida;
 use AppBundle\Entity\Socio;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -152,10 +153,28 @@ class ConsultasRepository extends EntityRepository
             ->from('AppBundle:Entrega', 'e')
             ->join('e.finca', 'f')
             ->join('f.propietario', 'p')
-            ->join('f.arrendatario', 'a')
+            ->leftJoin('f.arrendatario', 'a')
             ->where('p = :socio')
-            ->orwhere('a = :socio')
+            ->orWhere('a = :socio')
             ->setParameter('socio', $socio)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getEntregasPartida(Partida $partida)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('e')
+            ->addSelect('p')
+            ->from('AppBundle:Entrega', 'e')
+            ->join('e.partida', 'p')
+            ->where('p = :partida')
+            ->setParameter('partida', $partida)
             ->getQuery()
             ->getResult();
 
