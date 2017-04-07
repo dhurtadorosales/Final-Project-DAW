@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Entrega;
+use AppBundle\Entity\Lote;
 use AppBundle\Entity\Socio;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -179,6 +180,36 @@ class ConsultasRepository extends EntityRepository
             ->orwhere('a = :socio')
             ->setParameter('ent', $entrega)
             ->setParameter('socio', $socio)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getLotes()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Lote', 'l')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getLoteUnico(Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Lote', 'l')
+            ->where('l.id = :lot')
+            ->setParameter('lot', $lote)
             ->getQuery()
             ->getResult();
 

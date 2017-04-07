@@ -68,7 +68,7 @@ class ClienteController extends Controller
         }
         $mensaje = 'Clientes insertados correctamente';
 
-        return $this->render('cliente/operaciones.html.twig', [
+        return $this->render('cliente/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

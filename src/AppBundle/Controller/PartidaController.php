@@ -50,7 +50,7 @@ class PartidaController extends Controller
         }
         $mensaje = 'Partidas insertadas correctamente';
 
-        return $this->render('partida/operaciones.html.twig', [
+        return $this->render('partida/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

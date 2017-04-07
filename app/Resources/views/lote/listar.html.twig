@@ -3,7 +3,7 @@
 {% block title %}Lotes{% endblock %}
 
 {% block section %}
-    <h1>Listado de depositos</h1>
+    <h1>Listado de lotes</h1>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -15,7 +15,7 @@
         <thead>
         <tr>
             <th>Lote</th>
-            <th>Amasadas</th>
+            <th>Partidas</th>
             <th>Fincas</th>
             <th></th>
         </tr>
@@ -24,10 +24,10 @@
         {% for lote in lotes %}
             <tr>
                 <td>{{ lote.id }}-{{ lote.temporada }}</td>
-                <td><select name="slAmasadas" id="slAmasadas">
+                <td><select name="slPartidas" id="slPartidas">
                         <option value="0"></option>
-                        {% for amasada in lote.amasadas %}
-                            {% for entrega in amasada.entregas %}
+                        {% for partida in lote.partidas %}
+                            {% for entrega in partida.entregas %}
                                 <option value="{{ entrega.finca.id }}" title="Propietario: {{ entrega.finca.propietario }}">{{ entrega.finca.provincia }} {{ entrega.finca.municipio }} {{ entrega.finca.sector }} {{ entrega.finca.poligono }} {{ entrega.finca.parcela }} {{ entrega.finca.idInmueble }} {{ entrega.finca.caracterControl }}</option>
                             {% endfor %}
                         {% endfor %}

@@ -106,7 +106,7 @@ class EntregaController extends Controller
         }
         $mensaje = 'Entradas insertadas correctamente';
 
-        return $this->render('entrega/operaciones.html.twig', [
+        return $this->render('entrega/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }
@@ -147,7 +147,7 @@ class EntregaController extends Controller
         }
         $mensaje = 'Partidas asignadas correctamente';
 
-        return $this->render('entrega/operaciones.html.twig', [
+        return $this->render('entrega/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

@@ -19,11 +19,8 @@ class LoteController extends Controller
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
-        $lotes = $em->createQueryBuilder()
-            ->select('l')
-            ->from('AppBundle:Lote', 'l')
-            ->getQuery()
-            ->getResult();
+        $lotes = $em->getRepository('AppBundle:Lote')
+            ->getLotes();
 
         return $this->render('lote/listar.html.twig', [
             'lotes' => $lotes
@@ -38,13 +35,8 @@ class LoteController extends Controller
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
-        $resultados = $em->createQueryBuilder()
-            ->select('l')
-            ->from('AppBundle:Lote', 'l')
-            ->where('l.id = :lot')
-            ->setParameter('lot', $lote)
-            ->getQuery()
-            ->getResult();
+        $resultados = $em->getRepository('AppBundle:Lote')
+            ->getLoteUnico();
 
         return $this->render('lote/detalle.html.twig', [
             'resultados' => $resultados
@@ -69,10 +61,49 @@ class LoteController extends Controller
             $lote
                 ->setTemporada($temporada)
                 ->setCantidad($cantidad);
-        }
-        $mensaje = 'Entradas insertadas correctamente';
 
-        return $this->render('lote/operaciones.html.twig', [
+            $em->flush();
+        }
+        $mensaje = 'Lotes insertados correctamente';
+
+        return $this->render('lote/confirma.html.twig', [
+            'mensaje' => $mensaje
+        ]);
+    }
+
+    /**
+     * @Route("/lotes/partidas/asignar", name="lotes_partidas_asignar")
+     */
+    public function partidasAsignarAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtener lotes
+        $lotes = $em->getRepository('AppBundle:Lote')
+            ->getLotes();
+
+        //Obtener partidas
+        $partidas = $em->getRepository('AppBundle:Partida')
+            ->getPartidas();
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($partidas[0]);
+        $partidas[0]
+            ->setLote($lotes[0]);
+        $em->flush();
+
+ /*       for ($i = 0; $i < sizeof($partidas); $i++) {
+            $em->persist($partidas[$i]);
+            $partidas[$i]
+                ->setLote($lotes[$i]);
+
+            $em->flush();
+        }*/
+        $mensaje = 'Partidas asignadas correctamente';
+
+        return $this->render('lote/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

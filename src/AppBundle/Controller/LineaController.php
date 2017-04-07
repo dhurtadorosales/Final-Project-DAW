@@ -73,9 +73,9 @@ class LineaController extends Controller
 
             $em->flush();
 
-        $mensaje = 'Clientes insertados correctamente';
+        $mensaje = 'Lineas insertados correctamente';
 
-        return $this->render('cliente/operaciones.html.twig', [
+        return $this->render('linea/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

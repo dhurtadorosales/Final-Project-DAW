@@ -65,7 +65,7 @@ class VentaController extends Controller
         }
         $mensaje = 'Ventas insertadas correctamente';
 
-        return $this->render('venta/operaciones.html.twig', [
+        return $this->render('venta/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }
