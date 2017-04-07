@@ -15,6 +15,7 @@
         <thead>
         <tr>
             <th>Lote</th>
+            <th>Cantidad</th>
             <th>Partidas</th>
             <th>Fincas</th>
             <th></th>
@@ -24,14 +25,25 @@
         {% for lote in lotes %}
             <tr>
                 <td>{{ lote.id }}-{{ lote.temporada }}</td>
-                <td><select name="slPartidas" id="slPartidas">
+                <td>{{ lote.cantidad }}</td>
+                <td>
+                    <select name="slPartidas" id="slPartidas">
+                        <option value="0"></option>
+                        {% for partida in lote.partidas %}
+                            <option value="{{ partida.id }}" >{{ partida.id }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                    <select name="slFincas" id="slFincas">
                         <option value="0"></option>
                         {% for partida in lote.partidas %}
                             {% for entrega in partida.entregas %}
                                 <option value="{{ entrega.finca.id }}" title="Propietario: {{ entrega.finca.propietario }}">{{ entrega.finca.provincia }} {{ entrega.finca.municipio }} {{ entrega.finca.sector }} {{ entrega.finca.poligono }} {{ entrega.finca.parcela }} {{ entrega.finca.idInmueble }} {{ entrega.finca.caracterControl }}</option>
                             {% endfor %}
                         {% endfor %}
-                    </select></td>
+                    </select>
+                </td>
                 <td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">

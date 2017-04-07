@@ -83,16 +83,25 @@ class LoteController extends Controller
         $lotes = $em->getRepository('AppBundle:Lote')
             ->getLotes();
 
+        //Obtener cantidad
+        $cantidad = $em->getRepository('AppBundle:Lote')
+            ->getLoteUnico($lotes[0]);
+
         //Obtener partidas
         $partidas = $em->getRepository('AppBundle:Partida')
             ->getPartidas();
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+        //Asigna lote a la partida
         $em->persist($partidas[0]);
         $partidas[0]
             ->setLote($lotes[0]);
         $em->flush();
+
+        //Suma cantidad al lote
+        $em->$em->persist($lotes[0]);
+        $lotes[0]
+            ->setCantidad($cantidad);
+
 
  /*       for ($i = 0; $i < sizeof($partidas); $i++) {
             $em->persist($partidas[$i]);

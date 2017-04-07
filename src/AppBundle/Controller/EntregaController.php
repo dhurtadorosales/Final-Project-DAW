@@ -135,9 +135,7 @@ class EntregaController extends Controller
             $partidas[0],
         ];
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
+        //Asigna partida a cada entrega
         for ($i = 0; $i < sizeof($asignaciones); $i++) {
             $em->persist($entregas[$i]);
             $entregas[$i]
@@ -145,6 +143,26 @@ class EntregaController extends Controller
 
             $em->flush();
         }
+
+        //Suma cantidad a cada partida
+        foreach ($entregas as $item) {
+            $entrega = new Entrega();
+            $em->persist($entrega);
+            $entrega
+                ->setFecha(new \DateTime($item[1]))
+                ->setHoraInicio(new \DateTime($item[2]))
+                ->setHoraFin(new \DateTime($item[3]))
+                ->setPeso($item[4])
+                ->setRendimiento($item[5])
+                ->setSancion($item[6])
+                ->setObservaciones($item[7])
+                ->setBascula($item[8])
+                ->setProcedencia($item[9])
+                ->setFinca($item[11]);
+
+            $em->flush();
+        }
+
         $mensaje = 'Partidas asignadas correctamente';
 
         return $this->render('entrega/confirma.html.twig', [

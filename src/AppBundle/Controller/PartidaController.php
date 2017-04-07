@@ -39,6 +39,7 @@ class PartidaController extends Controller
             [0, "2017-03-28", 0, null]
         ];
 
+        //Crea partida
         foreach ($partidas as $item) {
             $partida = new Partida();
             $em->persist($partida);
@@ -48,6 +49,7 @@ class PartidaController extends Controller
 
             $em->flush();
         }
+
         $mensaje = 'Partidas insertadas correctamente';
 
         return $this->render('partida/confirma.html.twig', [
