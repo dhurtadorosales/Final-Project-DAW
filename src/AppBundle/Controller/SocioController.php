@@ -11,30 +11,6 @@ class SocioController extends Controller
     /**
      * @Route("/socios/listar", name="socios_listar")
      */
- /*   public function indexAction()
-    {
-        /** @var EntityManager $em */
-  /*      $em=$this->getDoctrine()->getManager();
-
-        $socios = $em->createQueryBuilder()
-            ->select('s')
-            ->from('AppBundle:Socio', 's')
-            ->getQuery()
-            ->getResult();
-
-        $numPlantas = $em->createQueryBuilder()
-            ->select('SUM(f.numPlantas)')
-            ->from('AppBundle:Finca', 'f')
-            ->groupBy('f.propietario')
-            ->getQuery()
-            ->getScalarResult();
-
-        return $this->render('socio/listar.html.twig', [
-            'socios' => $socios,
-            'numPlantas' => $numPlantas
-        ]);
-    }*/
-
     public function indexAction()
     {
         /** @var EntityManager $em */
@@ -46,5 +22,4 @@ class SocioController extends Controller
             'socios' => $socios
         ]);
     }
-
 }

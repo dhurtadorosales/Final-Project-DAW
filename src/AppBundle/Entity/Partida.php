@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Partida
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
  */
 class Partida
 {
@@ -40,7 +40,7 @@ class Partida
     /**
      * @var Lote
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="partidas")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $lote;
 

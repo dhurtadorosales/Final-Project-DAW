@@ -26,17 +26,19 @@
         </thead>
         <tbody>
             <tr>
-                <td>{{ resultado[0].id }}</td>
-                <td>{% if socio.id == resultado[0].finca.propietario.id %}
-                        {{ resultado[0].peso * (resultado[0].finca.partPropietario / 100) }}
+                <td>{{ entrega.id }}</td>
+                <td>
+                    {% if socio.id == entrega.finca.propietario.id %}
+                        {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
                     {% else %}
-                        {{ resultado[0].peso * (resultado[0].finca.partArrend) }}
+                        {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
                     {% endif %}
+                    {{ pesoAceituna }}
                 </td>
-                <td>{{ resultado[0].rendimiento }}</td>
-                <td>{{ resultado[0].peso * (resultado[0].rendimiento / 100) }}</td>
-                <td>{{ (resultado[0].peso * (resultado[0].rendimiento / 100)) * (resultado[0].sancion /100) }}</td>
-                <td>{{ resultado[0].peso * (resultado[0].rendimiento / 100) - (resultado[0].peso * (resultado[0].rendimiento / 100)) * (resultado[0].sancion /100) }}</td>
+                <td>{{ entrega.rendimiento }}</td>
+                <td>{{ pesoAceituna * entrega.rendimiento }}</td>
+                <td>{{ pesoAceituna * entrega.rendimiento * entrega.sancion }}</td>
+                <td>{{ (pesoAceituna * entrega.rendimiento) - (pesoAceituna * entrega.rendimiento * entrega.sancion) }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

@@ -13,26 +13,29 @@ use Symfony\Component\HttpFoundation\Request;
 class EntregaController extends Controller
 {
     /**
-     * @Route("/entregas/listar/{socio}", name="entregas_listar")
+     * @Route("/entregas/listar", name="entregas_listar")
      */
-    public function indexAction(Socio $socio)
+    public function listarAction()
     {
         /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $entregas = $em->getRepository('AppBundle:Entrega')
+            ->getEntregas();
 
-        $entregas = $em->createQueryBuilder()
-            ->select('e')
-            ->addSelect('f')
-            ->addSelect('p')
-            ->from('AppBundle:Entrega', 'e')
-            ->join('e.finca', 'f')
-            ->join('f.propietario', 'p')
-            ->join('f.arrendatario', 'a')
-            ->where('p = :socio')
-            ->orwhere('a = :socio')
-            ->setParameter('socio', $socio)
-            ->getQuery()
-            ->getResult();
+        return $this->render('entrega/listar.html.twig', [
+            'entregas' => $entregas,
+        ]);
+    }
+
+    /**
+     * @Route("/entregas/listar/socio/{socio}", name="entregas_listar_socio")
+     */
+    public function listarPorSocioAction(Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $entregas = $em->getRepository('AppBundle:Entrega')
+            ->getEntregasSocio($socio);
 
         return $this->render('entrega/listar.html.twig', [
             'entregas' => $entregas,
@@ -47,26 +50,13 @@ class EntregaController extends Controller
     {
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
-
-        $resultado = $em->createQueryBuilder()
-            ->select('e')
-            ->addSelect('f')
-            ->addSelect('p')
-            ->from('AppBundle:Entrega', 'e')
-            ->join('e.finca', 'f')
-            ->join('f.propietario', 'p')
-            ->join('f.arrendatario', 'a')
-            ->where('e.id = :ent')
-            ->andwhere('p = :socio')
-            ->orwhere('a = :socio')
-            ->setParameter('ent', $entrega)
-            ->setParameter('socio', $socio)
-            ->getQuery()
-            ->getResult();
+        $resultado = $em->getRepository('AppBundle:Entrega')
+            ->getEntregasDetalle($entrega, $socio);
 
         return $this->render('entrega/detalle.html.twig', [
             'resultado' => $resultado,
-            'socio' => $socio
+            'socio' => $socio,
+            'entrega' => $entrega
         ]);
     }
 
@@ -76,38 +66,22 @@ class EntregaController extends Controller
     public function insertarAction()
     {
         /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        $procedencias = $em->createQueryBuilder()
-            ->select('p')
-            ->from('AppBundle:Procedencia', 'p')
-            ->getQuery()
-            ->getResult();
+        //Obtención de procedencias
+        $procedencias = $em->getRepository('AppBundle:Procedencia')
+            ->getProcedencias();
 
-        /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
-
-        $amasadas = $em->createQueryBuilder()
-            ->select('a')
-            ->from('AppBundle:Amasada', 'a')
-            ->getQuery()
-            ->getResult();
-
-        /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
-
-        $fincas = $em->createQueryBuilder()
-            ->select('f')
-            ->from('AppBundle:Finca', 'f')
-            ->getQuery()
-            ->getResult();
+        //Obtención de fincas
+        $fincas = $em->getRepository('AppBundle:Finca')
+            ->getFincas();
 
         $entregas = [
-            [0, "2017-03-28", "16:15", "16:20", 1500, 18, 0, null, 1, $procedencias[0], $amasadas[0], $fincas[0]],
-            [0, "2017-03-28", "16:20", "16:25", 500, 23, 10, "Muy sucia", 1, $procedencias[1], $amasadas[2], $fincas[0]],
-            [0, "2017-03-28", "16:25", "16:30", 200, 25, 0, null, 2, $procedencias[1], $amasadas[2], $fincas[2]],
-            [0, "2017-03-28", "16:30", "17:03", 1000, 22, 10, "Atasco de tolva", 3, $procedencias[1], $amasadas[2], $fincas[1]],
-            [0, "2017-03-28", "17:07", "17:20", 900, 18, 0, null, 3, $procedencias[0], $amasadas[0], $fincas[2]]
+            [0, "2017-03-28", "16:15", "16:20", 1500, 18, 0, null, 1, $procedencias[0], null, $fincas[0]],
+            [0, "2017-03-28", "16:20", "16:25", 500, 23, 0.10, "Muy sucia", 1, $procedencias[1], null, $fincas[0]],
+            [0, "2017-03-28", "16:25", "16:30", 200, 25, 0, null, 2, $procedencias[1], null, $fincas[2]],
+            [0, "2017-03-28", "16:30", "17:03", 1000, 22, 0.10, "Atasco de tolva", 3, $procedencias[1], null, $fincas[1]],
+            [0, "2017-03-28", "17:07", "17:20", 900, 18, 0, null, 3, $procedencias[0], null, $fincas[2]]
         ];
 
         /** @var EntityManager $em */
@@ -117,21 +91,61 @@ class EntregaController extends Controller
             $entrega = new Entrega();
             $em->persist($entrega);
             $entrega
-                ->setFecha($item[1])
-                ->setHoraInicio($item[2])
-                ->setHoraFin($item[3])
+                ->setFecha(new \DateTime($item[1]))
+                ->setHoraInicio(new \DateTime($item[2]))
+                ->setHoraFin(new \DateTime($item[3]))
                 ->setPeso($item[4])
                 ->setRendimiento($item[5])
                 ->setSancion($item[6])
                 ->setObservaciones($item[7])
                 ->setBascula($item[8])
                 ->setProcedencia($item[9])
-                ->setAmasada($item[10])
                 ->setFinca($item[11]);
 
             $em->flush();
         }
         $mensaje = 'Entradas insertadas correctamente';
+
+        return $this->render('entrega/operaciones.html.twig', [
+            'mensaje' => $mensaje
+        ]);
+    }
+
+    /**
+     * @Route("/entregas/asignar/partida", name="entregas_asignar_partida")
+     */
+    public function asignarPartidaAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtención de procedencias
+        $partidas = $em->getRepository('AppBundle:Partida')
+            ->getPartidas();
+
+        //Obtención de entregas
+        $entregas = $em->getRepository('AppBundle:Entrega')
+            ->getEntregas();
+
+        $asignaciones = [
+            $partidas[0],
+            $partidas[1],
+            $partidas[2],
+            $partidas[2],
+            $partidas[0],
+        ];
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        for ($i = 0; $i < sizeof($asignaciones); $i++) {
+            $em->persist($entregas[$i]);
+            $entregas[$i]
+                ->setPartida($asignaciones[$i]);
+
+            $em->flush();
+        }
+        $mensaje = 'Partidas asignadas correctamente';
 
         return $this->render('entrega/operaciones.html.twig', [
             'mensaje' => $mensaje

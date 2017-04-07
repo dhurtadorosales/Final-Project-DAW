@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Entrega
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
  */
 class Entrega
 {
@@ -76,7 +76,7 @@ class Entrega
     /**
      * @var Partida
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Partida", inversedBy="entregas")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $partida;
 

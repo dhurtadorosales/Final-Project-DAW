@@ -14,16 +14,28 @@ class FincaController extends Controller
     /**
      * @Route("/fincas/listar", name="fincas_listar")
      */
-    public function indexAction()
+    public function listarAction()
     {
         /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $fincas = $em->getRepository('AppBundle:Finca')
+            ->getFincas();
 
-        $fincas = $em->createQueryBuilder()
-            ->select('f')
-            ->from('AppBundle:Finca', 'f')
-            ->getQuery()
-            ->getResult();
+        return $this->render('finca/listar.html.twig', [
+            'fincas' => $fincas
+        ]);
+
+    }
+
+    /**
+     * @Route("/fincas/listar/{lote}", name="fincas_listar_lote")
+     */
+    public function listarPorLoteAction(Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $fincas = $em->getRepository('AppBundle:Finca')
+            ->getFincasPorLote($lote);
 
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
@@ -31,28 +43,29 @@ class FincaController extends Controller
     }
 
     /**
-     * @Route("/fincas/listar/{lote}", name="fincas_listar_lote")
+     * @Route("/fincas/listar/propietario/{socio}", name="fincas_listar_propietario")
      */
-    public function Action(Lote $lote)
+    public function listarPorPropietarioAction(Socio $socio)
     {
         /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $fincas = $em->getRepository('AppBundle:Finca')
+            ->getFincasPorPropietario($socio);
 
-        $fincas = $em->createQueryBuilder()
-            ->select('f')
-            ->addSelect('e')
-            ->addSelect('a')
-            ->addSelect('d')
-            ->addSelect('l')
-            ->from('AppBundle:Finca', 'f')
-            ->join('f.entregas', 'e')
-            ->join('e.amasada', 'a')
-            ->join('a.deposito', 'd')
-            ->join('d.lotes', 'l')
-            ->where('l = :lot')
-            ->setParameter('lot', $lote)
-            ->getQuery()
-            ->getResult();
+        return $this->render('finca/listar.html.twig', [
+            'fincas' => $fincas
+        ]);
+    }
+
+    /**
+     * @Route("/fincas/listar/arrendatario/{socio}", name="fincas_listar_arrendatario")
+     */
+    public function listarPorArrendatarioAction(Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $fincas = $em->getRepository('AppBundle:Finca')
+            ->getFincasPorArrendatario($socio);
 
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas

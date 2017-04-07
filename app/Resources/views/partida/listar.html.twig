@@ -1,9 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Amasadas{% endblock %}
+{% block title %}Partidas{% endblock %}
 
 {% block section %}
-    <h1>Listado de amasadas</h1>
+    <h1>Listado de partidas</h1>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -17,19 +17,26 @@
             <th>Nº</th>
             <th>Fecha</th>
             <th>Cantidad</th>
-            <th>Aceite</th>
+            <th>Procedencia</th>
             <th>Entregas</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        {% for amasada in amasadas %}
+        {% for partida in partidas %}
             <tr>
-                <td>{{ amasada.id }}</td>
-                <td>{{ amasada.fechaFabricacion|date('d/m/Y') }}</td>
-                <td>{{ amasada.cantidad }}</td>
-                <td></td>
-                <td></td>
+                <td>{{ partida.id }}</td>
+                <td>{{ partida.fechaFabricacion|date('d/m/Y') }}</td>
+                <td>{{ partida.cantidad }}</td>
+                <td>{{ partida.entregas[1].procedencia.denominacion }}</td>
+                <td>
+                    <select name="slProcedencias" id="slProcedencias">
+                        <option value="0"></option>
+                        {% for entrega in partida.entregas %}
+                            <option value="{{ entrega.finca.id }}" title="Detalles de la entrega"><a href="#">{{ entrega.id }}</a></option>
+                        {% endfor %}
+                    </select></td>
+                </td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

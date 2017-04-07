@@ -27,16 +27,18 @@
         {% for entrega in entregas %}
             <tr>
                 <td>{{ entrega.id }}</td>
-                <td>{% if socio.id == entrega.finca.propietario.id %}
-                        {{ entrega.peso * (entrega.finca.partPropietario / 100) }}
+                <td>
+                    {% if socio.id == entrega.finca.propietario.id %}
+                        {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
                     {% else %}
-                        {{ entrega.peso * (entrega.finca.partArrend) }}
+                        {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
                     {% endif %}
+                    {{ pesoAceituna }}propietario:{{ entrega.finca.propietario }}   arrend:{{ entrega.finca.arrendatario }}
                 </td>
                 <td>{{ entrega.rendimiento }}</td>
-                <td>{{ entrega.peso * (entrega.rendimiento / 100) }}</td>
-                <td>{{ (entrega.peso * (entrega.rendimiento / 100)) * (entrega.sancion /100) }}</td>
-                <td>{{ entrega.peso * (entrega.rendimiento / 100) - (entrega.peso * (entrega.rendimiento / 100)) * (entrega.sancion /100) }}</td>
+                <td>{{ pesoAceituna * entrega.rendimiento }}</td>
+                <td>{{ pesoAceituna * entrega.rendimiento * entrega.sancion }}</td>
+                <td>{{ (pesoAceituna * entrega.rendimiento) - (pesoAceituna * entrega.rendimiento * entrega.sancion) }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

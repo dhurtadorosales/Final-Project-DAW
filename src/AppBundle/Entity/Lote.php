@@ -40,6 +40,7 @@ class Lote
     /**
      * @var Aceite
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceite", inversedBy="lotes")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $aceite;
 
