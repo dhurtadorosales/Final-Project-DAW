@@ -37,8 +37,8 @@ class Entrega
     private $horaFin;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
+     * @var float
+     * @ORM\Column(type="float", precision=2)
      */
     private $peso;
 
@@ -49,8 +49,8 @@ class Entrega
     private $rendimiento;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer", nullable=true)
+     * @var float
+     * @ORM\Column(type="integer", precision=2, nullable=true)
      */
     private $sancion;
 

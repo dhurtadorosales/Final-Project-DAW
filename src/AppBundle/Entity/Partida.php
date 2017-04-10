@@ -25,8 +25,8 @@ class Partida
     private $fechaFabricacion;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer", nullable=true)
+     * @var float
+     * @ORM\Column(type="float", precision=2, nullable=true)
      */
     private $cantidad;
 

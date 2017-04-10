@@ -18,6 +18,7 @@
             <th>Fecha</th>
             <th>kg aceite</th>
             <th>Procedencia</th>
+            <th>Lote</th>
             <th>Entregas</th>
             <th></th>
         </tr>
@@ -28,9 +29,16 @@
                 <td>{{ partida.id }}</td>
                 <td>{{ partida.fechaFabricacion|date('d/m/Y') }}</td>
                 <td>{{ partida.cantidad }}</td>
-                <td>{{ partida.entregas[0].procedencia.denominacion }}</td>
+                <td>{% if partida.cantidad != 0 %}
+                        {{ partida.entregas[0].procedencia.denominacion }}
+                    {% endif %}
+                </td>
+                <td>{% if partida.lote.id != null %}
+                        {{ partida.lote.id }}-{{ partida.lote.temporada }}
+                    {% endif %}
+                </td>
                 <td>
-                    <select name="slProcedencias" id="slProcedencias">
+                    <select name="slEntregas" id="slEntregas">
                         <option value="0"></option>
                         {% for entrega in partida.entregas %}
                             <option value="{{ entrega.finca.id }}" title="Detalles de la entrega"><a href="#">{{ entrega.id }}</a></option>

@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
+use AppBundle\Entity\Partida;
 use AppBundle\Entity\Socio;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,7 +30,7 @@ class LoteController extends Controller
     }
 
     /**
-     * @Route("/lotes/listar/{lote}", name="lotes_listar_lote")
+     * @Route("/lotes/listar/lote/{lote}", name="lotes_listar_lote")
      */
     public function listarFincasAction(Lote $lote)
     {
@@ -72,45 +74,55 @@ class LoteController extends Controller
     }
 
     /**
-     * @Route("/lotes/partidas/asignar", name="lotes_partidas_asignar")
+     * @Route("/lotes/partidas/asignar/{partida}/{lote}", name="lotes_partidas_asignar")
      */
-    public function partidasAsignarAction()
+    public function partidasAsignarAction(Partida $partida, Lote $lote)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtener lotes
-        $lotes = $em->getRepository('AppBundle:Lote')
-            ->getLotes();
-
-        //Obtener cantidad
-        $cantidad = $em->getRepository('AppBundle:Lote')
-            ->getLoteUnico($lotes[0]);
-
-        //Obtener partidas
-        $partidas = $em->getRepository('AppBundle:Partida')
-            ->getPartidas();
-
-        //Asigna lote a la partida
-        $em->persist($partidas[0]);
-        $partidas[0]
-            ->setLote($lotes[0]);
+        //Asigna la partida al lote
+        $em->persist($partida);
+        $partida
+            ->setLote($lote);
         $em->flush();
 
+        //Obtener cantidad del lote
+        $cantidadLote = $lote->getCantidad();
+
+        //Obtener cantidad de la partida
+        $cantidadPartida = $partida->getCantidad();
+
         //Suma cantidad al lote
-        $em->$em->persist($lotes[0]);
-        $lotes[0]
-            ->setCantidad($cantidad);
+        $cantidadNueva = $cantidadLote + $cantidadPartida;
 
+        $em->persist($lote);
+        $lote
+            ->setCantidad($cantidadNueva);
+        $em->flush();
 
- /*       for ($i = 0; $i < sizeof($partidas); $i++) {
-            $em->persist($partidas[$i]);
-            $partidas[$i]
-                ->setLote($lotes[$i]);
+        $mensaje = 'Partida asignada correctamente';
 
-            $em->flush();
-        }*/
-        $mensaje = 'Partidas asignadas correctamente';
+        return $this->render('lote/confirma.html.twig', [
+            'mensaje' => $mensaje
+        ]);
+    }
+
+    /**
+     * @Route("/lotes/aceite/asignar/{aceite}/{lote}", name="lotes_aceite_asignar")
+     */
+    public function aceiteAsignarAction(Aceite $aceite, Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Asigna el aceite al lote
+        $em->persist($lote);
+        $lote
+            ->setAceite($aceite);
+        $em->flush();
+
+        $mensaje = 'Aceite asignado correctamente';
 
         return $this->render('lote/confirma.html.twig', [
             'mensaje' => $mensaje

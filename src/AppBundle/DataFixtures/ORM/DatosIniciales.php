@@ -173,7 +173,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             $manager->persist($procedencia);
         }
 
-        //Procedencia
+        //Porcentajes
         $porcentajes = [
             [0, "iva", 0.21],
             [0, "iva reducido", 0.10],

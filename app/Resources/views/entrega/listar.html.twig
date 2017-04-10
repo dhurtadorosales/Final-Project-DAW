@@ -35,7 +35,7 @@
                     {% endif %}
                     {{ pesoAceituna }}
                 </td>
-                <td>{{ entrega.rendimiento }}</td>
+                <td>{{ entrega.rendimiento * 100 }}</td>
                 <td>{{ pesoAceituna * entrega.rendimiento }}</td>
                 <td>{{ pesoAceituna * entrega.rendimiento * entrega.sancion }}</td>
                 <td>{{ (pesoAceituna * entrega.rendimiento) - (pesoAceituna * entrega.rendimiento * entrega.sancion) }}</td>

@@ -126,6 +126,25 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
+
+    public function getPartidasLote(Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('p')
+            ->addSelect('l')
+            ->from('AppBundle:Partida', 'p')
+            ->join('p.lote', 'l')
+            ->where('l = :lote')
+            ->setParameter('lote', $lote)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
     public function getEntregas()
     {
         /** @var EntityManager $em */
