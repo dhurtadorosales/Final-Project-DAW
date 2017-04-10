@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Linea;
+use AppBundle\Entity\Porcentaje;
+use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
@@ -36,46 +38,32 @@ class LineaController extends Controller
     }
 
     /**
-     * @Route("/lineas/insertar", name="lineas_insertar")
+     * @Route("/lineas/insertar/producto/{venta}/{cantidad}/{producto}/{porcentaje}", name="lineas_insertar_producto")
      */
-    public function insertarAction()
+    public function insertarProductoAction(Venta $venta, $cantidad, Producto $producto, Porcentaje $porcentaje)
     {
-        /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
-
-        $venta = $em->createQueryBuilder()
-            ->select('v')
-            ->from('AppBundle:Venta', 'v')
-            ->where('v.id = 1')
-            ->getQuery()
-            ->getResult();
-
-        /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
-
-        $lote = $em->createQueryBuilder()
-            ->select('l')
-            ->from('AppBundle:Lote', 'l')
-            ->where('l.id = 1')
-            ->getQuery()
-            ->getResult();
-
-
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-            $linea = new Linea();
-            $em->persist($linea);
-            $linea
-                ->setCantidad(10)
-                ->setVenta($venta)
-                ->setLote($lote);
+        //Creación de línea
+        $linea = new Linea();
+        $em->persist($linea);
+        $linea
+            ->setVenta($venta)
+            ->setCantidad($cantidad)
+            ->setProducto($producto)
+            ->setPorcentaje($porcentaje);
 
-            $em->flush();
+        //Quitamos cantidad al producto
+        $em->persist($producto);
+        $producto
+            ->setStock($producto->getStock() - $cantidad);
 
-        $mensaje = 'Lineas insertados correctamente';
+        $em->flush();
 
-        return $this->render('linea/confirma.html.twig', [
+        $mensaje = 'Linea insertada correctamente';
+
+        return $this->render('venta/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

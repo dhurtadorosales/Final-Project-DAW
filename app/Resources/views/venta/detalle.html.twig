@@ -17,21 +17,32 @@
             <th>Cantidad</th>
             <th>Concepto</th>
             <th>Precio</th>
+            <th>Total</th>
             <th>Lote</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
+        {% set total = 0 %}
         {% for linea in lineas %}
             <tr>
                 <td>{{ linea.cantidad }}</td>
-                <td>{{ linea.lote.amasadas[0].aceite }}</td>
-                <td>0</td>
-                <td>{% if linea.lote.id < 10 %}
-                        0{{ linea.lote.id }}-{{ linea.lote.temporada }}
-                    {% else %}
-                        {{ linea.lote.id }}-{{ linea.lote.temporada }}
-                    {% endif %}
+                <td>{{ linea.producto }}</td>
+                <td>
+                    {% set precio = linea.producto.lotes[0].aceite.precioKg * linea.producto.lotes[0].aceite.densidadKgLitro (1 + linea.producto.envase.incremento) %}
+                    {{ precio }}
+                </td>
+                <td>{% set totalLinea = linea.cantidad * precio %}
+                    {% set total = total + totalLinea %}
+                    {{ totalLinea }}
+                </td>
+                <td>{#{% if linea.lote.id != null %}
+                        {% if linea.lote.id < 10 %}
+                            0{{ linea.lote.id }}-{{ linea.lote.temporada }}
+                        {% else %}
+                            {{ linea.lote.id }}-{{ linea.lote.temporada }}
+                        {% endif %}
+                    {% else %}#}
                 </td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
@@ -48,4 +59,5 @@
         {% endfor %}
         </tbody>
     </table>
+    <div>total = {{ total }}</div>
 {% endblock %}

@@ -45,6 +45,13 @@ class Producto
      */
     private $lineas;
 
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getLotes()[0]->getAceite() . " " . $this->getEnvase();
+    }
 
     /**
      * Constructor
