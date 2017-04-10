@@ -34,15 +34,22 @@ class Linea
     /**
      * @var Producto
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Producto", inversedBy="producto")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $producto;
+
+    /**
+     * @var Lote
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="lote")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $lote;
 
     /**
      * @var Porcentaje
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Porcentaje", inversedBy="lineas")
      */
     private $porcentaje;
-
 
 
     /**
@@ -125,6 +132,30 @@ class Linea
     public function getProducto()
     {
         return $this->producto;
+    }
+
+    /**
+     * Set lote
+     *
+     * @param \AppBundle\Entity\Lote $lote
+     *
+     * @return Linea
+     */
+    public function setLote(\AppBundle\Entity\Lote $lote = null)
+    {
+        $this->lote = $lote;
+
+        return $this;
+    }
+
+    /**
+     * Get lote
+     *
+     * @return \AppBundle\Entity\Lote
+     */
+    public function getLote()
+    {
+        return $this->lote;
     }
 
     /**

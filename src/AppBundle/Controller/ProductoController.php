@@ -3,73 +3,67 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Aceite;
+use AppBundle\Entity\Envase;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Partida;
+use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class LoteController extends Controller
+class ProductoController extends Controller
 {
     /**
-     * @Route("/lotes/listar", name="lotes_listar")
+     * @Route("/productos/listar", name="productos_listar")
      */
     public function indexAction()
     {
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
 
-        $lotes = $em->getRepository('AppBundle:Lote')
-            ->getLotes();
+        $productos = $em->getRepository('AppBundle:Producto')
+            ->findAll();
 
-        return $this->render('lote/listar.html.twig', [
-            'lotes' => $lotes
+        return $this->render('producto/listar.html.twig', [
+            'productos' => $productos
         ]);
     }
 
     /**
-     * @Route("/lotes/listar/lote/{lote}", name="lotes_listar_lote")
+     * @Route("/productos/envasar/{lote}/{producto}/{cantidad}", name="productos_envasar")
      */
-    public function listarFincasAction(Lote $lote)
-    {
-        /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
-
-        $resultados = $em->getRepository('AppBundle:Lote')
-            ->getLoteUnico();
-
-        return $this->render('lote/detalle.html.twig', [
-            'resultados' => $resultados
-        ]);
-    }
-
-    /**
-     * @Route("/lotes/insertar", name="lotes_insertar")
-     */
-    public function insertarAction()
+    public function productosEnvasadosAction(Lote $lote, Producto $producto, $cantidad)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $numLotes = 90;
-        $cantidad = 0;
-        $temporada = '16/17';
+        //Obtenemos el producto
+        $producto = $em->getRepository('AppBundle:Producto')
+            ->find($producto);
 
-        for ($i = 0; $i < $numLotes; $i++) {
-            $lote = new Lote();
-            $em->persist($lote);
-            $lote
-                ->setTemporada($temporada)
-                ->setCantidad($cantidad)
-                ->setStock($cantidad);
+        //Obtenemos el lote
+        $lote = $em->getRepository('AppBundle:Lote')
+            ->find($lote);
 
-            $em->flush();
-        }
-        $mensaje = 'Lotes insertados correctamente';
+        //Añadimos cantidad al producto
+        $stock = $producto->getStock() + $cantidad;
+        $em->persist($producto);
+        $producto
+            ->setStock($stock);
 
-        return $this->render('lote/confirma.html.twig', [
+        //Restamos la cantidad del stock del lote del que procede
+        $stock = $lote->getStock() - $cantidad;
+        $em->persist($lote);
+        $lote
+            ->setStock($stock);
+
+        $em->flush();
+
+        $mensaje = 'Producto envasado correctamente';
+
+        return $this->render('producto/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }
@@ -99,9 +93,7 @@ class LoteController extends Controller
 
         $em->persist($lote);
         $lote
-            ->setCantidad($cantidadNueva)
-            ->setStock($cantidadNueva);
-
+            ->setCantidad($cantidadNueva);
         $em->flush();
 
         $mensaje = 'Partida asignada correctamente';

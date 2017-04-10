@@ -16,6 +16,7 @@
         <tr>
             <th>Lote</th>
             <th>Cantidad</th>
+            <th>Stock</th>
             <th>Aceite</th>
             <th>Partidas</th>
             <th>Fincas</th>
@@ -27,6 +28,7 @@
             <tr>
                 <td>{{ lote.id }}-{{ lote.temporada }}</td>
                 <td>{{ lote.cantidad }}</td>
+                <td>{{ lote.stock }}</td>
                 <td>{% if lote.aceite != null %}
                         {{ lote.aceite }}
                     {% else %}

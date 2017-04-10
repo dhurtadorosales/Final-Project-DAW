@@ -1,9 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Lotes{% endblock %}
+{% block title %}Productos{% endblock %}
 
 {% block section %}
-    <h1>Fincas del lote</h1>
+    <h1>Listado de productos envasados</h1>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -14,23 +14,20 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
-            <th>Nº Finca</th>
-            <th>Referencia Catastral</th>
-            <th>Denominación</th>
+            <th>Aceite</th>
+            <th>Envase</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        {% for finca in fincas %}
+        {% for producto in productos %}
             <tr>
-                <td>{{ finca.deposito }}-{{ lote.temporada }}</td>
-                <td><select name="slAmasadas" id="slAmasadas">
-                        <option value="0"></option>
-                        {% for finca in lote.deposito %}
-                            <option value="{{ finca.deposito.amasadas.id }}">{{ finca.deposito.amasadas[0].denominacion }}</option>
-                        {% endfor %}
-                    </select></td>
-                <td>
+                <td>{{ producto.lotes[0].aceite }}</td>
+                <td>{{ producto.envase }}</td>
+                <td>{{ producto.stock }}</td>
+                <td>{{ producto.lotes[0].aceite.precioKg * producto.lotes[0].aceite.densidadKgLitro (1 + producto.envase.incremento) }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

@@ -31,6 +31,12 @@ class Lote
     private $cantidad;
 
     /**
+     * @var float
+     * @ORM\Column(type="float", precision=2)
+     */
+    private $stock;
+
+    /**
      * @var Partida[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partida", mappedBy="lote")
      * @ORM\JoinColumn(nullable=true)
@@ -51,13 +57,19 @@ class Lote
     private $productos;
 
     /**
+     * @var Linea[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="lote")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $lineas;
+
+    /**
      * Convierte a string
      */
     public function __toString()
     {
         return $this->getId() . "-" . $this->getTemporada();
     }
-
 
     /**
      * Constructor
@@ -66,6 +78,7 @@ class Lote
     {
         $this->partidas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->productos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lineas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -124,6 +137,30 @@ class Lote
     public function getCantidad()
     {
         return $this->cantidad;
+    }
+
+    /**
+     * Set stock
+     *
+     * @param float $stock
+     *
+     * @return Lote
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Get stock
+     *
+     * @return float
+     */
+    public function getStock()
+    {
+        return $this->stock;
     }
 
     /**
@@ -216,5 +253,39 @@ class Lote
     public function getProductos()
     {
         return $this->productos;
+    }
+
+    /**
+     * Add linea
+     *
+     * @param \AppBundle\Entity\Linea $linea
+     *
+     * @return Lote
+     */
+    public function addLinea(\AppBundle\Entity\Linea $linea)
+    {
+        $this->lineas[] = $linea;
+
+        return $this;
+    }
+
+    /**
+     * Remove linea
+     *
+     * @param \AppBundle\Entity\Linea $linea
+     */
+    public function removeLinea(\AppBundle\Entity\Linea $linea)
+    {
+        $this->lineas->removeElement($linea);
+    }
+
+    /**
+     * Get lineas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLineas()
+    {
+        return $this->lineas;
     }
 }

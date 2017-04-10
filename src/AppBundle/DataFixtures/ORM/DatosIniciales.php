@@ -10,6 +10,7 @@ use AppBundle\Entity\Finca;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Porcentaje;
 use AppBundle\Entity\Procedencia;
+use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Tipo;
 use AppBundle\Entity\Usuario;
@@ -33,11 +34,12 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
     {
         //Aceite
         $aceites = [
-            [0, "Aceite Virgen Extra", 0.916, 2.98],
-            [0, "Aceite Virgen", 0.916, 2.84],
-            [0, "Aceite Lampante", 0.916, 2.75]
+            [0, "Aceite Virgen Extra", 0.916, 3.80],
+            [0, "Aceite Virgen", 0.916, 3.75],
+            [0, "Aceite Lampante", 0.916, 3.68]
         ];
 
+        $aceites2 = [];
         foreach ($aceites as $item) {
             $aceite = new Aceite();
             $aceite
@@ -46,6 +48,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setPrecioKg($item[3]);
 
             $manager->persist($aceite);
+            array_push($aceites2, $aceite);
         }
 
         //Aceituna
@@ -192,12 +195,12 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Envase
         $envases = [
-            [0, "granel", 0.0],
             [0, "botella pvc 1L", 0.15],
             [0, "bidón pvc 5L", 0.10],
-            [0, "botella vidrio 1L", 0.20],
+            [0, "botella vidrio 1L", 0.20]
         ];
 
+        $envases2 = [];
         foreach ($envases as $item) {
             $envase = new Envase();
             $envase
@@ -205,7 +208,48 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setIncremento($item[2]);
 
             $manager->persist($envase);
+            array_push($envases2, $envase);
         }
+
+        //Lote
+        $cantidad = 0;
+        $temporada = '00/00';
+
+        $lotes2 = [];
+        foreach ($aceites2 as $item) {
+            $lote = new Lote();
+            $lote
+                ->setTemporada($temporada)
+                ->setCantidad($cantidad)
+                ->setStock($cantidad)
+                ->setAceite($item);
+
+            $manager->persist($lote);
+            array_push($lotes2, $lote);
+        }
+
+        //Producto
+        $productos = [
+            [0, 0, $lotes2[0] , $envases2[0]],
+            [0, 0, $lotes2[1] , $envases2[0]],
+            [0, 0, $lotes2[2] , $envases2[0]],
+            [0, 0, $lotes2[0] , $envases2[1]],
+            [0, 0, $lotes2[1] , $envases2[1]],
+            [0, 0, $lotes2[2] , $envases2[1]],
+            [0, 0, $lotes2[0] , $envases2[2]],
+            [0, 0, $lotes2[1] , $envases2[2]],
+            [0, 0, $lotes2[2] , $envases2[2]],
+        ];
+
+        foreach ($productos as $item) {
+        $producto = new Producto();
+        $producto
+            ->setStock($item[1])
+            ->addLote($item[2])
+            ->setEnvase($item[3]);
+
+        $manager->persist($producto);
+    }
 
         //Administrador
         $usuario = new Usuario();

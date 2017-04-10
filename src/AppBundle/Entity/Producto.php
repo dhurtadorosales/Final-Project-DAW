@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Producto
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
  */
 class Producto
 {
@@ -17,12 +17,6 @@ class Producto
      * @ORM\GeneratedValue()
      */
     private $id;
-
-    /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
-     */
-    private $precioLitro;
 
     /**
      * @var float
@@ -47,6 +41,7 @@ class Producto
     /**
      * @var Linea[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Linea", mappedBy="producto")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $lineas;
 
@@ -68,30 +63,6 @@ class Producto
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set precioLitro
-     *
-     * @param float $precioLitro
-     *
-     * @return Producto
-     */
-    public function setPrecioLitro($precioLitro)
-    {
-        $this->precioLitro = $precioLitro;
-
-        return $this;
-    }
-
-    /**
-     * Get precioLitro
-     *
-     * @return float
-     */
-    public function getPrecioLitro()
-    {
-        return $this->precioLitro;
     }
 
     /**

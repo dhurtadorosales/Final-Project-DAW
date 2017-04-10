@@ -2,7 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Entrega;
+use AppBundle\Entity\Envase;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Partida;
 use AppBundle\Entity\Socio;
@@ -247,6 +249,23 @@ class ConsultasRepository extends EntityRepository
             ->from('AppBundle:Lote', 'l')
             ->where('l.id = :lot')
             ->setParameter('lot', $lote)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+
+    public function getProductoAceiteEnvasado(Aceite $aceite)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Producto', 'p')
+            ->where('p.lotes[0].aceite.id = :aceite')
+            ->setParameter('aceite', $aceite)
             ->getQuery()
             ->getResult();
 
