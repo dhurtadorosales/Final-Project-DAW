@@ -1,0 +1,9 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Ventas{% endblock %}
+
+{% block section %}
+    {% if mensaje is defined %}
+        <h2>{{ mensaje }}</h2>
+    {% endif %}
+{% endblock %}

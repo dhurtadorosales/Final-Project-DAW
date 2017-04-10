@@ -25,7 +25,7 @@
         {% for venta in ventas %}
             <tr>
                 <td>{{ venta.id }}</td>
-                <td>{{ venta.cliente }}</td>
+                <td>{{ venta.cliente }}{{ venta.socio }}</td>
                 <td>{{ venta.fecha|date('d/m/Y') }}</td>
                 <td>0</td>
                 <td>

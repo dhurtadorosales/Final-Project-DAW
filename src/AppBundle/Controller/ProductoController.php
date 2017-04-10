@@ -21,7 +21,7 @@ class ProductoController extends Controller
     public function indexAction()
     {
         /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $productos = $em->getRepository('AppBundle:Producto')
             ->findAll();
