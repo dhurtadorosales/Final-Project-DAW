@@ -30,12 +30,6 @@ class Aceituna
      */
     private $fincas;
 
-    /**
-     * @var Entrega[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="variedad")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $entregas;
 
     /**
      * Convierte a string

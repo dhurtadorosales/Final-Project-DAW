@@ -69,7 +69,6 @@ class LiquidacionController extends Controller
         $anio2 = $anio++;
         $temporada = $anio . "/" . $anio2;
 
-
         //Obtención de todos los socios
         $socios = $em->getRepository('AppBundle:Socio')
             ->findAll();
@@ -90,7 +89,7 @@ class LiquidacionController extends Controller
                 ->setIvaReducido($porcentajes[1]->getCantidad())
                 ->setRetencion($porcentajes[2]->getCantidad())
                 ->setIndiceCorrector($porcentajes[3]->getCantidad())
-                ->getSocio($socios[$i]->getId());
+                ->setSocio($socios[$i]);
         }
         $em->flush();
 

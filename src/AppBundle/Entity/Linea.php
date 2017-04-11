@@ -39,14 +39,14 @@ class Linea
 
     /**
      * @var Producto
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Producto", inversedBy="producto")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Producto", inversedBy="lineas")
      * @ORM\JoinColumn(nullable=true)
      */
     private $producto;
 
     /**
      * @var Lote
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="lote")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="lineas")
      * @ORM\JoinColumn(nullable=true)
      */
     private $lote;

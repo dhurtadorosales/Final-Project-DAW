@@ -49,10 +49,8 @@
                 </td>
                 <td>{{ (pesoAceituna * entrega.rendimiento) - sancion }}</td>
                 <td>
-                    {% if entrega.partida.lote.aceite != null %}
+                    {% if entrega.partida.lote != null %}
                         {{ entrega.partida.lote.aceite }}
-                    {% else %}
-                        sin analizar
                     {% endif %}
                 </td>
                 <td>{{ entrega.precioKgAceite }}</td>

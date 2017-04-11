@@ -33,7 +33,7 @@
                         {{ partida.entregas[0].procedencia.denominacion }}
                     {% endif %}
                 </td>
-                <td>{% if partida.lote.id != null %}
+                <td>{% if partida.lote != null %}
                         {{ partida.lote.id }}-{{ partida.lote.temporada }}
                     {% endif %}
                 </td>

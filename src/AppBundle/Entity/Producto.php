@@ -39,7 +39,7 @@ class Producto
 
     /**
      * @var Envase
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Envase", inversedBy="producto")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Envase", inversedBy="productos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $envase;

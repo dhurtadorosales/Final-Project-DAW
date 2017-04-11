@@ -50,7 +50,7 @@ class Entrega
 
     /**
      * @var float
-     * @ORM\Column(type="integer", precision=2, nullable=true)
+     * @ORM\Column(type="float", precision=2, nullable=true)
      */
     private $sancion;
 
