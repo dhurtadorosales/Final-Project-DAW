@@ -18,6 +18,23 @@ use Symfony\Component\HttpFoundation\Request;
 class LiquidacionController extends Controller
 {
     /**
+     * @Route("/liquidaciones/listar/{temporada}", name="liquidaciones_listar_temporada")
+     */
+    public function listarAction($temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $liquidacion = $em->getRepository('AppBundle:Liquidacion')
+            ->getLiquidacionTemporada($temporada);
+
+        return $this->render('liquidacion/listar.html.twig', [
+            'liquidacion' => $liquidacion,
+            'temporada' => $temporada
+        ]);
+    }
+
+    /**
      * @Route("/liquidaciones/detalle/{socio}{temporada}", name="liquidaciones_detalle")
      */
     public function detalleAction(Socio $socio, $temporada)
@@ -25,10 +42,10 @@ class LiquidacionController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $liquidacion = $em->getRepository('AppBundle:Linea')
+        $liquidacion = $em->getRepository('AppBundle:Liquidacion')
             ->getLiquidacionDetalle($socio, $temporada);
 
-        return $this->render('venta/detalle.html.twig', [
+        return $this->render('liquidacion/detalle.html.twig', [
             'liquidacion' => $liquidacion,
             'socio' => $socio,
             'temporada' => $temporada
@@ -36,94 +53,50 @@ class LiquidacionController extends Controller
     }
 
     /**
-     * @Route("/liquidaciones/insertar/{socio}/{temporada}", name="liquidaciones_insertar")
+     * @Route("/liquidaciones/insertar", name="liquidaciones_insertar")
      */
-    public function insertarLiquidacionAction(Venta $venta, $cantidad, Producto $producto)
+    public function insertarLiquidacionAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Obtención de la fecha actual
+        $fecha = new \DateTime('now');
+        $anio = $fecha->format('Y');
+
+        //Como se liquidará al año siguiente le sumamos uno
+        $anio = (int)$anio;
+        $anio2 = $anio++;
+        $temporada = $anio . "/" . $anio2;
+
 
         //Obtención de todos los socios
         $socios = $em->getRepository('AppBundle:Socio')
             ->findAll();
 
         //Obtención de los porcentajes vigentes
-
+        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+            ->findAll();
 
         //Creación de la liquidación de cada socio
-        foreach ($socios as $item) {
+        for ($i = 0; $i < sizeof($socios); $i++) {
             $liquidacion = new  Liquidacion();
+            $em->persist($liquidacion);
             $liquidacion
-                ->setFecha()
-                ->setBeneficio()
-                ->setGasto()
-                ->setIva()
-                ->setIvaReducido()
-                ->setRetencion()
-                ->setIndiceCorrector();
+                ->setTemporada($temporada)
+                ->setBeneficio(0)
+                ->setGasto(0)
+                ->setIva($porcentajes[0]->getCantidad())
+                ->setIvaReducido($porcentajes[1]->getCantidad())
+                ->setRetencion($porcentajes[2]->getCantidad())
+                ->setIndiceCorrector($porcentajes[3]->getCantidad())
+                ->getSocio($socios[$i]->getId());
         }
-
-        $linea = new Linea();
-        $em->persist($linea);
-        $linea
-            ->setVenta($venta)
-            ->setCantidad($cantidad)
-            ->setPrecio($precio)
-            ->setProducto($producto);
-
-        //Añadimos la cantidad a la base imponible de la venta
-        $base = $venta->getBaseImponible();
-        $em->persist($venta);
-        $venta->setBaseImponible($base + ($cantidad * $precio));
-
-        //Quitamos cantidad al producto
-        $em->persist($producto);
-        $producto
-            ->setStock($producto->getStock() - $cantidad);
-
         $em->flush();
 
-        $mensaje = 'Linea insertada correctamente';
+        $mensaje = 'Liquidacion insertada correctamente';
 
-        return $this->render('venta/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
-    }
-
-    /**
-     * @Route("/2lineas/insertar/lote/{venta}/{cantidad}/{lote}", name="lineas_insertar_lote")
-     */
-    public function insertarLineaClienteAction(Venta $venta, $cantidad, Lote $lote)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Obtención del precio del lote
-        $precio = $lote->getAceite()->getPrecioKg() * $lote->getAceite()->getDensidadKgLitro();
-
-        //Creación de línea
-        $linea = new Linea();
-        $em->persist($linea);
-        $linea
-            ->setVenta($venta)
-            ->setCantidad($cantidad)
-            ->setPrecio($precio)
-            ->setLote($lote);
-
-        //Añadimos la cantidad a la base imponible de la venta
-        $base = $venta->getBaseImponible();
-        $venta->setBaseImponible($base + ($cantidad * $precio));
-
-        //Quitamos cantidad al lote
-        $em->persist($lote);
-        $lote
-            ->setStock($lote->getStock() - $cantidad);
-
-        $em->flush();
-
-        $mensaje = 'Linea insertada correctamente';
-
-        return $this->render('venta/confirma.html.twig', [
+        return $this->render('liquidacion/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

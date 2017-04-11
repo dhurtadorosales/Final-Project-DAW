@@ -62,11 +62,6 @@ class Venta
      */
     private $lineas;
 
-    /**
-     * @var Porcentaje[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Porcentaje", inversedBy="ventas")
-     */
-    private $porcentajes;
 
     /**
      * Constructor

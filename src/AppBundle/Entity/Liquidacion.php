@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Liquidacion
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
  */
 class Liquidacion
 {
@@ -20,9 +20,15 @@ class Liquidacion
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $fecha;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $temporada;
 
     /**
      * @var float
@@ -38,25 +44,25 @@ class Liquidacion
 
     /**
      * @var float
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float", precision=2)
      */
     private $iva;
 
     /**
      * @var float
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float", precision=2)
      */
     private $ivaReducido;
 
     /**
      * @var float
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="float", precision=2)
      */
     private $retencion;
 
     /**
     * @var float
-    * @ORM\Column(type="float", nullable=true)
+    * @ORM\Column(type="float", precision=2)
     */
     private $indiceCorrector;
 
@@ -66,19 +72,7 @@ class Liquidacion
      */
     private $socio;
 
-    /**
-     * @var Porcentaje[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Porcentaje", inversedBy="liquidaciones")
-     */
-    private $porcentajes;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->porcentajes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -112,6 +106,30 @@ class Liquidacion
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set temporada
+     *
+     * @param integer $temporada
+     *
+     * @return Liquidacion
+     */
+    public function setTemporada($temporada)
+    {
+        $this->temporada = $temporada;
+
+        return $this;
+    }
+
+    /**
+     * Get temporada
+     *
+     * @return integer
+     */
+    public function getTemporada()
+    {
+        return $this->temporada;
     }
 
     /**
@@ -280,39 +298,5 @@ class Liquidacion
     public function getSocio()
     {
         return $this->socio;
-    }
-
-    /**
-     * Add porcentaje
-     *
-     * @param \AppBundle\Entity\Porcentaje $porcentaje
-     *
-     * @return Liquidacion
-     */
-    public function addPorcentaje(\AppBundle\Entity\Porcentaje $porcentaje)
-    {
-        $this->porcentajes[] = $porcentaje;
-
-        return $this;
-    }
-
-    /**
-     * Remove porcentaje
-     *
-     * @param \AppBundle\Entity\Porcentaje $porcentaje
-     */
-    public function removePorcentaje(\AppBundle\Entity\Porcentaje $porcentaje)
-    {
-        $this->porcentajes->removeElement($porcentaje);
-    }
-
-    /**
-     * Get porcentajes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPorcentajes()
-    {
-        return $this->porcentajes;
     }
 }

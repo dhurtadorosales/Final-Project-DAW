@@ -1,0 +1,70 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Ventas{% endblock %}
+
+{% block section %}
+    <h1>Venta Nº {{ venta.id }}</h1>
+    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
+
+
+
+
+    -->
+    <p></p>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Cantidad</th>
+            <th>Concepto</th>
+            <th>Precio</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set total = 0 %}
+        {% for linea in lineas %}
+            <tr>
+                <td>{{ linea.cantidad }}</td>
+                <td>{% if linea.producto != null %}
+                        {{ linea.producto }}
+                    {% else %}
+                        {{ linea.lote.aceite }} - Lote: {{ linea.lote }}
+                    {% endif %}
+                </td>
+                <td>{% if linea.producto != null %}
+                        {% set precio = linea.producto.precio %}
+                    {% else %}
+                        {% set precio = linea.lote.aceite.precioKg * linea.lote.aceite.densidadKgLitro %}
+                    {% endif %}
+                    {{ precio }}
+                </td>
+                <td>{% set totalLinea = linea.cantidad * precio %}
+                    {% set total = total + totalLinea %}
+                    {{ totalLinea }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tr></tr>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Base Imponible</td>
+                <td>{{ total }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>IVA</td>
+                <td>{{ venta.iva * 100 }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>{{ total * (1 + venta.iva) }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

@@ -308,4 +308,24 @@ class ConsultasRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getLiquidacionDetalle(Socio $socio, $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->addSelect('s')
+            ->from('AppBundle:Liquidacion', 'l')
+            ->join('l.socio', 's')
+            ->where('s = :socio')
+            ->andWhere('l.temporada = :temporada')
+            ->setParameter('socio', $socio)
+            ->setParameter('temporada', $temporada)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
 }

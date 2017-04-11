@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Porcentaje
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
  */
 class Porcentaje
 {
@@ -30,19 +30,6 @@ class Porcentaje
      */
     private $cantidad;
 
-    /**
-     * @var Venta[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Venta", mappedBy="porcentajes")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $ventas;
-
-    /**
-     * @var Liquidacion[]
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Liquidacion", mappedBy="porcentajes")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $liquidaciones;
 
     /**
      * Convierte a string
@@ -52,14 +39,6 @@ class Porcentaje
         return $this->getDenominacion();
     }
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ventas = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->liquidaciones = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -117,73 +96,5 @@ class Porcentaje
     public function getCantidad()
     {
         return $this->cantidad;
-    }
-
-    /**
-     * Add venta
-     *
-     * @param \AppBundle\Entity\Venta $venta
-     *
-     * @return Porcentaje
-     */
-    public function addVenta(\AppBundle\Entity\Venta $venta)
-    {
-        $this->ventas[] = $venta;
-
-        return $this;
-    }
-
-    /**
-     * Remove venta
-     *
-     * @param \AppBundle\Entity\Venta $venta
-     */
-    public function removeVenta(\AppBundle\Entity\Venta $venta)
-    {
-        $this->ventas->removeElement($venta);
-    }
-
-    /**
-     * Get ventas
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVentas()
-    {
-        return $this->ventas;
-    }
-
-    /**
-     * Add liquidacione
-     *
-     * @param \AppBundle\Entity\Liquidacion $liquidacione
-     *
-     * @return Porcentaje
-     */
-    public function addLiquidacione(\AppBundle\Entity\Liquidacion $liquidacione)
-    {
-        $this->liquidaciones[] = $liquidacione;
-
-        return $this;
-    }
-
-    /**
-     * Remove liquidacione
-     *
-     * @param \AppBundle\Entity\Liquidacion $liquidacione
-     */
-    public function removeLiquidacione(\AppBundle\Entity\Liquidacion $liquidacione)
-    {
-        $this->liquidaciones->removeElement($liquidacione);
-    }
-
-    /**
-     * Get liquidaciones
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLiquidaciones()
-    {
-        return $this->liquidaciones;
     }
 }

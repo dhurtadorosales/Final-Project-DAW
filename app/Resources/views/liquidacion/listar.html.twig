@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liquidaciones{% endblock %}
+
+{% block section %}
+    <h1>Listado de liquidaciones de la temporada {{ temporada }}</h1>
+    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
+
+
+
+
+    -->
+    <p></p>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Nº</th>
+            <th>Socio</th>
+            <th>Cantidad</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set total = 0 %}
+        {% for liquidacion in liquidaciones %}
+            <tr>
+                <td>{{ liquidacion.id }}</td>
+                <td>{{ liquidacion.socio }}</td>
+                <td>{% set total = total + liquidacion.beneficio - liquidacion.gasto %}
+                    {{ liquidacion.beneficio - liquidacion.gasto }}</td>
+                <td>
+                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Suma</td>
+                <td>{{ total }}</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}
