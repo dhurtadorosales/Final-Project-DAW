@@ -25,6 +25,24 @@ class Venta
     private $fecha;
 
     /**
+     * @var float
+     * @ORM\Column(type="float")
+     */
+    private $baseImponible;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $iva;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $ivaReducido;
+
+    /**
      * @var Cliente
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cliente", inversedBy="ventas")
      * @ORM\JoinColumn(nullable=true)
@@ -44,6 +62,11 @@ class Venta
      */
     private $lineas;
 
+    /**
+     * @var Porcentaje[]
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Porcentaje", inversedBy="ventas")
+     */
+    private $porcentajes;
 
     /**
      * Constructor
@@ -51,6 +74,7 @@ class Venta
     public function __construct()
     {
         $this->lineas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->porcentajes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -85,6 +109,78 @@ class Venta
     public function getFecha()
     {
         return $this->fecha;
+    }
+
+    /**
+     * Set baseImponible
+     *
+     * @param float $baseImponible
+     *
+     * @return Venta
+     */
+    public function setBaseImponible($baseImponible)
+    {
+        $this->baseImponible = $baseImponible;
+
+        return $this;
+    }
+
+    /**
+     * Get baseImponible
+     *
+     * @return float
+     */
+    public function getBaseImponible()
+    {
+        return $this->baseImponible;
+    }
+
+    /**
+     * Set iva
+     *
+     * @param float $iva
+     *
+     * @return Venta
+     */
+    public function setIva($iva)
+    {
+        $this->iva = $iva;
+
+        return $this;
+    }
+
+    /**
+     * Get iva
+     *
+     * @return float
+     */
+    public function getIva()
+    {
+        return $this->iva;
+    }
+
+    /**
+     * Set ivaReducido
+     *
+     * @param float $ivaReducido
+     *
+     * @return Venta
+     */
+    public function setIvaReducido($ivaReducido)
+    {
+        $this->ivaReducido = $ivaReducido;
+
+        return $this;
+    }
+
+    /**
+     * Get ivaReducido
+     *
+     * @return float
+     */
+    public function getIvaReducido()
+    {
+        return $this->ivaReducido;
     }
 
     /**
@@ -167,5 +263,39 @@ class Venta
     public function getLineas()
     {
         return $this->lineas;
+    }
+
+    /**
+     * Add porcentaje
+     *
+     * @param \AppBundle\Entity\Porcentaje $porcentaje
+     *
+     * @return Venta
+     */
+    public function addPorcentaje(\AppBundle\Entity\Porcentaje $porcentaje)
+    {
+        $this->porcentajes[] = $porcentaje;
+
+        return $this;
+    }
+
+    /**
+     * Remove porcentaje
+     *
+     * @param \AppBundle\Entity\Porcentaje $porcentaje
+     */
+    public function removePorcentaje(\AppBundle\Entity\Porcentaje $porcentaje)
+    {
+        $this->porcentajes->removeElement($porcentaje);
+    }
+
+    /**
+     * Get porcentajes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPorcentajes()
+    {
+        return $this->porcentajes;
     }
 }

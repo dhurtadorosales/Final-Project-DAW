@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Linea;
+use AppBundle\Entity\Lote;
 use AppBundle\Entity\Porcentaje;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
@@ -38,9 +39,9 @@ class LineaController extends Controller
     }
 
     /**
-     * @Route("/lineas/insertar/producto/{venta}/{cantidad}/{producto}/{porcentaje}", name="lineas_insertar_producto")
+     * @Route("/lineas/insertar/producto/{venta}/{cantidad}/{producto}", name="lineas_insertar_producto")
      */
-    public function insertarProductoAction(Venta $venta, $cantidad, Producto $producto, Porcentaje $porcentaje)
+    public function insertarLineaSocioAction(Venta $venta, $cantidad, Producto $producto)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -51,13 +52,42 @@ class LineaController extends Controller
         $linea
             ->setVenta($venta)
             ->setCantidad($cantidad)
-            ->setProducto($producto)
-            ->setPorcentaje($porcentaje);
+            ->setProducto($producto);
 
         //Quitamos cantidad al producto
         $em->persist($producto);
         $producto
             ->setStock($producto->getStock() - $cantidad);
+
+        $em->flush();
+
+        $mensaje = 'Linea insertada correctamente';
+
+        return $this->render('venta/confirma.html.twig', [
+            'mensaje' => $mensaje
+        ]);
+    }
+
+    /**
+     * @Route("/lineas/insertar/producto/{venta}/{cantidad}/{lote}", name="lineas_insertar_producto")
+     */
+    public function insertarLineaClienteAction(Venta $venta, $cantidad, Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Creación de línea
+        $linea = new Linea();
+        $em->persist($linea);
+        $linea
+            ->setVenta($venta)
+            ->setCantidad($cantidad)
+            ->setLote($lote);
+
+        //Quitamos cantidad al lote
+        $em->persist($lote);
+        $lote
+            ->setStock($lote->getStock() - $cantidad);
 
         $em->flush();
 

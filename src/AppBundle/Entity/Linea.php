@@ -19,10 +19,16 @@ class Linea
     private $id;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
+     * @var float
+     * @ORM\Column(type="float")
      */
     private $cantidad;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float")
+     */
+    private $precio;
 
     /**
      * @var Venta
@@ -45,12 +51,6 @@ class Linea
      */
     private $lote;
 
-    /**
-     * @var Porcentaje
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Porcentaje", inversedBy="lineas")
-     */
-    private $porcentaje;
-
 
     /**
      * Get id
@@ -65,7 +65,7 @@ class Linea
     /**
      * Set cantidad
      *
-     * @param integer $cantidad
+     * @param float $cantidad
      *
      * @return Linea
      */
@@ -79,11 +79,35 @@ class Linea
     /**
      * Get cantidad
      *
-     * @return integer
+     * @return float
      */
     public function getCantidad()
     {
         return $this->cantidad;
+    }
+
+    /**
+     * Set precio
+     *
+     * @param float $precio
+     *
+     * @return Linea
+     */
+    public function setPrecio($precio)
+    {
+        $this->precio = $precio;
+
+        return $this;
+    }
+
+    /**
+     * Get precio
+     *
+     * @return float
+     */
+    public function getPrecio()
+    {
+        return $this->precio;
     }
 
     /**
@@ -156,29 +180,5 @@ class Linea
     public function getLote()
     {
         return $this->lote;
-    }
-
-    /**
-     * Set porcentaje
-     *
-     * @param \AppBundle\Entity\Porcentaje $porcentaje
-     *
-     * @return Linea
-     */
-    public function setPorcentaje(\AppBundle\Entity\Porcentaje $porcentaje = null)
-    {
-        $this->porcentaje = $porcentaje;
-
-        return $this;
-    }
-
-    /**
-     * Get porcentaje
-     *
-     * @return \AppBundle\Entity\Porcentaje
-     */
-    public function getPorcentaje()
-    {
-        return $this->porcentaje;
     }
 }
