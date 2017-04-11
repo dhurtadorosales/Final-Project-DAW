@@ -65,7 +65,7 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/productos/asignar/precio/", name="productos_envasar")
+     * @Route("/productos/asignar/precio/", name="productos_asignar_precio")
      */
     public function productosPrecioAction()
     {

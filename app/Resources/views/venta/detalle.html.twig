@@ -18,8 +18,6 @@
             <th>Concepto</th>
             <th>Precio</th>
             <th>Total</th>
-            <th>Lote</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -44,28 +42,29 @@
                     {% set total = total + totalLinea %}
                     {{ totalLinea }}
                 </td>
-                <td>{#{% if linea.lote.id != null %}
-                        {% if linea.lote.id < 10 %}
-                            0{{ linea.lote.id }}-{{ linea.lote.temporada }}
-                        {% else %}
-                            {{ linea.lote.id }}-{{ linea.lote.temporada }}
-                        {% endif %}
-                    {% else %}#}
-                </td>
-                <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
             </tr>
         {% endfor %}
         </tbody>
+        <tr></tr>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Base Imponible</td>
+                <td>{{ total }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>IVA</td>
+                <td>{{ venta.iva * 100 }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>{{ total * (1 + venta.iva) }}</td>
+            </tr>
+        </tfoot>
     </table>
-    <div>total = {{ total }}</div>
 {% endblock %}

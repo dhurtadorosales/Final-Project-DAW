@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Linea;
+use AppBundle\Entity\Liquidacion;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Porcentaje;
 use AppBundle\Entity\Producto;
@@ -14,37 +15,54 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Tests\Compiler\Lille;
 use Symfony\Component\HttpFoundation\Request;
 
-class LineaController extends Controller
+class LiquidacionController extends Controller
 {
     /**
-     * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
+     * @Route("/liquidaciones/detalle/{socio}{temporada}", name="liquidaciones_detalle")
      */
-    public function detalleAction(Venta $venta)
+    public function detalleAction(Socio $socio, $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $lineas = $em->getRepository('AppBundle:Linea')
-            ->getVentasDetalle($venta);
+        $liquidacion = $em->getRepository('AppBundle:Linea')
+            ->getLiquidacionDetalle($socio, $temporada);
 
         return $this->render('venta/detalle.html.twig', [
-            'lineas' => $lineas,
-            'venta' => $venta
+            'liquidacion' => $liquidacion,
+            'socio' => $socio,
+            'temporada' => $temporada
         ]);
     }
 
     /**
-     * @Route("/lineas/insertar/producto/{venta}/{cantidad}/{producto}", name="lineas_insertar_producto")
+     * @Route("/liquidaciones/insertar/{socio}/{temporada}", name="liquidaciones_insertar")
      */
-    public function insertarLineaSocioAction(Venta $venta, $cantidad, Producto $producto)
+    public function insertarLiquidacionAction(Venta $venta, $cantidad, Producto $producto)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtención del precio del producto
-        $precio = $producto->getPrecio();
+        //Obtención de todos los socios
+        $socios = $em->getRepository('AppBundle:Socio')
+            ->findAll();
 
-        //Creación de línea
+        //Obtención de los porcentajes vigentes
+
+
+        //Creación de la liquidación de cada socio
+        foreach ($socios as $item) {
+            $liquidacion = new  Liquidacion();
+            $liquidacion
+                ->setFecha()
+                ->setBeneficio()
+                ->setGasto()
+                ->setIva()
+                ->setIvaReducido()
+                ->setRetencion()
+                ->setIndiceCorrector();
+        }
+
         $linea = new Linea();
         $em->persist($linea);
         $linea
@@ -73,7 +91,7 @@ class LineaController extends Controller
     }
 
     /**
-     * @Route("/lineas/insertar/lote/{venta}/{cantidad}/{lote}", name="lineas_insertar_lote")
+     * @Route("/2lineas/insertar/lote/{venta}/{cantidad}/{lote}", name="lineas_insertar_lote")
      */
     public function insertarLineaClienteAction(Venta $venta, $cantidad, Lote $lote)
     {

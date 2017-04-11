@@ -8,6 +8,7 @@ use AppBundle\Entity\Envase;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Partida;
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -201,6 +202,26 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
+    public function getEntregasLote(Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('e')
+            ->addSelect('p')
+            ->addSelect('l')
+            ->from('AppBundle:Entrega', 'e')
+            ->join('e.partida', 'p')
+            ->join('p.lote', 'l')
+            ->where('l = :lote')
+            ->setParameter('lote', $lote)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
     public function getEntregasDetalle(Entrega $entrega, Socio $socio)
     {
         /** @var EntityManager $em */
@@ -266,6 +287,22 @@ class ConsultasRepository extends EntityRepository
             ->from('AppBundle:Producto', 'p')
             ->where('p.lotes[0].aceite.id = :aceite')
             ->setParameter('aceite', $aceite)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getVentasDetalle(Venta $venta)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Linea', 'l')
+            ->where('l.venta = :venta')
+            ->setParameter('venta', $venta)
             ->getQuery()
             ->getResult();
 

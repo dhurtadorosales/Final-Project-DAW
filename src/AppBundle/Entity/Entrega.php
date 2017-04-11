@@ -67,6 +67,12 @@ class Entrega
     private $bascula;
 
     /**
+     * @var float
+     * @ORM\Column(type="float", precision=2)
+     */
+    private $precioKgAceite;
+
+    /**
      * @var Procedencia
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Procedencia", inversedBy="entregas")
      * @ORM\JoinColumn(nullable=false)
@@ -86,6 +92,8 @@ class Entrega
      * @ORM\JoinColumn(nullable=false)
      */
     private $finca;
+
+
 
     /**
      * Get id
@@ -172,7 +180,7 @@ class Entrega
     /**
      * Set peso
      *
-     * @param integer $peso
+     * @param float $peso
      *
      * @return Entrega
      */
@@ -186,7 +194,7 @@ class Entrega
     /**
      * Get peso
      *
-     * @return integer
+     * @return float
      */
     public function getPeso()
     {
@@ -290,6 +298,30 @@ class Entrega
     }
 
     /**
+     * Set precioKgAceite
+     *
+     * @param float $precioKgAceite
+     *
+     * @return Entrega
+     */
+    public function setPrecioKgAceite($precioKgAceite)
+    {
+        $this->precioKgAceite = $precioKgAceite;
+
+        return $this;
+    }
+
+    /**
+     * Get precioKgAceite
+     *
+     * @return float
+     */
+    public function getPrecioKgAceite()
+    {
+        return $this->precioKgAceite;
+    }
+
+    /**
      * Set procedencia
      *
      * @param \AppBundle\Entity\Procedencia $procedencia
@@ -320,7 +352,7 @@ class Entrega
      *
      * @return Entrega
      */
-    public function setPartida(\AppBundle\Entity\Partida $partida)
+    public function setPartida(\AppBundle\Entity\Partida $partida = null)
     {
         $this->partida = $partida;
 

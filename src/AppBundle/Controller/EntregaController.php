@@ -77,11 +77,11 @@ class EntregaController extends Controller
             ->getFincas();
 
         $entregas = [
-            [0, "2017-03-28", "16:15", "16:20", 1500, 0.18, 0, null, 1, $procedencias[0], null, $fincas[0]],
-            [0, "2017-03-28", "16:20", "16:25", 500, 0.23, 0.10, "Muy sucia", 1, $procedencias[1], null, $fincas[0]],
-            [0, "2017-03-28", "16:25", "16:30", 200, 0.25, 0, null, 2, $procedencias[1], null, $fincas[2]],
-            [0, "2017-03-28", "16:30", "17:03", 1000, 0.22, 0.10, "Atasco de tolva", 3, $procedencias[1], null, $fincas[1]],
-            [0, "2017-03-28", "17:07", "17:20", 900, 0.18, 0, null, 3, $procedencias[0], null, $fincas[2]]
+            [0, "2017-03-28", "16:15", "16:20", 1500, 0.18, null, null, 1, 0, $procedencias[0], null, $fincas[0]],
+            [0, "2017-03-28", "16:20", "16:25", 500, 0.23, 0.15, "Muy sucia", 1, 0, $procedencias[1], null, $fincas[0]],
+            [0, "2017-03-28", "16:25", "16:30", 200, 0.25, null, null, 2, 0, $procedencias[1], null, $fincas[2]],
+            [0, "2017-03-28", "16:30", "17:03", 1000, 0.22, 0.15, "Atasco de tolva", 3, 0, $procedencias[1], null, $fincas[1]],
+            [0, "2017-03-28", "17:07", "17:20", 900, 0.18, null, null, 3, 0, $procedencias[0], null, $fincas[2]]
         ];
 
         /** @var EntityManager $em */
@@ -99,8 +99,9 @@ class EntregaController extends Controller
                 ->setSancion($item[6])
                 ->setObservaciones($item[7])
                 ->setBascula($item[8])
-                ->setProcedencia($item[9])
-                ->setFinca($item[11]);
+                ->setPrecioKgAceite($item[9])
+                ->setProcedencia($item[10])
+                ->setFinca($item[12]);
 
             $em->flush();
         }

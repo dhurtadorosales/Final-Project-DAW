@@ -19,7 +19,7 @@ class LoteController extends Controller
     public function indexAction()
     {
         /** @var EntityManager $em */
-        $em=$this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $lotes = $em->getRepository('AppBundle:Lote')
             ->getLotes();
@@ -124,6 +124,21 @@ class LoteController extends Controller
         $lote
             ->setAceite($aceite);
         $em->flush();
+
+        //Obtención de las entregas de ese lote
+        $entregas = $em->getRepository('AppBundle:Entrega')
+            ->getEntregasLote($lote);
+
+        //Obtenemos el precio del aceite
+        $precio = $aceite->getPrecioKg();
+
+        //Asignamos el precio a todas las entregas de ese lote
+        foreach ($entregas as $item) {
+            $em->persist($item);
+            $item->setPrecioKgAceite($precio);
+
+            $em->flush();
+        }
 
         $mensaje = 'Aceite asignado correctamente';
 

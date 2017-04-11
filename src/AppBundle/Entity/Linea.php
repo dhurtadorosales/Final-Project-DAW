@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Linea
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
  */
 class Linea
 {
