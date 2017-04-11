@@ -35,11 +35,19 @@ class VentaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtenemos los porcentajes
+        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+            ->findAll();
+        $iva = $porcentajes[0]->getCantidad();
+
+        //Creación de nueva venta
         $venta = new Venta();
 
         $em->persist($venta);
         $venta
             ->setFecha(new \DateTime('now'))
+            ->setBaseImponible(0)
+            ->setIva($iva)
             ->setCliente($cliente);
 
         $em->flush();
@@ -59,11 +67,19 @@ class VentaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtenemos los porcentajes
+        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+            ->findAll();
+        $iva = $porcentajes[0]->getCantidad();
+
+        //Creación de nueva venta
         $venta = new Venta();
 
         $em->persist($venta);
         $venta
             ->setFecha(new \DateTime('now'))
+            ->setBaseImponible(0)
+            ->setIva($iva)
             ->setSocio($socio);
 
         $em->flush();

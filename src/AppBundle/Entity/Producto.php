@@ -25,6 +25,12 @@ class Producto
     private $stock;
 
     /**
+     * @var float
+     * @ORM\Column(type="float", precision=2)
+     */
+    private $precio;
+
+    /**
      * @var Lote[]
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Lote", inversedBy="productos")
      * @ORM\JoinColumn(nullable=false)
@@ -52,6 +58,7 @@ class Producto
     {
         return $this->getLotes()[0]->getAceite() . " " . $this->getEnvase();
     }
+
 
     /**
      * Constructor
@@ -94,6 +101,30 @@ class Producto
     public function getStock()
     {
         return $this->stock;
+    }
+
+    /**
+     * Set precio
+     *
+     * @param float $precio
+     *
+     * @return Producto
+     */
+    public function setPrecio($precio)
+    {
+        $this->precio = $precio;
+
+        return $this;
+    }
+
+    /**
+     * Get precio
+     *
+     * @return float
+     */
+    public function getPrecio()
+    {
+        return $this->precio;
     }
 
     /**

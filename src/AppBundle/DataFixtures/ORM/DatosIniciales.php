@@ -230,23 +230,24 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Producto
         $productos = [
-            [0, 0, $lotes2[0] , $envases2[0]],
-            [0, 0, $lotes2[1] , $envases2[0]],
-            [0, 0, $lotes2[2] , $envases2[0]],
-            [0, 0, $lotes2[0] , $envases2[1]],
-            [0, 0, $lotes2[1] , $envases2[1]],
-            [0, 0, $lotes2[2] , $envases2[1]],
-            [0, 0, $lotes2[0] , $envases2[2]],
-            [0, 0, $lotes2[1] , $envases2[2]],
-            [0, 0, $lotes2[2] , $envases2[2]],
+            [0, 0, 3.80, $lotes2[0] , $envases2[0]],
+            [0, 0, 3.75, $lotes2[1] , $envases2[0]],
+            [0, 0, 3.48, $lotes2[2] , $envases2[0]],
+            [0, 0, 3.60, $lotes2[0] , $envases2[1]],
+            [0, 0, 3.25, $lotes2[1] , $envases2[1]],
+            [0, 0, 3.30, $lotes2[2] , $envases2[1]],
+            [0, 0, 3.68, $lotes2[0] , $envases2[2]],
+            [0, 0, 3.43, $lotes2[1] , $envases2[2]],
+            [0, 0, 3.59, $lotes2[2] , $envases2[2]],
         ];
 
         foreach ($productos as $item) {
         $producto = new Producto();
         $producto
             ->setStock($item[1])
-            ->addLote($item[2])
-            ->setEnvase($item[3]);
+            ->setPrecio($item[2])
+            ->addLote($item[3])
+            ->setEnvase($item[4]);
 
         $manager->persist($producto);
     }

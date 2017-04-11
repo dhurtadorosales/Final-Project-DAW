@@ -17,7 +17,7 @@
             <th>Nº</th>
             <th>Cliente</th>
             <th>Fecha</th>
-            <th>Cantidad</th>
+            <th>Base Imponible</th>
             <th></th>
         </tr>
         </thead>
@@ -27,7 +27,7 @@
                 <td>{{ venta.id }}</td>
                 <td>{{ venta.cliente }}{{ venta.socio }}</td>
                 <td>{{ venta.fecha|date('d/m/Y') }}</td>
-                <td>0</td>
+                <td>{{ venta.baseImponible }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

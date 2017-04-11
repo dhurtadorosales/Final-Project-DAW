@@ -46,13 +46,22 @@ class LineaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtención del precio del producto
+        $precio = $producto->getPrecio();
+
         //Creación de línea
         $linea = new Linea();
         $em->persist($linea);
         $linea
             ->setVenta($venta)
             ->setCantidad($cantidad)
+            ->setPrecio($precio)
             ->setProducto($producto);
+
+        //Añadimos la cantidad a la base imponible de la venta
+        $base = $venta->getBaseImponible();
+        $em->persist($venta);
+        $venta->setBaseImponible($base + ($cantidad * $precio));
 
         //Quitamos cantidad al producto
         $em->persist($producto);
@@ -69,12 +78,15 @@ class LineaController extends Controller
     }
 
     /**
-     * @Route("/lineas/insertar/producto/{venta}/{cantidad}/{lote}", name="lineas_insertar_producto")
+     * @Route("/lineas/insertar/lote/{venta}/{cantidad}/{lote}", name="lineas_insertar_lote")
      */
     public function insertarLineaClienteAction(Venta $venta, $cantidad, Lote $lote)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Obtención del precio del lote
+        $precio = $lote->getAceite()->getPrecioKg() * $lote->getAceite()->getDensidadKgLitro();
 
         //Creación de línea
         $linea = new Linea();
@@ -82,7 +94,12 @@ class LineaController extends Controller
         $linea
             ->setVenta($venta)
             ->setCantidad($cantidad)
+            ->setPrecio($precio)
             ->setLote($lote);
+
+        //Añadimos la cantidad a la base imponible de la venta
+        $base = $venta->getBaseImponible();
+        $venta->setBaseImponible($base + ($cantidad * $precio));
 
         //Quitamos cantidad al lote
         $em->persist($lote);

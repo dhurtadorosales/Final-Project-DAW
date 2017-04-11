@@ -39,10 +39,6 @@ class ProductoController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtenemos el producto
-        $producto = $em->getRepository('AppBundle:Producto')
-            ->find($producto);
-
         //Obtenemos el lote
         $lote = $em->getRepository('AppBundle:Lote')
             ->find($lote);
@@ -69,58 +65,10 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/lotes/partidas/asignar/{partida}/{lote}", name="lotes_partidas_asignar")
+     * @Route("/productos/asignar/precio/", name="productos_envasar")
      */
-    public function partidasAsignarAction(Partida $partida, Lote $lote)
+    public function productosPrecioAction()
     {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
 
-        //Asigna la partida al lote
-        $em->persist($partida);
-        $partida
-            ->setLote($lote);
-        $em->flush();
-
-        //Obtener cantidad del lote
-        $cantidadLote = $lote->getCantidad();
-
-        //Obtener cantidad de la partida
-        $cantidadPartida = $partida->getCantidad();
-
-        //Suma cantidad al lote
-        $cantidadNueva = $cantidadLote + $cantidadPartida;
-
-        $em->persist($lote);
-        $lote
-            ->setCantidad($cantidadNueva);
-        $em->flush();
-
-        $mensaje = 'Partida asignada correctamente';
-
-        return $this->render('lote/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
-    }
-
-    /**
-     * @Route("/lotes/aceite/asignar/{aceite}/{lote}", name="lotes_aceite_asignar")
-     */
-    public function aceiteAsignarAction(Aceite $aceite, Lote $lote)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Asigna el aceite al lote
-        $em->persist($lote);
-        $lote
-            ->setAceite($aceite);
-        $em->flush();
-
-        $mensaje = 'Aceite asignado correctamente';
-
-        return $this->render('lote/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
     }
 }

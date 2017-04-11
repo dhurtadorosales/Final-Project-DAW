@@ -27,9 +27,17 @@
         {% for linea in lineas %}
             <tr>
                 <td>{{ linea.cantidad }}</td>
-                <td>{{ linea.producto }}</td>
-                <td>
-                    {% set precio = linea.producto.lotes[0].aceite.precioKg * linea.producto.lotes[0].aceite.densidadKgLitro (1 + linea.producto.envase.incremento) %}
+                <td>{% if linea.producto != null %}
+                        {{ linea.producto }}
+                    {% else %}
+                        {{ linea.lote.aceite }} - Lote: {{ linea.lote }}
+                    {% endif %}
+                </td>
+                <td>{% if linea.producto != null %}
+                        {% set precio = linea.producto.precio %}
+                    {% else %}
+                        {% set precio = linea.lote.aceite.precioKg * linea.lote.aceite.densidadKgLitro %}
+                    {% endif %}
                     {{ precio }}
                 </td>
                 <td>{% set totalLinea = linea.cantidad * precio %}
