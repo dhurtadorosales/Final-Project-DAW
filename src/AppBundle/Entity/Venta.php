@@ -62,6 +62,12 @@ class Venta
      */
     private $lineas;
 
+    /**
+     * @var Temporada
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="ventas")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $temporada;
 
     /**
      * Constructor
@@ -69,7 +75,6 @@ class Venta
     public function __construct()
     {
         $this->lineas = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->porcentajes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -261,36 +266,26 @@ class Venta
     }
 
     /**
-     * Add porcentaje
+     * Set temporada
      *
-     * @param \AppBundle\Entity\Porcentaje $porcentaje
+     * @param \AppBundle\Entity\Temporada $temporada
      *
      * @return Venta
      */
-    public function addPorcentaje(\AppBundle\Entity\Porcentaje $porcentaje)
+    public function setTemporada(\AppBundle\Entity\Temporada $temporada)
     {
-        $this->porcentajes[] = $porcentaje;
+        $this->temporada = $temporada;
 
         return $this;
     }
 
     /**
-     * Remove porcentaje
+     * Get temporada
      *
-     * @param \AppBundle\Entity\Porcentaje $porcentaje
+     * @return \AppBundle\Entity\Temporada
      */
-    public function removePorcentaje(\AppBundle\Entity\Porcentaje $porcentaje)
+    public function getTemporada()
     {
-        $this->porcentajes->removeElement($porcentaje);
-    }
-
-    /**
-     * Get porcentajes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPorcentajes()
-    {
-        return $this->porcentajes;
+        return $this->temporada;
     }
 }

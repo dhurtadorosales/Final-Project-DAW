@@ -38,6 +38,20 @@ class Temporada
      */
     private $liquidaciones;
 
+    /**
+     * @var Entrega[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="temporada")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $entregas;
+
+    /**
+     * @var Venta[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Venta", mappedBy="temporada")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $ventas;
+
 
     /**
      * Convierte a string
@@ -46,8 +60,6 @@ class Temporada
     {
         return $this->getDenominacion();
     }
-
-
     /**
      * Constructor
      */
@@ -55,6 +67,8 @@ class Temporada
     {
         $this->lotes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->liquidaciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ventas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -157,5 +171,73 @@ class Temporada
     public function getLiquidaciones()
     {
         return $this->liquidaciones;
+    }
+
+    /**
+     * Add entrega
+     *
+     * @param \AppBundle\Entity\Entrega $entrega
+     *
+     * @return Temporada
+     */
+    public function addEntrega(\AppBundle\Entity\Entrega $entrega)
+    {
+        $this->entregas[] = $entrega;
+
+        return $this;
+    }
+
+    /**
+     * Remove entrega
+     *
+     * @param \AppBundle\Entity\Entrega $entrega
+     */
+    public function removeEntrega(\AppBundle\Entity\Entrega $entrega)
+    {
+        $this->entregas->removeElement($entrega);
+    }
+
+    /**
+     * Get entregas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEntregas()
+    {
+        return $this->entregas;
+    }
+
+    /**
+     * Add venta
+     *
+     * @param \AppBundle\Entity\Venta $venta
+     *
+     * @return Temporada
+     */
+    public function addVenta(\AppBundle\Entity\Venta $venta)
+    {
+        $this->ventas[] = $venta;
+
+        return $this;
+    }
+
+    /**
+     * Remove venta
+     *
+     * @param \AppBundle\Entity\Venta $venta
+     */
+    public function removeVenta(\AppBundle\Entity\Venta $venta)
+    {
+        $this->ventas->removeElement($venta);
+    }
+
+    /**
+     * Get ventas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVentas()
+    {
+        return $this->ventas;
     }
 }

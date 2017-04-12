@@ -22,7 +22,7 @@ class EntregaController extends Controller
         $entregas = $em->getRepository('AppBundle:Entrega')
             ->getEntregas();
 
-        return $this->render('entrega/listar.html.twig', [
+        return $this->render('entrega/listarTemporada.html.twig', [
             'entregas' => $entregas,
         ]);
     }
@@ -37,7 +37,7 @@ class EntregaController extends Controller
         $entregas = $em->getRepository('AppBundle:Entrega')
             ->getEntregasSocio($socio);
 
-        return $this->render('entrega/listar.html.twig', [
+        return $this->render('entrega/listarTemporada.html.twig', [
             'entregas' => $entregas,
             'socio' => $socio,
         ]);
@@ -76,12 +76,17 @@ class EntregaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincas();
 
+        //Obtención de la temporada en vigor
+        $temporadas = $em->getRepository('AppBundle:Temporada')
+            ->findAll();
+        $temporada = $temporadas[sizeof($temporadas - 1)];
+
         $entregas = [
-            [0, "2017-03-28", "16:15", "16:20", 1500, 0.18, null, null, 1, 0, $procedencias[0], null, $fincas[0]],
-            [0, "2017-03-28", "16:20", "16:25", 500, 0.23, 0.15, "Muy sucia", 1, 0, $procedencias[1], null, $fincas[0]],
-            [0, "2017-03-28", "16:25", "16:30", 200, 0.25, null, null, 2, 0, $procedencias[1], null, $fincas[2]],
-            [0, "2017-03-28", "16:30", "17:03", 1000, 0.22, 0.15, "Atasco de tolva", 3, 0, $procedencias[1], null, $fincas[1]],
-            [0, "2017-03-28", "17:07", "17:20", 900, 0.18, null, null, 3, 0, $procedencias[0], null, $fincas[2]]
+            [0, "2017-03-28", "16:15", "16:20", 1500, 0.18, null, null, 1, 0, $procedencias[0], null, $fincas[0], $temporada],
+            [0, "2017-03-28", "16:20", "16:25", 500, 0.23, 0.15, "Muy sucia", 1, 0, $procedencias[1], null, $fincas[0], $temporada],
+            [0, "2017-03-28", "16:25", "16:30", 200, 0.25, null, null, 2, 0, $procedencias[1], null, $fincas[2], $temporada],
+            [0, "2017-03-28", "16:30", "17:03", 1000, 0.22, 0.15, "Atasco de tolva", 3, 0, $procedencias[1], null, $fincas[1], $temporada],
+            [0, "2017-03-28", "17:07", "17:20", 900, 0.18, null, null, 3, 0, $procedencias[0], null, $fincas[2], $temporada]
         ];
 
         /** @var EntityManager $em */
@@ -101,7 +106,8 @@ class EntregaController extends Controller
                 ->setBascula($item[8])
                 ->setPrecioKgAceite($item[9])
                 ->setProcedencia($item[10])
-                ->setFinca($item[12]);
+                ->setFinca($item[12])
+                ->setTemporada($item[13]);
 
             $em->flush();
         }

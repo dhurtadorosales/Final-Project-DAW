@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Cliente;
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Temporada;
 use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,17 +14,51 @@ use Symfony\Component\HttpFoundation\Request;
 class VentaController extends Controller
 {
     /**
-     * @Route("/ventas/listar", name="ventas_listar")
+     * @Route("/ventas/listar/temporada/{temporada}", name="ventas_listar_temporada")
      */
-    public function listarAction()
+    public function listarTemporadaAction(Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $ventas = $em->getRepository('AppBundle:Venta')
-            ->findAll();
+            ->getVentasTemporada($temporada);
 
-        return $this->render('venta/listar.html.twig', [
-            'ventas' => $ventas
+        return $this->render('venta/listarTemporada.html.twig', [
+            'ventas' => $ventas,
+            'temporada' => $temporada
+        ]);
+    }
+
+    /**
+     * @Route("/ventas/listar/temporada/socio/{temporada}/{socio}", name="ventas_listar_temporada_socio")
+     */
+    public function listarTemporadaSocioAction(Temporada $temporada, Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $ventas = $em->getRepository('AppBundle:Venta')
+            ->getVentasTemporadaSocio($temporada, $socio);
+
+        return $this->render('venta/listarSocioTemporada.html.twig', [
+            'ventas' => $ventas,
+            'socio' => $socio,
+            'temporada' => $temporada
+        ]);
+    }
+
+    /**
+     * @Route("/ventas/listar/cliente/{cliente}", name="ventas_listar_cliente")
+     */
+    public function listarClienteAction(Cliente $cliente)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $ventas = $em->getRepository('AppBundle:Venta')
+            ->getVentasCliente($cliente);
+
+        return $this->render('venta/listarCliente.html.twig', [
+            'ventas' => $ventas,
+            'cliente' => $cliente
         ]);
     }
 
@@ -60,12 +95,17 @@ class VentaController extends Controller
     }
 
     /**
-     * @Route("/ventas/insertar/socio/{socio}", name="ventas_insertar_socio")
+     * @Route("/ventas/insertar/socio/{socio}{temporada}", name="ventas_insertar_socio")
      */
-    public function insertarSocioAction(Socio $socio)
+    public function insertarSocioAction(Socio $socio, Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Obtenemos la temporada vigente
+        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
+            ->findAll();
+        $temporada = $temporadas[sizeof($temporadas) - 1];
 
         //Obtenemos los porcentajes
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
@@ -80,7 +120,8 @@ class VentaController extends Controller
             ->setFecha(new \DateTime('now'))
             ->setBaseImponible(0)
             ->setIva($iva)
-            ->setSocio($socio);
+            ->setSocio($socio)
+            ->setTemporada($temporada);
 
         $em->flush();
 

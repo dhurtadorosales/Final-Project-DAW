@@ -29,7 +29,7 @@ class LiquidacionController extends Controller
         $liquidaciones = $em->getRepository('AppBundle:Liquidacion')
             ->getLiquidacionTemporada($temporada);
 
-        return $this->render('liquidacion/listar.html.twig', [
+        return $this->render('liquidacion/listarTemporada.html.twig', [
             'liquidaciones' => $liquidaciones,
             'temporada' => $temporada
         ]);
@@ -38,18 +38,49 @@ class LiquidacionController extends Controller
     /**
      * @Route("/liquidaciones/detalle/{socio}{temporada}", name="liquidaciones_detalle")
      */
-    public function detalleAction(Socio $socio, $temporada)
+    public function detalleAction(Socio $socio, Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtención de la liquidación correspondiente
         $liquidacion = $em->getRepository('AppBundle:Liquidacion')
-            ->getLiquidacionDetalle($socio, $temporada);
+                ->getLiquidacionDetalle($socio, $temporada);
+
+        //Obtencion de las entregas del socio en esa temporada
+        $entregas = $em->getRepository('AppBundle:Entrega')
+                ->getEntregasSocioTemporada($socio, $temporada);
+
+        //Obtención de las compras hechas por el socio en esa temporada
+        $ventas = $em->getRepository('AppBundle:Venta')
+                ->getVentasTemporadaSocio($temporada, $socio);
+
+        //Suma de las cantidades de cada entrega
+        $sumaEntregas = 0;
+        for ($i = 0; $i < sizeof($entregas); $i++) {
+            if ($entregas[$i]->getSancion() != null) {
+                $cantidad = $entregas[$i]->getPeso() * $entregas[$i]->getRendimiento() - ($entregas[$i]->getPeso() * $entregas[$i]->getRendimiento() * $entregas[$i]->getSancion());
+            }
+            else {
+                $cantidad = $entregas[$i]->getPeso() * $entregas[$i]->getRendimiento();
+            }
+            $precio = $entregas[$i]->getPrecioKgLitro();
+            $sumaEntregas = $sumaEntregas + ($cantidad * $precio);
+        }
+
+        //Suma de las cantidades de cada venta
+        $sumaVentas = 0;
+        for ($i = 0; $i < sizeof($ventas); $i++) {
+            $cantidad = $ventas[$i]->getBaseImponible();
+            $sumaVentas = $sumaVentas + $cantidad;
+        }
 
         return $this->render('liquidacion/detalle.html.twig', [
             'liquidacion' => $liquidacion,
             'socio' => $socio,
-            'temporada' => $temporada
+            'temporada' => $temporada,
+            'sumaEntregas' => $sumaEntregas,
+            'sumaVentas' => $sumaVentas
         ]);
     }
 

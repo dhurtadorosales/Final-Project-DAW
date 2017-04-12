@@ -24,7 +24,7 @@ class LoteController extends Controller
         $lotes = $em->getRepository('AppBundle:Lote')
             ->getLotes();
 
-        return $this->render('lote/listar.html.twig', [
+        return $this->render('lote/listarTemporada.html.twig', [
             'lotes' => $lotes
         ]);
     }

@@ -93,6 +93,12 @@ class Entrega
      */
     private $finca;
 
+    /**
+     * @var Temporada
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="entregas")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $temporada;
 
 
     /**
@@ -228,7 +234,7 @@ class Entrega
     /**
      * Set sancion
      *
-     * @param integer $sancion
+     * @param float $sancion
      *
      * @return Entrega
      */
@@ -242,7 +248,7 @@ class Entrega
     /**
      * Get sancion
      *
-     * @return integer
+     * @return float
      */
     public function getSancion()
     {
@@ -391,5 +397,29 @@ class Entrega
     public function getFinca()
     {
         return $this->finca;
+    }
+
+    /**
+     * Set temporada
+     *
+     * @param \AppBundle\Entity\Temporada $temporada
+     *
+     * @return Entrega
+     */
+    public function setTemporada(\AppBundle\Entity\Temporada $temporada)
+    {
+        $this->temporada = $temporada;
+
+        return $this;
+    }
+
+    /**
+     * Get temporada
+     *
+     * @return \AppBundle\Entity\Temporada
+     */
+    public function getTemporada()
+    {
+        return $this->temporada;
     }
 }

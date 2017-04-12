@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Aceite;
+use AppBundle\Entity\Cliente;
 use AppBundle\Entity\Entrega;
 use AppBundle\Entity\Envase;
 use AppBundle\Entity\Lote;
@@ -223,6 +224,32 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
+    public function getEntregasSocioTemporada(Socio $socio, Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('e')
+            ->addSelect('f')
+            ->addSelect('p')
+            ->addSelect('t')
+            ->from('AppBundle:Entrega', 'e')
+            ->join('e.temporada', 't')
+            ->join('e.finca', 'f')
+            ->join('f.propietario', 'p')
+            ->join('f.arrendatario', 'a')
+            ->where('t = :temporada')
+            ->andwhere('p = :socio')
+            ->orwhere('a = :socio')
+            ->setParameter('temporada', $temporada)
+            ->setParameter('socio', $socio)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
     public function getEntregasDetalle(Entrega $entrega, Socio $socio)
     {
         /** @var EntityManager $em */
@@ -255,6 +282,24 @@ class ConsultasRepository extends EntityRepository
         $consulta = $em->createQueryBuilder()
             ->select('l')
             ->from('AppBundle:Lote', 'l')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getLotesTemporada(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->addSelect('t')
+            ->from('AppBundle:Lote', 'l')
+            ->join('l.temporada', 't')
+            ->where('t = :temporada')
+            ->setParameter('temporada', $temporada)
             ->getQuery()
             ->getResult();
 
@@ -304,6 +349,65 @@ class ConsultasRepository extends EntityRepository
             ->from('AppBundle:Linea', 'l')
             ->where('l.venta = :venta')
             ->setParameter('venta', $venta)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getVentasTemporada(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('v')
+            ->addSelect('t')
+            ->from('AppBundle:Venta', 'v')
+            ->join('v.temporada', 't')
+            ->where('t = :temporada')
+            ->setParameter('temporada', $temporada)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getVentasTemporadaSocio(Temporada $temporada, Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('v')
+            ->addSelect('t')
+            ->addSelect('s')
+            ->from('AppBundle:Venta', 'v')
+            ->join('v.temporada', 't')
+            ->join('v.socio', 's')
+            ->where('t = :temporada')
+            ->andWhere('s = :socio')
+            ->setParameter('temporada', $temporada)
+            ->setParameter('socio', $socio)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getVentasCliente(Cliente $cliente)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('v')
+            ->addSelect('t')
+            ->addSelect('c')
+            ->from('AppBundle:Venta', 'v')
+            ->join('v.cliente', 'c')
+            ->where('c = :cliente')
+            ->setParameter('cliente', $cliente)
             ->getQuery()
             ->getResult();
 

@@ -18,7 +18,7 @@ class SocioController extends Controller
         $socios = $em->getRepository('AppBundle:Socio')
             ->findAll();
 
-        return $this->render('socio/listar.html.twig', [
+        return $this->render('socio/listarTemporada.html.twig', [
             'socios' => $socios
         ]);
     }

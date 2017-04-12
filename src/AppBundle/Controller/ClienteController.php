@@ -24,7 +24,7 @@ class ClienteController extends Controller
             ->getQuery()
             ->getResult();
 
-        return $this->render('cliente/listar.html.twig', [
+        return $this->render('cliente/listarTemporada.html.twig', [
             'clientes' => $clientes,
         ]);
     }
