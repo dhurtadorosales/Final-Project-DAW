@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Entrega;
 use AppBundle\Entity\Finca;
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Temporada;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,18 +29,19 @@ class EntregaController extends Controller
     }
 
     /**
-     * @Route("/entregas/listar/socio/{socio}", name="entregas_listar_socio")
+     * @Route("/entregas/listar/socio/{socio}/{temporada}", name="entregas_listar_socio")
      */
-    public function listarPorSocioAction(Socio $socio)
+    public function listarPorSocioAction(Socio $socio, Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $entregas = $em->getRepository('AppBundle:Entrega')
-            ->getEntregasSocio($socio);
+            ->getEntregasSocioTemporada($socio, $temporada);
 
-        return $this->render('entrega/listarTemporada.html.twig', [
+        return $this->render('entrega/listarSocioTemporada.html.twig', [
             'entregas' => $entregas,
             'socio' => $socio,
+            'temporada' => $temporada
         ]);
     }
 
@@ -79,7 +81,7 @@ class EntregaController extends Controller
         //Obtención de la temporada en vigor
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->findAll();
-        $temporada = $temporadas[sizeof($temporadas - 1)];
+        $temporada = $temporadas[sizeof($temporadas) - 1];
 
         $entregas = [
             [0, "2017-03-28", "16:15", "16:20", 1500, 0.18, null, null, 1, 0, $procedencias[0], null, $fincas[0], $temporada],

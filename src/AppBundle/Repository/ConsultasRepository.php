@@ -373,7 +373,7 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
-    public function getVentasTemporadaSocio(Temporada $temporada, Socio $socio)
+    public function getVentasSocioTemporada(Socio $socio, Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
@@ -402,7 +402,6 @@ class ConsultasRepository extends EntityRepository
 
         $consulta = $em->createQueryBuilder()
             ->select('v')
-            ->addSelect('t')
             ->addSelect('c')
             ->from('AppBundle:Venta', 'v')
             ->join('v.cliente', 'c')

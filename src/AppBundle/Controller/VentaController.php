@@ -30,14 +30,14 @@ class VentaController extends Controller
     }
 
     /**
-     * @Route("/ventas/listar/temporada/socio/{temporada}/{socio}", name="ventas_listar_temporada_socio")
+     * @Route("/ventas/listar/socio/temporada/{socio}/{temporada}", name="ventas_listar_socio_temporada")
      */
     public function listarTemporadaSocioAction(Temporada $temporada, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $ventas = $em->getRepository('AppBundle:Venta')
-            ->getVentasTemporadaSocio($temporada, $socio);
+            ->getVentasSocioTemporada($socio, $temporada);
 
         return $this->render('venta/listarSocioTemporada.html.twig', [
             'ventas' => $ventas,

@@ -34,11 +34,6 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         //Temporada
-        $temporada = new Temporada();
-        $temporada
-            ->setDenominacion('2016/2017');
-        $manager->persist($temporada);
-
         $temporadaAuxiliar = new Temporada();
         $temporadaAuxiliar
             ->setDenominacion('00/00');

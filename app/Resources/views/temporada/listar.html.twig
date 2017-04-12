@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Temporadas{% endblock %}
+
+{% block section %}
+    <h1>Listado de temporadas</h1>
+    <ul>
+        {% for temporada in temporadas %}
+            <li>{{ temporada }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

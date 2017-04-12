@@ -19,25 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
 class TemporadaController extends Controller
 {
     /**
-     * @Route("/liquidaciones/listar/{temporada}", name="liquidaciones_listar_temporada")
+     * @Route("/temporadas/listar", name="temporadas_listar")
      */
-    public function listarAction(Temporada $temporada)
+    public function listarAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $liquidaciones = $em->getRepository('AppBundle:Temporada')
-            ->getLiquidacionTemporada($temporada);
+        $temporadas = $em->getRepository('AppBundle:Temporada')
+            ->findAll();
 
         return $this->render('temporada/listarTemporada.html.twig', [
-            'liquidaciones' => $liquidaciones,
-            'temporada' => $temporada
+            'temporadas' => $temporadas
         ]);
     }
 
 
     /**
-     * @Route("/temporada/comenzar", name="liquidaciones_insertar")
+     * @Route("/temporadas/comenzar", name="temporadas_comenzar")
      */
     public function insertarLiquidacionAction()
     {
@@ -71,11 +70,34 @@ class TemporadaController extends Controller
         $fecha = new \DateTime('now');
         $fecha = $fecha->format('Y');
         $anio1 = (int)$fecha;
-        $anio2 = $anio1++;
+        $anio2 = $anio1 + 1;
         $denominacion = $anio1 . "/" . $anio2;
 
         $nuevaTemporada
                 ->setDenominacion($denominacion);
+
+        //Obtención de todos los socios
+        $socios = $em->getRepository('AppBundle:Socio')
+            ->findAll();
+
+        //Obtención de los porcentajes vigentes
+        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+            ->findAll();
+
+        //Creación de la nueva liquidación de cada socio
+        foreach ($socios as $item) {
+            $liquidacion = new  Liquidacion();
+            $em->persist($liquidacion);
+            $liquidacion
+                ->setTemporada($nuevaTemporada)
+                ->setBeneficio(0)
+                ->setGasto(0)
+                ->setIva($porcentajes[0]->getCantidad())
+                ->setIvaReducido($porcentajes[1]->getCantidad())
+                ->setRetencion($porcentajes[2]->getCantidad())
+                ->setIndiceCorrector($porcentajes[3]->getCantidad())
+                ->setSocio($item);
+        }
 
         //Creación de lotes con la temporada nueva
         $numLotes = 90;
@@ -92,9 +114,9 @@ class TemporadaController extends Controller
 
         $em->flush();
 
-        $mensaje = 'Liquidacion insertada correctamente';
+        $mensaje = 'Temporada comenzada correctamente';
 
-        return $this->render('liquidacion/confirma.html.twig', [
+        return $this->render('temporada/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

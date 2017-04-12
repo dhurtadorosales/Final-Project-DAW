@@ -6,6 +6,7 @@ use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Partida;
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Temporada;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,18 +15,19 @@ use Symfony\Component\HttpFoundation\Request;
 class LoteController extends Controller
 {
     /**
-     * @Route("/lotes/listar", name="lotes_listar")
+     * @Route("/lotes/listar/{temporada}", name="lotes_listar")
      */
-    public function indexAction()
+    public function indexAction(Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
         $lotes = $em->getRepository('AppBundle:Lote')
-            ->getLotes();
+            ->getLotesTemporada($temporada);
 
-        return $this->render('lote/listarTemporada.html.twig', [
-            'lotes' => $lotes
+        return $this->render('lote/listar.html.twig', [
+            'lotes' => $lotes,
+            'temporada' => $temporada
         ]);
     }
 

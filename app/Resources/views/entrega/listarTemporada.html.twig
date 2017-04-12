@@ -3,22 +3,7 @@
 {% block title %}Entregas{% endblock %}
 
 {% block section %}
-    <h2>Entrega Nº {{ entrega.id }}</h2>
-    <h2>Socio: {{ socio }}</h2>
-    <table class="table table-bordered table-striped table-hover">
-        <tr>
-            <td>Temporada</td><td>{{ entrega.temporada }}</td>
-        </tr>
-        <tr>
-            <td>Fecha</td><td>{{ entrega.fecha|date('d/m/Y') }}</td>
-        </tr>
-        <tr>
-            <td>Hora inicio</td><td>{{ entrega.horaInicio|date('H:i') }}</td>
-        </tr>
-        <tr>
-            <td>Hora fin</td><td>{{ entrega.horaFin|date('H:i') }}</td>
-        </tr>
-    </table>
+    <h1>Entregas temporada: {{ temporada }}</h1>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -29,16 +14,24 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
+            <th>Nº</th>
+            <th>Socio</th>
             <th>Kg Aceituna</th>
             <th>% Rendimiento</th>
             <th>Kg Aceite</th>
             <th>Sanción</th>
             <th>Total kg</th>
+            <th>Aceite</th>
+            <th>Precio</th>
+            <th>Importe</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
+        {% for entrega in entregas %}
             <tr>
+                <td>{{ entrega.id }}</td>
+                <td>{{ entrega.socio }}</td>
                 <td>
                     {% if socio.id == entrega.finca.propietario.id %}
                         {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
@@ -49,8 +42,21 @@
                 </td>
                 <td>{{ entrega.rendimiento * 100 }}</td>
                 <td>{{ pesoAceituna * entrega.rendimiento }}</td>
-                <td>{{ pesoAceituna * entrega.rendimiento * entrega.sancion }}</td>
-                <td>{{ (pesoAceituna * entrega.rendimiento) - (pesoAceituna * entrega.rendimiento * entrega.sancion) }}</td>
+                <td>{% if entrega.sancion != null %}
+                        {% set sancion = pesoAceituna * entrega.rendimiento * entrega.sancion %}
+                    {% else %}
+                        {% set sancion = 0 %}
+                    {% endif %}
+                    {{ sancion }}
+                </td>
+                <td>{{ (pesoAceituna * entrega.rendimiento) - sancion }}</td>
+                <td>
+                    {% if entrega.partida.lote != null %}
+                        {{ entrega.partida.lote.aceite }}
+                    {% endif %}
+                </td>
+                <td>{{ entrega.precioKgAceite }}</td>
+                <td>{{ ((pesoAceituna * entrega.rendimiento) - sancion) * entrega.precioKgAceite }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -63,11 +69,7 @@
                     </a>
                 </td>
             </tr>
+        {% endfor %}
         </tbody>
-        <tfoot>
-            <tr>
-                <td></td><td></td><td></td><td>Observaciones</td><td>{{ entrega.observaciones }}</td>
-            </tr>
-        </tfoot>
     </table>
 {% endblock %}

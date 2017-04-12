@@ -20,7 +20,7 @@ class PartidaController extends Controller
         $partidas = $em->getRepository('AppBundle:Partida')
             ->getPartidas();
 
-        return $this->render('partida/listarTemporada.html.twig', [
+        return $this->render('partida/listar.html.twig', [
             'partidas' => $partidas
         ]);
     }

@@ -29,14 +29,14 @@ class LiquidacionController extends Controller
         $liquidaciones = $em->getRepository('AppBundle:Liquidacion')
             ->getLiquidacionTemporada($temporada);
 
-        return $this->render('liquidacion/listarTemporada.html.twig', [
+        return $this->render('liquidacion/listar.html.twig', [
             'liquidaciones' => $liquidaciones,
             'temporada' => $temporada
         ]);
     }
 
     /**
-     * @Route("/liquidaciones/detalle/{socio}{temporada}", name="liquidaciones_detalle")
+     * @Route("/liquidaciones/detalle/{socio}/{temporada}", name="liquidaciones_detalle")
      */
     public function detalleAction(Socio $socio, Temporada $temporada)
     {
@@ -53,7 +53,7 @@ class LiquidacionController extends Controller
 
         //Obtención de las compras hechas por el socio en esa temporada
         $ventas = $em->getRepository('AppBundle:Venta')
-                ->getVentasTemporadaSocio($temporada, $socio);
+                ->getVentasSocioTemporada($socio, $temporada);
 
         //Suma de las cantidades de cada entrega
         $sumaEntregas = 0;
