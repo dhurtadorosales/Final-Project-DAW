@@ -19,12 +19,6 @@ class Lote
     private $id;
 
     /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $temporada;
-
-    /**
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
@@ -64,12 +58,19 @@ class Lote
     private $lineas;
 
     /**
+     * @var Temporada
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="lotes")
+     */
+    private $temporada;
+
+    /**
      * Convierte a string
      */
     public function __toString()
     {
         return $this->getId() . "-" . $this->getTemporada();
     }
+
 
     /**
      * Constructor
@@ -89,30 +90,6 @@ class Lote
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set temporada
-     *
-     * @param string $temporada
-     *
-     * @return Lote
-     */
-    public function setTemporada($temporada)
-    {
-        $this->temporada = $temporada;
-
-        return $this;
-    }
-
-    /**
-     * Get temporada
-     *
-     * @return string
-     */
-    public function getTemporada()
-    {
-        return $this->temporada;
     }
 
     /**
@@ -287,5 +264,29 @@ class Lote
     public function getLineas()
     {
         return $this->lineas;
+    }
+
+    /**
+     * Set temporada
+     *
+     * @param \AppBundle\Entity\Temporada $temporada
+     *
+     * @return Lote
+     */
+    public function setTemporada(\AppBundle\Entity\Temporada $temporada = null)
+    {
+        $this->temporada = $temporada;
+
+        return $this;
+    }
+
+    /**
+     * Get temporada
+     *
+     * @return \AppBundle\Entity\Temporada
+     */
+    public function getTemporada()
+    {
+        return $this->temporada;
     }
 }

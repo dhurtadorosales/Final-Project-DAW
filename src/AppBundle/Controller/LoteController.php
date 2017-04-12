@@ -53,9 +53,13 @@ class LoteController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtenemos la última temporada
+        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
+            ->findAll();
+        $temporada = $temporadas[sizeof($temporadas) - 1];
+
         $numLotes = 90;
         $cantidad = 0;
-        $temporada = '16/17';
 
         for ($i = 0; $i < $numLotes; $i++) {
             $lote = new Lote();

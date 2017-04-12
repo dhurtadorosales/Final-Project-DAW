@@ -8,6 +8,7 @@ use AppBundle\Entity\Lote;
 use AppBundle\Entity\Porcentaje;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Temporada;
 use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,16 +21,16 @@ class LiquidacionController extends Controller
     /**
      * @Route("/liquidaciones/listar/{temporada}", name="liquidaciones_listar_temporada")
      */
-    public function listarAction($temporada)
+    public function listarAction(Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $liquidacion = $em->getRepository('AppBundle:Liquidacion')
+        $liquidaciones = $em->getRepository('AppBundle:Liquidacion')
             ->getLiquidacionTemporada($temporada);
 
         return $this->render('liquidacion/listar.html.twig', [
-            'liquidacion' => $liquidacion,
+            'liquidaciones' => $liquidaciones,
             'temporada' => $temporada
         ]);
     }
@@ -60,14 +61,10 @@ class LiquidacionController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtención de la fecha actual
-        $fecha = new \DateTime('now');
-        $anio = $fecha->format('Y');
-
-        //Como se liquidará al año siguiente le sumamos uno
-        $anio = (int)$anio;
-        $anio2 = $anio++;
-        $temporada = $anio . "/" . $anio2;
+        //Obtenemos la última temporada
+        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
+            ->findAll();
+        $temporada = $temporadas[sizeof($temporadas) - 1];
 
         //Obtención de todos los socios
         $socios = $em->getRepository('AppBundle:Socio')
@@ -78,7 +75,7 @@ class LiquidacionController extends Controller
             ->findAll();
 
         //Creación de la liquidación de cada socio
-        for ($i = 0; $i < sizeof($socios); $i++) {
+        foreach ($socios as $item) {
             $liquidacion = new  Liquidacion();
             $em->persist($liquidacion);
             $liquidacion
@@ -89,7 +86,7 @@ class LiquidacionController extends Controller
                 ->setIvaReducido($porcentajes[1]->getCantidad())
                 ->setRetencion($porcentajes[2]->getCantidad())
                 ->setIndiceCorrector($porcentajes[3]->getCantidad())
-                ->setSocio($socios[$i]);
+                ->setSocio($item);
         }
         $em->flush();
 

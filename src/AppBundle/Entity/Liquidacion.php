@@ -25,12 +25,6 @@ class Liquidacion
     private $fecha;
 
     /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private $temporada;
-
-    /**
      * @var float
      * @ORM\Column(type="float")
      */
@@ -72,6 +66,11 @@ class Liquidacion
      */
     private $socio;
 
+    /**
+     * @var Temporada
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="liquidaciones")
+     */
+    private $temporada;
 
 
     /**
@@ -106,30 +105,6 @@ class Liquidacion
     public function getFecha()
     {
         return $this->fecha;
-    }
-
-    /**
-     * Set temporada
-     *
-     * @param integer $temporada
-     *
-     * @return Liquidacion
-     */
-    public function setTemporada($temporada)
-    {
-        $this->temporada = $temporada;
-
-        return $this;
-    }
-
-    /**
-     * Get temporada
-     *
-     * @return integer
-     */
-    public function getTemporada()
-    {
-        return $this->temporada;
     }
 
     /**
@@ -298,5 +273,29 @@ class Liquidacion
     public function getSocio()
     {
         return $this->socio;
+    }
+
+    /**
+     * Set temporada
+     *
+     * @param \AppBundle\Entity\Temporada $temporada
+     *
+     * @return Liquidacion
+     */
+    public function setTemporada(\AppBundle\Entity\Temporada $temporada = null)
+    {
+        $this->temporada = $temporada;
+
+        return $this;
+    }
+
+    /**
+     * Get temporada
+     *
+     * @return \AppBundle\Entity\Temporada
+     */
+    public function getTemporada()
+    {
+        return $this->temporada;
     }
 }

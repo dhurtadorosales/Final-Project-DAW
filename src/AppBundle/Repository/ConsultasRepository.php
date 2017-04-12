@@ -8,6 +8,7 @@ use AppBundle\Entity\Envase;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Partida;
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Temporada;
 use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -309,7 +310,7 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
-    public function getLiquidacionDetalle(Socio $socio, $temporada)
+    public function getLiquidacionDetalle(Socio $socio, Temporada $temporada)
     {
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
@@ -322,6 +323,24 @@ class ConsultasRepository extends EntityRepository
             ->where('s = :socio')
             ->andWhere('l.temporada = :temporada')
             ->setParameter('socio', $socio)
+            ->setParameter('temporada', $temporada)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getLiquidacionTemporada(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->addSelect('t')
+            ->from('AppBundle:Liquidacion', 'l')
+            ->join('l.temporada', 't')
+            ->where('t = :temporada')
             ->setParameter('temporada', $temporada)
             ->getQuery()
             ->getResult();

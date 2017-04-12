@@ -12,6 +12,7 @@ use AppBundle\Entity\Porcentaje;
 use AppBundle\Entity\Procedencia;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Temporada;
 use AppBundle\Entity\Tipo;
 use AppBundle\Entity\Usuario;
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -32,6 +33,17 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
     public function load(ObjectManager $manager)
     {
+        //Temporada
+        $temporada = new Temporada();
+        $temporada
+            ->setDenominacion('2016/2017');
+        $manager->persist($temporada);
+
+        $temporadaAuxiliar = new Temporada();
+        $temporadaAuxiliar
+            ->setDenominacion('00/00');
+        $manager->persist($temporadaAuxiliar);
+
         //Aceite
         $aceites = [
             [0, "Aceite Virgen Extra", 0.916, 3.80],
@@ -213,13 +225,12 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Lote
         $cantidad = 0;
-        $temporada = '00/00';
 
         $lotes2 = [];
         foreach ($aceites2 as $item) {
             $lote = new Lote();
             $lote
-                ->setTemporada($temporada)
+                ->setTemporada($temporadaAuxiliar)
                 ->setCantidad($cantidad)
                 ->setStock($cantidad)
                 ->setAceite($item);
