@@ -67,6 +67,7 @@ class TemporadaController extends Controller
         $anio1 = (int)$fecha;
         $anio2 = $anio1 + 1;
         $denominacion = $anio1 . "/" . $anio2;
+        //$denominacion = '2018/2019';
 
         try {
             $nuevaTemporada
@@ -99,10 +100,11 @@ class TemporadaController extends Controller
             $numLotes = 90;
             $cantidad = 0;
 
-            for ($i = 0; $i < $numLotes; $i++) {
+            for ($i = 1; $i <= $numLotes; $i++) {
                 $lote = new Lote();
                 $em->persist($lote);
                 $lote
+                    ->setNumero($i)
                     ->setTemporada($nuevaTemporada)
                     ->setCantidad($cantidad)
                     ->setStock($cantidad);

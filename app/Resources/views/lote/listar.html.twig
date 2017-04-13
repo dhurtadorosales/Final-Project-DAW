@@ -27,7 +27,7 @@
         <tbody>
         {% for lote in lotes %}
             <tr>
-                <td>{{ lote.id }}-{{ lote.temporada }}</td>
+                <td>{{ lote }}</td>
                 <td>{{ lote.cantidad }}</td>
                 <td>{{ lote.stock }}</td>
                 <td>{% if lote.aceite != null %}

@@ -19,6 +19,12 @@ class Lote
     private $id;
 
     /**
+     * @var integer
+     * @ORM\Column(type="integer")
+     */
+    private $numero;
+
+    /**
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
@@ -68,7 +74,7 @@ class Lote
      */
     public function __toString()
     {
-        return $this->getId() . "-" . $this->getTemporada();
+        return $this->getNumero() . "-" . $this->getTemporada();
     }
 
 
@@ -90,6 +96,30 @@ class Lote
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set numero
+     *
+     * @param integer $numero
+     *
+     * @return Lote
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return integer
+     */
+    public function getNumero()
+    {
+        return $this->numero;
     }
 
     /**

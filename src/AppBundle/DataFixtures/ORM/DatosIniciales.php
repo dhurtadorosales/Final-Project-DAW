@@ -225,6 +225,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         foreach ($aceites2 as $item) {
             $lote = new Lote();
             $lote
+                ->setNumero(0)
                 ->setTemporada($temporadaAuxiliar)
                 ->setCantidad($cantidad)
                 ->setStock($cantidad)

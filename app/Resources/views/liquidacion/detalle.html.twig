@@ -29,43 +29,43 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
-                <th>GANANCIAS</th>
-                <th>DEDUCCIONES</th>
+                <th colspan="2">GANANCIAS</th>
+                <th colspan="2">DEDUCCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Peso Aceituna</td>
-                <td>{{ pesoAceituna }} kg</td>
-                <td>Base imponible</td>
-                <td>{{ sumaVentas }} €</td>
+                <td>Kg Aceituna</td>
+                <td>{{ pesoAceituna }}</td>
+                <td>Base imponible €</td>
+                <td>{{ sumaVentas }}</td>
             </tr>
             <tr>
-                <td>Rendimiento medio</td>
-                <td>{{ rendimientoMedio * 100 }} %</td>
+                <td>Rendimiento medio %</td>
+                <td>{{ rendimientoMedio * 100 }}</td>
             <tr>
-                <td>Peso Aceite</td>
-                <td>{{ pesoAceite }} kg</td>
+                <td>Kg Aceite</td>
+                <td>{{ pesoAceite }}</td>
             </tr>
             <tr>
-                <td>Base imponible</td>
-                <td>{{ sumaEntregas }} €</td>
+                <td>Base imponible €</td>
+                <td>{{ sumaEntregas }}</td>
             </tr>
             <tr>
+                <td>IVA %</td>
+                <td>{{ porcentajes[1].cantidad * 100 }}</td>
                 <td>IVA</td>
-                <td>{{ porcentajes[1].cantidad * 100 }} %</td>
-                <td>IVA</td>
-                <td>{{ porcentajes[1].cantidad * 100 }} %</td>
+                <td>{{ porcentajes[1].cantidad * 100 }}</td>
             </tr>
             <tr>
-                <td>Retención</td>
-                <td>{{ porcentajes[2].cantidad * 100 }} %</td>
+                <td>Retención %</td>
+                <td>- {{ porcentajes[2].cantidad * 100 }}</td>
             </tr>
             <tr>
-                <td>Importe</td>
-                <td>{{ sumaEntregas * (1 + porcentajes[1].cantidad) - (sumaEntregas * porcentajes[2].cantidad) }} €</td>
+                <td>Importe €</td>
+                <td>{{ sumaEntregas * (1 + porcentajes[1].cantidad) - (sumaEntregas * porcentajes[2].cantidad) }}</td>
                 <td>A deducir</td>
-                <td>{{ sumaVentas * (1 * porcentajes[1].cantidad) }} €</td>
+                <td>{{ sumaVentas * (1 + porcentajes[1].cantidad) }}</td>
             </tr>
         </tbody>
     </table>
@@ -73,7 +73,7 @@
         <thead>
             <tr>
                 <th>IMPORTE TOTAL</th>
-                <td>{{ (sumaEntregas * (1 + porcentajes[1].cantidad) - (sumaEntregas * porcentajes[2].cantidad)) - (sumaVentas * (1 * porcentajes[1].cantidad))}} €</td>
+                <td>{{ (sumaEntregas * (1 + porcentajes[1].cantidad) - (sumaEntregas * porcentajes[2].cantidad)) - (sumaVentas * (1 + porcentajes[1].cantidad))}} €</td>
 
             </tr>
         </thead>

@@ -3,13 +3,38 @@
 {% block title %}Ventas{% endblock %}
 
 {% block section %}
-    <h1>Venta Nº {{ venta.id }}</h1>
-    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
-
-
-
-
-    -->
+    <h2>Factura</h2>
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <td>Factura Nº</td><td>{{ ventas[0].numero }}-{{ ventas[0].fecha|date('Y') }}</td>
+        </tr>
+        <tr>
+            <td>Fecha</td><td>{{ ventas[0].fecha|date('d/m/Y') }}</td>
+        </tr>
+    </table>
+    <h3>Datos del cliente</h3>
+    <table class="table table-bordered table-striped table-hover">
+        <tr><td>Nombre/Razón social</td><td>{{ persona }}</td></tr>
+        <tr><td>NIF</td><td>{{ persona.nif }}</td></tr>
+        <tr><td>Direccion</td>
+            <td>{{ persona.calle }}, {{ persona.numero }}
+                {% if persona.bloque != null %}
+                    -bloq {{ persona.bloque }}
+                {% endif %}
+                {% if persona.escalera != null %}
+                    -esc {{ persona.escalera }}
+                {% endif %}
+                {% if persona.piso != null %}
+                    -{{ persona.piso }}º
+                {% endif %}
+                {% if persona.letra != null %}
+                    {{ persona.letra }}
+                {% endif %}
+            </td></tr>
+        <tr><td>Localidad</td><td>{{ persona.localidad }}</td></tr>
+        <tr><td>Código Postal</td><td>{{ persona.codigoPostal }}</td></tr>
+        <tr><td>Provincia</td><td>{{ persona.provincia }}</td></tr>
+    </table>
     <p></p>
     <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -17,7 +42,7 @@
             <th>Cantidad</th>
             <th>Concepto</th>
             <th>Precio</th>
-            <th>Total</th>
+            <th>Importe</th>
         </tr>
         </thead>
         <tbody>
@@ -50,20 +75,20 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td>Base Imponible</td>
+                <td>Base Imponible €</td>
                 <td>{{ total }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td>IVA</td>
-                <td>{{ venta.iva * 100 }}</td>
+                <td>IVA %</td>
+                <td>{{ ventas[0].iva * 100 }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td>Total</td>
-                <td>{{ total * (1 + venta.iva) }}</td>
+                <td>Total €</td>
+                <td>{{ total * (1 + ventas[0].iva) }}</td>
             </tr>
         </tfoot>
     </table>

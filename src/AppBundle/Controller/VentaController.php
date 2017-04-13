@@ -30,6 +30,36 @@ class VentaController extends Controller
     }
 
     /**
+     * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
+     */
+    public function detalleAction(Venta $venta)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtención de la venta
+        $ventas = $em->getRepository('AppBundle:Venta')
+            ->getVenta($venta);
+
+        //Obtención de las líneas de la venta
+        $lineas = $em->getRepository('AppBundle:Linea')
+            ->getLineasVenta($venta);
+
+        if ($ventas[0]->getSocio() != null) {
+            $persona = $ventas[0]->getSocio();
+        }
+        else {
+            $persona = $ventas[0]->getCliente();
+        }
+
+        return $this->render('venta/detalle.html.twig', [
+            'ventas' => $ventas,
+            'lineas' => $lineas,
+            'persona' => $persona
+        ]);
+    }
+
+    /**
      * @Route("/ventas/listar/socio/temporada/{socio}/{temporada}", name="ventas_listar_socio_temporada")
      */
     public function listarTemporadaSocioAction(Temporada $temporada, Socio $socio)
@@ -75,11 +105,19 @@ class VentaController extends Controller
             ->findAll();
         $iva = $porcentajes[0]->getCantidad();
 
+        //Obtenemos el número de ventas de este año
+        $fecha = new \DateTime('now');
+        $anio = $fecha->format('Y');
+        $numero = $em->getRepository('AppBundle:Porcentaje')
+            ->getVentasAnio($anio);
+        $numero ++;
+
         //Creación de nueva venta
         $venta = new Venta();
 
         $em->persist($venta);
         $venta
+            ->setNumero($numero)
             ->setFecha(new \DateTime('now'))
             ->setBaseImponible(0)
             ->setIva($iva)
@@ -95,9 +133,9 @@ class VentaController extends Controller
     }
 
     /**
-     * @Route("/ventas/insertar/socio/{socio}{temporada}", name="ventas_insertar_socio")
+     * @Route("/ventas/insertar/socio/{socio}", name="ventas_insertar_socio")
      */
-    public function insertarSocioAction(Socio $socio, Temporada $temporada)
+    public function insertarSocioAction(Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -112,11 +150,19 @@ class VentaController extends Controller
             ->findAll();
         $ivaReducido = $porcentajes[1]->getCantidad();
 
+        //Obtenemos el número de ventas de este año
+        $fecha = new \DateTime('now');
+        $anio = $fecha->format('Y');
+        $numero = $em->getRepository('AppBundle:Porcentaje')
+            ->getVentasAnio($anio);
+        $numero ++;
+
         //Creación de nueva venta
         $venta = new Venta();
 
         $em->persist($venta);
         $venta
+            ->setNumero($numero)
             ->setFecha(new \DateTime('now'))
             ->setBaseImponible(0)
             ->setIva($ivaReducido)

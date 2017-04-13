@@ -16,22 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LineaController extends Controller
 {
-    /**
-     * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
-     */
-    public function detalleAction(Venta $venta)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $lineas = $em->getRepository('AppBundle:Linea')
-            ->getVentasDetalle($venta);
-
-        return $this->render('venta/detalle.html.twig', [
-            'lineas' => $lineas,
-            'venta' => $venta
-        ]);
-    }
 
     /**
      * @Route("/lineas/insertar/producto/{venta}/{cantidad}/{producto}", name="lineas_insertar_producto")

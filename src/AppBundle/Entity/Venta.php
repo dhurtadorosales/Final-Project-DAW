@@ -19,6 +19,12 @@ class Venta
     private $id;
 
     /**
+     * @var integer
+     * @ORM\Column(type="integer")
+     */
+    private $numero;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="date")
      */
@@ -69,6 +75,7 @@ class Venta
      */
     private $temporada;
 
+
     /**
      * Constructor
      */
@@ -85,6 +92,30 @@ class Venta
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set numero
+     *
+     * @param integer $numero
+     *
+     * @return Venta
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return integer
+     */
+    public function getNumero()
+    {
+        return $this->numero;
     }
 
     /**
@@ -272,7 +303,7 @@ class Venta
      *
      * @return Venta
      */
-    public function setTemporada(\AppBundle\Entity\Temporada $temporada)
+    public function setTemporada(\AppBundle\Entity\Temporada $temporada = null)
     {
         $this->temporada = $temporada;
 

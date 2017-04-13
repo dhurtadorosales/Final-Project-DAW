@@ -238,7 +238,7 @@ class ConsultasRepository extends EntityRepository
             ->join('e.temporada', 't')
             ->join('e.finca', 'f')
             ->join('f.propietario', 'p')
-            ->join('f.arrendatario', 'a')
+            ->leftJoin('f.arrendatario', 'a')
             ->where('t = :temporada')
             ->andwhere('p = :socio')
             ->orwhere('a = :socio')
@@ -262,7 +262,7 @@ class ConsultasRepository extends EntityRepository
             ->from('AppBundle:Entrega', 'e')
             ->join('e.finca', 'f')
             ->join('f.propietario', 'p')
-            ->join('f.arrendatario', 'a')
+            ->leftJoin('f.arrendatario', 'a')
             ->where('e.id = :ent')
             ->andwhere('p = :socio')
             ->orwhere('a = :socio')
@@ -339,7 +339,7 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
-    public function getVentasDetalle(Venta $venta)
+    public function getLineasVenta(Venta $venta)
     {
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
@@ -351,6 +351,40 @@ class ConsultasRepository extends EntityRepository
             ->setParameter('venta', $venta)
             ->getQuery()
             ->getResult();
+
+        return $consulta;
+    }
+
+    public function getVenta(Venta $venta)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('v')
+            ->from('AppBundle:Venta', 'v')
+            ->where('v = :venta')
+            ->setParameter('venta', $venta)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getVentasAnio($anio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('COUNT(v)')
+            ->from('AppBundle:Venta', 'v')
+            ->where('v.fecha > :fechaInicio')
+            ->andWhere('v.fecha < :fechaFin')
+            ->setParameter('fechaInicio', new \DateTime(($anio - 1) . "-12-31"))
+            ->setParameter('fechaFin', new \DateTime(($anio + 1) . "-01-01"))
+            ->getQuery()
+            ->getSingleScalarResult();
 
         return $consulta;
     }
