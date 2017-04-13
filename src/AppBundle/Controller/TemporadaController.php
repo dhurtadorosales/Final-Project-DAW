@@ -2,19 +2,14 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Linea;
 use AppBundle\Entity\Liquidacion;
 use AppBundle\Entity\Lote;
-use AppBundle\Entity\Porcentaje;
-use AppBundle\Entity\Producto;
-use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
-use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\Tests\Compiler\Lille;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class TemporadaController extends Controller
 {
@@ -73,48 +68,52 @@ class TemporadaController extends Controller
         $anio2 = $anio1 + 1;
         $denominacion = $anio1 . "/" . $anio2;
 
-        $nuevaTemporada
+        try {
+            $nuevaTemporada
                 ->setDenominacion($denominacion);
 
-        //Obtención de todos los socios
-        $socios = $em->getRepository('AppBundle:Socio')
-            ->findAll();
+            //Obtención de todos los socios
+            $socios = $em->getRepository('AppBundle:Socio')
+                ->findAll();
 
-        //Obtención de los porcentajes vigentes
-        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
-            ->findAll();
+            //Obtención de los porcentajes vigentes
+            $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+                ->findAll();
 
-        //Creación de la nueva liquidación de cada socio
-        foreach ($socios as $item) {
-            $liquidacion = new  Liquidacion();
-            $em->persist($liquidacion);
-            $liquidacion
-                ->setTemporada($nuevaTemporada)
-                ->setBeneficio(0)
-                ->setGasto(0)
-                ->setIva($porcentajes[0]->getCantidad())
-                ->setIvaReducido($porcentajes[1]->getCantidad())
-                ->setRetencion($porcentajes[2]->getCantidad())
-                ->setIndiceCorrector($porcentajes[3]->getCantidad())
-                ->setSocio($item);
+            //Creación de la nueva liquidación de cada socio
+            foreach ($socios as $item) {
+                $liquidacion = new  Liquidacion();
+                $em->persist($liquidacion);
+                $liquidacion
+                    ->setTemporada($nuevaTemporada)
+                    ->setBeneficio(0)
+                    ->setGasto(0)
+                    ->setIva($porcentajes[0]->getCantidad())
+                    ->setIvaReducido($porcentajes[1]->getCantidad())
+                    ->setRetencion($porcentajes[2]->getCantidad())
+                    ->setIndiceCorrector($porcentajes[3]->getCantidad())
+                    ->setSocio($item);
+            }
+
+            //Creación de lotes con la temporada nueva
+            $numLotes = 90;
+            $cantidad = 0;
+
+            for ($i = 0; $i < $numLotes; $i++) {
+                $lote = new Lote();
+                $em->persist($lote);
+                $lote
+                    ->setTemporada($nuevaTemporada)
+                    ->setCantidad($cantidad)
+                    ->setStock($cantidad);
+            }
+
+            $em->flush();
+
+            $mensaje = 'Temporada comenzada correctamente';
+        } catch (UniqueConstraintViolationException $exception) {
+            $mensaje = 'Ya existe esta temporada.';
         }
-
-        //Creación de lotes con la temporada nueva
-        $numLotes = 90;
-        $cantidad = 0;
-
-        for ($i = 0; $i < $numLotes; $i++) {
-            $lote = new Lote();
-            $em->persist($lote);
-            $lote
-                ->setTemporada($nuevaTemporada)
-                ->setCantidad($cantidad)
-                ->setStock($cantidad);
-        }
-
-        $em->flush();
-
-        $mensaje = 'Temporada comenzada correctamente';
 
         return $this->render('temporada/confirma.html.twig', [
             'mensaje' => $mensaje

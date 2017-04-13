@@ -110,7 +110,7 @@ class VentaController extends Controller
         //Obtenemos los porcentajes
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
             ->findAll();
-        $iva = $porcentajes[0]->getCantidad();
+        $ivaReducido = $porcentajes[1]->getCantidad();
 
         //Creación de nueva venta
         $venta = new Venta();
@@ -119,7 +119,7 @@ class VentaController extends Controller
         $venta
             ->setFecha(new \DateTime('now'))
             ->setBaseImponible(0)
-            ->setIva($iva)
+            ->setIva($ivaReducido)
             ->setSocio($socio)
             ->setTemporada($temporada);
 

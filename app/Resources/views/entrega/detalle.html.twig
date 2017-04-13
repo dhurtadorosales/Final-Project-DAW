@@ -18,6 +18,16 @@
         <tr>
             <td>Hora fin</td><td>{{ entrega.horaFin|date('H:i') }}</td>
         </tr>
+        <tr>
+            <th>Peso aceituna</th>
+            <th><h4>{% if socio.id == entrega.finca.propietario.id %}
+                    {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
+                {% else %}
+                    {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
+                {% endif %}
+                    {{ pesoAceituna }} kg</h4>
+            </th>
+        </tr>
     </table>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
@@ -29,44 +39,27 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
-            <th>Kg Aceituna</th>
+            <th>Tipo</th>
             <th>% Rendimiento</th>
             <th>Kg Aceite</th>
             <th>Sanción</th>
+            <th>Bonificación</th>
             <th>Total kg</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
             <tr>
-                <td>
-                    {% if socio.id == entrega.finca.propietario.id %}
-                        {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
-                    {% else %}
-                        {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
-                    {% endif %}
-                    {{ pesoAceituna }}
-                </td>
+                <td>{{ entrega.procedencia }}</td>
                 <td>{{ entrega.rendimiento * 100 }}</td>
                 <td>{{ pesoAceituna * entrega.rendimiento }}</td>
                 <td>{{ pesoAceituna * entrega.rendimiento * entrega.sancion }}</td>
-                <td>{{ (pesoAceituna * entrega.rendimiento) - (pesoAceituna * entrega.rendimiento * entrega.sancion) }}</td>
-                <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
+                <td>{{ pesoAceituna * entrega.rendimiento * entrega.procedencia.bonificacion }}</td>
+                <td>{{ (pesoAceituna * entrega.rendimiento) - (pesoAceituna * entrega.rendimiento * entrega.sancion) + (pesoAceituna * entrega.rendimiento * entrega.procedencia.bonificacion)}}</td>
             </tr>
         </tbody>
         <tfoot>
             <tr>
-                <td></td><td></td><td></td><td>Observaciones</td><td>{{ entrega.observaciones }}</td>
+                <td></td><td></td><td></td><td></td><td>Observaciones</td><td>{{ entrega.observaciones }}</td>
             </tr>
         </tfoot>
     </table>

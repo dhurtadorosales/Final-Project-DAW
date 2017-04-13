@@ -23,6 +23,8 @@
             <th>Total kg</th>
             <th>Aceite</th>
             <th>Precio</th>
+            <th>Total</th>
+            <th>Bonif. vuelo</th>
             <th>Importe</th>
             <th></th>
         </tr>
@@ -56,6 +58,8 @@
                 </td>
                 <td>{{ entrega.precioKgAceite }}</td>
                 <td>{{ ((pesoAceituna * entrega.rendimiento) - sancion) * entrega.precioKgAceite }}</td>
+                <td>{{ entrega.procedencia.bonificacion * 100 }} %</td>
+                <td>{{ ((pesoAceituna * entrega.rendimiento) - sancion + (pesoAceituna * entrega.procedencia.bonificacion)) * entrega.precioKgAceite }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

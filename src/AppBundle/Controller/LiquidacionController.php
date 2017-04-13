@@ -43,6 +43,10 @@ class LiquidacionController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtención de los porcentajes
+        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+            ->findAll();
+
         //Obtención de la liquidación correspondiente
         $liquidacion = $em->getRepository('AppBundle:Liquidacion')
                 ->getLiquidacionDetalle($socio, $temporada);
@@ -55,18 +59,34 @@ class LiquidacionController extends Controller
         $ventas = $em->getRepository('AppBundle:Venta')
                 ->getVentasSocioTemporada($socio, $temporada);
 
-        //Suma de las cantidades de cada entrega
+        //Suma datos para liquidacion
+        $pesoAceituna = 0;
+        $pesoAceite = 0;
+        $sumaRendimientos = 0;
+        $contadorRendimientos = 0;
         $sumaEntregas = 0;
-        for ($i = 0; $i < sizeof($entregas); $i++) {
-            if ($entregas[$i]->getSancion() != null) {
-                $cantidad = $entregas[$i]->getPeso() * $entregas[$i]->getRendimiento() - ($entregas[$i]->getPeso() * $entregas[$i]->getRendimiento() * $entregas[$i]->getSancion());
+        foreach ($entregas as $entrega) {
+            if ($socio == $entrega->getFinca()->getPropietario()) {
+                $peso = $entrega->getPeso() * $entrega->getFinca()->getPartPropietario();
             }
             else {
-                $cantidad = $entregas[$i]->getPeso() * $entregas[$i]->getRendimiento();
+                $peso = $entrega->getPeso() * $entrega->getFinca()->getPartArrend();
             }
-            $precio = $entregas[$i]->getPrecioKgLitro();
+            $pesoAceituna = $pesoAceituna + $peso;
+
+            $cantidad = ($peso * $entrega->getRendimiento())
+                - ($peso * $entrega->getRendimiento() * $entrega->getSancion())
+                + ($peso * $entrega->getRendimiento() * $entrega->getProcedencia()->getBonificacion());
+            $pesoAceite = $pesoAceite + $cantidad;
+
+            $sumaRendimientos = $sumaRendimientos + $entrega->getRendimiento();
+            $contadorRendimientos ++;
+
+            $precio = $entrega->getPrecioKgAceite();
             $sumaEntregas = $sumaEntregas + ($cantidad * $precio);
         }
+
+        $rendimientoMedio = $sumaRendimientos / $contadorRendimientos;
 
         //Suma de las cantidades de cada venta
         $sumaVentas = 0;
@@ -80,7 +100,11 @@ class LiquidacionController extends Controller
             'socio' => $socio,
             'temporada' => $temporada,
             'sumaEntregas' => $sumaEntregas,
-            'sumaVentas' => $sumaVentas
+            'sumaVentas' => $sumaVentas,
+            'pesoAceituna' => $pesoAceituna,
+            'pesoAceite' => $pesoAceite,
+            'rendimientoMedio' => $rendimientoMedio,
+            'porcentajes' => $porcentajes
         ]);
     }
 
