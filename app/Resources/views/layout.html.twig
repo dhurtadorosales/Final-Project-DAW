@@ -10,11 +10,11 @@
                         {% if app.user %}
                             <li>
                                 <a href="{{ path('perfil') }}">
-                                    <i class="fa fa-sign-user"></i> {{ app.user }}: {{ app.user.nif }}
+                                    <i class="fa fa-sign-user"></i> {{ app.user.nif }}
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ path('salir') }}">
                                     <i class="fa fa-sign-out"></i> {{ 'layout.finalizaSesion'|trans }}
                                 </a>
                             </li>
@@ -81,84 +81,88 @@
                         </div>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-main">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li {% if ruta == 'inicio' %} class="active" {% endif %}>
-                                <a href="#">{{ 'layout.inicio'|trans }}</a>
-                            </li>
-                            <li class="dropdown desplegable">
-                                <a href="#">{{ 'layout.quienesSomos'|trans }}</a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <p>{{ 'layout.descripcion'|trans }}</p>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown desplegable">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
-                                <ul class="dropdown-menu">
-                                        <li><a href="#">{{ 'layout.extra'|trans }}</a></li>
+                        {% block navegador %}
+                            <ul class="nav navbar-nav navbar-right">
+                                {% if ruta == 'inicio' %}
+                                <li {% if ruta == 'inicio' %} class="active" {% endif %}>
+                                    <a href="#">{{ 'layout.inicio'|trans }}</a>
+                                </li>
+                                <li class="dropdown desplegable">
+                                    <a href="#">{{ 'layout.quienesSomos'|trans }}</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <p>{{ 'layout.descripcion'|trans }}</p>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown desplegable">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
+                                    <ul class="dropdown-menu">
+                                            <li><a href="#">{{ 'layout.extra'|trans }}</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">{{ 'layout.virgen'|trans }}</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">{{ 'layout.lampante'|trans }}</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown desplegable">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.variedades'|trans }}</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Picual</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">{{ 'layout.virgen'|trans }}</a></li>
+                                        <li><a href="#">Alberquina</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">{{ 'layout.lampante'|trans }}</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown desplegable">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.variedades'|trans }}</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Picual</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Alberquina</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Gordal</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Hojiblanca</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Lechín</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">{{ 'layout.venta'|trans }}</a>
-                            </li>
-                            <li>
-                                <a href="#">{{ 'layout.contacto'|trans }}</a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right navOculto">
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-language"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#">{{ 'layout.espanol'|trans }}</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">{{ 'layout.ingles'|trans }}</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <input class="form-control mr-sm-2" type="text" id="tbBuscar">
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                                        <li><a href="#">Gordal</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Hojiblanca</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Lechín</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">{{ 'layout.venta'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a href="#">{{ 'layout.contacto'|trans }}</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right navOculto">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-language"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">{{ 'layout.espanol'|trans }}</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">{{ 'layout.ingles'|trans }}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <input class="form-control mr-sm-2" type="text" id="tbBuscar">
+                                        </li>
+                                    </ul>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        {% endblock %}
                     </div>
                 </div>
             </nav>
