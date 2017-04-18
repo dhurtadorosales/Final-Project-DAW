@@ -9,16 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class SocioController extends Controller
 {
     /**
-     * @Route("/socios/listar", name="socios_listar")
+     * @Route("/administrador/socios/listar", name="socios_listar")
      */
-    public function indexAction()
+    public function listarAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $socios = $em->getRepository('AppBundle:Socio')
             ->findAll();
 
-        return $this->render('socio/listarTemporada.html.twig', [
+        return $this->render('socio/listar.html.twig', [
             'socios' => $socios
         ]);
     }

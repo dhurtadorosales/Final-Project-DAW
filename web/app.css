@@ -1,13 +1,89 @@
 body {
     font-family: Arial;
+    background-color: #E9DEF2;
+    background-image: url("images/header.jpg");
+    background-repeat: repeat-x;
+    margin: 0;
+    padding: 0;
 }
 
-nav h3 {
+nav {
+    font-weight: bold;
+}
+
+footer {
+    background-color: #9998A6;
+    border-radius: 0;
+}
+
+footer a {
+    color: #222222;
+}
+
+footer .container {
+    padding-top: 20px;
+}
+
+aside {
+    background-color: #E9DEF2;
+}
+
+section {
+    background-color: #E9DEF2;
+    z-index: 4;
+    margin-top: 0;
+}
+
+.navegacion {
     color: white;
+    opacity: 0.85;
+    z-index: 5;
+}
+
+.contenedor {
+    width: 100%;
+}
+
+.navbar-inverse {
+    border-radius: inherit;
+}
+
+.dropdown-menu {
+    z-index: 15;
+    border-radius: inherit;
+    background-color: #222222;
+    color: #9D9D9D;
+}
+
+.dropdown-menu li a {
+    font-weight: bold;
+    color: #9D9D9D;
+}
+
+.dropdown-menu li a:hover {
+    color: #978B2A;
+    background-color: #222222;
 }
 
 .tituloResponsive {
     display: none;
+}
+
+.contenedorLogoSesion {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.listaNavegador {
+    font-weight: bold;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.listaNavegador li {
+    margin-right: 5%;
 }
 
 .presentacion {
@@ -20,13 +96,25 @@ nav h3 {
     margin-bottom: 0;
 }
 
-.navOculto {
-    display: none;
-}
-
 .logotipo {
     display: flex;
     align-items: center;
+}
+
+.navbar-header {
+    width: 100%;
+}
+
+.menuOculto {
+    display: none;
+}
+
+.activo {
+    background-color: #222222;
+}
+
+.activo a {
+    border-bottom: 5px solid #978B2A;
 }
 
 .listaEnlacesExteriores {
@@ -42,15 +130,24 @@ nav h3 {
     max-width: 200px;
 }
 
-.menu {
-    display: flex;
-}
-
 #logo {
     width: 10%;
 }
 
 @media screen and (max-width: 480px)  {
+    .menuOculto {
+        display: block;
+    }
+
+    .contenedorSesion {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 0;
+    }
+
     .tituloResponsive {
         display: block;
     }
@@ -59,39 +156,52 @@ nav h3 {
         display: none;
     }
 
-    .menuOculto {
-        display: none;
-    }
-
-    .navOculto {
-        display: block;
-    }
-
     .listaEnlacesExteriores img {
         margin-left: 25%;
         max-width: 50px;
     }
 
-    @media screen and (max-width: 768px) {
-        .tituloResponsive {
+    #logo {
+        width: 20%;
+    }
+
+    #navbar-main {
+        margin-right: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+        .menuOculto {
             display: block;
         }
 
-        .eslogan {
+        .contenedorSesion {
             display: none;
         }
 
-        .menuOculto {
-            display: none;
+        .container {
+            width: 100%;
+            padding-right: 0;
         }
 
-        .navOculto {
+        .tituloResponsive {
             display: block;
         }
 
         .listaEnlacesExteriores img {
             margin-left: 25%;
             max-width: 50px;
+        }
+
+        .eslogan {
+            display: none;
+        }
+
+        #logo {
+            width: 20%;
+        }
+
+        #navbar-main {
+            margin-right: 0;
         }
     }
 }

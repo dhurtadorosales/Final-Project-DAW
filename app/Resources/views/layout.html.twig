@@ -4,67 +4,6 @@
     {% set ruta = app.request.get('_route') %}
     {% block header %}
         <header>
-            <nav class="navbar navbar-default navegacion">
-                <div class="container">
-                    <ul class="nav navbar-nav navbar-left">
-                        {% if app.user %}
-                            <li>
-                                <a href="{{ path('perfil') }}">
-                                    <i class="fa fa-sign-user"></i> {{ app.user.nif }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('salir') }}">
-                                    <i class="fa fa-sign-out"></i> {{ 'layout.finalizaSesion'|trans }}
-                                </a>
-                            </li>
-                        {% else %}
-                        <li>
-                            <a href="{{ path('entrar') }}">
-                                <i class="fa fa-sign-in"></i> {{ 'layout.iniciarSesion'|trans }}
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right menuOculto" id="enlaceRedes">
-                        <li>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="button" title="facebook">
-                                <i class="fa fa-facebook" aria-hidden="true"></i>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="button" title="twitter">
-                                <i class="fa fa-twitter" aria-hidden="true"></i>
-                            </button>
-                        </li>
-                        <li class="dropdown desplegable">
-                            <button href="#" class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle"
-                                    data-toggle="dropdown" data-hover="dropdown">
-                                <i class="fa fa-language"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="#">{{ 'layout.espanol'|trans }}</a>
-                                </li>
-                                <li>
-                                    <a href="#">{{ 'layout.ingles'|trans }}</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown desplegable">
-                            <button href="#" class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle"
-                                    data-toggle="dropdown" data-hover="dropdown">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <input class="form-control mr-sm-2" type="text" placeholder="{{ 'layout.buscar'|trans }}" id="tbBuscar">
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
             <nav class="navbar navbar-inverse navegacion">
                 <div class="container">
                     <div class="navbar-header">
@@ -74,26 +13,66 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <div class="logotipo">
-                            <img src="{{ asset('icon.png') }}" alt="logotipo" id="logo">
-                            <h3 class="eslogan"> Sociedad Cooperativa</h3>
-                            <h3 class="tituloResponsive"></h3>
+                        <div class="contenedorLogoSesion">
+                            <div class="logotipo">
+                                <img src="{{ asset('icon.png') }}" alt="logotipo" id="logo">
+                                <h3 class="eslogan"> Sociedad Cooperativa</h3>
+                                <h3 class="tituloResponsive"></h3>
+                            </div>
+                            <ul class="nav navbar-nav navbar-right contenedorSesion">
+                                {% if app.user %}
+                                    <li class="dropdown desplegable">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                            <i class="fa fa-user-circle-o"></i> {{ app.user.nif }}
+                                        <ul class="dropdown-menu">
+                                            <li><a href="{{ path('perfil') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                                    <i class="fa fa-cog"></i> Ir al perfil
+                                                </a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="{{ path('salir') }}">
+                                                    <i class="fa fa-sign-out"></i> {{ 'layout.finalizaSesion'|trans }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a href="{{ path('entrar') }}">
+                                            <i class="fa fa-sign-in"></i> {{ 'layout.iniciarSesion'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
                         </div>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-main">
-                        {% block navegador %}
-                            <ul class="nav navbar-nav navbar-right">
-                                {% if ruta == 'inicio' %}
-                                <li {% if ruta == 'inicio' %} class="active" {% endif %}>
-                                    <a href="#">{{ 'layout.inicio'|trans }}</a>
-                                </li>
-                                <li class="dropdown desplegable">
-                                    <a href="#">{{ 'layout.quienesSomos'|trans }}</a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <p>{{ 'layout.descripcion'|trans }}</p>
-                                        </li>
-                                    </ul>
+                        <ul class="nav navbar-nav navbar-right listaNavegador">
+                            <ul class="nav navbar-nav navbar-right menuOculto">
+                                {% if app.user %}
+                                    <li class="dropdown desplegable">
+                                        <a href="{{ path('perfil') }}">
+                                            <i class="fa fa-user-circle-o"></i> {{ app.user.nif }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('salir') }}">
+                                            <i class="fa fa-sign-out"></i> {{ 'layout.finalizaSesion'|trans }}
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a href="{{ path('entrar') }}">
+                                            <i class="fa fa-sign-in"></i> {{ 'layout.iniciarSesion'|trans }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+
+                            {% if not is_granted('ROLE_USUARIO') %}
+                                <li {% if ruta == 'inicio' %} class="activo" {% endif %}>
+                                    <a href="{{ path('inicio') }}">{{ 'layout.inicio'|trans }}</a>
                                 </li>
                                 <li class="dropdown desplegable">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
@@ -125,67 +104,45 @@
                                 <li>
                                     <a href="#">{{ 'layout.contacto'|trans }}</a>
                                 </li>
-                            </ul>
-                            <ul class="nav navbar-nav navbar-right navOculto">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-facebook"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <li class="dropdown desplegable">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
                                         <i class="fa fa-language"></i>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a href="#">{{ 'layout.espanol'|trans }}</a>
                                         </li>
+                                        <li class="divider"></li>
                                         <li>
                                             <a href="#">{{ 'layout.ingles'|trans }}</a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <input class="form-control mr-sm-2" type="text" id="tbBuscar">
-                                        </li>
-                                    </ul>
-                                </li>
-                                {% endif %}
-                            </ul>
-                        {% endblock %}
+                            {% endif %}
+                        </ul>
                     </div>
                 </div>
             </nav>
         </header>
     {% endblock %}
     {% block content %}
-        {% block aside %}{% endblock %}
-        {% block section %}{% endblock %}
+        <aside>{% block aside %}{% endblock %}</aside>
+        <section>{% block section %}{% endblock %}</section>
     {% endblock %}
     {% block footer %}
-        <footer class="navbar navbar-default">
+        <footer>
             <div class="container">
-            <ul class="nav navbar-nav navbar-left">
-                <li>
-                    <div>IES ORETANIA</div>
-                    <div>{{ 'layout.autor'|trans }}: Diego Hurtado Rosales</div>
-                </li>
-            </ul>
-            <ul class="nav navbar navbar-right">
-                <li>
-                    <a href="#">{{ 'layout.arriba'|trans }}</a>
-                </li>
-            </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    <li>
+                        <div>IES ORETANIA</div>
+                        <div>{{ 'layout.autor'|trans }}: Diego Hurtado Rosales</div>
+                    </li>
+                </ul>
+                <ul class="nav navbar navbar-right">
+                    <li>
+                        <a href="#">{{ 'layout.arriba'|trans }}</a>
+                    </li>
+                </ul>
             </div>
         </footer>
     {% endblock %}

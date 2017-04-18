@@ -25,6 +25,15 @@ class UsuarioController extends Controller
     }
 
     /**
+     * @Route("/usuarios/{usuario}", name="usuarios")
+     */
+    public function principalAction(Usuario $usuario)
+    {
+
+        return $this->render('usuario/principal.html.twig');
+    }
+
+    /**
      * @Route("/comprobar", name="comprobar")
      * @Route("/salir", name="salir")
      */

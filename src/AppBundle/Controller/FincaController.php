@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FincaController extends Controller
 {
     /**
-     * @Route("/fincas/listar", name="fincas_listar")
+     * @Route("/socio/fincas/listar", name="fincas_listar")
      */
     public function listarAction()
     {
@@ -21,7 +21,7 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincas();
 
-        return $this->render('finca/listarTemporada.html.twig', [
+        return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
         ]);
 
@@ -37,7 +37,7 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincasPorLote($lote);
 
-        return $this->render('finca/listarTemporada.html.twig', [
+        return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
         ]);
     }
@@ -52,7 +52,7 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincasPorPropietario($socio);
 
-        return $this->render('finca/listarTemporada.html.twig', [
+        return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
         ]);
     }
@@ -67,7 +67,7 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincasPorArrendatario($socio);
 
-        return $this->render('finca/listarTemporada.html.twig', [
+        return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
         ]);
     }

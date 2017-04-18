@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ app.user.nif }}{% endblock %}
+
+{% block section %}
+    {% if is_granted('ROLE_ADMINISTRADOR') %}
+        <a class="btn btn-lg btn-success" href="{{ path('temporadas_comenzar') }}">
+            <i class="fa fa-calendar fa-2x pull-left"></i> Comenzar<br>Temporada
+        </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_SOCIO') %}
+        <a class="btn btn-lg btn-success" href="{#{ path('fincas_listar_propietario', {'propietario' : propietario.id}) }#}">
+            <i class="fa fa-area-chart fa-2x pull-left"></i> Fincas<br>En propiedad
+        </a>
+        <a class="btn btn-lg btn-success" href="{#{ path('fincas_listar_arrendatario') }#}">
+            <i class="fa fa-area-chart fa-2x pull-left"></i> Fincas<br>Arrendadas
+        </a>
+    {% endif %}
+
+{% endblock %}
