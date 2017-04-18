@@ -265,7 +265,8 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('75111567F')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'administrador'))
+                ->setNombre('Diego Hurtado Rosales')
+                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '75111567F'))
                 ->setAdministrador(true)
                 ->setEmpleado(true)
                 ->setComercial(true)
@@ -283,6 +284,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('2698364J')
+                ->setNombre('Joaquín Hernández Mota')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '2698364J'))
                 ->setAdministrador(false)
                 ->setEmpleado(true)
@@ -301,6 +303,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('26471698H')
+                ->setNombre('Pedro Román López')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '26471698H'))
                 ->setAdministrador(false)
                 ->setEmpleado(true)
@@ -319,6 +322,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('26456123A')
+                ->setNombre('Antonio Martínez Huertas')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '26456123A'))
                 ->setAdministrador(false)
                 ->setEmpleado(true)
@@ -337,6 +341,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('26354843H')
+                ->setNombre('Valentín González Molina')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '26354843H'))
                 ->setAdministrador(false)
                 ->setEmpleado(false)
@@ -355,6 +360,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('29478215Z')
+                ->setNombre('Luis López Martínez')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '29478215Z'))
                 ->setAdministrador(false)
                 ->setEmpleado(false)
@@ -373,6 +379,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('A23548796')
+                ->setNombre('Koipe, S.A.')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'A23548796'))
                 ->setAdministrador(false)
                 ->setEmpleado(false)
@@ -393,6 +400,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('A23548756')
+                ->setNombre('Carbonell, S.A.')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'A23548756'))
                 ->setAdministrador(false)
                 ->setEmpleado(false)
@@ -413,6 +421,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('B41584732')
+                ->setNombre('Grupo Ybarra, S.L.')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'B41584732'))
                 ->setAdministrador(false)
                 ->setEmpleado(false)
@@ -433,6 +442,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         if ($usuario instanceof UserInterface) {
             $usuario
                 ->setNif('A23846985')
+                ->setNombre('Coosur, S.A.')
                 ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'A23846985'))
                 ->setAdministrador(false)
                 ->setEmpleado(false)

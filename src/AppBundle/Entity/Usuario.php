@@ -33,6 +33,13 @@ class Usuario implements UserInterface
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
+    private $nombre;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
     private $clave;
 
     /**
@@ -399,82 +406,26 @@ class Usuario implements UserInterface
     }
 
     /**
-     * Get administrador
+     * Set nombre
      *
-     * @return boolean
+     * @param string $nombre
+     *
+     * @return Usuario
      */
-    public function getAdministrador()
+    public function setNombre($nombre)
     {
-        return $this->administrador;
+        $this->nombre = $nombre;
+
+        return $this;
     }
 
     /**
-     * Get empleado
+     * Get nombre
      *
-     * @return boolean
+     * @return string
      */
-    public function getEmpleado()
+    public function getNombre()
     {
-        return $this->empleado;
-    }
-
-    /**
-     * Get comercial
-     *
-     * @return boolean
-     */
-    public function getComercial()
-    {
-        return $this->comercial;
-    }
-
-    /**
-     * Get dependiente
-     *
-     * @return boolean
-     */
-    public function getDependiente()
-    {
-        return $this->dependiente;
-    }
-
-    /**
-     * Get encargado
-     *
-     * @return boolean
-     */
-    public function getEncargado()
-    {
-        return $this->encargado;
-    }
-
-    /**
-     * Get socio
-     *
-     * @return boolean
-     */
-    public function getSocio()
-    {
-        return $this->socio;
-    }
-
-    /**
-     * Get cliente
-     *
-     * @return boolean
-     */
-    public function getCliente()
-    {
-        return $this->cliente;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return boolean
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
+        return $this->nombre;
     }
 }
