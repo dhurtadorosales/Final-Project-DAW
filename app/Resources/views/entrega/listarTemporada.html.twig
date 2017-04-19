@@ -1,0 +1,58 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Entregas{% endblock %}
+
+{% block section %}
+    <h1>Temporada: {{ temporada }}</h1>
+    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
+
+
+
+
+    -->
+    <p></p>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Nº</th>
+            <th>Propietario</th>
+            <th>Arrendatario</th>
+            <th>Kg Aceituna</th>
+            <th>Rendimiento %</th>
+            <th>Kg Aceite</th>
+            <th>Procedencia %</th>
+            <th>Aceite</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entrega in entregas %}
+            <tr>
+                <td>{{ entrega.id }}</td>
+                <td>{{ entrega.finca.propietario }}</td>
+                <td>{{ entrega.finca.arrendatario }}</td>
+                <td>{{ entrega.peso }}</td>
+                <td>{{ entrega.rendimiento * 100 }}</td>
+                <td>{{ entrega.peso * entrega.rendimiento }}</td>
+                <td>{{ entrega.procedencia}}</td>
+                <td>
+                    {% if entrega.partida.lote != null %}
+                        {{ entrega.partida.lote.aceite }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

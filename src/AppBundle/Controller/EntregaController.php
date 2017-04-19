@@ -14,6 +14,22 @@ use Symfony\Component\HttpFoundation\Request;
 class EntregaController extends Controller
 {
     /**
+     * @Route("/entregas/listar/temporada/{temporada}", name="entregas_listar_temporada")
+     */
+    public function listarTemporadaAction(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $entregas = $em->getRepository('AppBundle:Entrega')
+            ->getEntregasTemporada($temporada);
+
+        return $this->render('entrega/listarTemporada.html.twig', [
+            'entregas' => $entregas,
+            'temporada' => $temporada
+        ]);
+    }
+
+    /**
      * @Route("/entregas/listar/socio/{socio}/{temporada}", name="entregas_listar_socio")
      */
     public function listarPorSocioAction(Socio $socio, Temporada $temporada)

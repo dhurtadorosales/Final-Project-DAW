@@ -31,8 +31,13 @@ class MovimientoController extends Controller
             ->getVentasTemporada($temporada);
 
         $sumaVentas = 0;
-        foreach ($ventas as $item) {
-            $sumaVentas = $sumaVentas + $item->getSuma() - ($item->getSuma() * $item->getDescuento()) + ($item->getSuma() * $item->getIva());
+        foreach ($ventas as $venta) {
+            $sumaVenta = $venta->getSuma();
+            $descuento = $sumaVenta * $venta->getDescuento();
+            $baseImponible = $sumaVenta - $descuento;
+            $sumaIva = $baseImponible * $venta->getIva();
+            $totalVenta = $baseImponible + $sumaIva;
+            $sumaVentas = $sumaVentas + $totalVenta;
         }
 
         return $this->render('movimiento/listar.html.twig', [

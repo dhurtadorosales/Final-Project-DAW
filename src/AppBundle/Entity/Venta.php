@@ -71,7 +71,6 @@ class Venta
     /**
      * @var Temporada
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="ventas")
-     * @ORM\JoinColumn(nullable=true)
      */
     private $temporada;
 

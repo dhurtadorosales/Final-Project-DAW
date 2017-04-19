@@ -83,8 +83,14 @@ class LiquidacionController extends Controller
 
         //Cálculo de suma de ventas de la temporada
         $sumaVentasTemporada = 0;
+
         foreach ($ventasTemporada as $venta) {
-            $sumaVentasTemporada = $sumaVentasTemporada + ($venta->getSuma() - ($venta->getSuma() * $venta->getDescuento()) + ($venta->getSuma() - ($venta->getSuma() * $venta->getDescuento()) * $venta->getIva()));
+            $sumaVenta = $venta->getSuma();
+            $descuento = $sumaVenta * $venta->getDescuento();
+            $baseImponible = $sumaVenta - $descuento;
+            $sumaIva = $baseImponible * $venta->getIva();
+            $totalVenta = $baseImponible + $sumaIva;
+            $sumaVentasTemporada = $sumaVentasTemporada + $totalVenta;
         }
 
         //Cálculo de suma de kg entregas
@@ -127,7 +133,7 @@ class LiquidacionController extends Controller
             $sumaVentas = $sumaVentas + $cantidad;
         }
 
-        $precioLiquidacion = (($sumaMovimientos + $sumaVentasTemporada) / $sumaEntregas) / (sizeof($socios) - 1);
+        $precioLiquidacion = (($sumaMovimientos + $sumaVentasTemporada) / $sumaEntregas);
 
         return $this->render('liquidacion/detalle.html.twig', [
             'liquidacion' => $liquidacion,

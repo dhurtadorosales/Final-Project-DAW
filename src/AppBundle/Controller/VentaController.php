@@ -99,6 +99,11 @@ class VentaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtenemos la temporada vigente
+        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
+            ->findAll();
+        $temporada = $temporadas[sizeof($temporadas) - 1];
+
         //Obtenemos los porcentajes
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
             ->findAll();
@@ -121,6 +126,7 @@ class VentaController extends Controller
             ->setSuma(0)
             ->setIva($iva)
             ->setCliente($cliente)
+            ->setTemporada($temporada)
             ->setDescuento($cliente->getDescuento());
 
         $em->flush();
