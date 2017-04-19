@@ -103,6 +103,12 @@ class Socio
     private $email;
 
     /**
+     * @var float
+     * @ORM\Column(type="float", precision=2)
+     */
+    private $descuento;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="date")
      */
@@ -155,7 +161,6 @@ class Socio
     {
         return $this->getNombre() . " " . $this->getApellidos();
     }
-
 
     /**
      * Constructor
@@ -512,6 +517,30 @@ class Socio
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set descuento
+     *
+     * @param float $descuento
+     *
+     * @return Socio
+     */
+    public function setDescuento($descuento)
+    {
+        $this->descuento = $descuento;
+
+        return $this;
+    }
+
+    /**
+     * Get descuento
+     *
+     * @return float
+     */
+    public function getDescuento()
+    {
+        return $this->descuento;
     }
 
     /**

@@ -48,8 +48,16 @@
                 <td>{{ pesoAceite }}</td>
             </tr>
             <tr>
+                <td>€/kg Aceite</td>
+                <td>{{ precioLiquidacion }}</td>
+            </tr>
+            <tr>
+                <td>Bonificaciones €</td>
+                <td>{{ sumaBonificacion }}</td>
+            </tr>
+            <tr>
                 <td>Base imponible €</td>
-                <td>{{ sumaEntregas }}</td>
+                <td>{{ (pesoAceite * precioLiquidacion) + sumaBonificacion }}</td>
             </tr>
             <tr>
                 <td>IVA %</td>
@@ -63,7 +71,9 @@
             </tr>
             <tr>
                 <td>Importe €</td>
-                <td>{{ sumaEntregas * (1 + porcentajes[1].cantidad) - (sumaEntregas * porcentajes[2].cantidad) }}</td>
+                <td>{% set importe = (pesoAceite * precioLiquidacion) * (1 + porcentajes[1].cantidad) - (pesoAceite * precioLiquidacion * porcentajes[2].cantidad) %}
+                    {{ importe }}
+                </td>
                 <td>A deducir</td>
                 <td>{{ sumaVentas * (1 + porcentajes[1].cantidad) }}</td>
             </tr>

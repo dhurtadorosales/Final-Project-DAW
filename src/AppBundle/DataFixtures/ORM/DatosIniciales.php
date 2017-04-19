@@ -79,9 +79,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Cliente
         $clientes = [
-            [0, "A23548796", "Koipe, S.A.", "", "Ctra/ Arjona", "s/n", "", "", "", "", "24740", "Andújar", "Jaén", "953510065", "atencion.cliente@koipe.com", 0.10],
-            [0, "A23548756", "Carbonell, S.A.", "", "C/ Marie Curie", "20", "", "", "", "", "28521", "Rivas Vaciamacrid", "Madrid", "902202107", "atencion.cliente@carbonell.com", 0.15],
-            [0, "B41584732", "Grupo Ybarra, S.L.", "", "Ctra/ Isla Menorca", "s/n", "", "", "", "", "41703", "Dos Hermanas", "Sevilla", "902014555", "consumidor@grupoybarra.com", 0.10],
+            [0, "A23548796", "Koipe, S.A.", "", "Ctra/ Arjona", "s/n", "", "", "", "", "24740", "Andújar", "Jaén", "953510065", "atencion.cliente@koipe.com", 0.07],
+            [0, "A23548756", "Carbonell, S.A.", "", "C/ Marie Curie", "20", "", "", "", "", "28521", "Rivas Vaciamacrid", "Madrid", "902202107", "atencion.cliente@carbonell.com", 0.05],
+            [0, "B41584732", "Grupo Ybarra, S.L.", "", "Ctra/ Isla Menorca", "s/n", "", "", "", "", "41703", "Dos Hermanas", "Sevilla", "902014555", "consumidor@grupoybarra.com", 0.06],
             [0, "A23846985", "Coosur, S.A.", "", "Ctra/ La Carolina", "s/n", "", "", "", "", "23220", "Vilches", "Jaén", "953631165", "info@coosur.com", 0]
         ];
 
@@ -102,16 +102,16 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setProvincia($item[12])
                 ->setTelefono($item[13])
                 ->setEmail($item[14])
-                ->setDescuentoPersonalizado($item[15]);
+                ->setDescuento($item[15]);
 
             $manager->persist($cliente);
         }
 
         //Socio
         $socios = [
-            [0, "75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "651378790", "dhurtadorosales@gmail.com", "2017-03-27", true, null],
-            [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes", "9", "", "", "", "", "23700", "Linares", "Jaén", "625782462", null, "2017-03-27", true, null],
-            [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti", "15", "", "", "2", "B", "23700", "Linares", "Jaén", "614783565", null, "2017-03-27", true, null]
+            [0, "75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "651378790", "dhurtadorosales@gmail.com", 0.10, "2017-03-27", true, null],
+            [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes", "9", "", "", "", "", "23700", "Linares", "Jaén", "625782462", null, 0.10, "2017-03-27", true, null],
+            [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti", "15", "", "", "2", "B", "23700", "Linares", "Jaén", "614783565", null, 0.10, "2017-03-27", true, null]
         ];
         $socios2 = [];
 
@@ -132,8 +132,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setProvincia($item[12])
                 ->setTelefono($item[13])
                 ->setEmail($item[14])
-                ->setFechaAlta(new \DateTime($item[15]))
-                ->setActivo($item[16]);
+                ->setDescuento($item[15])
+                ->setFechaAlta(new \DateTime($item[16]))
+                ->setActivo($item[17]);
 
             $manager->persist($socio);
             array_push($socios2, $socio);

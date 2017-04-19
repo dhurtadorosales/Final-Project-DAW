@@ -23,7 +23,7 @@ class VentaController extends Controller
         $ventas = $em->getRepository('AppBundle:Venta')
             ->getVentasTemporada($temporada);
 
-        return $this->render('venta/listarTemporada.html.twig', [
+        return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
             'temporada' => $temporada
         ]);
@@ -69,9 +69,8 @@ class VentaController extends Controller
         $ventas = $em->getRepository('AppBundle:Venta')
             ->getVentasSocioTemporada($socio, $temporada);
 
-        return $this->render('venta/listarSocioTemporada.html.twig', [
+        return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
-            'socio' => $socio,
             'temporada' => $temporada
         ]);
     }
@@ -86,9 +85,9 @@ class VentaController extends Controller
         $ventas = $em->getRepository('AppBundle:Venta')
             ->getVentasCliente($cliente);
 
-        return $this->render('venta/listarCliente.html.twig', [
+        return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
-            'cliente' => $cliente
+            'temporada' => null
         ]);
     }
 
@@ -119,9 +118,10 @@ class VentaController extends Controller
         $venta
             ->setNumero($numero)
             ->setFecha(new \DateTime('now'))
-            ->setBaseImponible(0)
+            ->setSuma(0)
             ->setIva($iva)
-            ->setCliente($cliente);
+            ->setCliente($cliente)
+            ->setDescuento($cliente->getDescuento());
 
         $em->flush();
 
@@ -164,10 +164,11 @@ class VentaController extends Controller
         $venta
             ->setNumero($numero)
             ->setFecha(new \DateTime('now'))
-            ->setBaseImponible(0)
+            ->setSuma(0)
             ->setIva($ivaReducido)
             ->setSocio($socio)
-            ->setTemporada($temporada);
+            ->setTemporada($temporada)
+            ->setDescuento($socio->getDescuento());
 
         $em->flush();
 

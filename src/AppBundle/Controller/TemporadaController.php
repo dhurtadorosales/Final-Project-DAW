@@ -24,7 +24,7 @@ class TemporadaController extends Controller
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->findAll();
 
-        return $this->render('temporada/listarTemporada.html.twig', [
+        return $this->render('temporada/listar.html.twig', [
             'temporadas' => $temporadas
         ]);
     }
@@ -87,17 +87,13 @@ class TemporadaController extends Controller
                 $em->persist($liquidacion);
                 $liquidacion
                     ->setTemporada($nuevaTemporada)
-                    ->setBeneficio(0)
-                    ->setGasto(0)
                     ->setIva($porcentajes[0]->getCantidad())
-                    ->setIvaReducido($porcentajes[1]->getCantidad())
                     ->setRetencion($porcentajes[2]->getCantidad())
-                    ->setIndiceCorrector($porcentajes[3]->getCantidad())
                     ->setSocio($item);
             }
 
             //Creación de lotes con la temporada nueva
-            $numLotes = 90;
+            $numLotes = 10;
             $cantidad = 0;
 
             for ($i = 1; $i <= $numLotes; $i++) {

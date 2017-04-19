@@ -52,6 +52,13 @@ class Temporada
      */
     private $ventas;
 
+    /**
+     * @var Movimiento[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Movimiento", mappedBy="temporada")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $movimientos;
+
 
     /**
      * Convierte a string
@@ -60,6 +67,8 @@ class Temporada
     {
         return $this->getDenominacion();
     }
+
+
     /**
      * Constructor
      */
@@ -69,6 +78,7 @@ class Temporada
         $this->liquidaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ventas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -239,5 +249,39 @@ class Temporada
     public function getVentas()
     {
         return $this->ventas;
+    }
+
+    /**
+     * Add movimiento
+     *
+     * @param \AppBundle\Entity\Movimiento $movimiento
+     *
+     * @return Temporada
+     */
+    public function addMovimiento(\AppBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos[] = $movimiento;
+
+        return $this;
+    }
+
+    /**
+     * Remove movimiento
+     *
+     * @param \AppBundle\Entity\Movimiento $movimiento
+     */
+    public function removeMovimiento(\AppBundle\Entity\Movimiento $movimiento)
+    {
+        $this->movimientos->removeElement($movimiento);
+    }
+
+    /**
+     * Get movimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMovimientos()
+    {
+        return $this->movimientos;
     }
 }

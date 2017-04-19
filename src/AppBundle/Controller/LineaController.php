@@ -38,9 +38,8 @@ class LineaController extends Controller
             ->setProducto($producto);
 
         //Añadimos la cantidad a la base imponible de la venta
-        $base = $venta->getBaseImponible();
-        $em->persist($venta);
-        $venta->setBaseImponible($base + ($cantidad * $precio));
+        $suma = $venta->getSuma();
+        $venta->setSuma($suma + ($cantidad * $precio));
 
         //Quitamos cantidad al producto
         $em->persist($producto);
@@ -76,9 +75,18 @@ class LineaController extends Controller
             ->setPrecio($precio)
             ->setLote($lote);
 
+        //Obtención del descuento
+        if ($venta->getCliente() != null) {
+            $descuento = $venta->getCliente()->getDescuento();
+        }
+        else {
+            $descuento = $venta->getSocio()->getDescuento();
+        }
+        $venta->setDescuento($descuento);
+
         //Añadimos la cantidad a la base imponible de la venta
-        $base = $venta->getBaseImponible();
-        $venta->setBaseImponible($base + ($cantidad * $precio));
+        $suma = $venta->getSuma();
+        $venta->setSuma($suma + ($cantidad * $precio));
 
         //Quitamos cantidad al lote
         $em->persist($lote);

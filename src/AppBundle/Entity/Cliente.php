@@ -106,7 +106,7 @@ class Cliente
      * @var float
      * @ORM\Column(type="float", precision=2, nullable=true)
      */
-    private $descuentoPersonalizado;
+    private $descuento;
 
     /**
      * @var Venta[]
@@ -122,6 +122,7 @@ class Cliente
     {
         return $this->getNombre() . " " . $this->getApellidos();
     }
+
 
     /**
      * Constructor
@@ -484,9 +485,9 @@ class Cliente
      *
      * @return Cliente
      */
-    public function setDescuentoPersonalizado($descuentoPersonalizado)
+    public function setDescuento($descuento)
     {
-        $this->descuentoPersonalizado = $descuentoPersonalizado;
+        $this->descuento = $descuento;
 
         return $this;
     }

@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Movimientos{% endblock %}
+
+{% block section %}
+    <h2>Movimientos</h2>
+    <h2>Temporada: {{ temporada }}</h2>
+    <p></p>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Concepto</th>
+                <th>Cantidad</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set sumaGastos = 0 %}
+        {% set sumaGanancias = 0 %}
+        {% for movimiento in movimientos %}
+            <tr>
+                <td>{{ movimiento.fecha|date('d/m/Y')}}</td>
+                <td>{{ movimiento.concepto }}</td>
+                <td>{% if movimiento.cantidad < 0 %}
+                        {% set sumaGastos = sumaGastos - movimiento.cantidad %}
+                    {% else %}
+                        {% set sumaGanancias = sumaGanancias + movimiento.cantidad %}
+                    {% endif %}
+                    {{ movimiento.cantidad }}
+                </td>
+                <td>
+                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Venta Aceite €</th>
+                <th>Suma Gastos €</th>
+                <th>Suma Beneficios €</th>
+                <th>Beneficio Total €</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ sumaVentas }}</td>
+                <td>{{ sumaGastos }}</td>
+                <td>{{ sumaGanancias }}</td>
+                <td>{{ sumaVentas - sumaGastos + sumaGanancias }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

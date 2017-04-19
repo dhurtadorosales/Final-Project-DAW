@@ -224,6 +224,24 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
+    public function getEntregasTemporada(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('e')
+            ->addSelect('t')
+            ->from('AppBundle:Entrega', 'e')
+            ->join('e.temporada', 't')
+            ->where('t = :temporada')
+            ->setParameter('temporada', $temporada)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
     public function getEntregasSocioTemporada(Socio $socio, Temporada $temporada)
     {
         /** @var EntityManager $em */
@@ -447,6 +465,30 @@ class ConsultasRepository extends EntityRepository
         return $consulta;
     }
 
+    public function getLineasSocioTemporada(Socio $socio, Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->addSelect('v')
+            ->addSelect('t')
+            ->addSelect('s')
+            ->from('AppBundle:Linea', 'l')
+            ->join('l.venta', 'v')
+            ->join('v.temporada', 't')
+            ->join('v.socio', 's')
+            ->where('t = :temporada')
+            ->andWhere('s = :socio')
+            ->setParameter('temporada', $temporada)
+            ->setParameter('socio', $socio)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
     public function getLiquidacionDetalle(Socio $socio, Temporada $temporada)
     {
         /** @var EntityManager $em */
@@ -477,6 +519,24 @@ class ConsultasRepository extends EntityRepository
             ->addSelect('t')
             ->from('AppBundle:Liquidacion', 'l')
             ->join('l.temporada', 't')
+            ->where('t = :temporada')
+            ->setParameter('temporada', $temporada)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getMovimientosTemporada(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('m')
+            ->addSelect('t')
+            ->from('AppBundle:Movimiento', 'm')
+            ->join('m.temporada', 't')
             ->where('t = :temporada')
             ->setParameter('temporada', $temporada)
             ->getQuery()

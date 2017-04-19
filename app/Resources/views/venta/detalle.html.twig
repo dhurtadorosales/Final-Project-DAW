@@ -75,8 +75,22 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td>Base Imponible €</td>
+                <td>Suma €</td>
                 <td>{{ total }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Descuento %</td>
+                <td>{{ persona.descuento * 100 }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Base Imponible €</td>
+                <td>{% set baseImponible = total - (total * persona.descuento) %}
+                    {{ baseImponible }}
+                </td>
             </tr>
             <tr>
                 <td></td>
@@ -88,7 +102,7 @@
                 <td></td>
                 <td></td>
                 <td>Total €</td>
-                <td>{{ total * (1 + ventas[0].iva) }}</td>
+                <td>{{ baseImponible * (1 + ventas[0].iva) }}</td>
             </tr>
         </tfoot>
     </table>

@@ -131,21 +131,6 @@ class LoteController extends Controller
             ->setAceite($aceite);
         $em->flush();
 
-        //Obtención de las entregas de ese lote
-        $entregas = $em->getRepository('AppBundle:Entrega')
-            ->getEntregasLote($lote);
-
-        //Obtenemos el precio del aceite
-        $precio = $aceite->getPrecioKg();
-
-        //Asignamos el precio a todas las entregas de ese lote
-        foreach ($entregas as $item) {
-            $em->persist($item);
-            $item->setPrecioKgAceite($precio);
-
-            $em->flush();
-        }
-
         $mensaje = 'Aceite asignado correctamente';
 
         return $this->render('lote/confirma.html.twig', [

@@ -3,20 +3,17 @@
 {% block title %}Ventas{% endblock %}
 
 {% block section %}
-    <h1>Listado de ventas</h1>
-    <h1>Temporada: {{ temporada }}</h1>
-    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
+    <h2>Ventas</h2>
+    {% if temporada != null %}
+        <h2>Temporada: {{ temporada }}</h2>
+    {% endif %}
 
-
-
-
-    -->
     <p></p>
     <table class="table table-bordered table-striped table-hover">
         <thead>
         <tr>
             <th>Nº</th>
-            <th>Cliente/Socio</th>
+            <th>Comprador</th>
             <th>Fecha</th>
             <th>Base Imponible €</th>
             <th>IVA %</th>
@@ -30,15 +27,11 @@
                 <td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
                 <td>{{ venta.cliente }}{{ venta.socio }}</td>
                 <td>{{ venta.fecha|date('d/m/Y') }}</td>
-                <td>{{ venta.baseImponible }}</td>
-                <td>{% if venta.iva != null %}
-                        {% set impuesto = venta.iva %}
-                    {% else %}
-                        {% set impuesto = venta.ivaReducido %}
-                    {% endif %}
-                    {{ impuesto * 100 }} %
+                <td>{% set baseImponible = venta.suma - (venta.suma * venta.descuento) %}
+                    {{ baseImponible}}
                 </td>
-                <td>{{ venta.baseImponible * impuesto }}</td>
+                <td>{{ venta.iva * 100 }}</td>
+                <td>{{ baseImponible * (1 + venta.iva) }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

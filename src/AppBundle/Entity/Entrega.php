@@ -67,12 +67,6 @@ class Entrega
     private $bascula;
 
     /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
-     */
-    private $precioKgAceite;
-
-    /**
      * @var Procedencia
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Procedencia", inversedBy="entregas")
      * @ORM\JoinColumn(nullable=false)
@@ -303,29 +297,6 @@ class Entrega
         return $this->bascula;
     }
 
-    /**
-     * Set precioKgAceite
-     *
-     * @param float $precioKgAceite
-     *
-     * @return Entrega
-     */
-    public function setPrecioKgAceite($precioKgAceite)
-    {
-        $this->precioKgAceite = $precioKgAceite;
-
-        return $this;
-    }
-
-    /**
-     * Get precioKgAceite
-     *
-     * @return float
-     */
-    public function getPrecioKgAceite()
-    {
-        return $this->precioKgAceite;
-    }
 
     /**
      * Set procedencia

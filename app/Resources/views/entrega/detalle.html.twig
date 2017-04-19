@@ -40,21 +40,17 @@
         <thead>
         <tr>
             <th>Tipo</th>
+            <th>Sanción</th>
             <th>% Rendimiento</th>
             <th>Kg Aceite</th>
-            <th>Sanción</th>
-            <th>Bonificación</th>
-            <th>Total kg</th>
         </tr>
         </thead>
         <tbody>
             <tr>
                 <td>{{ entrega.procedencia }}</td>
+                <td>{{ pesoAceituna * entrega.sancion }}</td>
                 <td>{{ entrega.rendimiento * 100 }}</td>
-                <td>{{ pesoAceituna * entrega.rendimiento }}</td>
-                <td>{{ pesoAceituna * entrega.rendimiento * entrega.sancion }}</td>
-                <td>{{ pesoAceituna * entrega.rendimiento * entrega.procedencia.bonificacion }}</td>
-                <td>{{ (pesoAceituna * entrega.rendimiento) - (pesoAceituna * entrega.rendimiento * entrega.sancion) + (pesoAceituna * entrega.rendimiento * entrega.procedencia.bonificacion)}}</td>
+                <td>{{ (pesoAceituna - pesoAceituna * entrega.sancion) * entrega.rendimiento }}</td>
             </tr>
         </tbody>
         <tfoot>

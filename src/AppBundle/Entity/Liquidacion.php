@@ -26,18 +26,6 @@ class Liquidacion
 
     /**
      * @var float
-     * @ORM\Column(type="float")
-     */
-    private $beneficio;
-
-    /**
-     * @var float
-     * @ORM\Column(type="float")
-     */
-    private $gasto;
-
-    /**
-     * @var float
      * @ORM\Column(type="float", precision=2)
      */
     private $iva;
@@ -46,19 +34,7 @@ class Liquidacion
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $ivaReducido;
-
-    /**
-     * @var float
-     * @ORM\Column(type="float", precision=2)
-     */
     private $retencion;
-
-    /**
-    * @var float
-    * @ORM\Column(type="float", precision=2)
-    */
-    private $indiceCorrector;
 
     /**
      * @var Socio
@@ -108,54 +84,6 @@ class Liquidacion
     }
 
     /**
-     * Set beneficio
-     *
-     * @param float $beneficio
-     *
-     * @return Liquidacion
-     */
-    public function setBeneficio($beneficio)
-    {
-        $this->beneficio = $beneficio;
-
-        return $this;
-    }
-
-    /**
-     * Get beneficio
-     *
-     * @return float
-     */
-    public function getBeneficio()
-    {
-        return $this->beneficio;
-    }
-
-    /**
-     * Set gasto
-     *
-     * @param float $gasto
-     *
-     * @return Liquidacion
-     */
-    public function setGasto($gasto)
-    {
-        $this->gasto = $gasto;
-
-        return $this;
-    }
-
-    /**
-     * Get gasto
-     *
-     * @return float
-     */
-    public function getGasto()
-    {
-        return $this->gasto;
-    }
-
-    /**
      * Set iva
      *
      * @param float $iva
@@ -180,30 +108,6 @@ class Liquidacion
     }
 
     /**
-     * Set ivaReducido
-     *
-     * @param float $ivaReducido
-     *
-     * @return Liquidacion
-     */
-    public function setIvaReducido($ivaReducido)
-    {
-        $this->ivaReducido = $ivaReducido;
-
-        return $this;
-    }
-
-    /**
-     * Get ivaReducido
-     *
-     * @return float
-     */
-    public function getIvaReducido()
-    {
-        return $this->ivaReducido;
-    }
-
-    /**
      * Set retencion
      *
      * @param float $retencion
@@ -225,30 +129,6 @@ class Liquidacion
     public function getRetencion()
     {
         return $this->retencion;
-    }
-
-    /**
-     * Set indiceCorrector
-     *
-     * @param float $indiceCorrector
-     *
-     * @return Liquidacion
-     */
-    public function setIndiceCorrector($indiceCorrector)
-    {
-        $this->indiceCorrector = $indiceCorrector;
-
-        return $this;
-    }
-
-    /**
-     * Get indiceCorrector
-     *
-     * @return float
-     */
-    public function getIndiceCorrector()
-    {
-        return $this->indiceCorrector;
     }
 
     /**

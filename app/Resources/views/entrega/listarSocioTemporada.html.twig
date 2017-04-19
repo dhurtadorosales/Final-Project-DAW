@@ -17,15 +17,11 @@
         <tr>
             <th>Nº</th>
             <th>Kg Aceituna</th>
+            <th>Sanción</th>
             <th>Rendimiento %</th>
             <th>Kg Aceite</th>
-            <th>Sanción</th>
-            <th>Total kg</th>
+            <th>Procedencia %</th>
             <th>Aceite</th>
-            <th>Precio</th>
-            <th>Total €</th>
-            <th>Bonif. vuelo %</th>
-            <th>Importe €</th>
             <th></th>
         </tr>
         </thead>
@@ -41,25 +37,21 @@
                     {% endif %}
                     {{ pesoAceituna }}
                 </td>
-                <td>{{ entrega.rendimiento * 100 }}</td>
-                <td>{{ pesoAceituna * entrega.rendimiento }}</td>
                 <td>{% if entrega.sancion != null %}
-                        {% set sancion = pesoAceituna * entrega.rendimiento * entrega.sancion %}
+                        {% set sancion = pesoAceituna * entrega.sancion %}
                     {% else %}
                         {% set sancion = 0 %}
                     {% endif %}
-                    {{ sancion }}
+                    - {{ sancion }}
                 </td>
-                <td>{{ (pesoAceituna * entrega.rendimiento) - sancion }}</td>
+                <td>{{ entrega.rendimiento * 100 }}</td>
+                <td>{{ (pesoAceituna - sancion) * entrega.rendimiento }}</td>
+                <td>{{ entrega.procedencia}}</td>
                 <td>
                     {% if entrega.partida.lote != null %}
                         {{ entrega.partida.lote.aceite }}
                     {% endif %}
                 </td>
-                <td>{{ entrega.precioKgAceite }}</td>
-                <td>{{ ((pesoAceituna * entrega.rendimiento) - sancion) * entrega.precioKgAceite }}</td>
-                <td>{{ entrega.procedencia.bonificacion * 100 }}</td>
-                <td>{{ ((pesoAceituna * entrega.rendimiento) - sancion + (pesoAceituna * entrega.procedencia.bonificacion)) * entrega.precioKgAceite }}</td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>

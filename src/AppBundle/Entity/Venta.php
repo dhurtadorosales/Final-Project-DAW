@@ -34,7 +34,7 @@ class Venta
      * @var float
      * @ORM\Column(type="float")
      */
-    private $baseImponible;
+    private $suma;
 
     /**
      * @var float
@@ -46,7 +46,7 @@ class Venta
      * @var float
      * @ORM\Column(type="float", nullable=true)
      */
-    private $ivaReducido;
+    private $descuento;
 
     /**
      * @var Cliente
@@ -74,7 +74,6 @@ class Venta
      * @ORM\JoinColumn(nullable=true)
      */
     private $temporada;
-
 
     /**
      * Constructor
@@ -143,27 +142,27 @@ class Venta
     }
 
     /**
-     * Set baseImponible
+     * Set suma
      *
-     * @param float $baseImponible
+     * @param float $suma
      *
      * @return Venta
      */
-    public function setBaseImponible($baseImponible)
+    public function setSuma($suma)
     {
-        $this->baseImponible = $baseImponible;
+        $this->suma = $suma;
 
         return $this;
     }
 
     /**
-     * Get baseImponible
+     * Get suma
      *
      * @return float
      */
-    public function getBaseImponible()
+    public function getSuma()
     {
-        return $this->baseImponible;
+        return $this->suma;
     }
 
     /**
@@ -191,27 +190,27 @@ class Venta
     }
 
     /**
-     * Set ivaReducido
+     * Set descuento
      *
-     * @param float $ivaReducido
+     * @param float $descuento
      *
      * @return Venta
      */
-    public function setIvaReducido($ivaReducido)
+    public function setDescuento($descuento)
     {
-        $this->ivaReducido = $ivaReducido;
+        $this->descuento = $descuento;
 
         return $this;
     }
 
     /**
-     * Get ivaReducido
+     * Get descuento
      *
      * @return float
      */
-    public function getIvaReducido()
+    public function getDescuento()
     {
-        return $this->ivaReducido;
+        return $this->descuento;
     }
 
     /**
