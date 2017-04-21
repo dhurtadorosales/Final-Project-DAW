@@ -1,0 +1,398 @@
+.app-name {
+    font-size: 200%;
+    font-weight: bold;
+    letter-spacing: -4px;
+}
+
+.app-version {
+    font-size: 120%;
+    font-weight: bold;
+    letter-spacing: -6px;
+    transform: scale(0.8, 1.0);
+    color: #244500;
+    color: rgba(20, 40, 0, 0.5);
+}
+
+.login-form {
+    margin: -70px auto 0 auto;
+    max-width: 500px;
+    font: 15px/1.6em Lato, sans-serif;
+}
+
+@media (min-width: 992px) {
+    .login-form {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+}
+
+.login-form .panel {
+    border: none;
+    box-shadow: 0 0 8px 0 rgba(0,0,0,0.63);
+}
+
+.login-form .panel .panel-heading {
+    color: #fff;
+    background: #6e91af;
+    line-height: 2.4em;
+    font-weight: bold;
+    padding-left: 26px;
+}
+
+.login-form .panel .panel-body {
+    background: #f2f2f2;
+    padding: 20px 26px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+form[role=login] {
+    color: #a5a5a5;
+}
+
+form[role=login] label {
+    font-weight: normal;
+}
+
+form[role=login] input {
+    margin: .5em 0;
+    font-size: 18px;
+}
+
+form[role=login] button {
+    margin-top: 2em;
+    font-weight: bold;
+    font-size: 110%;
+}
+
+.tile {
+    position: relative;
+    display: block;
+    float: left;
+    margin: 5px;
+    height: 100%;
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-clip: padding-box;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.75);
+    padding: 0;
+}
+
+.tile-col-12 {
+    width: 96%;
+}
+
+.tile-col-9 {
+    width: 72%;
+}
+
+.tile-col-6 {
+    width: 48%;
+}
+
+.tile-col-4 {
+    width: 96%;
+}
+
+@media (min-width: 992px) {
+    .tile-col-4 {
+        width: 32%;
+    }
+
+    .tile-icon-holder {
+        padding-top: 22%;
+    }
+
+    .tile-row {
+        height: 400px !important;
+        padding: 0 !important;
+    }
+}
+
+.tile-col-3 {
+    width: 24%;
+}
+
+/* Colores extraídos de https://metroui.org.ua/colors.html */
+.tile-black {
+    background: #000000 !important;
+}
+
+.tile-white {
+    background: #ffffff !important;
+}
+
+.tile-lime {
+    background: #a4c400 !important;
+}
+
+.tile-green {
+    background: #60a917 !important;
+}
+
+.tile-emerald {
+    background: #008a00 !important;
+}
+
+.tile-teal {
+    background: #00aba9 !important;
+}
+
+.tile-cyan {
+    background: #1ba1e2 !important;
+}
+
+.tile-blue {
+    background: #00aff0 !important;
+}
+
+.tile-cobalt {
+    background: #0050ef !important;
+}
+
+.tile-indigo {
+    background: #6a00ff !important;
+}
+
+.tile-violet {
+    background: #aa00ff !important;
+}
+
+.tile-purple {
+    background-color: #7B4F9D !important;
+}
+
+.tile-pink {
+    background: #dc4fad !important;
+}
+
+.tile-magenta {
+    background: #d80073 !important;
+}
+
+.tile-crimson {
+    background: #a20025 !important;
+}
+
+.tile-red {
+    background: #ce352c !important;
+}
+
+.tile-orange {
+    background: #fa6800 !important;
+}
+
+.tile-amber {
+    background: #f0a30a !important;
+}
+
+.tile-yellow {
+    background: #e3c800 !important;
+}
+
+.tile-brown {
+    background: #825a2c !important;
+}
+
+.tile-olive {
+    background: #6d8764 !important;
+}
+
+.tile-steel {
+    background: #647687 !important;
+}
+
+.tile-mauve {
+    background: #76608a !important;
+}
+
+.tile-taupe {
+    background: #87794e !important;
+}
+
+.tile-gray {
+    background: #555555 !important;
+}
+
+.tile-dark {
+    background: #333333 !important;
+}
+
+.tile-darker {
+    background: #222222 !important;
+}
+
+.tile-transparent {
+    background: transparent !important;
+}
+
+.tile-dark-brown {
+    background: #63362f !important;
+}
+
+.tile-dark-crimson {
+    background: #640024 !important;
+}
+
+.tile-dark-magenta {
+    background: #81003c !important;
+}
+
+.tile-dark-indigo {
+    background: #4b0096 !important;
+}
+
+.tile-dark-cyan {
+    background: #1b6eae !important;
+}
+
+.tile-dark-cobalt {
+    background: #00356a !important;
+}
+
+.tile-dark-teal {
+    background: #004050 !important;
+}
+
+.tile-dark-emerald {
+    background: #003e00 !important;
+}
+
+.tile-dark-green {
+    background: #128023 !important;
+}
+
+.tile-dark-orange {
+    background: #bf5a15 !important;
+}
+
+.tile-dark-red {
+    background: #9a1616 !important;
+}
+
+.tile-dark-pink {
+    background: #9a165a !important;
+}
+
+.tile-dark-violet {
+    background: #57169a !important;
+}
+
+.tile-dark-blue {
+    background: #16499a !important;
+}
+
+.tile-light-blue {
+    background: #4390df !important;
+}
+
+.tile-light-red {
+    background: #da5a53 !important;
+}
+
+.tile-light-green {
+    background: #7ad61d !important;
+}
+
+.tile-lighter-blue {
+    background: #00ccff !important;
+}
+
+.tile-light-teal {
+    background: #45fffd !important;
+}
+
+.tile-light-olive {
+    background: #78aa1c !important;
+}
+
+.tile-light-orange {
+    background: #ffc194 !important;
+}
+
+.tile-light-pink {
+    background: #f472d0 !important;
+}
+
+.tile-gray-dark {
+    background: #333333 !important;
+}
+
+.tile-gray-darker {
+    background: #222222 !important;
+}
+
+.tile-gray-light {
+    background: #999999 !important;
+}
+
+.tile-gray-lighter {
+    background: #eeeeee !important;
+}
+
+.tile-icon-holder {
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    font-size: 40px;
+    color: #ffffff;
+}
+
+.tile-icon-holder:hover {
+    color: #caeff2 !important;
+}
+
+.text-holder {
+    position: absolute;
+    bottom: 0;
+    text-align: left;
+    text-overflow: ellipsis;
+    padding: 10px;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+}
+
+.text-holder:hover {
+    color: #caeff2 !important;
+}
+
+.tile-row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 200px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+@media print
+{
+    .no-print {
+        display: none !important;
+    }
+}
+
+.sorted > .asc:after {
+    content: " \f0dd";
+    font-family: FontAwesome;
+}
+
+.sorted > .desc:after {
+    content: " \f0de";
+    font-family: FontAwesome;
+}
+
+@media print
+{
+    .no-print {
+        display: none !important;
+    }
+}

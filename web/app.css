@@ -95,6 +95,10 @@ section h2 {
     margin-right: 5%;
 }
 
+.listaInicio:hover {
+    color: #978B2A !important;
+}
+
 .presentacion {
     width: 100%;
 }

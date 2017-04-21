@@ -24,6 +24,7 @@
                                     <li class="dropdown desplegable">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
                                             <i class="fa fa-user-circle-o"></i> {{ app.user.nombre }}
+                                        </a>
                                         <ul class="dropdown-menu">
                                             <li><a href="{{ path('perfil') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
                                                     <i class="fa fa-cog"></i> Ir al perfil
@@ -72,7 +73,7 @@
 
                             {% if not is_granted('ROLE_USUARIO') %}
                                 <li {% if ruta == 'inicio' %} class="activo" {% endif %}>
-                                    <a href="{{ path('inicio') }}">{{ 'layout.inicio'|trans }}</a>
+                                    <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>
                                 </li>
                                 <li class="dropdown desplegable">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>

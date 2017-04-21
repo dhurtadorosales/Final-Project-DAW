@@ -11,11 +11,37 @@
 
     {% if is_granted('ROLE_SOCIO') %}
         <a class="btn btn-lg btn-success" href="{#{ path('fincas_listar_propietario', {'propietario' : propietario.id}) }#}">
-            <i class="fa fa-area-chart fa-2x pull-left"></i> Fincas<br>En propiedad
+            <i class="fa fa-area-chart fa-2x pull-left"></i> Fincas<br/>En propiedad
         </a>
         <a class="btn btn-lg btn-success" href="{#{ path('fincas_listar_arrendatario') }#}">
-            <i class="fa fa-area-chart fa-2x pull-left"></i> Fincas<br>Arrendadas
+            <i class="fa fa-area-chart fa-2x fa-plus-circle"></i><br/>Fincas Arrendadas
         </a>
+
+
+
+
+
+
+
+    <div class="container tile-row">
+        <!--<article class="col-md-4 tile tile-col-4 tile-{##}{ color }}">-->
+        <article class="col-md-4 tile tile-col-4 tile-green">
+            <a href="#">
+                <div class="tile-icon-holder">
+                    <!--<i class="fa fa-{##}{ icon }} fa-4x"></i>-->
+                    <i class="fa fa-calendar fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>hola</h4>
+                    <p>nuevo</p>
+                </div>
+            </a>
+        </article>
+    </div>
+
+
+
+
     {% endif %}
 
 {% endblock %}
