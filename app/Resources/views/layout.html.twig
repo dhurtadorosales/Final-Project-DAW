@@ -26,7 +26,9 @@
                                             <i class="fa fa-user-circle-o"></i> {{ app.user.nombre }}
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="{{ path('perfil') }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                            <li>
+                                                <a href="{{ path('perfil') }}" class="dropdown-toggle listaInicio"
+                                                   data-toggle="dropdown" data-hover="dropdown">
                                                     <i class="fa fa-cog"></i> Ir al perfil
                                                 </a>
                                             </li>
@@ -40,7 +42,7 @@
                                     </li>
                                 {% else %}
                                     <li>
-                                        <a href="{{ path('entrar') }}">
+                                        <a href="{{ path('entrar') }}" class="listaInicio">
                                             <i class="fa fa-sign-in"></i> {{ 'layout.iniciarSesion'|trans }}
                                         </a>
                                     </li>
@@ -76,7 +78,7 @@
                                     <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>
                                 </li>
                                 <li class="dropdown desplegable">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
+                                    <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
                                     <ul class="dropdown-menu">
                                             <li><a href="#">{{ 'layout.extra'|trans }}</a></li>
                                             <li class="divider"></li>
@@ -86,7 +88,7 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown desplegable">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.variedades'|trans }}</a>
+                                    <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.variedades'|trans }}</a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">Picual</a></li>
                                         <li class="divider"></li>
@@ -100,13 +102,13 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#">{{ 'layout.venta'|trans }}</a>
+                                    <a href="#" class="listaInicio">{{ 'layout.venta'|trans }}</a>
                                 </li>
                                 <li>
-                                    <a href="#">{{ 'layout.contacto'|trans }}</a>
+                                    <a href="#" class="listaInicio">{{ 'layout.contacto'|trans }}</a>
                                 </li>
                                 <li class="dropdown desplegable">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">
                                         <i class="fa fa-language"></i>
                                     </a>
                                     <ul class="dropdown-menu">
