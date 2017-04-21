@@ -26,29 +26,14 @@
         </thead>
         <tbody>
         {% for socio in socios %}
-            <tr {% if socio.email != null %}
-                    title="{{ socio.email }}"
-                {% else %}
-                    title="No tiene email"
-                {% endif %}>
+            <tr>
                 <td>{{ socio.id }}</td>
-                <td>{{ socio.nif }}</td>
-                <td>{{ socio.apellidos }}, {{ socio.nombre }}</td>
-                <td>{{ socio.calle }}, {{ socio.numero }}
-                    {% if socio.bloque != null %}
-                        -bloq {{ socio.bloque }}
-                    {% endif %}
-                    {% if socio.escalera != null %}
-                        -esc {{ socio.escalera }}
-                    {% endif %}
-                    {% if socio.piso != null %}
-                        -{{ socio.piso }}º
-                    {% endif %}
-                    {% if socio.letra != null %}
-                        {{ socio.letra }}
-                    {% endif %} - {{socio.localidad}} ({{ socio.provincia }})
+                <td>{{ socio.usuario.nif }}</td>
+                <td>{{ socio.usuario.apellidos }}, {{ socio.usuario.nombre }}</td>
+                <td>
+                    {{ socio.usuario.direccion }} - {{socio.usuario.localidad}} ({{ socio.usuario.provincia }})
                 </td>
-                <td>{{ socio.telefono}}</td>
+                <td>{{ socio.usuario.telefono}}</td>
                 <td>{% set sum = 0 %}
                     {% for i in socio.fincasPropiedad %}
                         {% set sum = sum + i.numPlantas %}

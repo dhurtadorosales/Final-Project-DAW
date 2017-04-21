@@ -49,18 +49,10 @@ class Venta
     private $descuento;
 
     /**
-     * @var Cliente
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cliente", inversedBy="ventas")
-     * @ORM\JoinColumn(nullable=true)
+     * @var Usuario
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="ventas")
      */
-    private $cliente;
-
-    /**
-     * @var Socio
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="ventas")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $socio;
+    private $usuario;
 
     /**
      * @var Linea[]
@@ -73,7 +65,6 @@ class Venta
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="ventas")
      */
     private $temporada;
-
     /**
      * Constructor
      */
@@ -213,51 +204,27 @@ class Venta
     }
 
     /**
-     * Set cliente
+     * Set persona
      *
-     * @param \AppBundle\Entity\Cliente $cliente
+     * @param \AppBundle\Entity\Usuario $usuario
      *
      * @return Venta
      */
-    public function setCliente(\AppBundle\Entity\Cliente $cliente = null)
+    public function setPersona(\AppBundle\Entity\Usuario $usuario = null)
     {
-        $this->cliente = $cliente;
+        $this->usuario = $usuario;
 
         return $this;
     }
 
     /**
-     * Get cliente
+     * Get persona
      *
-     * @return \AppBundle\Entity\Cliente
+     * @return \AppBundle\Entity\Usuario
      */
-    public function getCliente()
+    public function getPersona()
     {
-        return $this->cliente;
-    }
-
-    /**
-     * Set socio
-     *
-     * @param \AppBundle\Entity\Socio $socio
-     *
-     * @return Venta
-     */
-    public function setSocio(\AppBundle\Entity\Socio $socio = null)
-    {
-        $this->socio = $socio;
-
-        return $this;
-    }
-
-    /**
-     * Get socio
-     *
-     * @return \AppBundle\Entity\Socio
-     */
-    public function getSocio()
-    {
-        return $this->socio;
+        return $this->usuario;
     }
 
     /**

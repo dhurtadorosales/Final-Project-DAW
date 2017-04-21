@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Usuario
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
  */
 class Usuario implements UserInterface
 {
@@ -33,14 +33,61 @@ class Usuario implements UserInterface
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
      */
-    private $nombre;
+    private $clave;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
      */
-    private $clave;
+    private $nombre;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $apellidos;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $direccion;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=5)
+     */
+    private $codigoPostal;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $localidad;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    private $provincia;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=9, nullable=true)
+     */
+    private $telefono;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float", precision=2, nullable=true)
+     */
+    private $descuento;
 
     /**
      * @var boolean
@@ -76,14 +123,43 @@ class Usuario implements UserInterface
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    private $socio;
+    private $cliente;
 
     /**
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    private $cliente;
+    private $rolSocio;
 
+    /**
+     * @var Socio
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="usuario")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $socio;
+
+    /**
+     * @var Venta[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Venta", mappedBy="usuario")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $ventas;
+
+    /**
+     * Convierte a string
+     */
+    public function __toString()
+    {
+        return $this->getNombre() . " " . $this->getApellidos();
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ventas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -144,6 +220,222 @@ class Usuario implements UserInterface
     }
 
     /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Usuario
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellidos
+     *
+     * @param string $apellidos
+     *
+     * @return Usuario
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+
+        return $this;
+    }
+
+    /**
+     * Get apellidos
+     *
+     * @return string
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
+    }
+
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return Usuario
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    /**
+     * Set codigoPostal
+     *
+     * @param string $codigoPostal
+     *
+     * @return Usuario
+     */
+    public function setCodigoPostal($codigoPostal)
+    {
+        $this->codigoPostal = $codigoPostal;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoPostal
+     *
+     * @return string
+     */
+    public function getCodigoPostal()
+    {
+        return $this->codigoPostal;
+    }
+
+    /**
+     * Set localidad
+     *
+     * @param string $localidad
+     *
+     * @return Usuario
+     */
+    public function setLocalidad($localidad)
+    {
+        $this->localidad = $localidad;
+
+        return $this;
+    }
+
+    /**
+     * Get localidad
+     *
+     * @return string
+     */
+    public function getLocalidad()
+    {
+        return $this->localidad;
+    }
+
+    /**
+     * Set provincia
+     *
+     * @param string $provincia
+     *
+     * @return Usuario
+     */
+    public function setProvincia($provincia)
+    {
+        $this->provincia = $provincia;
+
+        return $this;
+    }
+
+    /**
+     * Get provincia
+     *
+     * @return string
+     */
+    public function getProvincia()
+    {
+        return $this->provincia;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     *
+     * @return Usuario
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Usuario
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set descuento
+     *
+     * @param float $descuento
+     *
+     * @return Usuario
+     */
+    public function setDescuento($descuento)
+    {
+        $this->descuento = $descuento;
+
+        return $this;
+    }
+
+    /**
+     * Get descuento
+     *
+     * @return float
+     */
+    public function getDescuento()
+    {
+        return $this->descuento;
+    }
+
+    /**
      * Set administrador
      *
      * @param boolean $administrador
@@ -162,7 +454,7 @@ class Usuario implements UserInterface
      *
      * @return boolean
      */
-    public function isAdministrador()
+    public function getAdministrador()
     {
         return $this->administrador;
     }
@@ -186,7 +478,7 @@ class Usuario implements UserInterface
      *
      * @return boolean
      */
-    public function isEmpleado()
+    public function getEmpleado()
     {
         return $this->empleado;
     }
@@ -210,7 +502,7 @@ class Usuario implements UserInterface
      *
      * @return boolean
      */
-    public function isComercial()
+    public function getComercial()
     {
         return $this->comercial;
     }
@@ -234,7 +526,7 @@ class Usuario implements UserInterface
      *
      * @return boolean
      */
-    public function isDependiente()
+    public function getDependiente()
     {
         return $this->dependiente;
     }
@@ -258,33 +550,9 @@ class Usuario implements UserInterface
      *
      * @return boolean
      */
-    public function isEncargado()
+    public function getEncargado()
     {
         return $this->encargado;
-    }
-
-    /**
-     * Set socio
-     *
-     * @param boolean $socio
-     *
-     * @return Usuario
-     */
-    public function setSocio($socio)
-    {
-        $this->socio = $socio;
-
-        return $this;
-    }
-
-    /**
-     * Get socio
-     *
-     * @return boolean
-     */
-    public function isSocio()
-    {
-        return $this->socio;
     }
 
     /**
@@ -306,11 +574,92 @@ class Usuario implements UserInterface
      *
      * @return boolean
      */
-    public function isCliente()
+    public function getCliente()
     {
         return $this->cliente;
     }
 
+    /**
+     * Set rolSocio
+     *
+     * @param boolean $rolSocio
+     *
+     * @return Usuario
+     */
+    public function setRolSocio($rolSocio)
+    {
+        $this->rolSocio = $rolSocio;
+
+        return $this;
+    }
+
+    /**
+     * Get rolSocio
+     *
+     * @return boolean
+     */
+    public function getRolSocio()
+    {
+        return $this->rolSocio;
+    }
+
+    /**
+     * Set socio
+     *
+     * @param \AppBundle\Entity\Socio $socio
+     *
+     * @return Usuario
+     */
+    public function setSocio(\AppBundle\Entity\Socio $socio = null)
+    {
+        $this->socio = $socio;
+
+        return $this;
+    }
+
+    /**
+     * Get socio
+     *
+     * @return \AppBundle\Entity\Socio
+     */
+    public function getSocio()
+    {
+        return $this->socio;
+    }
+
+    /**
+     * Add venta
+     *
+     * @param \AppBundle\Entity\Venta $venta
+     *
+     * @return Usuario
+     */
+    public function addVenta(\AppBundle\Entity\Venta $venta)
+    {
+        $this->ventas[] = $venta;
+
+        return $this;
+    }
+
+    /**
+     * Remove venta
+     *
+     * @param \AppBundle\Entity\Venta $venta
+     */
+    public function removeVenta(\AppBundle\Entity\Venta $venta)
+    {
+        $this->ventas->removeElement($venta);
+    }
+
+    /**
+     * Get ventas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVentas()
+    {
+        return $this->ventas;
+    }
 
     /**
      * Returns the roles granted to the user.
@@ -332,27 +681,27 @@ class Usuario implements UserInterface
     {
         $roles = ['ROLE_USUARIO'];
 
-        if ($this->isAdministrador()) {
+        if ($this->getAdministrador()) {
             $roles[] = 'ROLE_ADMINISTRADOR';
         }
 
-        if ($this->isComercial()) {
+        if ($this->getComercial()) {
             $roles[] = 'ROLE_COMERCIAL';
         }
 
-        if ($this->isDependiente()) {
+        if ($this->getDependiente()) {
             $roles[] = 'ROLE_DEPENDIENTE';
         }
 
-        if ($this->isEncargado()) {
+        if ($this->getEncargado()) {
             $roles[] = 'ROLE_ENCARGADO';
         }
 
-        if ($this->isSocio()) {
+        if ($this->getRolSocio()) {
             $roles[] = 'ROLE_SOCIO';
         }
 
-        if ($this->isCliente()) {
+        if ($this->getCliente()) {
             $roles[] = 'ROLE_CLIENTE';
         }
 
@@ -403,29 +752,5 @@ class Usuario implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Usuario
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
     }
 }

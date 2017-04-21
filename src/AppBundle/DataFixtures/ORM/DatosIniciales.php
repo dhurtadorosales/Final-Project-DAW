@@ -77,67 +77,82 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             array_push($variedades2, $variedad);
         }
 
-        //Cliente
-        $clientes = [
-            [0, "A23548796", "Koipe, S.A.", "", "Ctra/ Arjona", "s/n", "", "", "", "", "24740", "Andújar", "Jaén", "953510065", "atencion.cliente@koipe.com", 0.07],
-            [0, "A23548756", "Carbonell, S.A.", "", "C/ Marie Curie", "20", "", "", "", "", "28521", "Rivas Vaciamacrid", "Madrid", "902202107", "atencion.cliente@carbonell.com", 0.05],
-            [0, "B41584732", "Grupo Ybarra, S.L.", "", "Ctra/ Isla Menorca", "s/n", "", "", "", "", "41703", "Dos Hermanas", "Sevilla", "902014555", "consumidor@grupoybarra.com", 0.06],
-            [0, "A23846985", "Coosur, S.A.", "", "Ctra/ La Carolina", "s/n", "", "", "", "", "23220", "Vilches", "Jaén", "953631165", "info@coosur.com", 0]
-        ];
-
-        foreach ($clientes as $item) {
-            $cliente = new Cliente();
-            $cliente
-                ->setNif($item[1])
-                ->setNombre($item[2])
-                ->setApellidos($item[3])
-                ->setCalle($item[4])
-                ->setNumero($item[5])
-                ->setBloque($item[6])
-                ->setEscalera($item[7])
-                ->setPiso($item[8])
-                ->setLetra($item[9])
-                ->setCodigoPostal($item[10])
-                ->setLocalidad($item[11])
-                ->setProvincia($item[12])
-                ->setTelefono($item[13])
-                ->setEmail($item[14])
-                ->setDescuento($item[15]);
-
-            $manager->persist($cliente);
-        }
-
         //Socio
         $socios = [
-            [0, "75111567F", "Diego", "Hurtado Rosales", "C/ España", "23", "", "", "", "", "23320", "Torreperogil", "Jaén", "651378790", "dhurtadorosales@gmail.com", 0.10, "2017-03-27", true, null],
-            [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes", "9", "", "", "", "", "23700", "Linares", "Jaén", "625782462", null, 0.10, "2017-03-27", true, null],
-            [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti", "15", "", "", "2", "B", "23700", "Linares", "Jaén", "614783565", null, 0.10, "2017-03-27", true, null]
+            [0, "2017-03-27", true],
+            [0, "2017-03-27", true],
+            [0, "2017-03-27", true]
         ];
         $socios2 = [];
 
         foreach ($socios as $item) {
             $socio = new Socio();
             $socio
-                ->setNif($item[1])
-                ->setNombre($item[2])
-                ->setApellidos($item[3])
-                ->setCalle($item[4])
-                ->setNumero($item[5])
-                ->setBloque($item[6])
-                ->setEscalera($item[7])
-                ->setPiso($item[8])
-                ->setLetra($item[9])
-                ->setCodigoPostal($item[10])
-                ->setLocalidad($item[11])
-                ->setProvincia($item[12])
-                ->setTelefono($item[13])
-                ->setEmail($item[14])
-                ->setDescuento($item[15])
-                ->setFechaAlta(new \DateTime($item[16]))
-                ->setActivo($item[17]);
+                ->setFechaAlta(new \DateTime($item[1]))
+                ->setActivo($item[2]);
 
             $manager->persist($socio);
             array_push($socios2, $socio);
+        }
+
+        //Usuario
+        $usuarios = [
+            [0, "75111567F", "Diego", "Hurtado Rosales", "C/ España, 23", "23320", "Torreperogil",
+                "Jaén", "651378790", "dhurtadorosales@gmail.com", 0.10, true, true, true, false, false, false, true, $socios2[0]],
+            [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes, 9", "23700", "Linares",
+                "Jaén", "625782462", null, 0.10, false, false, false, false, false, true, false, $socios2[1]],
+            [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti, 15-2ºB", "23700", "Linares",
+                "Jaén", "614783565", null, 0.10, false, false, false, false, false, true, false, $socios2[2]],
+            [0, "2698364J", "Joaquín", "Hernández Mota", "C/ Picasso, 26", "23700", "Linares",
+                "Jaén", "614783835", null, 0.10, false, true, true, false, false, false, false, null],
+            [0, "26471698H", "Pedro", "Román López", "C/ Lope de Vega, 34", "15", "23700", "Linares",
+                "Jaén", "618785365", null, 0.10, false, true, false, true, false, false, false, null],
+            [0, "26456123A", "Antonio", "Martínez Huertas", "C/ Ramón y Cajal, 83","23700", "Linares",
+                "Jaén", "614783565", null, 0.10, false, true, false, false, true, false, false, null],
+            [0, "A23548796", "Koipe, S.A.", null, "Ctra/ Arjona, s/n", "24740", "Andújar",
+                "Jaén", "953510065", "atencion.cliente@koipe.com", 0.07, false, false, false, false, false, false, true, null],
+            [0, "A23548756", "Carbonell, S.A.", null, "C/ Marie Curie, 20", "28521", "Rivas Vaciamacrid",
+                "Madrid", "902202107", "atencion.cliente@carbonell.com", 0.05, false, false, false, false, false, false, true, null],
+            [0, "B41584732", "Grupo Ybarra, S.L.", null, "Ctra/ Isla Menorca, s/n", "41703", "Dos Hermanas",
+                "Sevilla", "902014555", "consumidor@grupoybarra.com", 0.06, false, false, false, false, false, false, true, null],
+            [0, "A23846985", "Coosur, S.A.", null, "Ctra/ La Carolina, s/n", "23220", "Vilches",
+                "Jaén", "953631165", "info@coosur.com", 0, false, false, false, false, false, false, true, null]
+
+        ];
+        $usuarios2 = [];
+
+        foreach ($usuarios as $item) {
+            $usuario = new Usuario();
+            $usuario
+                ->setNif($item[1])
+                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, $item[1]))
+                ->setNombre($item[2])
+                ->setApellidos($item[3])
+                ->setDireccion($item[4])
+                ->setCodigoPostal($item[5])
+                ->setLocalidad($item[6])
+                ->setProvincia($item[7])
+                ->setTelefono($item[8])
+                ->setEmail($item[9])
+                ->setDescuento($item[10])
+                ->setAdministrador($item[11])
+                ->setEmpleado($item[12])
+                ->setComercial($item[13])
+                ->setDependiente($item[14])
+                ->setEncargado($item[15])
+                ->setCliente($item[16])
+                ->setRolSocio($item[17]);
+
+            $manager->persist($usuario);
+            array_push($usuarios2, $usuario);
+        }
+
+        //Asignación socios
+        for ($i = 0; $i < sizeof($socios2); $i++) {
+            $usuarios2[$i]
+                ->setSocio($socios2[$i]);
+
+            $manager->persist($usuarios2[$i]);;
         }
 
         //Finca
@@ -259,202 +274,6 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         $manager->persist($producto);
     }
-
-        //Administrador
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('75111567F')
-                ->setNombre('Diego Hurtado Rosales')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '75111567F'))
-                ->setAdministrador(true)
-                ->setEmpleado(true)
-                ->setComercial(true)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(true)
-                ->setCliente(false);
-
-            $manager->persist($usuario);
-        }
-
-        //Comercial 2
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('2698364J')
-                ->setNombre('Joaquín Hernández Mota')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '2698364J'))
-                ->setAdministrador(false)
-                ->setEmpleado(true)
-                ->setComercial(true)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(false)
-                ->setCliente(false);
-
-            $manager->persist($usuario);
-        }
-
-        //Dependiente
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('26471698H')
-                ->setNombre('Pedro Román López')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '26471698H'))
-                ->setAdministrador(false)
-                ->setEmpleado(true)
-                ->setComercial(false)
-                ->setDependiente(true)
-                ->setEncargado(false)
-                ->setSocio(false)
-                ->setCliente(false);
-
-            $manager->persist($usuario);
-        }
-
-        //Encargado
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('26456123A')
-                ->setNombre('Antonio Martínez Huertas')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '26456123A'))
-                ->setAdministrador(false)
-                ->setEmpleado(true)
-                ->setComercial(false)
-                ->setDependiente(false)
-                ->setEncargado(true)
-                ->setSocio(false)
-                ->setCliente(false);
-
-            $manager->persist($usuario);
-        }
-
-        //Socio 2
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('26354843H')
-                ->setNombre('Valentín González Molina')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '26354843H'))
-                ->setAdministrador(false)
-                ->setEmpleado(false)
-                ->setComercial(false)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(true)
-                ->setCliente(false);
-
-            $manager->persist($usuario);
-        }
-
-        //Socio 3
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('29478215Z')
-                ->setNombre('Luis López Martínez')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, '29478215Z'))
-                ->setAdministrador(false)
-                ->setEmpleado(false)
-                ->setComercial(false)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(true)
-                ->setCliente(false);
-
-            $manager->persist($usuario);
-        }
-
-        //Cliente 1
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('A23548796')
-                ->setNombre('Koipe, S.A.')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'A23548796'))
-                ->setAdministrador(false)
-                ->setEmpleado(false)
-                ->setComercial(false)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(false)
-                ->setCliente(true);
-
-            $manager->persist($usuario);
-        }
-
-        $manager->flush();
-
-        //Cliente 2
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('A23548756')
-                ->setNombre('Carbonell, S.A.')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'A23548756'))
-                ->setAdministrador(false)
-                ->setEmpleado(false)
-                ->setComercial(false)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(false)
-                ->setCliente(true);
-
-            $manager->persist($usuario);
-        }
-
-        $manager->flush();
-
-        //Cliente 3
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('B41584732')
-                ->setNombre('Grupo Ybarra, S.L.')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'B41584732'))
-                ->setAdministrador(false)
-                ->setEmpleado(false)
-                ->setComercial(false)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(false)
-                ->setCliente(true);
-
-            $manager->persist($usuario);
-        }
-
-        $manager->flush();
-
-        //Cliente 4
-        $usuario = new Usuario();
-
-        if ($usuario instanceof UserInterface) {
-            $usuario
-                ->setNif('A23846985')
-                ->setNombre('Coosur, S.A.')
-                ->setClave($this->container->get('security.password_encoder')->encodePassword($usuario, 'A23846985'))
-                ->setAdministrador(false)
-                ->setEmpleado(false)
-                ->setComercial(false)
-                ->setDependiente(false)
-                ->setEncargado(false)
-                ->setSocio(false)
-                ->setCliente(true);
-
-            $manager->persist($usuario);
-        }
 
         $manager->flush();
     }
