@@ -7,6 +7,10 @@ body {
     padding: 0;
 }
 
+header {
+    margin-bottom: 0;
+}
+
 nav {
     font-weight: bold;
 }
@@ -32,6 +36,11 @@ section {
     background-color: #E9DEF2;
     z-index: 4;
     margin-top: 0;
+}
+
+section h2 {
+    margin-top: 0;
+    padding-top: 20px;
 }
 
 .navegacion {

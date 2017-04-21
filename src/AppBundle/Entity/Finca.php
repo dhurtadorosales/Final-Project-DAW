@@ -32,7 +32,7 @@ class Finca
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=2)
      */
     private $municipio;
 

@@ -3,7 +3,7 @@
 {% block title %}Fincas{% endblock %}
 
 {% block section %}
-    <h1>Listado de fincas</h1>
+    <h2>Fincas</h2>
     <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
 
 
@@ -27,18 +27,37 @@
         </thead>
         <tbody>
         {% for finca in fincas %}
+            {% if finca.municipio < 100 %}
+                {% set refCatastral = finca.provincia ~ 0 ~ finca.municipio ~ finca.sector ~ finca.poligono ~ finca.parcela ~ finca.idInmueble ~ finca.caracterControl %}
+            {% else %}
+                {% set refCatastral = finca.provincia ~ finca.municipio ~ finca.sector ~ finca.poligono ~ finca.parcela ~ finca.idInmueble ~ finca.caracterControl %}
+            {% endif %}
             <tr>
-                <td>{{ finca.provincia }} {{ finca.municipio }} {{ finca.sector }} {{ finca.poligono }} {{ finca.parcela }} {{ finca.idInmueble }} {{ finca.caracterControl }}</td>
-                <td>{{ finca.propietario }}</td>
-                <td>{{ finca.partPropietario }} %</td>
+                <td>
+                    <a href="https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?UrbRus=R&RefC={{ refCatastral }}&esBice=&RCBice1=&RCBice2=&DenoBice=&del={{ finca.provincia }}&mun={{ finca.municipio }}"
+                       target="_blank" title="ir a los datos catastrales">
+                        {{ refCatastral }}
+                    </a>
+                </td>
+                <td>
+                    <a href="#" title="ir a la ficha del socio">
+                        {{ finca.propietario }}
+                    </a>
+                </td>
+                <td>{{ finca.partPropietario * 100 }} %</td>
                 <td>{% if finca.arrendatario != null %}
-                        {{ finca.arrendatario }}
+                        <a href="#" title="ir a la ficha del socio">{{ finca.arrendatario }}</a>
                     {% endif %}
                 </td>
-                <td>{{ finca.partArrend }} %</td>
+                <td>{{ finca.partArrend * 100 }} %</td>
                 <td>{{ finca.variedad }}</td>
                 <td>{{ finca.numPlantas }}</td>
-                <td>{{ finca.regadio }}</td>
+                <td>{% if finca.regadio == 1 %}
+                        Sí
+                    {% else %}
+                        No
+                    {% endif %}
+                </td>
                 <td>
                     <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -54,4 +73,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div id="mapa"></div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('fincas.js') }}"></script>
 {% endblock %}
