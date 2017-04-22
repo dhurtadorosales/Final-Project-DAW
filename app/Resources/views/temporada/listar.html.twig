@@ -3,10 +3,12 @@
 {% block title %}Temporadas{% endblock %}
 
 {% block section %}
-    <h2>Temporadas</h2>
-    <ul>
-        {% for temporada in temporadas %}
-            <li>{{ temporada }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>Temporadas</h2>
+        <ul>
+            {% for temporada in temporadas %}
+                <li>{{ temporada }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

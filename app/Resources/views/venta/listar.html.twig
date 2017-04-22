@@ -3,48 +3,38 @@
 {% block title %}Ventas{% endblock %}
 
 {% block section %}
-    <h2>Ventas</h2>
-    {% if temporada != null %}
-        <h2>Temporada: {{ temporada }}</h2>
-    {% endif %}
-
-    <p></p>
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-        <tr>
-            <th>Nº</th>
-            <th>Comprador</th>
-            <th>Fecha</th>
-            <th>Base Imponible €</th>
-            <th>IVA %</th>
-            <th>Importe €</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for venta in ventas %}
+    <div class="container">
+        <h2>Ventas</h2>
+        {% if temporada != null %}
+            <h2>Temporada: {{ temporada }}</h2>
+        {% endif %}
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
             <tr>
-                <td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
-                <td>{{ venta.cliente }}{{ venta.socio }}</td>
-                <td>{{ venta.fecha|date('d/m/Y') }}</td>
-                <td>{% set baseImponible = venta.suma - (venta.suma * venta.descuento) %}
-                    {{ baseImponible}}
-                </td>
-                <td>{{ venta.iva * 100 }}</td>
-                <td>{{ baseImponible * (1 + venta.iva) }}</td>
-                <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
+                <th>Nº</th>
+                <th>Comprador</th>
+                <th>Fecha</th>
+                <th>Base Imponible €</th>
+                <th>IVA %</th>
+                <th>Importe €</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
+                    <td>{{ venta.cliente }}{{ venta.socio }}</td>
+                    <td>{{ venta.fecha|date('d/m/Y') }}</td>
+                    <td>{% set baseImponible = venta.suma - (venta.suma * venta.descuento) %}
+                        {{ baseImponible}}
+                    </td>
+                    <td>{{ venta.iva * 100 }}</td>
+                    <td>{{ baseImponible * (1 + venta.iva) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -3,61 +3,46 @@
 {% block title %}Partidas{% endblock %}
 
 {% block section %}
-    <h2>Listado de partidas</h2>
-    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
-
-
-
-
-    -->
-    <p></p>
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-        <tr>
-            <th>Nº</th>
-            <th>Fecha</th>
-            <th>kg aceite</th>
-            <th>Procedencia</th>
-            <th>Lote</th>
-            <th>Entregas</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for partida in partidas %}
+    <div class="container">
+        <h2>Listado de partidas</h2>
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
             <tr>
-                <td>{{ partida.id }}</td>
-                <td>{{ partida.fechaFabricacion|date('d/m/Y') }}</td>
-                <td>{{ partida.cantidad }}</td>
-                <td>{% if partida.cantidad != 0 %}
-                        {{ partida.entregas[0].procedencia.denominacion }}
-                    {% endif %}
-                </td>
-                <td>{% if partida.lote != null %}
-                        {{ partida.lote.id }}-{{ partida.lote.temporada }}
-                    {% endif %}
-                </td>
-                <td>
-                    <select name="slEntregas" id="slEntregas">
-                        <option value="0"></option>
-                        {% for entrega in partida.entregas %}
-                            <option value="{{ entrega.finca.id }}" title="Detalles de la entrega"><a href="#">{{ entrega.id }}</a></option>
-                        {% endfor %}
-                    </select></td>
-                </td>
-                <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
+                <th>Nº</th>
+                <th>Fecha</th>
+                <th>kg aceite</th>
+                <th>Procedencia</th>
+                <th>Lote</th>
+                <th>Entregas</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for partida in partidas %}
+                <tr>
+                    <td>{{ partida.id }}</td>
+                    <td>{{ partida.fechaFabricacion|date('d/m/Y') }}</td>
+                    <td>{{ partida.cantidad }}</td>
+                    <td>{% if partida.cantidad != 0 %}
+                            {{ partida.entregas[0].procedencia.denominacion }}
+                        {% endif %}
+                    </td>
+                    <td>{% if partida.lote != null %}
+                            {{ partida.lote.id }}-{{ partida.lote.temporada }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <select name="slEntregas" id="slEntregas">
+                            <option value="0"></option>
+                            {% for entrega in partida.entregas %}
+                                <option value="{{ entrega.finca.id }}" title="Detalles de la entrega"><a href="#">{{ entrega.id }}</a></option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

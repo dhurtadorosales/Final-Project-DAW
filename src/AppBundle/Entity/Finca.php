@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Finca
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\FincaRepository")
  */
 class Finca
 {

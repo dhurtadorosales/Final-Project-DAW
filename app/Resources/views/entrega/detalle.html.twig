@@ -3,8 +3,11 @@
 {% block title %}Entregas{% endblock %}
 
 {% block section %}
+    <div class="container">
     <h2>Entrega Nº {{ entrega.id }}</h2>
     <h2>Socio: {{ socio }}</h2>
+    </div>
+    <div class="container">
     <table class="table table-bordered table-striped table-hover">
         <tr>
             <td>Temporada</td><td>{{ entrega.temporada }}</td>
@@ -59,4 +62,5 @@
             </tr>
         </tfoot>
     </table>
+    </div>
 {% endblock %}

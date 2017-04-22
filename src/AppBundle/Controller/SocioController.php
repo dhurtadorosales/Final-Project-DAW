@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class SocioController extends Controller
 {
     /**
-     * @Route("/administrador/socios/listar", name="socios_listar")
+     * @Route("/socios/listar", name="socios_listar")
      */
     public function listarAction()
     {

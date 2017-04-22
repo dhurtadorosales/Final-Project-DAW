@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Cliente;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
+use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,14 +77,14 @@ class VentaController extends Controller
     }
 
     /**
-     * @Route("/ventas/listar/cliente/{cliente}", name="ventas_listar_cliente")
+     * @Route("/ventas/listar/cliente/{usuario}", name="ventas_listar_cliente")
      */
-    public function listarClienteAction(Cliente $cliente)
+    public function listarClienteAction(Usuario $usuario)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $ventas = $em->getRepository('AppBundle:Venta')
-            ->getVentasCliente($cliente);
+            ->getVentasCliente($usuario);
 
         return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
@@ -94,7 +95,7 @@ class VentaController extends Controller
     /**
      * @Route("/ventas/insertar/cliente/{cliente}", name="ventas_insertar_cliente")
      */
-    public function insertarClienteAction(Cliente $cliente)
+    public function insertarClienteAction(Usuario $usuario)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -125,9 +126,9 @@ class VentaController extends Controller
             ->setFecha(new \DateTime('now'))
             ->setSuma(0)
             ->setIva($iva)
-            ->setCliente($cliente)
+            ->setPersona($usuario)
             ->setTemporada($temporada)
-            ->setDescuento($cliente->getDescuento());
+            ->setDescuento($usuario->getDescuento());
 
         $em->flush();
 

@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 class FincaController extends Controller
 {
     /**
-     * @Route("/socio/fincas/listar", name="fincas_listar")
+     * @Route("/fincas/listar", name="fincas_listar")
      */
     public function listarAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $fincas = $em->getRepository('AppBundle:Finca')
-            ->getFincas();
+            ->findAll();
 
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
@@ -28,7 +28,7 @@ class FincaController extends Controller
     }
 
     /**
-     * @Route("/fincas/listar/lotes/{lote}", name="fincas_listar_lote")
+     * @Route("/fincas/listar/lote/{lote}", name="fincas_listar_lote")
      */
     public function listarPorLoteAction(Lote $lote)
     {

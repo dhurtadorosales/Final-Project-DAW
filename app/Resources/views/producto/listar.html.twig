@@ -3,44 +3,29 @@
 {% block title %}Productos{% endblock %}
 
 {% block section %}
-    <h2>Listado de productos envasados</h2>
-    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
-
-
-
-
-    -->
-    <p></p>
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-        <tr>
-            <th>Aceite</th>
-            <th>Envase</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for producto in productos %}
+    <div class="container">
+        <h2>Listado de productos envasados</h2>
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
             <tr>
-                <td>{{ producto.lotes[0].aceite }}</td>
-                <td>{{ producto.envase }}</td>
-                <td>{{ producto.stock }}</td>
-                <td>{{ producto.lotes[0].aceite.precioKg * producto.lotes[0].aceite.densidadKgLitro (1 + producto.envase.incremento) }}</td>
-                <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
+                <th>Aceite</th>
+                <th>Envase</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.lotes[0].aceite }}</td>
+                    <td>{{ producto.envase }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>{{ producto.lotes[0].aceite.precioKg * producto.lotes[0].aceite.densidadKgLitro (1 + producto.envase.incremento) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

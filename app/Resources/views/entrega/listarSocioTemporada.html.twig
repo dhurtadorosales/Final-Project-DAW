@@ -3,68 +3,53 @@
 {% block title %}Entregas{% endblock %}
 
 {% block section %}
-    <h2>Entregas socio: {{ socio }}</h2>
-    <h2>Temporada: {{ temporada }}</h2>
-    <!--<a href="#" class="btn btn-success"><i class="fa fa-plus"></i> Añadir alumno</a>
-
-
-
-
-    -->
-    <p></p>
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-        <tr>
-            <th>Nº</th>
-            <th>Kg Aceituna</th>
-            <th>Sanción</th>
-            <th>Rendimiento %</th>
-            <th>Kg Aceite</th>
-            <th>Procedencia %</th>
-            <th>Aceite</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for entrega in entregas %}
+    <div class="container">
+        <h2>Entregas socio: {{ socio }}</h2>
+        <h2>Temporada: {{ temporada }}</h2>
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
             <tr>
-                <td>{{ entrega.id }}</td>
-                <td>
-                    {% if socio.id == entrega.finca.propietario.id %}
-                        {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
-                    {% else %}
-                        {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
-                    {% endif %}
-                    {{ pesoAceituna }}
-                </td>
-                <td>{% if entrega.sancion != null %}
-                        {% set sancion = pesoAceituna * entrega.sancion %}
-                    {% else %}
-                        {% set sancion = 0 %}
-                    {% endif %}
-                    - {{ sancion }}
-                </td>
-                <td>{{ entrega.rendimiento * 100 }}</td>
-                <td>{{ (pesoAceituna - sancion) * entrega.rendimiento }}</td>
-                <td>{{ entrega.procedencia}}</td>
-                <td>
-                    {% if entrega.partida.lote != null %}
-                        {{ entrega.partida.lote.aceite }}
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="#" class="btn btn-xs btn-success col-sm-6" title="Listado de fincas del socio">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-info col-sm-6" title="Modificar datos del socio">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="#" class="btn btn-xs btn-danger col-sm-6" title="Dar de baja">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                </td>
+                <th>Nº</th>
+                <th>Kg Aceituna</th>
+                <th>Sanción</th>
+                <th>Rendimiento %</th>
+                <th>Kg Aceite</th>
+                <th>Procedencia %</th>
+                <th>Aceite</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for entrega in entregas %}
+                <tr>
+                    <td>{{ entrega.id }}</td>
+                    <td>
+                        {% if socio.id == entrega.finca.propietario.id %}
+                            {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
+                        {% else %}
+                            {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
+                        {% endif %}
+                        {{ pesoAceituna }}
+                    </td>
+                    <td>{% if entrega.sancion != null %}
+                            {% set sancion = pesoAceituna * entrega.sancion %}
+                        {% else %}
+                            {% set sancion = 0 %}
+                        {% endif %}
+                        - {{ sancion }}
+                    </td>
+                    <td>{{ entrega.rendimiento * 100 }}</td>
+                    <td>{{ (pesoAceituna - sancion) * entrega.rendimiento }}</td>
+                    <td>{{ entrega.procedencia}}</td>
+                    <td>
+                        {% if entrega.partida.lote != null %}
+                            {{ entrega.partida.lote.aceite }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

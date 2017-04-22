@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Venta
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ConsultasRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VentaRepository")
  */
 class Venta
 {
@@ -204,13 +204,13 @@ class Venta
     }
 
     /**
-     * Set persona
+     * Set usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
      *
      * @return Venta
      */
-    public function setPersona(\AppBundle\Entity\Usuario $usuario = null)
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
     {
         $this->usuario = $usuario;
 
@@ -218,11 +218,11 @@ class Venta
     }
 
     /**
-     * Get persona
+     * Get usuario
      *
      * @return \AppBundle\Entity\Usuario
      */
-    public function getPersona()
+    public function geUsuario()
     {
         return $this->usuario;
     }
