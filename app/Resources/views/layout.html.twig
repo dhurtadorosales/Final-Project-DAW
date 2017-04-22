@@ -73,7 +73,7 @@
                                 {% endif %}
                             </ul>
 
-                            {% if not is_granted('ROLE_USUARIO') %}
+                            {% if not is_granted('ROLE_USUARIO') and ruta != 'entrar' %}
                                 <li {% if ruta == 'inicio' %} class="activo" {% endif %}>
                                     <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>
                                 </li>

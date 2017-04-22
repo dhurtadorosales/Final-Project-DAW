@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ app.user.nif }}{% endblock %}
+
+{% block section %}
+    {% if is_granted('ROLE_ADMINISTRADOR') %}
+        <a class="btn btn-lg btn-success" href="{{ path('temporadas_comenzar') }}">
+            <i class="fa fa-calendar fa-2x pull-left"></i> Comenzar<br>Temporada
+        </a>
+    {% endif %}
+
+    {% if is_granted('ROLE_SOCIO') %}
+        <a class="btn btn-lg btn-success" href="{#{ path('fincas_listar_propietario', {'propietario' : propietario.id}) }#}">
+            <i class="fa fa-area-chart fa-2x pull-left"></i> Fincas<br/>En propiedad
+        </a>
+        <a class="btn btn-lg btn-success" href="{#{ path('fincas_listar_arrendatario') }#}">
+            <i class="fa fa-area-chart fa-2x fa-plus-circle"></i><br/>Fincas Arrendadas
+        </a>
+
+
+
+
+
+    <div class="container">
+        <div class="tiles">
+            <a href="#" class="btn">
+                <div class="tile bg-primary">
+                    <div class="tile-body">
+                        <i class="fa fa-area-chart"></i>
+                    </div>
+                    <div class="tile-object">
+                        <div class="number">Fincas</div>
+                        <div class="number">en propiedad</div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="btn">
+                <div class="tile bg-primary">
+                    <div class="tile-body">
+                        <i class="fa fa-area-chart"></i>
+                    </div>
+                    <div class="tile-object">
+                        <div class="number">Fincas</div>
+                        <div class="number">arrendadas</div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" class="btn">
+                <div class="tile bg-primary">
+                    <div class="tile-body">
+                        <i class="fa fa-calculator"></i>
+                    </div>
+                    <div class="tile-object">
+                        <div class="number">Liquidaciones</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+
+
+    {% endif %}
+
+{% endblock %}

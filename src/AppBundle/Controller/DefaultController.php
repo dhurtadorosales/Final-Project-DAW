@@ -44,4 +44,12 @@ class DefaultController extends Controller
             'fotos' => $fotos
         ]);
     }
+
+    /**
+     * @Route("/principal", name="principal")
+     */
+    public function principalAction()
+    {
+        return $this->render('default/principal.html.twig');
+    }
 }

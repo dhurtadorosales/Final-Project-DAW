@@ -32,10 +32,11 @@ security:
             form_login:
               login_path: entrar
               check_path: comprobar
+              default_target_path: principal
 
             logout:
               path: salir
-              target: entrar
+              target: inicio
 
             # activate different ways to authenticate
 
