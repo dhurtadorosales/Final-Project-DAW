@@ -23,21 +23,7 @@
         <table class="table table-bordered table-striped table-hover">
             <tr><td>Nombre/Razón social</td><td>{{ persona }}</td></tr>
             <tr><td>NIF</td><td>{{ persona.nif }}</td></tr>
-            <tr><td>Direccion</td>
-                <td>{{ persona.calle }}, {{ persona.numero }}
-                    {% if persona.bloque != null %}
-                        -bloq {{ persona.bloque }}
-                    {% endif %}
-                    {% if persona.escalera != null %}
-                        -esc {{ persona.escalera }}
-                    {% endif %}
-                    {% if persona.piso != null %}
-                        -{{ persona.piso }}º
-                    {% endif %}
-                    {% if persona.letra != null %}
-                        {{ persona.letra }}
-                    {% endif %}
-                </td></tr>
+            <tr><td>Direccion</td><td>{{ persona.direccion }}</td></tr>
             <tr><td>Localidad</td><td>{{ persona.localidad }}</td></tr>
             <tr><td>Código Postal</td><td>{{ persona.codigoPostal }}</td></tr>
             <tr><td>Provincia</td><td>{{ persona.provincia }}</td></tr>

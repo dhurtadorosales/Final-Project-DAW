@@ -222,7 +222,7 @@ class Venta
      *
      * @return \AppBundle\Entity\Usuario
      */
-    public function geUsuario()
+    public function getUsuario()
     {
         return $this->usuario;
     }

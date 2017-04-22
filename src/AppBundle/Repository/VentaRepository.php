@@ -2,12 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Aceite;
-use AppBundle\Entity\Cliente;
-use AppBundle\Entity\Entrega;
-use AppBundle\Entity\Envase;
-use AppBundle\Entity\Lote;
-use AppBundle\Entity\Partida;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
 use AppBundle\Entity\Usuario;
@@ -85,7 +79,7 @@ class VentaRepository extends EntityRepository
         return $consulta;
     }
 
-    public function getVentasSocioTemporada(Socio $socio, Temporada $temporada)
+    public function getVentasTemporadaSocio(Temporada $temporada, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
@@ -93,10 +87,12 @@ class VentaRepository extends EntityRepository
         $consulta = $em->createQueryBuilder()
             ->select('v')
             ->addSelect('t')
+            ->addSelect('u')
             ->addSelect('s')
             ->from('AppBundle:Venta', 'v')
             ->join('v.temporada', 't')
-            ->join('v.socio', 's')
+            ->join('v.usuario', 'u')
+            ->join('u.socio', 's')
             ->where('t = :temporada')
             ->andWhere('s = :socio')
             ->setParameter('temporada', $temporada)

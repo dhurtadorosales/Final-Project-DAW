@@ -75,15 +75,6 @@ class LineaController extends Controller
             ->setPrecio($precio)
             ->setLote($lote);
 
-        //Obtención del descuento
-        if ($venta->getCliente() != null) {
-            $descuento = $venta->getCliente()->getDescuento();
-        }
-        else {
-            $descuento = $venta->getSocio()->getDescuento();
-        }
-        $venta->setDescuento($descuento);
-
         //Añadimos la cantidad a la base imponible de la venta
         $suma = $venta->getSuma();
         $venta->setSuma($suma + ($cantidad * $precio));

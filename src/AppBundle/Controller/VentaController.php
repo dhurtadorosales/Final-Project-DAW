@@ -46,12 +46,8 @@ class VentaController extends Controller
         $lineas = $em->getRepository('AppBundle:Linea')
             ->getLineasVenta($venta);
 
-        if ($ventas[0]->getSocio() != null) {
-            $persona = $ventas[0]->getSocio();
-        }
-        else {
-            $persona = $ventas[0]->getCliente();
-        }
+
+        $persona = $ventas[0]->getUsuario();
 
         return $this->render('venta/detalle.html.twig', [
             'ventas' => $ventas,
@@ -61,14 +57,14 @@ class VentaController extends Controller
     }
 
     /**
-     * @Route("/ventas/listar/socio/temporada/{socio}/{temporada}", name="ventas_listar_socio_temporada")
+     * @Route("/ventas/listar/temporada/socio/{temporada}/{socio}", name="ventas_listar_temporada_socio")
      */
     public function listarTemporadaSocioAction(Temporada $temporada, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $ventas = $em->getRepository('AppBundle:Venta')
-            ->getVentasSocioTemporada($socio, $temporada);
+            ->getVentasTemporadaSocio($socio, $temporada);
 
         return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
@@ -93,7 +89,7 @@ class VentaController extends Controller
     }
 
     /**
-     * @Route("/ventas/insertar/cliente/{cliente}", name="ventas_insertar_cliente")
+     * @Route("/ventas/insertar/cliente/{usuario}", name="ventas_insertar_cliente")
      */
     public function insertarClienteAction(Usuario $usuario)
     {
@@ -105,15 +101,21 @@ class VentaController extends Controller
             ->findAll();
         $temporada = $temporadas[sizeof($temporadas) - 1];
 
-        //Obtenemos los porcentajes
+        //Obtenemos los porcentajes. Si el usuario es socio solo paga el iva reducido
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
             ->findAll();
-        $iva = $porcentajes[0]->getCantidad();
+
+        if ($usuario->getRolSocio() == true) {
+            $iva = $porcentajes[1]->getCantidad();
+        }
+        else {
+            $iva = $porcentajes[0]->getCantidad();
+        }
 
         //Obtenemos el número de ventas de este año
         $fecha = new \DateTime('now');
         $anio = $fecha->format('Y');
-        $numero = $em->getRepository('AppBundle:Porcentaje')
+        $numero = $em->getRepository('AppBundle:Venta')
             ->getVentasAnio($anio);
         $numero ++;
 
@@ -126,56 +128,9 @@ class VentaController extends Controller
             ->setFecha(new \DateTime('now'))
             ->setSuma(0)
             ->setIva($iva)
-            ->setPersona($usuario)
+            ->setUsuario($usuario)
             ->setTemporada($temporada)
             ->setDescuento($usuario->getDescuento());
-
-        $em->flush();
-
-        $mensaje = 'Venta insertada correctamente';
-
-        return $this->render('venta/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
-    }
-
-    /**
-     * @Route("/ventas/insertar/socio/{socio}", name="ventas_insertar_socio")
-     */
-    public function insertarSocioAction(Socio $socio)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Obtenemos la temporada vigente
-        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
-            ->findAll();
-        $temporada = $temporadas[sizeof($temporadas) - 1];
-
-        //Obtenemos los porcentajes
-        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
-            ->findAll();
-        $ivaReducido = $porcentajes[1]->getCantidad();
-
-        //Obtenemos el número de ventas de este año
-        $fecha = new \DateTime('now');
-        $anio = $fecha->format('Y');
-        $numero = $em->getRepository('AppBundle:Porcentaje')
-            ->getVentasAnio($anio);
-        $numero ++;
-
-        //Creación de nueva venta
-        $venta = new Venta();
-
-        $em->persist($venta);
-        $venta
-            ->setNumero($numero)
-            ->setFecha(new \DateTime('now'))
-            ->setSuma(0)
-            ->setIva($ivaReducido)
-            ->setSocio($socio)
-            ->setTemporada($temporada)
-            ->setDescuento($socio->getDescuento());
 
         $em->flush();
 

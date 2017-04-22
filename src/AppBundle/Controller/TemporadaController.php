@@ -89,7 +89,8 @@ class TemporadaController extends Controller
                     ->setTemporada($nuevaTemporada)
                     ->setIva($porcentajes[0]->getCantidad())
                     ->setRetencion($porcentajes[2]->getCantidad())
-                    ->setSocio($item);
+                    ->setSocio($item)
+                    ->setFecha(null);
             }
 
             //Creación de lotes con la temporada nueva

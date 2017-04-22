@@ -73,11 +73,11 @@ class EntregaController extends Controller
 
         //Obtención de procedencias
         $procedencias = $em->getRepository('AppBundle:Procedencia')
-            ->getProcedencias();
+            ->findAll();
 
         //Obtención de fincas
         $fincas = $em->getRepository('AppBundle:Finca')
-            ->getFincas();
+            ->findAll();
 
         //Obtención de la temporada en vigor
         $temporadas = $em->getRepository('AppBundle:Temporada')
@@ -130,11 +130,11 @@ class EntregaController extends Controller
 
         //Obtención de procedencias
         $partidas = $em->getRepository('AppBundle:Partida')
-            ->getPartidas();
+            ->findAll();
 
         //Obtención de entregas
         $entregas = $em->getRepository('AppBundle:Entrega')
-            ->getEntregas();
+            ->findAll();
 
         $asignaciones = [
             $partidas[0],

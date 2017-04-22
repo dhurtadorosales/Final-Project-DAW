@@ -43,10 +43,6 @@ class LiquidacionController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtención de los socios
-        $socios = $em->getRepository('AppBundle:Socio')
-            ->findAll();
-
         //Obtención de los porcentajes
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
             ->findAll();
@@ -61,7 +57,7 @@ class LiquidacionController extends Controller
 
         //Obtención de las compras hechas por el socio en esa temporada
         $ventas = $em->getRepository('AppBundle:Venta')
-                ->getVentasSocioTemporada($socio, $temporada);
+                ->getVentasTemporadaSocio($temporada, $socio);
 
         //Obtención movimientos de la temporada
         $movimientos = $em->getRepository('AppBundle:Movimiento')
@@ -124,7 +120,12 @@ class LiquidacionController extends Controller
 
         }
 
-        $rendimientoMedio = $sumaRendimientos / $contadorRendimientos;
+        if ($contadorRendimientos != 0) {
+            $rendimientoMedio = $sumaRendimientos / $contadorRendimientos;
+        }
+        else {
+            $rendimientoMedio = 0;
+        }
 
         //Suma de las cantidades de cada venta
         $sumaVentas = 0;
@@ -133,7 +134,12 @@ class LiquidacionController extends Controller
             $sumaVentas = $sumaVentas + $cantidad;
         }
 
-        $precioLiquidacion = (($sumaMovimientos + $sumaVentasTemporada) / $sumaEntregas);
+        if ($sumaEntregas != 0) {
+            $precioLiquidacion = (($sumaMovimientos + $sumaVentasTemporada) / $sumaEntregas);
+        }
+        else {
+            $precioLiquidacion = 0;
+        }
 
         return $this->render('liquidacion/detalle.html.twig', [
             'liquidacion' => $liquidacion,
@@ -177,13 +183,10 @@ class LiquidacionController extends Controller
             $em->persist($liquidacion);
             $liquidacion
                 ->setTemporada($temporada)
-                ->setBeneficio(0)
-                ->setGasto(0)
                 ->setIva($porcentajes[0]->getCantidad())
-                ->setIvaReducido($porcentajes[1]->getCantidad())
                 ->setRetencion($porcentajes[2]->getCantidad())
-                ->setIndiceCorrector($porcentajes[3]->getCantidad())
-                ->setSocio($item);
+                ->setSocio($item)
+                ->setFecha(null);
         }
         $em->flush();
 

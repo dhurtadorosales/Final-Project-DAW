@@ -25,7 +25,7 @@
             {% for venta in ventas %}
                 <tr>
                     <td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
-                    <td>{{ venta.cliente }}{{ venta.socio }}</td>
+                    <td>{{ venta.usuario }}</td>
                     <td>{{ venta.fecha|date('d/m/Y') }}</td>
                     <td>{% set baseImponible = venta.suma - (venta.suma * venta.descuento) %}
                         {{ baseImponible}}
