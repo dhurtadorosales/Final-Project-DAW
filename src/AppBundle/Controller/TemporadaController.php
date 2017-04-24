@@ -7,6 +7,7 @@ use AppBundle\Entity\Lote;
 use AppBundle\Entity\Temporada;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -15,6 +16,7 @@ class TemporadaController extends Controller
 {
     /**
      * @Route("/temporadas/listar", name="temporadas_listar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function listarAction()
     {
@@ -29,11 +31,20 @@ class TemporadaController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/temporadas/comenzar", name="temporadas_comenzar", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function comenzarTemporadaAction()
+    {
+        return $this->render('temporada/confirma.html.twig');
+    }
 
     /**
-     * @Route("/temporadas/comenzar", name="temporadas_comenzar")
+     * @Route("/temporadas/comenzar", name="temporadas_comenzar_confirmar", methods={"POST"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function insertarLiquidacionAction()
+    public function confirmarTemporadaAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -109,13 +120,11 @@ class TemporadaController extends Controller
 
             $em->flush();
 
-            $mensaje = 'Temporada comenzada correctamente';
+            $this->addFlash('estado', 'Temporada comenzada');
         } catch (UniqueConstraintViolationException $exception) {
-            $mensaje = 'Ya existe esta temporada.';
+            $this->addFlash('error', 'Ya existe esta temporada');
         }
 
-        return $this->render('temporada/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
+        return $this->render('default/principal.html.twig');
     }
 }

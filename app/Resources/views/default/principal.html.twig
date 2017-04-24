@@ -3,10 +3,30 @@
 {% block title %}{{ app.user.nif }}{% endblock %}
 
 {% block section %}
+    <div class="container">
+        {% if app.session.flashBag.has('estado') %}
+            {% set mensajes = app.session.flashBag.get('estado') %}
+            {% for mensaje in mensajes %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            {% set mensajes = app.session.flashBag.get('error') %}
+            {% for mensaje in mensajes %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
     {% if is_granted('ROLE_ADMINISTRADOR') %}
         <div class="container">
             <div class="tiles">
-                <a href="#" class="btn">
+                <a href="{{ path('temporadas_comenzar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-calendar"></i>
@@ -17,7 +37,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('socios_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
@@ -27,7 +47,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('empleados_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
@@ -77,7 +97,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('clientes_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
@@ -97,13 +117,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('empleados_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
                         </div>
                         <div class="tile-object">
-                            <div class="number">Clientes</div>
+                            <div class="number"></div>
                         </div>
                     </div>
                 </a>
@@ -184,7 +204,7 @@
         <div class="container">
             <div class="tiles">
                 <a href="#" class="btn">
-                    <div class="tile tile-dark-cobalt">
+                    <div class="tile tile-dark-emerald">
                         <div class="tile-body">
                             <i class="fa fa-map"></i>
                         </div>

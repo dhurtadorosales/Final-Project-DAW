@@ -31,4 +31,20 @@ class UsuarioRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getEmpleados()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('u')
+            ->from('AppBundle:Usuario', 'u')
+            ->where('u.empleado = :valor')
+            ->setParameter('valor', true)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
 }

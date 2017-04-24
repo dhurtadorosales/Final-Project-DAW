@@ -3,7 +3,16 @@
 {% block title %}Temporada{% endblock %}
 
 {% block section %}
-    {% if mensaje is defined %}
-        <h2>{{ mensaje }}</h2>
-    {% endif %}
+    <div class="container">
+        <h3>Vas a comenzar una nueva temporada</h3>
+        <h3>¿deseas continuar?</h3>
+        <form action="{{ path('temporadas_comenzar_confirmar') }}" method="post" name="confirmar">
+            <button type="submit" name="aceptar" class="btn btn-success">
+                <i class="fa fa-check"></i> Aceptar
+            </button>
+            <a href="{{ path('principal') }}" class="btn btn-danger">
+                <i class="fa fa-times" name="cancelar"></i> Cancelar
+            </a>
+        </form>
+    </div>
 {% endblock %}

@@ -43,6 +43,10 @@ section h2 {
     padding-top: 20px;
 }
 
+thead {
+    background-color: cadetblue;
+}
+
 .navegacion {
     color: white;
     opacity: 0.85;

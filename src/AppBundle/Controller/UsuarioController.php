@@ -6,6 +6,7 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\UsuarioType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,15 +15,31 @@ class UsuarioController extends Controller
     /**
      * @Route("/clientes/listar", name="clientes_listar")
      */
-    public function listarAction()
+    public function listarClientesAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $clientes = $em->getRepository('AppBundle:Usuario')
             ->getClientes();
 
-        return $this->render('cliente/listar.html.twig', [
+        return $this->render('usuario/listarClientes.html.twig', [
             'clientes' => $clientes
+        ]);
+    }
+
+    /**
+     * @Route("/empleados/listar", name="empleados_listar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function listarAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $empleados = $em->getRepository('AppBundle:Usuario')
+            ->getEmpleados();
+
+        return $this->render('usuario/listarEmpleados.html.twig', [
+            'empleados' => $empleados
         ]);
     }
 

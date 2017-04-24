@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Empleados{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <h2>Empleados</h2>
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-striped table-hover table-responsive">
+            <thead>
+            <tr>
+                <th>NIF</th>
+                <th>Empleado</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Roles</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for empleado in empleados %}
+                <tr>
+                    <td>{{ empleado.nif }}</td>
+                    <td>{{ empleado.nombre }} {{ empleado.apellidos }}</td>
+                    <td>
+                        {{ empleado.direccion }} - {{empleado.localidad}} ({{ empleado.provincia }})
+                    </td>
+                    <td>{{ empleado.telefono}}</td>
+                    <td>{{ empleado.email }}</td>
+                    <td>
+                        <select name="slRoles" id="slRoles">
+                            {% set value = 0 %}
+                            {% if empleado.comercial == true %}
+                                <option value="{% set value = value + 1 %}">Comercial</option>
+                            {% endif %}
+                            {% if empleado.dependiente == true %}
+                                <option value="{% set value = value + 1 %}">Dependiente</option>
+                            {% endif %}
+                            {% if empleado.encargado == true %}
+                                <option value="{% set value = value + 1 %}">Encargado</option>
+                            {% endif %}
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
