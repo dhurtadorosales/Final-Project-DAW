@@ -4,8 +4,8 @@
 
 {% block section %}
     <div class="container">
-        <h2>Listado de lotes</h2>
-        <h2>Temporada: {{ temporada }}</h2>
+        <h2>Lotes</h2>
+        <h3>Temporada: {{ temporada }}</h3>
     </div>
     <div class="container">
         <table class="table table-bordered table-striped table-hover">
@@ -16,7 +16,6 @@
                 <th>Stock</th>
                 <th>Aceite</th>
                 <th>Entregas</th>
-                <th>Partidas</th>
                 <th>Fincas</th>
             </tr>
             </thead>
@@ -33,25 +32,22 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="">enlace</a>
+                        {% if lote.cantidad != 0 %}
+                            <a href="{{ path('entregas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default">
+                                Entregas del lote
+                            </a>
+                        {% else %}
+                            Lote vacío
+                        {% endif %}
                     </td>
                     <td>
-                        <select name="slPartidas" id="slPartidas">
-                            <option value="0"></option>
-                            {% for partida in lote.partidas %}
-                                <option value="{{ partida.id }}" >{{ partida.id }}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                    <td>
-                        <select name="slFincas" id="slFincas">
-                            <option value="0"></option>
-                            {% for partida in lote.partidas %}
-                                {% for entrega in partida.entregas %}
-                                    <option value="{{ entrega.finca.id }}" title="Propietario: {{ entrega.finca.propietario }}">{{ entrega.finca.provincia }} {{ entrega.finca.municipio }} {{ entrega.finca.sector }} {{ entrega.finca.poligono }} {{ entrega.finca.parcela }} {{ entrega.finca.idInmueble }} {{ entrega.finca.caracterControl }}</option>
-                                {% endfor %}
-                            {% endfor %}
-                        </select>
+                        {% if lote.cantidad != 0 %}
+                            <a href="{{ path('fincas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default">
+                                Fincas del lote
+                            </a>
+                        {% else %}
+                            Lote vacío
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

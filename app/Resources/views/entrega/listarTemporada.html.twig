@@ -4,13 +4,19 @@
 
 {% block section %}
     <div class="container">
-        <h2>Temporada: {{ temporada }}</h2>
+        {% if app.request == path('principal') %}
+            <h2>Temporada: {{ temporada }}</h2>
+        {% endif %}
+        {% if app.request == path('lotes_listar') %}
+            <h2>Lote: {{ lote }}</h2>
+        {% endif %}
     </div>
     <div class="container">
         <table class="table table-bordered table-striped table-hover">
             <thead>
             <tr>
                 <th>Nº</th>
+                <th>Fecha</th>
                 <th>Propietario</th>
                 <th>Arrendatario</th>
                 <th>Kg Aceituna</th>
@@ -24,6 +30,7 @@
             {% for entrega in entregas %}
                 <tr>
                     <td>{{ entrega.id }}</td>
+                    <td>{{ entrega.fecha|date('d/m/Y') }}</td>
                     <td>{{ entrega.finca.propietario }}</td>
                     <td>{{ entrega.finca.arrendatario }}</td>
                     <td>{{ entrega.peso }}</td>
@@ -31,8 +38,8 @@
                     <td>{{ entrega.peso * entrega.rendimiento }}</td>
                     <td>{{ entrega.procedencia}}</td>
                     <td>
-                        {% if entrega.partida.lote != null %}
-                            {{ entrega.partida.lote.aceite }}
+                        {% if entrega.lote != null %}
+                            {{ entrega.lote.aceite }}
                         {% endif %}
                     </td>
                 </tr>

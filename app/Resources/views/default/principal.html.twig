@@ -80,10 +80,30 @@
                 <a href="{{ path('liquidaciones_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
-                            <i class="fa fa-exchange"></i>
+                            <i class="fa fa-calculator"></i>
                         </div>
                         <div class="tile-object">
                             <div class="number">Liquidaciones</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('lotes_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-barcode"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Lotes</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('productos_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-basket"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Productos</div>
                         </div>
                     </div>
                 </a>
@@ -100,7 +120,7 @@
                 <a href="#" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
-                            <i class="fa fa-money"></i>
+                            <i class="fa fa-eur"></i>
                         </div>
                         <div class="tile-object">
                             <div class="number">Precios</div>
@@ -124,6 +144,26 @@
                         </div>
                         <div class="tile-object">
                             <div class="number">Ventas</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('lotes_listar') }}" class="btn">
+                    <div class="tile tile-dark-orange">
+                        <div class="tile-body">
+                            <i class="fa fa-barcode"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Lotes</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('productos_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-basket"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Productos</div>
                         </div>
                     </div>
                 </a>
@@ -154,6 +194,26 @@
                         </div>
                     </div>
                 </a>
+                <a href="{{ path('lotes_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-barcode"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Lotes</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('productos_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-basket"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Productos</div>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     {% endif %}
@@ -161,17 +221,17 @@
     {% if is_granted('ROLE_ENCARGADO') %}
         <div class="container">
             <div class="tiles">
-                <a href="#" class="btn">
+                <a href="{{ path('entregas_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
-                            <i class="fa fa-shopping-cart"></i>
+                            <i class="fa fa-balance-scale"></i>
                         </div>
                         <div class="tile-object">
                             <div class="number">Entregas</div>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('entregas_insertar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
@@ -182,14 +242,44 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('lotes_listar_asignacion') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
-                            <i class="fa fa-shopping-cart"></i>
+                            <i class="fa fa-flask"></i>
                         </div>
                         <div class="tile-object">
                             <div class="number">Resultados</div>
                             <div class="number">Calidad</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-industry"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Envasar</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('lotes_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-barcode"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Lotes</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('productos_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-basket"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Productos</div>
                         </div>
                     </div>
                 </a>
@@ -248,7 +338,7 @@
                 <a href="{{ path('movimientos_listar') }}" class="btn">
                     <div class="tile tile-dark-cyan">
                         <div class="tile-body">
-                            <i class="fa fa-balance-scale"></i>
+                            <i class="fa fa-exchange"></i>
                         </div>
                         <div class="tile-object">
                             <div class="number">Estado</div>

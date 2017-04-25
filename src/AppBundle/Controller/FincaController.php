@@ -31,6 +31,7 @@ class FincaController extends Controller
 
     /**
      * @Route("/fincas/listar/lote/{lote}", name="fincas_listar_lote")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO') or is_granted('ROLE_SOCIO')")
      */
     public function listarPorLoteAction(Lote $lote)
     {

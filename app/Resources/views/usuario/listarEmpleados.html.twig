@@ -29,18 +29,15 @@
                     <td>{{ empleado.telefono}}</td>
                     <td>{{ empleado.email }}</td>
                     <td>
-                        <select name="slRoles" id="slRoles">
-                            {% set value = 0 %}
-                            {% if empleado.comercial == true %}
-                                <option value="{% set value = value + 1 %}">Comercial</option>
-                            {% endif %}
-                            {% if empleado.dependiente == true %}
-                                <option value="{% set value = value + 1 %}">Dependiente</option>
-                            {% endif %}
-                            {% if empleado.encargado == true %}
-                                <option value="{% set value = value + 1 %}">Encargado</option>
-                            {% endif %}
-                        </select>
+                        {% if empleado.comercial == true %}
+                            Comercial
+                        {% endif %}
+                        {% if empleado.dependiente == true %}
+                            Dependiente
+                        {% endif %}
+                        {% if empleado.encargado == true %}
+                            Encargado
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

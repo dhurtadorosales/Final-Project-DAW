@@ -3,8 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Entrega;
+use AppBundle\Entity\Lote;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -68,6 +70,24 @@ class EntregaController extends Controller
     }
 
     /**
+     * @Route("/entregas/listar/lote/{lote}", name="entregas_listar_lote")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO') or is_granted('ROLE_SOCIO')")
+     */
+    public function listarEntregasLoteAction(Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $entregas = $em->getRepository('AppBundle:Entrega')
+            ->getEntregasLote($lote);
+
+        return $this->render('entrega/listarTemporada.html.twig', [
+            'entregas' => $entregas,
+            'lote' => $lote
+        ]);
+    }
+
+    /**
      * @Route("/entregas/detalle/{entrega}/{socio}", name="entregas_detalle")
      * @Security("is_granted('ROLE_ENCARGADO') or user.getNif() == socio.getUsuario().getNif()")")
      */
@@ -86,10 +106,20 @@ class EntregaController extends Controller
     }
 
     /**
-     * @Route("/entregas/insertar", name="entregas_insertar")
+     * @Route("/entregas/insertar", name="entregas_insertar", methods={"GET"})
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
-    public function insertarAction()
+    public function insertarEntregasAction()
+    {
+        return $this->render('entrega/confirma.html.twig');
+    }
+
+
+    /**
+     * @Route("/entregas/insertar", name="entregas_insertar_confirmar", methods={"POST"})
+     * @Security("is_granted('ROLE_ENCARGADO')")
+     */
+    public function confirmarInsertarEntregasAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -118,85 +148,42 @@ class EntregaController extends Controller
             [0, "2017-03-28", "17:07", "17:20", 900, 0.18, null, null, 3, $procedencias[0], null, $fincas[2], $temporada, $lotes[0]]
         ];
 
-        foreach ($entregas as $item) {
-            $entrega = new Entrega();
-            $em->persist($entrega);
-            $entrega
-                ->setFecha(new \DateTime($item[1]))
-                ->setHoraInicio(new \DateTime($item[2]))
-                ->setHoraFin(new \DateTime($item[3]))
-                ->setPeso($item[4])
-                ->setRendimiento($item[5])
-                ->setSancion($item[6])
-                ->setObservaciones($item[7])
-                ->setBascula($item[8])
-                ->setProcedencia($item[9])
-                ->setFinca($item[11])
-                ->setTemporada($item[12]);
+        try {
 
-            $em->flush();
-        }
-        $mensaje = 'Entradas insertadas correctamente';
+            foreach ($entregas as $item) {
+                $entrega = new Entrega();
+                $em->persist($entrega);
+                $entrega
+                    ->setFecha(new \DateTime($item[1]))
+                    ->setHoraInicio(new \DateTime($item[2]))
+                    ->setHoraFin(new \DateTime($item[3]))
+                    ->setPeso($item[4])
+                    ->setRendimiento($item[5])
+                    ->setSancion($item[6])
+                    ->setObservaciones($item[7])
+                    ->setBascula($item[8])
+                    ->setProcedencia($item[9])
+                    ->setFinca($item[11])
+                    ->setTemporada($item[12])
+                    ->setLote($item[13]);
 
-        return $this->render('entrega/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
-    }
+                //Obtención cantidad a sumar a la cantidad y stock del lote
+                $cantidadLote = $entrega->getPeso() * $entrega->getRendimiento();
 
-    /**
-     * @Route("/entregas/asignar/partida", name="entregas_asignar_partida")
-     */
-    public function asignarPartidaAction()
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+                $em->persist($entrega->getLote());
 
-        //Obtención de procedencias
-        $partidas = $em->getRepository('AppBundle:Partida')
-            ->findAll();
+                //Sumamos la cantidad y el stock de aceite de la nueva entrega
+                $entrega->getLote()->setCantidad($entrega->getLote()->getCantidad() + $cantidadLote);
+                $entrega->getLote()->setStock($entrega->getLote()->getStock() + $cantidadLote);
 
-        //Obtención de entregas
-        $entregas = $em->getRepository('AppBundle:Entrega')
-            ->findAll();
+                $em->flush();
+            }
 
-        $asignaciones = [
-            $partidas[0],
-            $partidas[1],
-            $partidas[2],
-            $partidas[2],
-            $partidas[0],
-        ];
-
-        //array de sumas
-        $sumas = [];
-
-        //Asigna partida a cada entrega
-        for ($i = 0; $i < sizeof($asignaciones); $i++) {
-            $em->persist($entregas[$i]);
-            $entregas[$i]
-                ->setPartida($asignaciones[$i]);
-
-            $em->flush();
+            $this->addFlash('estado', 'Entradas insertadas correctamente');
+        } catch (UniqueConstraintViolationException $exception) {
+            $this->addFlash('error', 'No se han podido insertar las entradas');
         }
 
-        //Rellena array de sumas
-        foreach ($entregas as $item) {
-            $suma = ($item->getPeso()) * ($item->getRendimiento());
-            array_push($sumas, $suma);
-        }
-
-        //Suma cantidad a cada partida
-        for ($i = 0; $i < sizeof($partidas); $i++) {
-            $em->persist($partidas[$i]);
-            $partidas[$i]
-                ->setCantidad($sumas[$i]);
-
-            $em->flush();
-        }
-        $mensaje = 'Partidas asignadas correctamente';
-
-        return $this->render('entrega/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
+        return $this->redirectToRoute('principal');
     }
 }

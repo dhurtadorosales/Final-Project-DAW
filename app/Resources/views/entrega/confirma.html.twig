@@ -3,7 +3,16 @@
 {% block title %}Entregas{% endblock %}
 
 {% block section %}
-    {% if mensaje is defined %}
-        <h2>{{ mensaje }}</h2>
-    {% endif %}
+    <div class="container">
+        <h3>Vas a insertar nuevas entregas</h3>
+        <h3>¿deseas continuar?</h3>
+        <form action="{{ path('entregas_insertar_confirmar') }}" method="post" name="confirmar">
+            <button type="submit" name="aceptar" class="btn btn-success">
+                <i class="fa fa-check"></i> Aceptar
+            </button>
+            <a href="{{ path('principal') }}" class="btn btn-danger" name="cancelar">
+                <i class="fa fa-times"></i> Cancelar
+            </a>
+        </form>
+    </div>
 {% endblock %}

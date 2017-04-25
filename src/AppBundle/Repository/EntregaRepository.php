@@ -63,11 +63,9 @@ class EntregaRepository extends EntityRepository
 
         $consulta = $em->createQueryBuilder()
             ->select('e')
-            ->addSelect('p')
             ->addSelect('l')
             ->from('AppBundle:Entrega', 'e')
-            ->join('e.partida', 'p')
-            ->join('p.lote', 'l')
+            ->join('e.lote', 'l')
             ->where('l = :lote')
             ->setParameter('lote', $lote)
             ->getQuery()
@@ -88,6 +86,7 @@ class EntregaRepository extends EntityRepository
             ->join('e.temporada', 't')
             ->where('t = :temporada')
             ->setParameter('temporada', $temporada)
+            ->orderBy('e.id', 'DESC')
             ->getQuery()
             ->getResult();
 

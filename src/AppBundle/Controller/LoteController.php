@@ -5,22 +5,32 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Partida;
-use AppBundle\Entity\Socio;
+
 use AppBundle\Entity\Temporada;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\TemporadaActual;
 
 class LoteController extends Controller
 {
     /**
-     * @Route("/lotes/listar/{temporada}", name="lotes_listar")
+     * @Route("/lotes/listar", name="lotes_listar")
+     * @Route("/lotes/listar/{temporada}", name="lotes_listar_temporada")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO')")
      */
-    public function indexAction(Temporada $temporada)
+    public function listarLotesAction(Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Si no recibe ninguna temporada se obtendrá la actual
+        if (null === $temporada) {
+            //Creamos una instancia del servicio
+            $temporadaActual = new TemporadaActual($em);
+            $temporada = $temporadaActual->temporadaActualAction();
+        }
 
         $lotes = $em->getRepository('AppBundle:Lote')
             ->getLotesTemporada($temporada);
@@ -32,9 +42,32 @@ class LoteController extends Controller
     }
 
     /**
-     * @Route("/lotes/listar/lote/{lote}", name="lotes_listar_lote")
+     * @Route("/lotes/listar/asignacion", name="lotes_listar_asignacion")
+     * @Security("is_granted('ROLE_ENCARGADO')")
      */
-    public function listarFincasAction(Lote $lote)
+    public function listarLotesAsignacionAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtención temporada actual
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
+        $lotes = $em->getRepository('AppBundle:Lote')
+            ->getLotesTemporadaNoNulos($temporada);
+
+        return $this->render('lote/listarAsignacion.html.twig', [
+            'lotes' => $lotes,
+            'temporada' => $temporada
+        ]);
+    }
+
+    /**
+     * @Route("/lotes/listar/lote/{lote}", name="lotes_listar_lote")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO')")
+     */
+    public function listarLotesLoteAction(Lote $lote)
     {
         /** @var EntityManager $em */
         $em=$this->getDoctrine()->getManager();
@@ -47,46 +80,9 @@ class LoteController extends Controller
         ]);
     }
 
-
-    /**
-     * @Route("/lotes/partidas/asignar/{partida}/{lote}", name="lotes_partidas_asignar")
-     */
-    public function partidasAsignarAction(Partida $partida, Lote $lote)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Asigna la partida al lote
-        $em->persist($partida);
-        $partida
-            ->setLote($lote);
-        $em->flush();
-
-        //Obtener cantidad del lote
-        $cantidadLote = $lote->getCantidad();
-
-        //Obtener cantidad de la partida
-        $cantidadPartida = $partida->getCantidad();
-
-        //Suma cantidad al lote
-        $cantidadNueva = $cantidadLote + $cantidadPartida;
-
-        $em->persist($lote);
-        $lote
-            ->setCantidad($cantidadNueva)
-            ->setStock($cantidadNueva);
-
-        $em->flush();
-
-        $mensaje = 'Partida asignada correctamente';
-
-        return $this->render('lote/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
-    }
-
     /**
      * @Route("/lotes/aceite/asignar/{aceite}/{lote}", name="lotes_aceite_asignar")
+     * @Security("is_granted('ROLE_ENCARGADO')")
      */
     public function aceiteAsignarAction(Aceite $aceite, Lote $lote)
     {

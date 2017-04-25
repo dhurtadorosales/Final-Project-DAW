@@ -12,6 +12,7 @@
             <thead>
             <tr>
                 <th>Nº</th>
+                <th>Fecha</th>
                 <th>Kg Aceituna</th>
                 <th>Sanción</th>
                 <th>Rendimiento %</th>
@@ -24,6 +25,7 @@
             {% for entrega in entregas %}
                 <tr>
                     <td>{{ entrega.id }}</td>
+                    <td>{{ entrega.fecha|date('d/m/Y') }}</td>
                     <td>
                         {% if socio.id == entrega.finca.propietario.id %}
                             {% set pesoAceituna = entrega.peso * entrega.finca.partPropietario %}
@@ -43,8 +45,8 @@
                     <td>{{ (pesoAceituna - sancion) * entrega.rendimiento }}</td>
                     <td>{{ entrega.procedencia}}</td>
                     <td>
-                        {% if entrega.partida.lote != null %}
-                            {{ entrega.partida.lote.aceite }}
+                        {% if entrega.lote != null %}
+                            {{ entrega.lote.aceite }}
                         {% endif %}
                     </td>
                 </tr>

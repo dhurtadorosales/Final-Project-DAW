@@ -10,6 +10,7 @@ use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +18,7 @@ class ProductoController extends Controller
 {
     /**
      * @Route("/productos/listar", name="productos_listar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO')")
      */
     public function indexAction()
     {
@@ -33,6 +35,7 @@ class ProductoController extends Controller
 
     /**
      * @Route("/productos/envasar/{lote}/{producto}/{cantidad}", name="productos_envasar")
+     * @Security("is_granted('ROLE_ENCARGADO')")
      */
     public function productosEnvasadosAction(Lote $lote, Producto $producto, $cantidad)
     {

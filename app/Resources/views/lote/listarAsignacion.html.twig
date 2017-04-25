@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Lotes{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <h2>Lotes</h2>
+        <h3>Temporada: {{ temporada }}</h3>
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Lote</th>
+                <th>Asignación</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lote in lotes %}
+                <tr>
+                    <td>{{ lote }}</td>
+                    <td>{{ lote.cantidad }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
