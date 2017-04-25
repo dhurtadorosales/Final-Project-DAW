@@ -47,38 +47,6 @@ class LoteController extends Controller
         ]);
     }
 
-    /**
-     * @Route("/lotes/insertar", name="lotes_insertar")
-     */
-    public function insertarAction()
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Obtenemos la última temporada
-        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
-            ->findAll();
-        $temporada = $temporadas[sizeof($temporadas) - 1];
-
-        $numLotes = 90;
-        $cantidad = 0;
-
-        for ($i = 0; $i < $numLotes; $i++) {
-            $lote = new Lote();
-            $em->persist($lote);
-            $lote
-                ->setTemporada($temporada)
-                ->setCantidad($cantidad)
-                ->setStock($cantidad);
-
-            $em->flush();
-        }
-        $mensaje = 'Lotes insertados correctamente';
-
-        return $this->render('lote/confirma.html.twig', [
-            'mensaje' => $mensaje
-        ]);
-    }
 
     /**
      * @Route("/lotes/partidas/asignar/{partida}/{lote}", name="lotes_partidas_asignar")

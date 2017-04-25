@@ -74,11 +74,11 @@ class Entrega
     private $procedencia;
 
     /**
-     * @var Partida
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Partida", inversedBy="entregas")
+     * @var Lote
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Lote", inversedBy="entregas")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $partida;
+    private $lote;
 
     /**
      * @var Finca
@@ -93,6 +93,7 @@ class Entrega
      * @ORM\JoinColumn(nullable=false)
      */
     private $temporada;
+
 
 
     /**
@@ -297,7 +298,6 @@ class Entrega
         return $this->bascula;
     }
 
-
     /**
      * Set procedencia
      *
@@ -323,27 +323,27 @@ class Entrega
     }
 
     /**
-     * Set partida
+     * Set lote
      *
-     * @param \AppBundle\Entity\Partida $partida
+     * @param \AppBundle\Entity\Lote $lote
      *
      * @return Entrega
      */
-    public function setPartida(\AppBundle\Entity\Partida $partida = null)
+    public function setLote(\AppBundle\Entity\Lote $lote = null)
     {
-        $this->partida = $partida;
+        $this->lote = $lote;
 
         return $this;
     }
 
     /**
-     * Get partida
+     * Get lote
      *
-     * @return \AppBundle\Entity\Partida
+     * @return \AppBundle\Entity\Lote
      */
-    public function getPartida()
+    public function getLote()
     {
-        return $this->partida;
+        return $this->lote;
     }
 
     /**

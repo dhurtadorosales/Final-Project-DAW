@@ -15,7 +15,7 @@ class MovimientoController extends Controller
     /**
      * @Route("/movimientos/listar", name="movimientos_listar")
      * @Route("/movimientos/listar/temporada/{temporada}", name="movimientos_listar_temporada")
-     * @Security("is_granted('ROLE_ADMINISTRADOR', 'ROLE_SOCIO')")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_SOCIO')")
      */
     public function listarMovimientosTemporadaAction(Temporada $temporada = null)
     {

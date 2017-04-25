@@ -37,11 +37,11 @@ class Lote
     private $stock;
 
     /**
-     * @var Partida[]
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Partida", mappedBy="lote")
+     * @var Entrega[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="lote")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $partidas;
+    private $entregas;
 
     /**
      * @var Aceite
@@ -76,14 +76,12 @@ class Lote
     {
         return $this->getNumero() . "-" . $this->getTemporada();
     }
-
-
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->partidas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->productos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->lineas = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -171,37 +169,37 @@ class Lote
     }
 
     /**
-     * Add partida
+     * Add entrega
      *
-     * @param \AppBundle\Entity\Partida $partida
+     * @param \AppBundle\Entity\Entrega $entrega
      *
      * @return Lote
      */
-    public function addPartida(\AppBundle\Entity\Partida $partida)
+    public function addEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->partidas[] = $partida;
+        $this->entregas[] = $entrega;
 
         return $this;
     }
 
     /**
-     * Remove partida
+     * Remove entrega
      *
-     * @param \AppBundle\Entity\Partida $partida
+     * @param \AppBundle\Entity\Entrega $entrega
      */
-    public function removePartida(\AppBundle\Entity\Partida $partida)
+    public function removeEntrega(\AppBundle\Entity\Entrega $entrega)
     {
-        $this->partidas->removeElement($partida);
+        $this->entregas->removeElement($entrega);
     }
 
     /**
-     * Get partidas
+     * Get entregas
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPartidas()
+    public function getEntregas()
     {
-        return $this->partidas;
+        return $this->entregas;
     }
 
     /**

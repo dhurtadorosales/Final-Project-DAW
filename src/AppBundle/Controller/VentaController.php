@@ -18,7 +18,7 @@ class VentaController extends Controller
     /**
      * @Route("/ventas/listar", name="ventas_listar")
      * @Route("/ventas/listar/temporada/{temporada}", name="ventas_listar_temporada")
-     * @Security("is_granted('ROLE_COMERCIAL')")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
     public function listarTemporadaAction(Temporada $temporada = null)
     {
@@ -43,7 +43,7 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
-     * @Security("is_granted('USUARIO')")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == socio.getUsuario().getNif()")")
      */
     public function detalleAction(Venta $venta)
     {
@@ -71,7 +71,7 @@ class VentaController extends Controller
     /**
      * @Route("/ventas/listar/socio/{socio}", name="ventas_listar_socio")
      * @Route("/ventas/listar/socio/temporada/{socio}/{temporada}", name="ventas_listar_socio_temporada")
-     * @Security("is_granted('ROLE_COMERCIAL', 'ROLE_SOCIO)")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == socio.getUsuario().getNif()")")
      */
     public function listarTemporadaSocioAction(Socio $socio, Temporada $temporada = null)
     {
@@ -96,7 +96,7 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/listar/cliente/{usuario}", name="ventas_listar_cliente")
-     * @Security("is_granted('ROLE_COMERCIAL', ROLE_SOCIO)")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == usuario.getNif()")")
      */
     public function listarClienteAction(Usuario $usuario)
     {
@@ -113,7 +113,7 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/insertar/cliente/{usuario}", name="ventas_insertar_cliente")
-     * @Security("is_granted('ROLE_COMERCIAL', 'ROLE_DEPENDIENTE')")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
     public function insertarClienteAction(Usuario $usuario)
     {

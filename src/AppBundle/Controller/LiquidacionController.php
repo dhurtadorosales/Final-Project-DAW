@@ -43,7 +43,7 @@ class LiquidacionController extends Controller
     /**
      * @Route("/liquidaciones/detalle/{socio}/{temporada}", name="liquidaciones_detalle_temporada")
      * @Route("/liquidaciones/detalle/{socio}", name="liquidaciones_detalle")
-     * @Security("is_granted('ROLE_ADMINISTRADOR', 'ROLE_SOCIO')")
+     * @Security("has_role('ROLE_ADMINISTRADOR') or user.getNif() == socio.getUsuario().getNif()")
      */
     public function detalleAction(Socio $socio, Temporada $temporada = null)
     {
