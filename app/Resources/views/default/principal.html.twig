@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('fincas_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-map"></i>
@@ -67,13 +67,23 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('movimientos_listar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-exchange"></i>
                         </div>
                         <div class="tile-object">
                             <div class="number">Movimientos</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('liquidaciones_listar') }}" class="btn">
+                    <div class="tile tile-dark-teal">
+                        <div class="tile-body">
+                            <i class="fa fa-exchange"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Liquidaciones</div>
                         </div>
                     </div>
                 </a>
@@ -88,7 +98,7 @@
         <div class="container">
             <div class="tiles">
                 <a href="#" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-money"></i>
                         </div>
@@ -98,7 +108,7 @@
                     </div>
                 </a>
                 <a href="{{ path('clientes_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
                         </div>
@@ -107,23 +117,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
-                    <div class="tile tile-dark-teal">
+                <a href="{{ path('ventas_listar') }}" class="btn">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-shopping-cart"></i>
                         </div>
                         <div class="tile-object">
                             <div class="number">Ventas</div>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ path('empleados_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
-                        <div class="tile-body">
-                            <i class="fa fa-users"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number"></div>
                         </div>
                     </div>
                 </a>
@@ -135,7 +135,7 @@
         <div class="container">
             <div class="tiles">
                 <a href="#" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-shopping-cart"></i>
                         </div>
@@ -203,8 +203,8 @@
     {% if is_granted('ROLE_SOCIO') %}
         <div class="container">
             <div class="tiles">
-                <a href="#" class="btn">
-                    <div class="tile tile-dark-emerald">
+                <a href="{{ path('fincas_listar_propietario', {'socio': app.user.socio.id }) }}" class="btn">
+                    <div class="tile tile-dark-cyan">
                         <div class="tile-body">
                             <i class="fa fa-map"></i>
                         </div>
@@ -214,8 +214,8 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
-                    <div class="tile bg-primary">
+                <a href="{{ path('fincas_listar_arrendatario', {'socio': app.user.socio.id }) }}" class="btn">
+                    <div class="tile tile-dark-cyan">
                         <div class="tile-body">
                             <i class="fa fa-map"></i>
                         </div>
@@ -225,8 +225,8 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
-                    <div class="tile bg-primary">
+                <a href="{{ path('liquidaciones_detalle', {'socio': app.user.socio.id }) }}" class="btn">
+                    <div class="tile tile-dark-cyan">
                         <div class="tile-body">
                             <i class="fa fa-calculator"></i>
                         </div>
@@ -236,7 +236,7 @@
                     </div>
                 </a>
                 <a href="#" class="btn">
-                    <div class="tile bg-primary">
+                    <div class="tile tile-dark-cyan">
                         <div class="tile-body">
                             <i class="fa fa-user"></i>
                         </div>
@@ -245,8 +245,8 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
-                    <div class="tile bg-primary">
+                <a href="{{ path('movimientos_listar') }}" class="btn">
+                    <div class="tile tile-dark-cyan">
                         <div class="tile-body">
                             <i class="fa fa-balance-scale"></i>
                         </div>

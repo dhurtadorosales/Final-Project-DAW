@@ -300,6 +300,7 @@ Tiles(new in v1.1.1)
 
 .tile-dark-cyan {
      background: #1b6eae !important;
+    opacity: 0.7;
  }
 
 .tile-dark-cobalt {
@@ -307,7 +308,8 @@ Tiles(new in v1.1.1)
  }
 
 .tile-dark-teal {
-     background: #004050 !important;
+    background: #004050 !important;
+    opacity: 0.7;
  }
 
 .tile-dark-emerald {
@@ -319,7 +321,8 @@ Tiles(new in v1.1.1)
  }
 
 .tile-dark-orange {
-     background: #bf5a15 !important;
+    background: #bf5a15 !important;
+    opacity: 0.7;
  }
 
 .tile-dark-red {

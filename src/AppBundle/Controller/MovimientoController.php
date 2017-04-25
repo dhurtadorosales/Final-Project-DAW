@@ -2,25 +2,32 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Liquidacion;
-use AppBundle\Entity\Lote;
 use AppBundle\Entity\Movimiento;
 use AppBundle\Entity\Temporada;
+use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class MovimientoController extends Controller
 {
     /**
+     * @Route("/movimientos/listar", name="movimientos_listar")
      * @Route("/movimientos/listar/temporada/{temporada}", name="movimientos_listar_temporada")
+     * @Security("is_granted('ROLE_ADMINISTRADOR', 'ROLE_SOCIO')")
      */
-    public function listarMovimientosTemporadaAction(Temporada $temporada)
+    public function listarMovimientosTemporadaAction(Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Si no recibe ninguna temporada se obtendrá la actual
+        if (null === $temporada) {
+            //Creamos una instancia del servicio
+            $temporadaActual = new TemporadaActual($em);
+            $temporada = $temporadaActual->temporadaActualAction();
+        }
 
         //Obtención movimientos
         $movimientos = $em->getRepository('AppBundle:Movimiento')
@@ -50,6 +57,7 @@ class MovimientoController extends Controller
 
     /**
      * @Route("/movimientos/insertar", name="movimientos_insertar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function insertarLiquidacionAction()
     {

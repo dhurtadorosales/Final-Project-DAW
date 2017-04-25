@@ -9,18 +9,29 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\TemporadaActual;
 
 class VentaController extends Controller
 {
     /**
+     * @Route("/ventas/listar", name="ventas_listar")
      * @Route("/ventas/listar/temporada/{temporada}", name="ventas_listar_temporada")
+     * @Security("is_granted('ROLE_COMERCIAL')")
      */
-    public function listarTemporadaAction(Temporada $temporada)
+    public function listarTemporadaAction(Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Si no recibe ninguna temporada se obtendrá la actual
+        if (null === $temporada) {
+            //Creamos una instancia del servicio
+            $temporadaActual = new TemporadaActual($em);
+            $temporada = $temporadaActual->temporadaActualAction();
+        }
+
         $ventas = $em->getRepository('AppBundle:Venta')
             ->getVentasTemporada($temporada);
 
@@ -32,6 +43,7 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
+     * @Security("is_granted('USUARIO')")
      */
     public function detalleAction(Venta $venta)
     {
@@ -57,12 +69,22 @@ class VentaController extends Controller
     }
 
     /**
-     * @Route("/ventas/listar/temporada/socio/{temporada}/{socio}", name="ventas_listar_temporada_socio")
+     * @Route("/ventas/listar/socio/{socio}", name="ventas_listar_socio")
+     * @Route("/ventas/listar/socio/temporada/{socio}/{temporada}", name="ventas_listar_socio_temporada")
+     * @Security("is_granted('ROLE_COMERCIAL', 'ROLE_SOCIO)")
      */
-    public function listarTemporadaSocioAction(Temporada $temporada, Socio $socio)
+    public function listarTemporadaSocioAction(Socio $socio, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Si no recibe ninguna temporada se obtendrá la actual
+        if (null === $temporada) {
+            //Creamos una instancia del servicio
+            $temporadaActual = new TemporadaActual($em);
+            $temporada = $temporadaActual->temporadaActualAction();
+        }
+
         $ventas = $em->getRepository('AppBundle:Venta')
             ->getVentasTemporadaSocio($socio, $temporada);
 
@@ -74,6 +96,7 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/listar/cliente/{usuario}", name="ventas_listar_cliente")
+     * @Security("is_granted('ROLE_COMERCIAL', ROLE_SOCIO)")
      */
     public function listarClienteAction(Usuario $usuario)
     {
@@ -90,6 +113,7 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/insertar/cliente/{usuario}", name="ventas_insertar_cliente")
+     * @Security("is_granted('ROLE_COMERCIAL', 'ROLE_DEPENDIENTE')")
      */
     public function insertarClienteAction(Usuario $usuario)
     {
@@ -97,9 +121,10 @@ class VentaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //Obtenemos la temporada vigente
-        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
-            ->findAll();
-        $temporada = $temporadas[sizeof($temporadas) - 1];
+        //Si no recibe ninguna temporada se obtendrá la actual
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
 
         //Obtenemos los porcentajes. Si el usuario es socio solo paga el iva reducido
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')

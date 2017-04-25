@@ -2,30 +2,35 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Linea;
 use AppBundle\Entity\Liquidacion;
-use AppBundle\Entity\Lote;
-use AppBundle\Entity\Porcentaje;
-use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
-use AppBundle\Entity\Venta;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\Tests\Compiler\Lille;
-use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\TemporadaActual;
 
 class LiquidacionController extends Controller
 {
     /**
+     * @Route("/liquidaciones/listar", name="liquidaciones_listar")
      * @Route("/liquidaciones/listar/{temporada}", name="liquidaciones_listar_temporada")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function listarAction(Temporada $temporada)
+    public function listarAction(Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Si no recibe ninguna temporada se obtendrá la actual
+        if (null === $temporada) {
+            //Creamos una instancia del servicio
+            $temporadaActual = new TemporadaActual($em);
+            $temporada = $temporadaActual->temporadaActualAction();
+        }
+
+        //Obtención de las liquidaciones
         $liquidaciones = $em->getRepository('AppBundle:Liquidacion')
             ->getLiquidacionTemporada($temporada);
 
@@ -36,12 +41,21 @@ class LiquidacionController extends Controller
     }
 
     /**
-     * @Route("/liquidaciones/detalle/{socio}/{temporada}", name="liquidaciones_detalle")
+     * @Route("/liquidaciones/detalle/{socio}/{temporada}", name="liquidaciones_detalle_temporada")
+     * @Route("/liquidaciones/detalle/{socio}", name="liquidaciones_detalle")
+     * @Security("is_granted('ROLE_ADMINISTRADOR', 'ROLE_SOCIO')")
      */
-    public function detalleAction(Socio $socio, Temporada $temporada)
+    public function detalleAction(Socio $socio, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        //Si no recibe ninguna temporada se obtendrá la actual
+        if (null === $temporada) {
+            //Creamos una instancia del servicio
+            $temporadaActual = new TemporadaActual($em);
+            $temporada = $temporadaActual->temporadaActualAction();
+        }
 
         //Obtención de los porcentajes
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')

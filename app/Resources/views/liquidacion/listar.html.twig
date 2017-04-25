@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liquidaciones{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <h2>Liquidaciones</h2>
+        <h2>Temporada: {{ temporada }}</h2>
+    </div>
+    <div class="container">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Nº</th>
+                <th>Socio</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for liquidacion in liquidaciones %}
+                <tr>
+                    <td>{{ liquidacion.id }}</td>
+                    <td>{{ liquidacion.socio }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

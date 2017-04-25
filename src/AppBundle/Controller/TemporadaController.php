@@ -9,8 +9,8 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use AppBundle\Service\TemporadaActual;
 
 class TemporadaController extends Controller
 {
@@ -49,10 +49,9 @@ class TemporadaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtenemos la temporada aún vigente
-        $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
-            ->findAll();
-        $temporada = $temporadas[sizeof($temporadas) - 1];
+        //Obtenemos la temporada aún vigente. Usamos el servicio
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
 
         //Si existe la temporada anterior
         if ($temporada != null) {
@@ -125,6 +124,6 @@ class TemporadaController extends Controller
             $this->addFlash('error', 'Ya existe esta temporada');
         }
 
-        return $this->render('default/principal.html.twig');
+        return $this->redirectToRoute('principal');
     }
 }

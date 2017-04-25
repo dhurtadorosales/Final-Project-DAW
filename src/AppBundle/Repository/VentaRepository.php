@@ -73,6 +73,7 @@ class VentaRepository extends EntityRepository
             ->join('v.temporada', 't')
             ->where('t = :temporada')
             ->setParameter('temporada', $temporada)
+            ->orderBy('v.numero', 'DESC')
             ->getQuery()
             ->getResult();
 
