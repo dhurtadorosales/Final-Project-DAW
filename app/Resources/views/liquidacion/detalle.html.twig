@@ -5,7 +5,7 @@
 {% block section %}
     <div class="container">
         <h2>Liquidación</h2>
-        <h2>Socio: {{ socio }}</h2>
+        <h3>Socio: {{ socio }}</h3>
     </div>
     <div class="container">
         <table class="table table-bordered table-striped table-hover">
@@ -14,11 +14,11 @@
             </tr>
             <tr>
                 <td>Fecha</td>
-                <td>{#% if liquidacion.fecha != null %}
-                        {{ liquidacion.fecha|date('d/m/Y') }}
+                <td>{% if liquidacion[0].fecha != null %}
+                        {{ liquidacion[0].fecha|date('d/m/Y') }}
                     {% else %}
                         Provisional
-                    {% endif %}#}
+                    {% endif %}
                 </td>
             </tr>
         </table>
@@ -55,21 +55,23 @@
                 </tr>
                 <tr>
                     <td>Base imponible €</td>
-                    <td>{{ (pesoAceite * precioLiquidacion) + sumaBonificacion }}</td>
+                    <td>{% set baseImponible = (pesoAceite * precioLiquidacion) + sumaBonificacion %}
+                        {{ baseImponible }}
+                    </td>
                 </tr>
                 <tr>
-                    <td>IVA %</td>
-                    <td>{{ porcentajes[1].cantidad * 100 }}</td>
-                    <td>IVA</td>
-                    <td>{{ porcentajes[1].cantidad * 100 }}</td>
+                    <td>IVA {{ porcentajes[1].cantidad * 100 }}%</td>
+                    <td>{{ baseImponible * porcentajes[1].cantidad }}</td>
+                    <td>IVA {{ porcentajes[1].cantidad * 100 }}%</td>
+                    <td>{{ sumaVentas * porcentajes[1].cantidad }}</td>
                 </tr>
                 <tr>
-                    <td>Retención %</td>
-                    <td>- {{ porcentajes[2].cantidad * 100 }}</td>
+                    <td>Retención {{ porcentajes[2].cantidad * 100 }}%</td>
+                    <td>- {{ baseImponible * porcentajes[2].cantidad }}</td>
                 </tr>
                 <tr>
                     <td>Importe €</td>
-                    <td>{% set importe = (pesoAceite * precioLiquidacion) * (1 + porcentajes[1].cantidad) - (pesoAceite * precioLiquidacion * porcentajes[2].cantidad) %}
+                    <td>{% set importe = (baseImponible) * (1 + porcentajes[1].cantidad) - (baseImponible * porcentajes[2].cantidad) %}
                         {{ importe }}
                     </td>
                     <td>A deducir</td>
@@ -83,8 +85,7 @@
             <thead>
                 <tr>
                     <th>IMPORTE TOTAL</th>
-                    <td>{{ (sumaEntregas * (1 + porcentajes[1].cantidad) - (sumaEntregas * porcentajes[2].cantidad)) - (sumaVentas * (1 + porcentajes[1].cantidad))}} €</td>
-
+                    <td>{{ importe - sumaVentas * (1 + porcentajes[1].cantidad) }} €</td>
                 </tr>
             </thead>
         </table>

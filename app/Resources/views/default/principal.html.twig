@@ -23,9 +23,9 @@
             {% endfor %}
         {% endif %}
     </div>
-    {% if is_granted('ROLE_ADMINISTRADOR') %}
-        <div class="container">
-            <div class="tiles">
+    <div class="container">
+        <div class="tiles">
+            {% if is_granted('ROLE_ADMINISTRADOR') %}
                 <a href="{{ path('temporadas_comenzar') }}" class="btn">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
@@ -107,16 +107,32 @@
                         </div>
                     </div>
                 </a>
-            </div>
-        </div>
-    {% endif %}
+            {% endif %}
 
-    {% if is_granted('ROLE_EMPLEADO') %}
-    {% endif %}
+            {% if is_granted('ROLE_EMPLEADO') %}
+                <a href="{{ path('lotes_listar') }}" class="btn">
+                    <div class="tile tile-dark-orange">
+                        <div class="tile-body">
+                            <i class="fa fa-barcode"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Lotes</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('productos_listar') }}" class="btn">
+                    <div class="tile tile-dark-orange">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-basket"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Productos</div>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
 
-    {% if is_granted('ROLE_COMERCIAL') %}
-        <div class="container">
-            <div class="tiles">
+            {% if is_granted('ROLE_COMERCIAL') %}
                 <a href="#" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
@@ -147,33 +163,9 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('lotes_listar') }}" class="btn">
-                    <div class="tile tile-dark-orange">
-                        <div class="tile-body">
-                            <i class="fa fa-barcode"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Lotes</div>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ path('productos_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
-                        <div class="tile-body">
-                            <i class="fa fa-shopping-basket"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Productos</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    {% endif %}
+            {% endif %}
 
-    {% if is_granted('ROLE_DEPENDIENTE') %}
-        <div class="container">
-            <div class="tiles">
+            {% if is_granted('ROLE_DEPENDIENTE') %}
                 <a href="#" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
@@ -185,7 +177,7 @@
                     </div>
                 </a>
                 <a href="#" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
                         </div>
@@ -194,35 +186,11 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('lotes_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
-                        <div class="tile-body">
-                            <i class="fa fa-barcode"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Lotes</div>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ path('productos_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
-                        <div class="tile-body">
-                            <i class="fa fa-shopping-basket"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Productos</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    {% endif %}
+            {% endif %}
 
-    {% if is_granted('ROLE_ENCARGADO') %}
-        <div class="container">
-            <div class="tiles">
+            {% if is_granted('ROLE_ENCARGADO') %}
                 <a href="{{ path('entregas_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-balance-scale"></i>
                         </div>
@@ -232,7 +200,7 @@
                     </div>
                 </a>
                 <a href="{{ path('entregas_insertar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
                         </div>
@@ -243,7 +211,7 @@
                     </div>
                 </a>
                 <a href="{{ path('lotes_asignacion') }}" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-flask"></i>
                         </div>
@@ -254,7 +222,7 @@
                     </div>
                 </a>
                 <a href="#" class="btn">
-                    <div class="tile tile-dark-teal">
+                    <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-industry"></i>
                         </div>
@@ -263,36 +231,12 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('lotes_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
-                        <div class="tile-body">
-                            <i class="fa fa-barcode"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Lotes</div>
-                        </div>
-                    </div>
-                </a>
-                <a href="{{ path('productos_listar') }}" class="btn">
-                    <div class="tile tile-dark-teal">
-                        <div class="tile-body">
-                            <i class="fa fa-shopping-basket"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Productos</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    {% endif %}
+            {% endif %}
 
-    {% if is_granted('ROLE_CLIENTE') %}
-    {% endif %}
+            {% if is_granted('ROLE_CLIENTE') %}
+            {% endif %}
 
-    {% if is_granted('ROLE_SOCIO') %}
-        <div class="container">
-            <div class="tiles">
+            {% if is_granted('ROLE_SOCIO') %}
                 <a href="{{ path('fincas_listar_propietario', {'socio': app.user.socio.id }) }}" class="btn">
                     <div class="tile tile-dark-cyan">
                         <div class="tile-body">
@@ -325,13 +269,13 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('entregas_listar_socio', {'socio': app.user.socio.id}) }}" class="btn">
                     <div class="tile tile-dark-cyan">
                         <div class="tile-body">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-balance-scale"></i>
                         </div>
                         <div class="tile-object">
-                            <div class="number">Ver perfil</div>
+                            <div class="number">Entregas</div>
                         </div>
                     </div>
                 </a>
@@ -346,8 +290,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            {% endif %}
         </div>
-    {% endif %}
-
+    </div>
 {% endblock %}

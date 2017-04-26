@@ -12,16 +12,17 @@ class LoteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        for ($i = 0; $i < 10; $i++) {
-            $builder
-                ->add('aceite', null);
-        }
+        $builder
+            ->add('aceite', null, [
+                'label' => 'Nombre del lote',
+                'placeholder' => '[Ninguno]'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Lote::class
+            'data_class' => Lote::class,
         ]);
     }
 }

@@ -4,8 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
-use AppBundle\Entity\Partida;
-
 use AppBundle\Entity\Temporada;
 use AppBundle\Form\Type\LoteType;
 use Doctrine\ORM\EntityManager;
@@ -13,8 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Service\TemporadaActual;
-use Symfony\Component\BrowserKit\Request;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoteController extends Controller
 {
@@ -105,6 +102,35 @@ class LoteController extends Controller
         $mensaje = 'Aceite asignado correctamente';
         return $this->render('lote/confirma.html.twig', [
             'mensaje' => $mensaje
+        ]);
+    }
+
+    /**
+     * @Route("/modificar/lote/{id}", name="modificar_lote")
+     */
+    public function formLoteAction(Request $request, Lote $lote)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(LoteType::class, $lote);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('principal');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+
+        }
+
+        return $this->render('lote/form.html.twig', [
+            'lote' => $lote,
+            'formulario' => $form->createView()
         ]);
     }
 }

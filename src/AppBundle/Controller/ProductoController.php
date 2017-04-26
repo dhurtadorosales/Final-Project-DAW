@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Envase;
 use AppBundle\Entity\Lote;
-use AppBundle\Entity\Partida;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use Doctrine\ORM\EntityManager;
