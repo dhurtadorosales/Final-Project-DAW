@@ -7,11 +7,14 @@ use AppBundle\Entity\Lote;
 use AppBundle\Entity\Partida;
 
 use AppBundle\Entity\Temporada;
+use AppBundle\Form\Type\LoteType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Service\TemporadaActual;
+use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class LoteController extends Controller
 {
@@ -42,7 +45,7 @@ class LoteController extends Controller
     }
 
     /**
-     * @Route("/lotes/listar/asignacion", name="lotes_listar_asignacion")
+     * @Route("/lotes/asignacion", name="lotes_asignacion")
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
     public function listarLotesAsignacionAction()
@@ -54,11 +57,17 @@ class LoteController extends Controller
         $temporadaActual = new TemporadaActual($em);
         $temporada = $temporadaActual->temporadaActualAction();
 
+        //Obtención de los lotes de esta temporada
         $lotes = $em->getRepository('AppBundle:Lote')
             ->getLotesTemporadaNoNulos($temporada);
 
-        return $this->render('lote/listarAsignacion.html.twig', [
+        //Obtención de las calidades de aceite
+        $aceites = $em->getRepository('AppBundle:Aceite')
+            ->findAll();
+
+        return $this->render('lote/asignacion.html.twig', [
             'lotes' => $lotes,
+            'aceites' => $aceites,
             'temporada' => $temporada
         ]);
     }
@@ -88,15 +97,12 @@ class LoteController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-
         //Asigna el aceite al lote
         $em->persist($lote);
         $lote
             ->setAceite($aceite);
         $em->flush();
-
         $mensaje = 'Aceite asignado correctamente';
-
         return $this->render('lote/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);

@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Lotes{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <h2>Lotes</h2>
+        <h3>Temporada: {{ temporada }}</h3>
+    </div>
+    <div class="container">
+        <form action="" method="post"></form>
+        <ul>
+            {% set valor = 0 %}
+            {% for lote in lotes %}
+                <li>
+                    <label>Lote {{ lote }}: </label>
+                    <select id="slAceite{{ valor }}">
+                        <option value="{{ lote.id }}" name="{{ lote.id }}">[Selecciona calidad del aceite]</option>
+                        {% for aceite in aceites %}
+                            <option value="{{ lote.id }}" name="{{ lote.id }}">{{ aceite }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                {% set valor = valor + 1 %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
