@@ -100,7 +100,7 @@ class LoteController extends Controller
             ->setAceite($aceite);
         $em->flush();
         $mensaje = 'Aceite asignado correctamente';
-        return $this->render('lote/confirma.html.twig', [
+        return $this->render('producto/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
     }

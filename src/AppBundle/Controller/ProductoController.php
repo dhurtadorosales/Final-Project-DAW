@@ -2,11 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Aceite;
-use AppBundle\Entity\Envase;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
-use AppBundle\Entity\Socio;
+use AppBundle\Form\Type\ProductoType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -67,10 +65,30 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/productos/asignar/precio/", name="productos_asignar_precio")
+     * @Route("/modificar/producto/{id}", name="modificar_producto")
      */
-    public function productosPrecioAction()
+    public function formProductoAction(Request $request, Producto $producto)
     {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
 
+        $form = $this->createForm(ProductoType::class, $producto);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('principal');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+
+        return $this->render('producto/form.html.twig', [
+            'producto' => $producto,
+            'formulario' => $form->createView()
+        ]);
     }
 }
