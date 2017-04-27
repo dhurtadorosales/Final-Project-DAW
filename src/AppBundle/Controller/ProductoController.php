@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
 use AppBundle\Form\Type\ProductoType;
@@ -65,9 +66,28 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/modificar/producto/{id}", name="modificar_producto")
+     * @Route("/productos/aceite", name="productos_aceite")
+     * @Security("is_granted('ROLE_ENCARGADO')")
      */
-    public function formProductoAction(Request $request, Producto $producto)
+    public function productoAceiteAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtenemos las calidades de aceite
+        $aceites = $em->getRepository('AppBundle:Aceite')
+            ->findAll();
+
+        return $this->render('producto/formAceite.html.twig', [
+            'aceites' => $aceites
+        ]);
+    }
+
+    /**
+     * @Route("/modificar/producto/{id}", name="modificar_producto")
+     * @Security("is_granted('ROLE_ENCARGADO')")
+     */
+    public function modificarProductoAction(Request $request, Producto $producto)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -89,6 +109,38 @@ class ProductoController extends Controller
         return $this->render('producto/form.html.twig', [
             'producto' => $producto,
             'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/producto/form/{producto}/{aceite}", name="producto_form")
+     * @Security("is_granted('ROLE_ENCARGADO')")
+     */
+    public function formProductoAction(Producto $producto, Aceite $aceite)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtenemos el lote
+        $lotes = $em->getRepository('AppBundle:Lote')
+            ->getLoteAceite($aceite);
+
+        return $this->render('producto/form.html.twig', [
+            'lotes' => $lotes,
+            'producto' => $producto
+        ]);
+    }
+
+    /**
+     * @Route("/productos/confirmar/{lote}/{producto}/{cantidad}", name="productos_confirmar")
+     * @Security("is_granted('ROLE_ENCARGADO')")
+     */
+    public function productoConfirmarAction(Lote $lote, Producto $producto, $cantidad)
+    {
+        return $this->render('producto/confirma.html.twig', [
+            'lote' => $lote,
+            'producto' => $producto,
+            'cantidad' => $cantidad
         ]);
     }
 }

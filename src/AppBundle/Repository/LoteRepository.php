@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Temporada;
 use Doctrine\ORM\EntityManager;
@@ -57,6 +58,24 @@ class LoteRepository extends EntityRepository
             ->from('AppBundle:Lote', 'l')
             ->where('l.id = :lot')
             ->setParameter('lot', $lote)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getLoteAceite(Aceite $aceite)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Lote', 'l')
+            ->where('l.aceite = :aceite')
+            ->andWhere('l.stock != :stock')
+            ->setParameter('aceite', $aceite)
+            ->setParameter('stock', 0)
             ->getQuery()
             ->getResult();
 

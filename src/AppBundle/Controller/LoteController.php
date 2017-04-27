@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Temporada;
+use AppBundle\Form\Model\ListaLotes;
+use AppBundle\Form\Type\ListaLotesType;
 use AppBundle\Form\Type\LoteType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -54,7 +56,7 @@ class LoteController extends Controller
         $temporadaActual = new TemporadaActual($em);
         $temporada = $temporadaActual->temporadaActualAction();
 
-        //Obtención de los lotes de esta temporada
+        //Obtención de los lotes de esta temporada que contienen aceite
         $lotes = $em->getRepository('AppBundle:Lote')
             ->getLotesTemporadaNoNulos($temporada);
 
@@ -106,14 +108,31 @@ class LoteController extends Controller
     }
 
     /**
-     * @Route("/modificar/lote/{id}", name="modificar_lote")
+     * @Route("/modificar/lote", name="modificar_lote")
      */
-    public function formLoteAction(Request $request, Lote $lote)
+    public function formLoteAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(LoteType::class, $lote);
+        //Obtención temporada actual
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
+        //Creación de un objeto de la clase ListaLotes
+        $lista = new ListaLotes();
+
+        //Obtención de los lotes de esta temporada que contienen aceite
+        $lotes = $em->getRepository('AppBundle:Lote')
+            ->getLotesTemporadaNoNulos($temporada);
+
+        //Añadimos los lotes a la lista de lotes
+        foreach ($lotes as $lote) {
+            $lista->getLotes()->add($lote);
+        }
+
+        //Ejecución de formulario
+        $form = $this->createForm(ListaLotesType::class, $lista);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -125,11 +144,10 @@ class LoteController extends Controller
             catch(\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');
             }
-
         }
 
         return $this->render('lote/form.html.twig', [
-            'lote' => $lote,
+            'lista' => $lista,
             'formulario' => $form->createView()
         ]);
     }

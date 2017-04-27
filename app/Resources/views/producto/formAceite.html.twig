@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Productos{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <h2>Selecciona calidad del aceite</h2>
+        <div class="form-group">
+            <form method="post" action="{{ path('producto_form', {'lote': lote.id }, {'producto': producto.id }, {'cantidad': cantidad }) }}">
+                <div class="container">
+                    <label for="slAceites">Calidad del aceite: </label>
+                    <select name="slAceites" id="sAceites">
+                        <option value="0">[Ninguno]</option>
+                        {% for aceite in aceites %}
+                            <option value="{{ aceite.id }}">{{ aceite }}</option>
+                        {% endfor  %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default">
+                    <i class="fa fa-check"></i> Aceptar
+                </button>
+                <a href="{{ path('principal') }}" class="btn btn-default">
+                    <i class="fa fa-times"></i> Cancelar
+                </a>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}
