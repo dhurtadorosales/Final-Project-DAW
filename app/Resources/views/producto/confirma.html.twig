@@ -4,13 +4,13 @@
 
 {% block section %}
     <div class="container">
-        <h3>Vas a comenzar una nueva temporada</h3>
+        <h3>Se va a envasar aceite procedente de un lote</h3>
         <h3>¿deseas continuar?</h3>
-        <form action="{{ path('productos_envasar', {'lote': lote.id }, {'producto': producto.id }, {'cantidad': cantidad } }}" method="post" name="confirmar">
+        <form action="{{ path('modificar_producto') }}" method="post" name="confirmar">
             <button type="submit" name="aceptar" class="btn btn-default">
                 <i class="fa fa-check"></i> Aceptar
             </button>
-            <a href="{{ path('principal') }}" class="btn btn-default" name="cancelar">
+            <a href="{{ path('modificar_producto') }}" class="btn btn-default" name="cancelar">
                 <i class="fa fa-times"></i> Cancelar
             </a>
         </form>

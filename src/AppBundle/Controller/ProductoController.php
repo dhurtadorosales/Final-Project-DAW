@@ -5,6 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
+use AppBundle\Form\Model\ListaLotes;
+use AppBundle\Form\Model\ListaProductos;
+use AppBundle\Form\Type\ListaProductosType;
 use AppBundle\Form\Type\ProductoType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -84,17 +87,31 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/modificar/producto/{id}", name="modificar_producto")
+     * @Route("/modificar/producto", name="modificar_producto")
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
-    public function modificarProductoAction(Request $request, Producto $producto)
+    public function modificarProductoAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(ProductoType::class, $producto);
+        //Creación de un objeto de la clase ListaLotes
+        $lista = new ListaProductos();
+
+        //Obtenemos todos los productos
+        $productos = $em->getRepository('AppBundle:Producto')
+            ->findAll();
+
+        //Añadimos los productos a la lista de productos
+        foreach ($productos as $producto) {
+            $lista->getProductos()->add($producto);
+        }
+
+        //Ejecución de formulario
+        $form = $this->createForm(ListaProductosType::class, $lista);
         $form->handleRequest($request);
 
+        //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $em->flush();
@@ -107,7 +124,7 @@ class ProductoController extends Controller
         }
 
         return $this->render('producto/form.html.twig', [
-            'producto' => $producto,
+            'lista' => $lista,
             'formulario' => $form->createView()
         ]);
     }

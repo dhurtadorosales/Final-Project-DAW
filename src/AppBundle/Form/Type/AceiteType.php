@@ -2,28 +2,26 @@
 
 namespace AppBundle\Form\Type;
 
-use AppBundle\Form\Model\ListaLotes;
+use AppBundle\Entity\Aceite;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class ListaLotesType extends AbstractType
+class AceiteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lotes', CollectionType::class, [
-                'entry_type' => LoteType::class,
-                'label' => 'Asignación de calidad de aceite'
+            ->add('aceite', null, [
+                'label' => 'Aceite',
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ListaLotes::class,
+            'data_class' => Aceite::class,
         ]);
     }
 }

@@ -18,7 +18,7 @@ class ListaLotes
         return $this->lotes;
     }
 
-    public function setTags(ArrayCollection $lotes)
+    public function setLotes(ArrayCollection $lotes)
     {
         $this->lotes = $lotes;
     }
