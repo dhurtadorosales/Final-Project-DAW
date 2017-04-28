@@ -7,6 +7,7 @@ use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
 use AppBundle\Form\Model\ListaProductos;
 use AppBundle\Form\Type\ListaProductosType;
+use AppBundle\Form\Type\Producto2Type;
 use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,6 +30,24 @@ class ProductoController extends Controller
             ->findAll();
 
         return $this->render('producto/listar.html.twig', [
+            'productos' => $productos
+        ]);
+    }
+
+    /**
+     * @Route("/productos/principal", name="productos_principal")
+     * @Security("is_granted('ROLE_ENCARGADO')")
+     */
+    public function productosPrincipalAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtenemos los productos
+        $productos = $em->getRepository('AppBundle:Producto')
+            ->findAll();
+
+        return $this->render('producto/principal.html.twig', [
             'productos' => $productos
         ]);
     }
@@ -109,7 +128,6 @@ class ProductoController extends Controller
         foreach ($productos as $producto) {
             $lista->getProductos()->add($producto);
         }
-        dump($lista->getProductos());
 
         //Ejecución de formulario
         $form = $this->createForm(ListaProductosType::class, $lista, [
@@ -136,21 +154,41 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/producto/form/{producto}/{aceite}", name="producto_form")
+     * @Route("/producto/form/{producto}", name="producto_form")
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
-    public function formProductoAction(Producto $producto, Aceite $aceite)
+    public function formProductoAction(Request $request, Producto $producto)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtenemos el lote
-        $lotes = $em->getRepository('AppBundle:Lote')
-            ->getLoteAceite($aceite);
+        //Obtención temporada actual
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
+        //Obtenemos el aceite del producto
+        $aceite = $producto->getLotes()[0]->getAceite();
+
+        $form = $this->createForm(Producto2Type::class, $producto, [
+            'temporada' => $temporada,
+            'aceite' => $aceite
+        ]);
+        $form->handleRequest($request);
+
+        //Si es válido
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('principal');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
 
         return $this->render('producto/form.html.twig', [
-            'lotes' => $lotes,
-            'producto' => $producto
+            'formulario' => $form->createView()
         ]);
     }
 

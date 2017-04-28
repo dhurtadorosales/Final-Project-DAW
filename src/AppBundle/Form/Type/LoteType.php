@@ -5,6 +5,8 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\Lote;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -13,10 +15,16 @@ class LoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('aceite', null, [
-                'label' => Lote::class,
-                'placeholder' => '[Ninguno]'
-            ]);
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
+                $form = $event->getForm();
+                $data = $event->getData();
+                $form
+                    ->add('aceite', null, [
+                        'label' => $data,
+                        'placeholder' => '[Ninguno]',
+                        'translation_domain' => false
+                    ]);
+            });
     }
 
     public function configureOptions(OptionsResolver $resolver)

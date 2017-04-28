@@ -6,7 +6,6 @@ use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -27,8 +26,9 @@ class ProductoType extends AbstractType
                         'query_builder' => function(LoteRepository $loteRepository) use ($options) {
                             return $loteRepository->getLotesTemporadaNoNulosQuery($options['temporada']);
                         },
-                        'label' => $data->getEnvase(),
-                        'translation_domain' => false
+                        'label' => $data,
+                        'translation_domain' => false,
+                        'placeholder' => '[Ninguno]'
                     ])
                     ->add('stock');
                 });

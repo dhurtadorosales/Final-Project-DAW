@@ -14,15 +14,14 @@ class ListaProductosType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($builder->getData());
         $builder
             ->add('productos', CollectionType::class, [
                 'entry_type' => ProductoType::class,
-                'label' => 'Productos',
+                'label' => null,
                 'entry_options' => [
                     'temporada' => $options['temporada'],
                     'label' => false
-                ]
+                ],
             ]);
     }
 

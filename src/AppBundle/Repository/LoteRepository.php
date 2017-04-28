@@ -48,7 +48,7 @@ class LoteRepository extends EntityRepository
         return $consulta;
     }
 
-    public function getLotesTemporadaNoNulosQuery(Temporada $temporada)
+    public function getLotesTemporadaNoNulosQuery(Temporada $temporada, Aceite $aceite)
     {
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
@@ -56,11 +56,15 @@ class LoteRepository extends EntityRepository
         $consulta = $em->createQueryBuilder()
             ->select('l')
             ->addSelect('t')
+            ->addSelect('a')
             ->from('AppBundle:Lote', 'l')
             ->join('l.temporada', 't')
+            ->join('l.aceite', 'a')
             ->where('t = :temporada')
+            ->andwhere('a = :aceite')
             ->andWhere('l.cantidad != :cantidad')
             ->setParameter('temporada', $temporada)
+            ->setParameter('aceite', $aceite)
             ->setParameter('cantidad', 0);
 
         return $consulta;

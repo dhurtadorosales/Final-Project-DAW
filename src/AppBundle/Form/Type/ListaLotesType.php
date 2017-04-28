@@ -16,7 +16,10 @@ class ListaLotesType extends AbstractType
         $builder
             ->add('lotes', CollectionType::class, [
                 'entry_type' => LoteType::class,
-                'label' => 'Asignación de calidad de aceite'
+                'label' => 'Lotes',
+                'entry_options' => [
+                    'label' => false
+                ]
             ]);
     }
 
