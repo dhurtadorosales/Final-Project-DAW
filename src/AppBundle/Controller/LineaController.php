@@ -8,8 +8,10 @@ use AppBundle\Entity\Porcentaje;
 use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Venta;
+use AppBundle\Form\Type\LineaType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Tests\Compiler\Lille;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,5 +93,37 @@ class LineaController extends Controller
         return $this->render('venta/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
+    }
+
+    /**
+     * @Route("/lineas/nueva/{venta}", name="lineas_nueva")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
+     */
+    public function formLineaAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $venta = new Linea();
+        $em->persist($venta);
+
+        $form = $this->createForm(LineaType::class, $venta);
+        $form->handleRequest($request);
+
+        //Si es válido
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Línea insertada con éxito');
+                return $this->redirectToRoute('ventas_modificar');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido crear la venta');
+            }
+
+            return $this->render('venta/form.html.twig', [
+                'venta' => $venta,
+                'formulario' => $form->createView()
+            ]);
+        }
     }
 }

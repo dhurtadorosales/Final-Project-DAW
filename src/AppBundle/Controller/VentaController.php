@@ -7,11 +7,13 @@ use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Venta;
+use AppBundle\Form\Type\VentaType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Service\TemporadaActual;
+use Symfony\Component\HttpFoundation\Request;
 
 class VentaController extends Controller
 {
@@ -125,7 +127,6 @@ class VentaController extends Controller
         $temporadaActual = new TemporadaActual($em);
         $temporada = $temporadaActual->temporadaActualAction();
 
-
         //Obtenemos los porcentajes. Si el usuario es socio solo paga el iva reducido
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
             ->findAll();
@@ -164,5 +165,52 @@ class VentaController extends Controller
         return $this->render('venta/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
+    }
+
+    /**
+     * @Route("/ventas/nueva", name="ventas_nueva")
+     * @Route("/ventas/modificar/{venta}", name="ventas_modificar")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
+     */
+    public function formVentaAction(Request $request, Venta $venta = null)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if (null == $venta) {
+            //Creación de una nueva venta
+            $venta = new Venta();
+            $em->persist($venta);
+        }
+
+        $form = $this->createForm(VentaType::class, $venta);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Venta creada con éxito');
+                return $this->redirectToRoute('ventas_asigna_cliente');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido crear la venta');
+            }
+
+            return $this->render('venta/form.html.twig', [
+                'venta' => $venta,
+                'formulario' => $form->createView()
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/ventas/asigna/cliente", name="ventas_asigna_cliente")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
+     */
+    public function ventasAsignaClienteAction(Request $request)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+
     }
 }

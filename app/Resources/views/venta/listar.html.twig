@@ -6,8 +6,11 @@
     <div class="container">
         <h2>Ventas</h2>
         {% if temporada != null %}
-            <h2>Temporada: {{ temporada }}</h2>
+            <h3>Temporada: {{ temporada }}</h3>
         {% endif %}
+        <a href="{{ path('ventas_nueva') }}" class="btn btn-default">
+            <i class="fa fa-plus"></i> Nueva venta
+        </a>
     </div>
     <div class="container">
         <table class="table table-bordered table-striped table-hover">

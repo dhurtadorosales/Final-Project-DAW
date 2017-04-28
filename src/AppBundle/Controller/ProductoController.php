@@ -5,10 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Aceite;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
-use AppBundle\Form\Model\ListaLotes;
 use AppBundle\Form\Model\ListaProductos;
 use AppBundle\Form\Type\ListaProductosType;
-use AppBundle\Form\Type\ProductoType;
+use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -95,6 +94,10 @@ class ProductoController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtención temporada actual
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
         //Creación de un objeto de la clase ListaLotes
         $lista = new ListaProductos();
 
@@ -106,9 +109,12 @@ class ProductoController extends Controller
         foreach ($productos as $producto) {
             $lista->getProductos()->add($producto);
         }
+        dump($lista->getProductos());
 
         //Ejecución de formulario
-        $form = $this->createForm(ListaProductosType::class, $lista);
+        $form = $this->createForm(ListaProductosType::class, $lista, [
+            'temporada' => $temporada
+        ]);
         $form->handleRequest($request);
 
         //Si es válido
