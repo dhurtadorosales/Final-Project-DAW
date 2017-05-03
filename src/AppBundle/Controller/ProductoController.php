@@ -52,14 +52,14 @@ class ProductoController extends Controller
         ]);
     }
 
-    /**
+    /*
      * @Route("/productos/envasar/{lote}/{producto}/{cantidad}", name="productos_envasar")
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
-    public function productosEnvasadosAction(Lote $lote, Producto $producto, $cantidad)
+   /* public function productosEnvasadosAction(Lote $lote, Producto $producto, $cantidad)
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+       /* $em = $this->getDoctrine()->getManager();
 
         //Obtenemos el lote
         $lote = $em->getRepository('AppBundle:Lote')
@@ -84,7 +84,7 @@ class ProductoController extends Controller
         return $this->render('producto/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
-    }
+    }*/
 
     /**
      * @Route("/productos/aceite", name="productos_aceite")
@@ -169,6 +169,9 @@ class ProductoController extends Controller
         //Obtenemos el aceite del producto
         $aceite = $producto->getLotes()[0]->getAceite();
 
+        //Obtención cantidad del producto
+        $cantidadProducto = $producto->getStock();
+
         $form = $this->createForm(Producto2Type::class, $producto, [
             'temporada' => $temporada,
             'aceite' => $aceite
@@ -178,6 +181,22 @@ class ProductoController extends Controller
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                //Obtención de la cantidad que se ha envasado
+                $cantidadEnvasar = $form['stock']->getData();
+
+                //Obtención del lote del que procede
+                $lote = $form['lotes']->getData();
+
+                //Suma cantidad al producto
+                $em->persist($producto);
+                $producto
+                     ->setStock($cantidadProducto + $cantidadEnvasar);
+
+                //Restamos la cantidad del stock del lote del que procede
+                $em->persist($lote);
+                $lote
+                    ->setStock($lote->getStock() - $cantidadEnvasar);
+
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
                 return $this->redirectToRoute('principal');
