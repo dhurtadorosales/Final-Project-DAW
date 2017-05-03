@@ -177,40 +177,42 @@ class VentaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        //Obtenemos la temporada vigente
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
+        //Obtenemos el número de ventas de este año
+        $fecha = new \DateTime('now');
+        $anio = $fecha->format('Y');
+        $numero = $em->getRepository('AppBundle:Venta')
+            ->getVentasAnio($anio);
+        $numero ++;
+
         if (null == $venta) {
             //Creación de una nueva venta
             $venta = new Venta();
             $em->persist($venta);
         }
 
-        $form = $this->createForm(VentaType::class, $venta);
+        $form = $this->createForm(VentaType::class, $venta, [
+            'numero' => $numero,
+            'fecha' => $fecha,
+            'temporada' => $temporada
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Venta creada con éxito');
-                return $this->redirectToRoute('ventas_asigna_cliente');
+                return $this->redirectToRoute('ventas_listar');
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se ha podido crear la venta');
             }
-
-            return $this->render('venta/form.html.twig', [
-                'venta' => $venta,
-                'formulario' => $form->createView()
-            ]);
         }
-    }
 
-    /**
-     * @Route("/ventas/asigna/cliente", name="ventas_asigna_cliente")
-     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
-     */
-    public function ventasAsignaClienteAction(Request $request)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-
+        return $this->render('venta/form.html.twig', [
+            'formulario' => $form->createView()
+        ]);
     }
 }
