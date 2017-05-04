@@ -24,6 +24,9 @@
         {% endif %}
     </div>
     <div class="container">
+        <a href="{{ path('principal') }}" class="btn btn-default">
+            <i class="fa fa-home"></i> Ir a principal
+        </a>
         <div class="tiles">
             {% for producto in productos %}
                 <a href="{{ path('producto_form', {'producto' : producto.id}) }}" class="btn">

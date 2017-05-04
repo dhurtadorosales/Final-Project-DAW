@@ -121,9 +121,10 @@ class MovimientoController extends Controller
         $movimiento = new Movimiento();
         $em->persist($movimiento);
 
+
         $form = $this->createForm(MovimientoType::class, $movimiento, [
             'fecha' => $fecha,
-            'temporada' => $temporada
+            'temporada' => $temporada,
         ]);
         $form->handleRequest($request);
 
@@ -137,7 +138,7 @@ class MovimientoController extends Controller
             }
         }
 
-        return $this->render('movimiento/form.html.twig', [
+        return $this->render('movimientos/form.html.twig', [
             'movimiento' => $movimiento,
             'formulario' => $form->createView()
         ]);

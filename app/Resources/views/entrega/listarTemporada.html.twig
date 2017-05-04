@@ -10,6 +10,9 @@
         {% if app.request == path('lotes_listar') %}
             <h2>Lote: {{ lote }}</h2>
         {% endif %}
+        <a href="{{ path('principal') }}" class="btn btn-default">
+            <i class="fa fa-home"></i> Ir a principal
+        </a>
     </div>
     <div class="container">
         <table class="table table-bordered table-striped table-hover">

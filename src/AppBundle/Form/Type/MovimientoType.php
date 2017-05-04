@@ -50,7 +50,7 @@ class MovimientoType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Movimiento::class,
             'fecha' => null,
-            'temporada' => null
+            'temporada' => null,
         ]);
     }
 }

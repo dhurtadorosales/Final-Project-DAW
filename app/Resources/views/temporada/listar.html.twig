@@ -5,6 +5,9 @@
 {% block section %}
     <div class="container">
         <h2>Temporadas</h2>
+        <a href="{{ path('principal') }}" class="btn btn-default">
+            <i class="fa fa-home"></i> Ir a principal
+        </a>
         <ul>
             {% for temporada in temporadas %}
                 <li>{{ temporada }}</li>
