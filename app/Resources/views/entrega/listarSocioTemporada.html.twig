@@ -22,6 +22,9 @@
                 <th>Kg Aceite</th>
                 <th>Procedencia %</th>
                 <th>Aceite</th>
+                {% if is_granted('ROLE_SOCIO') %}
+                <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -52,6 +55,13 @@
                             {{ entrega.lote.aceite }}
                         {% endif %}
                     </td>
+                {% if is_granted('ROLE_SOCIO') %}
+                    <td>
+                        <a href="{{ path('entregas_detalle', {'entrega' : entrega.id, 'socio' : socio.id}) }}" class="btn btn-default">
+                            <i class="fa fa-balance-scale"></i> Detalle
+                        </a>
+                    </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
