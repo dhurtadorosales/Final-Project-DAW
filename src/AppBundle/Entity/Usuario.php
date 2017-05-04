@@ -132,6 +132,12 @@ class Usuario implements UserInterface
     private $rolSocio;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $activo;
+
+    /**
      * @var Socio
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="usuario")
      * @ORM\JoinColumn(nullable=true)
@@ -601,6 +607,30 @@ class Usuario implements UserInterface
     public function getRolSocio()
     {
         return $this->rolSocio;
+    }
+
+    /**
+     * Set activo
+     *
+     * @param boolean $activo
+     *
+     * @return Usuario
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+
+        return $this;
+    }
+
+    /**
+     * Get activo
+     *
+     * @return boolean
+     */
+    public function getActivo()
+    {
+        return $this->activo;
     }
 
     /**

@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class SocioController extends Controller
@@ -21,7 +22,7 @@ class SocioController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $socios = $em->getRepository('AppBundle:Socio')
-            ->findAll();
+            ->getSocios();
 
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios
@@ -55,16 +56,57 @@ class SocioController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $em->flush();
-                $this->addFlash('estado', 'Empleado guardado con éxito');
+                $this->addFlash('estado', 'Socio guardado con éxito');
                 return $this->redirectToRoute('principal');
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar el empleado');
+                $this->addFlash('error', 'No se ha podido guardar el socio');
             }
         }
 
         return $this->render('socio/form.html.twig', [
             'formulario' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/socios/eliminar/{socio}", name="socios_eliminar", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function borrarAction(Socio $socio)
+    {
+        return $this->render('socio/confirma.html.twig', [
+            'socio' => $socio
+        ]);
+    }
+
+    /**
+     * @Route("/socios/eliminar/{socio}", name="confirmar_socios_eliminar", methods={"POST"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function confirmarBorradoAction(Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        try {
+            //Obtenemos el usuario correspondiente al socio
+            $usuario = $socio->getUsuario();
+
+            //Desactivamos al socio y al usuario si no es el administrador
+            if ($usuario->getAdministrador() == true) {
+                $this->addFlash('error', 'No se puede dar de baja a este empleado ya que es el administrador');
+            }
+            else {
+                $socio->setActivo(false);
+                $usuario->setActivo(false);
+                $em->flush();
+                $this->addFlash('estado', 'Socio eliminado con éxito');
+            }
+        }
+        catch(Exception $e) {
+            $this->addFlash('error', 'No se ha podido eliminar el socio');
+        }
+
+        return $this->redirectToRoute('socios_listar');
     }
 }

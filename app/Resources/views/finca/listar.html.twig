@@ -4,11 +4,31 @@
 
 {% block section %}
     <div class="container">
+        {% if app.session.flashBag.has('estado') %}
+            {% set mensajes = app.session.flashBag.get('estado') %}
+            {% for mensaje in mensajes %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            {% set mensajes = app.session.flashBag.get('error') %}
+            {% for mensaje in mensajes %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="container">
         <h2>Fincas</h2>
         <a href="{{ path('principal') }}" class="btn btn-default">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <a href="{{ path('fincas_nueva') }}" class="btn btn-default">
             <i class="fa fa-plus"></i> Nueva finca
         </a>
     </div>
@@ -24,6 +44,9 @@
                 <th>Variedad</th>
                 <th>Nº Plantas</th>
                 <th>Regadío</th>
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -41,13 +64,11 @@
                         </a>
                     </td>
                     <td>
-                        <a href="#" title="ir a la ficha del socio">
-                            {{ finca.propietario }}
-                        </a>
+                        {{ finca.propietario }}
                     </td>
                     <td>{{ finca.partPropietario * 100 }} %</td>
                     <td>{% if finca.arrendatario != null %}
-                            <a href="#" title="ir a la ficha del socio">{{ finca.arrendatario }}</a>
+                            {{ finca.arrendatario }}
                         {% endif %}
                     </td>
                     <td>{{ finca.partArrend * 100 }} %</td>
@@ -59,6 +80,16 @@
                             No
                         {% endif %}
                     </td>
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
+                        <td>
+                            <a href="{{ path('fincas_modificar', {'finca' : finca.id }) }}" class="btn btn-default">
+                                <i class="fa fa-pencil"></i> Modificar datos
+                            </a>
+                            <a href="{{ path('fincas_eliminar', {'finca' : finca.id }) }}" class="btn btn-default">
+                                <i class="fa fa-trash"></i> Dar de baja
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

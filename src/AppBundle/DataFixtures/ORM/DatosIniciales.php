@@ -141,7 +141,8 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setDependiente($item[14])
                 ->setEncargado($item[15])
                 ->setCliente($item[16])
-                ->setRolSocio($item[17]);
+                ->setRolSocio($item[17])
+                ->setActivo(true);
 
             $manager->persist($usuario);
             array_push($usuarios2, $usuario);
@@ -179,7 +180,8 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
                 ->setPartArrend($item[12])
                 ->setVariedad($item[13])
                 ->setPropietario($item[14])
-                ->setArrendatario($item[15]);
+                ->setArrendatario($item[15])
+                ->setActiva(true);
 
             $manager->persist($finca);
         }

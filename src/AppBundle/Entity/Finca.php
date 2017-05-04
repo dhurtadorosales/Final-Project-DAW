@@ -98,6 +98,12 @@ class Finca
     private $variedad;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $activa;
+
+    /**
      * @var Entrega[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Entrega", mappedBy="finca")
      * @ORM\JoinColumn(nullable=true)
@@ -125,6 +131,7 @@ class Finca
     {
         return $this->getProvincia() . " " . $this->$this->getMunicipio() . " " . $this->getSector() . " " . $this->getPoligono() . " " . $this->getParcela() . " " . $this->getIdInmueble() . " " . $this->getCaracterControl();
     }
+
 
     /**
      * Constructor
@@ -387,7 +394,7 @@ class Finca
     /**
      * Set partPropietario
      *
-     * @param integer $partPropietario
+     * @param float $partPropietario
      *
      * @return Finca
      */
@@ -401,7 +408,7 @@ class Finca
     /**
      * Get partPropietario
      *
-     * @return integer
+     * @return float
      */
     public function getPartPropietario()
     {
@@ -411,7 +418,7 @@ class Finca
     /**
      * Set partArrend
      *
-     * @param integer $partArrend
+     * @param float $partArrend
      *
      * @return Finca
      */
@@ -425,11 +432,35 @@ class Finca
     /**
      * Get partArrend
      *
-     * @return integer
+     * @return float
      */
     public function getPartArrend()
     {
         return $this->partArrend;
+    }
+
+    /**
+     * Set activa
+     *
+     * @param boolean $activa
+     *
+     * @return Finca
+     */
+    public function setActiva($activa)
+    {
+        $this->activa = $activa;
+
+        return $this;
+    }
+
+    /**
+     * Get activa
+     *
+     * @return boolean
+     */
+    public function getActiva()
+    {
+        return $this->activa;
     }
 
     /**

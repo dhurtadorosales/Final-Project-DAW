@@ -2,12 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Finca;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Socio;
+use AppBundle\Form\Type\FincaModificarType;
+use AppBundle\Form\Type\FincaType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class FincaController extends Controller
@@ -21,7 +25,7 @@ class FincaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $fincas = $em->getRepository('AppBundle:Finca')
-            ->findAll();
+            ->getFincas();
 
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
@@ -75,5 +79,74 @@ class FincaController extends Controller
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas
         ]);
+    }
+
+    /**
+     * @Route("/fincas/nueva", name="fincas_nueva")
+     * @Route("/fincas/modificar/{finca}", name="fincas_modificar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function formAction(Request $request, Finca $finca = null)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if (null == $finca) {
+            $finca = new Finca();
+            $em->persist($finca);
+
+            $form = $this->createForm(FincaType::class, $finca);
+            $form->handleRequest($request);
+        }
+        else {
+            $form = $this->createForm(FincaModificarType::class, $finca);
+        }
+
+        //Si es válido
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Finca guardada con éxito');
+                return $this->redirectToRoute('fincas_listar');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se ha podido guardar la finca');
+            }
+        }
+
+        return $this->render('finca/form.html.twig', [
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/fincas/eliminar/{finca}", name="fincas_eliminar", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function borrarAction(Finca $finca)
+    {
+        return $this->render('finca/confirma.html.twig', [
+            'finca' => $finca
+        ]);
+    }
+
+    /**
+     * @Route("/fincas/eliminar/{finca}", name="confirmar_fincas_eliminar", methods={"POST"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function confirmarBorradoAction(Finca $finca)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        try {
+            $finca->setActiva(false);
+            $em->flush();
+            $this->addFlash('estado', 'Finca eliminada con éxito');
+        }
+        catch(Exception $e) {
+            $this->addFlash('error', 'No se ha podido eliminar la finca');
+        }
+
+        return $this->redirectToRoute('fincas_listar');
     }
 }

@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class UsuarioController extends Controller
@@ -137,7 +138,7 @@ class UsuarioController extends Controller
                 return $this->redirectToRoute('principal');
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar el empleado');
+                $this->addFlash('error', 'No se ha podido guardar el empleado');
             }
         }
 
@@ -169,16 +170,53 @@ class UsuarioController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $em->flush();
-                $this->addFlash('estado', 'Empleado guardado con éxito');
+                $this->addFlash('estado', 'Cliente guardado con éxito');
                 return $this->redirectToRoute('principal');
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar el empleado');
+                $this->addFlash('error', 'No se ha podido guardar el cliente');
             }
         }
 
         return $this->render('usuario/formCliente.html.twig', [
             'formulario' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/empleados/eliminar/{empleado}", name="empleados_eliminar", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function borrarAction(Usuario $usuario)
+    {
+        return $this->render('usuario/confirma.html.twig', [
+            'empleado' => $usuario
+        ]);
+    }
+
+    /**
+     * @Route("/empleados/eliminar/{empleado}", name="confirmar_empleados_eliminar", methods={"POST"})
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function confirmarBorradoAction(Usuario $usuario)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        try {
+            //Desactivamos al usuario si no es el administrador
+            if ($usuario->getAdministrador() == true) {
+                $this->addFlash('error', 'No se puede dar de baja a este empleado ya que es el administrador');
+            }
+            else {
+                $usuario->setActivo(false);
+                $em->flush();
+                $this->addFlash('estado', 'Empleado eliminado con éxito');
+            }
+        }
+        catch(Exception $e) {
+            $this->addFlash('error', 'No se ha podido eliminar el empleado');
+        }
+
+        return $this->redirectToRoute('empleados_listar');
     }
 }

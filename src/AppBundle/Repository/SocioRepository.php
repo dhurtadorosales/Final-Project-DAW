@@ -24,6 +24,8 @@ class SocioRepository extends EntityRepository
         $consulta = $em->createQueryBuilder()
             ->select('s')
             ->from('AppBundle:Socio', 's')
+            ->where('s.activo = :activo')
+            ->setParameter('activo', true)
             ->getQuery()
             ->getResult();
 

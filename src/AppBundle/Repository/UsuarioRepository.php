@@ -25,7 +25,9 @@ class UsuarioRepository extends EntityRepository
             ->select('u')
             ->from('AppBundle:Usuario', 'u')
             ->where('u.cliente = :valor')
+            ->andWhere('u.activo = :activo')
             ->setParameter('valor', true)
+            ->setParameter('activo', true)
             ->getQuery()
             ->getResult();
 
@@ -41,7 +43,9 @@ class UsuarioRepository extends EntityRepository
             ->select('u')
             ->from('AppBundle:Usuario', 'u')
             ->where('u.empleado = :valor')
+            ->andWhere('u.activo = :activo')
             ->setParameter('valor', true)
+            ->setParameter('activo', true)
             ->getQuery()
             ->getResult();
 
