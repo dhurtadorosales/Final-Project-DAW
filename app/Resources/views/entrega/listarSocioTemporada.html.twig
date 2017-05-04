@@ -55,7 +55,7 @@
                             {{ entrega.lote.aceite }}
                         {% endif %}
                     </td>
-                {% if is_granted('ROLE_SOCIO') %}
+                    {% if is_granted('ROLE_SOCIO') %}
                     <td>
                         <a href="{{ path('entregas_detalle', {'entrega' : entrega.id, 'socio' : socio.id}) }}" class="btn btn-default">
                             <i class="fa fa-balance-scale"></i> Detalle

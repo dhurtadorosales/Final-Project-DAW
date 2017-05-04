@@ -4,9 +4,32 @@
 
 {% block section %}
     <div class="container">
+        {% if app.session.flashBag.has('estado') %}
+            {% set mensajes = app.session.flashBag.get('estado') %}
+            {% for mensaje in mensajes %}
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if app.session.flashBag.has('error') %}
+            {% set mensajes = app.session.flashBag.get('error') %}
+            {% for mensaje in mensajes %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                    {{ mensaje }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="container">
         <h2>Empleados</h2>
         <a href="{{ path('principal') }}" class="btn btn-default">
             <i class="fa fa-home"></i> Ir a principal
+        </a>
+        <a href="{{ path('empleados_nuevo') }}" class="btn btn-default">
+            <i class="fa fa-plus"></i> Nuevo Empleado
         </a>
     </div>
     <div class="container">
@@ -19,6 +42,7 @@
                 <th>Teléfono</th>
                 <th>Email</th>
                 <th>Roles</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +65,11 @@
                         {% if empleado.encargado == true %}
                             Encargado
                         {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('empleados_modificar', {'empleado' : empleado.id }) }}" class="btn btn-default">
+                            <i class="fa fa-pencil"></i> Modificar datos
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

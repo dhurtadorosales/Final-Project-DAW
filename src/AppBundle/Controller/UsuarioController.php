@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Type\ClienteType;
+use AppBundle\Form\Type\EmpleadoType;
 use AppBundle\Form\Type\UsuarioType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -104,6 +106,78 @@ class UsuarioController extends Controller
             $this->getDoctrine()->getManager()->flush();
         }
         return $this->render('usuario/perfil.html.twig', [
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/empleados/nuevo", name="empleados_nuevo")
+     * @Route("/empleados/modificar/{empleado}", name="empleados_modificar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function formEmpleadoAction(Request $request, Usuario $usuario = null)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if (null == $usuario) {
+            $usuario = new Usuario();
+            $em->persist($usuario);
+            $usuario->setEmpleado(true);
+        }
+
+        $form = $this->createForm(EmpleadoType::class, $usuario);
+        $form->handleRequest($request);
+
+        //Si es válido
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Empleado guardado con éxito');
+                return $this->redirectToRoute('principal');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar el empleado');
+            }
+        }
+
+        return $this->render('usuario/formEmpleado.html.twig', [
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/clientes/nuevo", name="clientes_nuevo")
+     * @Route("/clientes/modificar/{cliente}", name="clientes_modificar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function formClienteAction(Request $request, Usuario $usuario = null)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        if (null == $usuario) {
+            $usuario = new Usuario();
+            $em->persist($usuario);
+            $usuario->setCliente(true);
+        }
+
+        $form = $this->createForm(ClienteType::class, $usuario);
+        $form->handleRequest($request);
+
+        //Si es válido
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Empleado guardado con éxito');
+                return $this->redirectToRoute('principal');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar el empleado');
+            }
+        }
+
+        return $this->render('usuario/formCliente.html.twig', [
             'formulario' => $form->createView()
         ]);
     }

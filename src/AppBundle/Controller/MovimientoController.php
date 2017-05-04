@@ -121,7 +121,6 @@ class MovimientoController extends Controller
         $movimiento = new Movimiento();
         $em->persist($movimiento);
 
-
         $form = $this->createForm(MovimientoType::class, $movimiento, [
             'fecha' => $fecha,
             'temporada' => $temporada,

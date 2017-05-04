@@ -8,7 +8,7 @@
         <a href="{{ path('principal') }}" class="btn btn-default">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <a href="{{ path('socios_nuevo') }}" class="btn btn-default">
             <i class="fa fa-plus"></i> Nuevo socio
         </a>
     </div>
@@ -23,6 +23,7 @@
                 <th>Teléfono</th>
                 <th>Nº Plantas</th>
                 <th>Fecha de alta</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +42,11 @@
                         {% endfor %}{{ sum }}
                 </td>
                     <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
+                    <td>
+                        <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default">
+                            <i class="fa fa-pencil"></i> Modificar datos
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
