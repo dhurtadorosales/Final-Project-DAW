@@ -7,7 +7,6 @@ use AppBundle\Entity\Lote;
 use AppBundle\Entity\Temporada;
 use AppBundle\Form\Model\ListaLotes;
 use AppBundle\Form\Type\ListaLotesType;
-use AppBundle\Form\Type\LoteType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -109,6 +108,7 @@ class LoteController extends Controller
 
     /**
      * @Route("/modificar/lote", name="modificar_lote")
+     * @Security("is_granted('ROLE_ENCARGADO')")
      */
     public function formLoteAction(Request $request)
     {

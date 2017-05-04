@@ -4,11 +4,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Movimiento;
 use AppBundle\Entity\Temporada;
+use AppBundle\Form\Type\MovimientoType;
 use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class MovimientoController extends Controller
 {
@@ -59,7 +61,7 @@ class MovimientoController extends Controller
      * @Route("/movimientos/insertar", name="movimientos_insertar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function insertarLiquidacionAction()
+    public function insertarMovimientoAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -97,6 +99,47 @@ class MovimientoController extends Controller
 
         return $this->render('movimiento/confirma.html.twig', [
             'mensaje' => $mensaje
+        ]);
+    }
+
+    /**
+     * @Route("/movimientos/nuevo", name="movimientos_nuevo")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function formMovimientoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtenemos la temporada vigente
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
+        //Obtenemos la fecha actual
+        $fecha = new \DateTime('now');
+
+        //Creación de un nuevo movimiento
+        $movimiento = new Movimiento();
+        $em->persist($movimiento);
+
+        $form = $this->createForm(MovimientoType::class, $movimiento, [
+            'fecha' => $fecha,
+            'temporada' => $temporada
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Movimiento creado con éxito');
+                return $this->redirectToRoute('movimientos_listar');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'No se ha podido crear la venta');
+            }
+        }
+
+        return $this->render('movimiento/form.html.twig', [
+            'movimiento' => $movimiento,
+            'formulario' => $form->createView()
         ]);
     }
 }
