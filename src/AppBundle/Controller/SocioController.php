@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Liquidacion;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\SocioType;
@@ -52,6 +53,10 @@ class SocioController extends Controller
         $usuario = new Usuario();
         $usuario->setSocio($socio);
 
+        //Obtención de la temporada actual
+        $temporadaActual = new TemporadaActual($em);
+        $temporada = $temporadaActual->temporadaActualAction();
+
         $form = $this->createForm(SocioType::class, $socio, [
             'fecha' => $fecha,
             'usuario' => $usuario
@@ -61,6 +66,20 @@ class SocioController extends Controller
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+
+
+                //Crear nuevo usuario
+
+
+                //Crear la liquidación del socio
+                $liquidacion = new  Liquidacion();
+                $liquidacion
+                    ->setTemporada($temporada)
+                    ->setFecha($fecha)
+                    ->setIva(0.1)
+                    ->setRetencion(0.02)
+                    ->setSocio($socio);
+
                 $em->flush();
                 $this->addFlash('estado', 'Socio guardado con éxito');
                 return $this->redirectToRoute('principal');
