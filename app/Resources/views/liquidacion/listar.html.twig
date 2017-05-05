@@ -16,6 +16,7 @@
             <tr>
                 <th>Nº</th>
                 <th>Socio</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +24,11 @@
                 <tr>
                     <td>{{ liquidacion.id }}</td>
                     <td>{{ liquidacion.socio }}</td>
+                    <td>
+                        <a href="{{ path('liquidaciones_detalle', {'socio' : liquidacion.socio.id}) }}" class="btn btn-default">
+                            <i class="fa fa-search"></i> Detalle
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
