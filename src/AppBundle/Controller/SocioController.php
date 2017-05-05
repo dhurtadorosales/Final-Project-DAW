@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Socio;
+use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\SocioType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -47,8 +48,13 @@ class SocioController extends Controller
         //Obtenemos la fecha actual
         $fecha = new \DateTime('now');
 
+        //Obtención del usuario correspondiente al socio
+        $usuario = new Usuario();
+        $usuario->setSocio($socio);
+
         $form = $this->createForm(SocioType::class, $socio, [
-            'fecha' => $fecha
+            'fecha' => $fecha,
+            'usuario' => $usuario
         ]);
         $form->handleRequest($request);
 
@@ -98,6 +104,7 @@ class SocioController extends Controller
             }
             else {
                 $socio->setActivo(false);
+                $socio->setFechaBaja(new \DateTime('now'));
                 $usuario->setActivo(false);
                 $em->flush();
                 $this->addFlash('estado', 'Socio eliminado con éxito');

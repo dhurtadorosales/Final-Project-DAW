@@ -5,7 +5,9 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\Movimiento;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Usuario;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
@@ -26,11 +28,15 @@ class SocioType extends AbstractType
                 $form = $event->getForm();
                 $data = $event->getData();
                 $form
+                    ->add('usuario', CollectionType::class, [
+                        'entry_type' => Usuario2Type::class,
+                        'entry_options' => [
+                            'temporada' => $options['usuario'],
+                            'label' => false
+                        ],
+                    ])
                     ->add('fechaAlta', null, [
                         'label' => 'Fecha de alta:',
-                        /*if ('data' == null) {
-                           'data' => $options['fecha']
-                        }*/
                         'translation_domain' => false
                     ])
                     ->add('activo', null, [
@@ -51,7 +57,8 @@ class SocioType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Socio::class,
-            'fecha' => null
+            'fecha' => null,
+            'usuario' => null
         ]);
     }
 }
