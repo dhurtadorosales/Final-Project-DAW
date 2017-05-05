@@ -60,18 +60,6 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/usuario", name="usuario")
-     * @Route("/usuarios/{usuario}", name="usuarios")
-     */
-    public function principalAction(Usuario $usuario = null)
-    {
-        if (null === $usuario) {
-            $usuario = $this->getUser();
-        }
-        return $this->render('usuario/principal.html.twig');
-    }
-
-    /**
      * @Route("/comprobar", name="comprobar")
      * @Route("/salir", name="salir")
      */
