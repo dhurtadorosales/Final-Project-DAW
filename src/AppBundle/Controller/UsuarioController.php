@@ -87,14 +87,12 @@ class UsuarioController extends Controller
     {
         $usuario = $this->getUser();
 
-        $form = $this->createForm(UsuarioType::class, $usuario, [
-            'es_administrador' => $this->isGranted('ROLE_ADMINISTRADOR')
-        ]);
+        $form = $this->createForm(UsuarioType::class, $usuario);
 
         $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()) {
-
+            try {
             $claveFormulario = $form->get('nueva')->get('first')->getData();
 
             if ($claveFormulario) {
@@ -105,9 +103,17 @@ class UsuarioController extends Controller
             }
 
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('estado', 'Contraseña guardada con éxito');
+            return $this->redirectToRoute('principal');
+
+            } catch (Exception $e) {
+                $this->addFlash('error', 'No se ha podido guardar la contraseña');
+            }
         }
+
         return $this->render('usuario/perfil.html.twig', [
-            'formulario' => $form->createView()
+            'formulario' => $form->createView(),
+            'usuario' => $usuario
         ]);
     }
 

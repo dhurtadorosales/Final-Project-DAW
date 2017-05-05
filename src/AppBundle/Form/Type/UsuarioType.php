@@ -16,35 +16,23 @@ class UsuarioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-            ->add('nif', null, [
-                'label' => 'form.nif'
+            ->add('antigua', PasswordType::class, [
+                'label' => 'Contraseña antigua:',
+                'mapped' => false,
+                'constraints' => [
+                    new UserPassword()
+                ]
             ])
-            ->add('administrador', null, [
-                'label' => 'form.administrador',
-                'disabled' => ($options['es_administrador'] === false)
-            ]);
-
-        if (false === $options['es_administrador']) {
-            $builder
-                ->add('antigua', PasswordType::class, [
-                    'label' => 'form.clave_antigua',
-                    'mapped' => false,
-                    'constraints' => [
-                        new UserPassword()
-                    ]
-                ]);
-        }
-
-        $builder
             ->add('nueva', RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
                 'first_options' => [
-                    'label' => 'form.clave_nueva',
+                    'label' => 'Nueva contraseña:',
                 ],
                 'second_options' => [
-                    'label' => 'form.clave_nueva_repetir'
+                    'label' => 'Repite la nueva contraseña:'
                 ]
             ]);
     }

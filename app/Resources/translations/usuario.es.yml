@@ -1,8 +1,0 @@
-
-form.nif: NIF
-form.administrador: ¿Es administrador?
-form.clave_antigua: Contraseña actual
-form.clave_nueva: Nueva contraseña
-form.clave_nueva_repetir: Repite la nueva contraseña
-
-form.guardar: Guardar los cambios
