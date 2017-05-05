@@ -29,13 +29,6 @@ class ClienteType extends AbstractType
                         'label' => 'Nif:',
                         'translation_domain' => false
                     ])
-                    ->add('clave', PasswordType::class, [
-                        'label' => 'Clave:',
-                        'translation_domain' => false,
-                        'attr' => [
-                            'readonly' => true
-                        ]
-                    ])
                     ->add('nombre', null, [
                         'label' => 'Nombre:',
                         'translation_domain' => false

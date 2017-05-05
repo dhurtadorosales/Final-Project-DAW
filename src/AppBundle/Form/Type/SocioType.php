@@ -28,31 +28,45 @@ class SocioType extends AbstractType
                 $form = $event->getForm();
                 $data = $event->getData();
                 $form
-                    /*->add('usuario', CollectionType::class, [
-                        'entry_type' => Usuario2Type::class,
-                        'entry_options' => [
-                            'temporada' => $options['usuario'],
-                            'label' => false
-                        ],
-                    ])*/
-                    ->add('fechaAlta', null, [
-                        'label' => 'Fecha de alta:',
-                        'translation_domain' => false
-                    ])
-                    ->add('activo', null, [
-                        'label' => 'Activo',
-                        'translation_domain' => false,
-                        'attr' => [
-                            'readonly' => true
-                        ]
-                    ])
-                    ->add('fechaBaja', null, [
-                        'label' => 'Fecha de baja:',
-                        'translation_domain' => false,
-                        ''
-                    ])
                     ->add('nif', null, [
+                        'label' => 'Nif:',
                         'property_path' => 'usuario.nif'
+                    ])
+                    ->add('nombre', null, [
+                        'label' => 'Nombre:',
+                        'property_path' => 'usuario.nombre'
+                    ])
+                    ->add('apellidos', null, [
+                        'label' => 'Apellidos:',
+                        'property_path' => 'usuario.apellidos'
+                    ])
+                    ->add('direccion', null, [
+                        'label' => 'Dirección:',
+                        'property_path' => 'usuario.direccion'
+                    ])
+                    ->add('codigoPostal', null, [
+                        'label' => 'Código postal:',
+                        'property_path' => 'usuario.codigoPostal'
+                    ])
+                    ->add('localidad', null, [
+                        'label' => 'Localidad:',
+                        'property_path' => 'usuario.localidad'
+                    ])
+                    ->add('provincia', null, [
+                        'label' => 'Provincia:',
+                        'property_path' => 'usuario.provincia'
+                    ])
+                    ->add('telefono', null , [
+                        'label' => 'Telefono:',
+                        'property_path' => 'usuario.telefono'
+                    ])
+                    ->add('email', EmailType::class, [
+                        'label' => 'Correo electrónico:',
+                        'property_path' => 'usuario.email'
+                    ])
+                    ->add('descuento', PercentType::class, [
+                        'label' => 'Descuento:',
+                        'property_path' => 'usuario.descuento'
                     ]);
             });
     }
@@ -61,8 +75,7 @@ class SocioType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Socio::class,
-            'fecha' => null,
-            'usuario' => null
+            'translation_domain' => false
         ]);
     }
 }

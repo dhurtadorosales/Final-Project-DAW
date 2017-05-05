@@ -41,39 +41,44 @@ class SocioController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $em2 = $this->getDoctrine()->getManager();
+        $em3 = $this->getDoctrine()->getManager();
 
         //Obtenemos la fecha actual
         $fecha = new \DateTime('now');
-
-        //Obtención del usuario correspondiente al socio
-        //$usuario = new Usuario();
-        //$usuario->setSocio($socio);
-
-        $usuario= $socio->getUsuario();
 
         //Obtención de la temporada actual
         $temporadaActual = new TemporadaActual($em);
         $temporada = $temporadaActual->temporadaActualAction();
 
         if (null == $socio) {
+            //Nuevo socio
             $socio = new Socio();
             $em->persist($socio);
 
-            $form = $this->createForm(SocioType::class, $socio, [
-                'fecha' => $fecha,
-                'usuario' => $usuario
-            ]);
+            //Nuevo usuario que debe ser asignado al nuevo socio
+            $usuario = new Usuario();
+            $socio->setUsuario($usuario);
+            $em2->persist($usuario);
+
+            $form = $this->createForm(SocioType::class, $socio);
             $form->handleRequest($request);
 
             //Si es válido
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
+                    //Asignación fecha de alta y activo
+                    $socio
+                        ->setFechaAlta($fecha)
+                        ->setActivo(true);
 
-                    //Crear nuevo usuario
-
+                    //Asignación de la clave. Será la misma que su nif
+                    $socio
+                        ->getUsuario()->setClave($form['nif']->getData());
 
                     //Crear la liquidación del socio
                     $liquidacion = new  Liquidacion();
+                    $em3->persist($liquidacion);
                     $liquidacion
                         ->setTemporada($temporada)
                         ->setFecha($fecha)
@@ -81,18 +86,17 @@ class SocioController extends Controller
                         ->setRetencion(0.02)
                         ->setSocio($socio);
                     $em->flush();
+                   // $em2->flush();
+                    //$em3->flush();
                     $this->addFlash('estado', 'Socio guardado con éxito');
-                    return $this->redirectToRoute('principal');
+                    return $this->redirectToRoute('socios_listar');
                 } catch (\Exception $e) {
                     $this->addFlash('error', 'No se ha podido guardar el socio');
                 }
             }
         }
         else {
-            $form = $this->createForm(SocioType::class, $socio, [
-                'fecha' => $fecha,
-                'usuario' => $usuario
-            ]);
+            $form = $this->createForm(SocioType::class, $socio);
             $form->handleRequest($request);
 
             //Si es válido
@@ -100,7 +104,7 @@ class SocioController extends Controller
                 try {
                     $em->flush();
                     $this->addFlash('estado', 'Socio guardado con éxito');
-                    return $this->redirectToRoute('principal');
+                    return $this->redirectToRoute('socios_listar');
                 } catch (\Exception $e) {
                     $this->addFlash('error', 'No se ha podido guardar el socio');
                 }
