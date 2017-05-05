@@ -6,6 +6,7 @@ use AppBundle\Entity\Liquidacion;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\SocioType;
+use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -41,11 +42,6 @@ class SocioController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        if (null == $socio) {
-            $socio = new Socio();
-            $em->persist($socio);
-        }
-
         //Obtenemos la fecha actual
         $fecha = new \DateTime('now');
 
@@ -57,35 +53,55 @@ class SocioController extends Controller
         $temporadaActual = new TemporadaActual($em);
         $temporada = $temporadaActual->temporadaActualAction();
 
-        $form = $this->createForm(SocioType::class, $socio, [
-            'fecha' => $fecha,
-            'usuario' => $usuario
-        ]);
-        $form->handleRequest($request);
+        if (null == $socio) {
+            $socio = new Socio();
+            $em->persist($socio);
 
-        //Si es válido
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
+            $form = $this->createForm(SocioType::class, $socio, [
+                'fecha' => $fecha,
+                'usuario' => $usuario
+            ]);
+            $form->handleRequest($request);
+
+            //Si es válido
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+
+                    //Crear nuevo usuario
 
 
-                //Crear nuevo usuario
-
-
-                //Crear la liquidación del socio
-                $liquidacion = new  Liquidacion();
-                $liquidacion
-                    ->setTemporada($temporada)
-                    ->setFecha($fecha)
-                    ->setIva(0.1)
-                    ->setRetencion(0.02)
-                    ->setSocio($socio);
-
-                $em->flush();
-                $this->addFlash('estado', 'Socio guardado con éxito');
-                return $this->redirectToRoute('principal');
+                    //Crear la liquidación del socio
+                    $liquidacion = new  Liquidacion();
+                    $liquidacion
+                        ->setTemporada($temporada)
+                        ->setFecha($fecha)
+                        ->setIva(0.1)
+                        ->setRetencion(0.02)
+                        ->setSocio($socio);
+                    $em->flush();
+                    $this->addFlash('estado', 'Socio guardado con éxito');
+                    return $this->redirectToRoute('principal');
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'No se ha podido guardar el socio');
+                }
             }
-            catch(\Exception $e) {
-                $this->addFlash('error', 'No se ha podido guardar el socio');
+        }
+        else {
+            $form = $this->createForm(SocioType::class, $socio, [
+                'fecha' => $fecha,
+                'usuario' => $usuario
+            ]);
+            $form->handleRequest($request);
+
+            //Si es válido
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    $em->flush();
+                    $this->addFlash('estado', 'Socio guardado con éxito');
+                    return $this->redirectToRoute('principal');
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'No se ha podido guardar el socio');
+                }
             }
         }
 
