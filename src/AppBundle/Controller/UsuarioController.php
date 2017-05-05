@@ -107,7 +107,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/empleados/nuevo", name="empleados_nuevo")
-     * @Route("/empleados/modificar/{empleado}", name="empleados_modificar")
+     * @Route("/empleados/modificar/{id}", name="empleados_modificar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function formEmpleadoAction(Request $request, Usuario $usuario = null)
@@ -178,7 +178,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/empleados/eliminar/{empleado}", name="empleados_eliminar", methods={"GET"})
+     * @Route("/empleados/eliminar/{id}", name="empleados_eliminar", methods={"GET"})
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function borrarAction(Usuario $usuario)

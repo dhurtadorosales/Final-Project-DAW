@@ -51,7 +51,7 @@ class FincaController extends Controller
 
     /**
      * @Route("/fincas/listar/propietario/{socio}", name="fincas_listar_propietario")
-     * @Security("is_granted('ROLE_ADMINISTRADOR', 'ROLE_SOCIO')")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or user.getNif() == socio.getUsuario().getNif()")
      */
     public function listarPorPropietarioAction(Socio $socio)
     {
@@ -67,7 +67,7 @@ class FincaController extends Controller
 
     /**
      * @Route("/fincas/listar/arrendatario/{socio}", name="fincas_listar_arrendatario")
-     * @Security("is_granted('ROLE_ADMINISTRADOR', 'ROLE_SOCIO')")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or user.getNif() == socio.getUsuario().getNif()")
      */
     public function listarPorArrendatarioAction(Socio $socio)
     {
@@ -96,11 +96,12 @@ class FincaController extends Controller
             $em->persist($finca);
 
             $form = $this->createForm(FincaType::class, $finca);
-            $form->handleRequest($request);
+
         }
         else {
             $form = $this->createForm(FincaModificarType::class, $finca);
         }
+        $form->handleRequest($request);
 
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {

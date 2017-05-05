@@ -46,8 +46,10 @@ class SocioController extends Controller
         $fecha = new \DateTime('now');
 
         //Obtención del usuario correspondiente al socio
-        $usuario = new Usuario();
-        $usuario->setSocio($socio);
+        //$usuario = new Usuario();
+        //$usuario->setSocio($socio);
+
+        $usuario= $socio->getUsuario();
 
         //Obtención de la temporada actual
         $temporadaActual = new TemporadaActual($em);

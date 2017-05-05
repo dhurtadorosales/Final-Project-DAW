@@ -67,10 +67,10 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ path('empleados_modificar', {'empleado' : empleado.id }) }}" class="btn btn-default">
+                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default">
                             <i class="fa fa-pencil"></i> Modificar datos
                         </a>
-                        <a href="{{ path('empleados_eliminar', {'empleado' : empleado.id }) }}" class="btn btn-default">
+                        <a href="{{ path('empleados_eliminar', {'id' : empleado.id }) }}" class="btn btn-default">
                             <i class="fa fa-trash"></i> Dar de baja
                         </a>
                     </td>

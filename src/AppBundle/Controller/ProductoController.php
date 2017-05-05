@@ -171,7 +171,8 @@ class ProductoController extends Controller
 
         //Obtención cantidad del producto
         $cantidadProducto = $producto->getStock();
-
+        ///pasar lista de lotes
+        ////////////////////////////
         $form = $this->createForm(Producto2Type::class, $producto, [
             'temporada' => $temporada,
             'aceite' => $aceite
@@ -186,6 +187,7 @@ class ProductoController extends Controller
 
                 //Obtención del lote del que procede
                 $lote = $form['lotes']->getData();
+
 
                 //Suma cantidad al producto
                 $em->persist($producto);

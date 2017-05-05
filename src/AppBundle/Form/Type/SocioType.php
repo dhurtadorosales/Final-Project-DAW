@@ -28,13 +28,13 @@ class SocioType extends AbstractType
                 $form = $event->getForm();
                 $data = $event->getData();
                 $form
-                    ->add('usuario', CollectionType::class, [
+                    /*->add('usuario', CollectionType::class, [
                         'entry_type' => Usuario2Type::class,
                         'entry_options' => [
                             'temporada' => $options['usuario'],
                             'label' => false
                         ],
-                    ])
+                    ])*/
                     ->add('fechaAlta', null, [
                         'label' => 'Fecha de alta:',
                         'translation_domain' => false
@@ -48,7 +48,11 @@ class SocioType extends AbstractType
                     ])
                     ->add('fechaBaja', null, [
                         'label' => 'Fecha de baja:',
-                        'translation_domain' => false
+                        'translation_domain' => false,
+                        ''
+                    ])
+                    ->add('nif', null, [
+                        'property_path' => 'usuario.nif'
                     ]);
             });
     }
