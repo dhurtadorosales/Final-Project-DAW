@@ -59,7 +59,6 @@ class Producto
         return $this->getLotes()[0]->getAceite() . " " . $this->getEnvase();
     }
 
-
     /**
      * Constructor
      */

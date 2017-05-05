@@ -4,8 +4,10 @@ namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -22,12 +24,13 @@ class Producto2Type extends AbstractType
                     $form = $event->getForm();
                     $data = $event->getData();
                     $form
-                        ->add('lotes', CollectionType::class, [
+                        ->add('lotes', EntityType::class, [
                             'class' => Lote::class,
-                            'query_builder' => function (LoteRepository $loteRepository) use ($options) {
+                            'mapped' => false,
+                            'query_builder' => function(LoteRepository $loteRepository) use ($options) {
                                 return $loteRepository->getLotesTemporadaNoNulosQuery($options['temporada'], $options['aceite']);
                             },
-                                'placeholder' => '[Ninguno]'
+                            'placeholder' => '[Ninguno]',
                         ])
                         ->add('stock');
                 });
@@ -39,8 +42,6 @@ class Producto2Type extends AbstractType
             'data_class' => Producto::class,
             'temporada' => null,
             'aceite' => null
-        ])
-        ->setRequired(['temporada', 'aceite']);
-
+        ]);
     }
 }
