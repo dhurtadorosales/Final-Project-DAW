@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liquidaciones{% endblock %}
+
+{% block section %}
+    {% set socio = app.user.socio.id %}
+    <div class="container">
+        <h2>Liquidaciones anteriores</h2>
+        <div class="tiles">
+            {% for temporada in temporadas %}
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    <a href="{{ path('liquidaciones_listar', {'temporada' : temporada.id}) }}" class="btn">
+                {% else %}
+                    <a href="{{ path('liquidaciones_detalle', {'socio' : socio, 'temporada' : temporada.id}) }}" class="btn">
+                {% endif %}
+                    <div class="tile tile-dark-orange">
+                        <div class="tile-body">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Temporada</div>
+                            <div class="number">{{ temporada }}</div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

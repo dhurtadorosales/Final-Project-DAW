@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Temporada
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TemporadaRepository")
  */
 class Temporada
 {

@@ -16,7 +16,7 @@ class TemporadaController extends Controller
 {
     /**
      * @Route("/temporadas/listar", name="temporadas_listar")
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_SOCIO')")
      */
     public function listarAction()
     {
@@ -24,9 +24,9 @@ class TemporadaController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $temporadas = $em->getRepository('AppBundle:Temporada')
-            ->findAll();
+            ->getTemporadas();
 
-        return $this->render('temporada/listar.html.twig', [
+        return $this->render('liquidacion/principal.html.twig', [
             'temporadas' => $temporadas
         ]);
     }
