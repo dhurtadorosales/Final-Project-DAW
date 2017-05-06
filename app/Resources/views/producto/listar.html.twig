@@ -15,7 +15,7 @@
             <tr>
                 <th>Aceite</th>
                 <th>Envase</th>
-                <th>Cantidad</th>
+                <th>Unidades</th>
                 <th>Precio</th>
             </tr>
             </thead>
@@ -25,7 +25,7 @@
                     <td>{{ producto.lotes[0].aceite }}</td>
                     <td>{{ producto.envase }}</td>
                     <td>{{ producto.stock }}</td>
-                    <td>{{ producto.lotes[0].aceite.precioKg * producto.lotes[0].aceite.densidadKgLitro (1 + producto.envase.incremento) }}</td>
+                    <td>{{ producto.lotes[0].aceite.precioKg * producto.lotes[0].aceite.densidadKgLitro }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -28,7 +28,7 @@ class Envase
      * @var float
      * @ORM\Column(type="float", precision=2)
      */
-    private $incremento;
+    private $capacidadLitros;
 
     /**
      * @var Producto[]
@@ -44,6 +44,7 @@ class Envase
     {
         return $this->getDenominacion();
     }
+
 
     /**
      * Constructor
@@ -88,28 +89,29 @@ class Envase
     }
 
     /**
-     * Set incremento
+     * Set capacidadLitros
      *
-     * @param float $incremento
+     * @param float $capacidadLitros
      *
      * @return Envase
      */
-    public function setIncremento($incremento)
+    public function setCapacidadLitros($capacidadLitros)
     {
-        $this->incremento = $incremento;
+        $this->capacidadLitros = $capacidadLitros;
 
         return $this;
     }
 
     /**
-     * Get incremento
+     * Get capacidadLitros
      *
      * @return float
      */
-    public function getIncremento()
+    public function getCapacidadLitros()
     {
-        return $this->incremento;
+        return $this->capacidadLitros;
     }
+
 
     /**
      * Add producto

@@ -220,9 +220,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Envase
         $envases = [
-            [0, "botella pvc 1L", 0.15],
-            [0, "bidón pvc 5L", 0.10],
-            [0, "botella vidrio 1L", 0.20]
+            [0, "botella pvc 1L", 1],
+            [0, "bidón pvc 5L", 5],
+            [0, "botella vidrio 1L", 1]
         ];
 
         $envases2 = [];
@@ -230,7 +230,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             $envase = new Envase();
             $envase
                 ->setDenominacion($item[1])
-                ->setIncremento($item[2]);
+                ->setCapacidadLitros($item[3]);
 
             $manager->persist($envase);
             array_push($envases2, $envase);
@@ -255,15 +255,15 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Producto
         $productos = [
-            [0, 0, 3.80, $lotes2[0] , $envases2[0]],
-            [0, 0, 3.75, $lotes2[1] , $envases2[0]],
-            [0, 0, 3.48, $lotes2[2] , $envases2[0]],
-            [0, 0, 3.60, $lotes2[0] , $envases2[1]],
-            [0, 0, 3.25, $lotes2[1] , $envases2[1]],
-            [0, 0, 3.30, $lotes2[2] , $envases2[1]],
-            [0, 0, 3.68, $lotes2[0] , $envases2[2]],
+            [0, 0, 3.48, $lotes2[0] , $envases2[0]],
+            [0, 0, 3.43, $lotes2[1] , $envases2[0]],
+            [0, 0, 3.37, $lotes2[2] , $envases2[0]],
+            [0, 0, 17.40, $lotes2[0] , $envases2[1]],
+            [0, 0, 17.17, $lotes2[1] , $envases2[1]],
+            [0, 0, 16.85, $lotes2[2] , $envases2[1]],
+            [0, 0, 3.48, $lotes2[0] , $envases2[2]],
             [0, 0, 3.43, $lotes2[1] , $envases2[2]],
-            [0, 0, 3.59, $lotes2[2] , $envases2[2]],
+            [0, 0, 3.37, $lotes2[2] , $envases2[2]],
         ];
 
         foreach ($productos as $item) {

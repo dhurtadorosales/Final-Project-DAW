@@ -181,9 +181,12 @@ class ProductoController extends Controller
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                //Obtención de la cantidad que se ha envasado
-                $cantidadEnvasar = $form['stock']->getData();
-                dump($form['lotes']->getData());
+                //Obtención de la cantidad en peso que se ha envasado
+                $pesoEnvasar = $form['stock']->getData();
+
+                //Pasamos ese peso a unidades de producto
+                $cantidadEnvasar = (int)(($pesoEnvasar * $producto->getLotes()[0]->getAceite()->getDensidadKgLitro()) / ($producto->getEnvase()->getCapacidadLitros()));
+
                 //Obtención del lote del que procede
                 $lote = $form['lotes']->getData();
 
@@ -195,7 +198,7 @@ class ProductoController extends Controller
                 //Restamos la cantidad del stock del lote del que procede
                 $em->persist($lote);
                 $lote
-                    ->setStock($lote->getStock() - $cantidadEnvasar);
+                    ->setStock($lote->getStock() - $pesoEnvasar);
 
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
