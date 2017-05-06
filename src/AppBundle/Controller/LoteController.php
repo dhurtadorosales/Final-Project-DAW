@@ -43,34 +43,6 @@ class LoteController extends Controller
     }
 
     /**
-     * @Route("/lotes/asignacion", name="lotes_asignacion")
-     * @Security("is_granted('ROLE_ENCARGADO')")
-     */
-    public function listarLotesAsignacionAction()
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Obtención temporada actual
-        $temporadaActual = new TemporadaActual($em);
-        $temporada = $temporadaActual->temporadaActualAction();
-
-        //Obtención de los lotes de esta temporada que contienen aceite
-        $lotes = $em->getRepository('AppBundle:Lote')
-            ->getLotesTemporadaNoNulos($temporada);
-
-        //Obtención de las calidades de aceite
-        $aceites = $em->getRepository('AppBundle:Aceite')
-            ->findAll();
-
-        return $this->render('lote/asignacion.html.twig', [
-            'lotes' => $lotes,
-            'aceites' => $aceites,
-            'temporada' => $temporada
-        ]);
-    }
-
-    /**
      * @Route("/lotes/listar/lote/{lote}", name="lotes_listar_lote")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO')")
      */
@@ -84,25 +56,6 @@ class LoteController extends Controller
 
         return $this->render('lote/detalle.html.twig', [
             'resultados' => $resultados
-        ]);
-    }
-
-    /**
-     * @Route("/lotes/aceite/asignar/{aceite}/{lote}", name="lotes_aceite_asignar")
-     * @Security("is_granted('ROLE_ENCARGADO')")
-     */
-    public function aceiteAsignarAction(Aceite $aceite, Lote $lote)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        //Asigna el aceite al lote
-        $em->persist($lote);
-        $lote
-            ->setAceite($aceite);
-        $em->flush();
-        $mensaje = 'Aceite asignado correctamente';
-        return $this->render('producto/confirma.html.twig', [
-            'mensaje' => $mensaje
         ]);
     }
 

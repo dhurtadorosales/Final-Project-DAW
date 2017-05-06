@@ -20,9 +20,8 @@ class LoteType extends AbstractType
                 $data = $event->getData();
                 $form
                     ->add('aceite', null, [
-                        'label' => $data,
-                        'placeholder' => '[Ninguno]',
-                        'translation_domain' => false
+                        'label' => $data . ':',
+                        'placeholder' => '[Ninguno]'
                     ]);
             });
     }
@@ -31,6 +30,7 @@ class LoteType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Lote::class,
+            'translation_domain' => false
         ]);
     }
 }

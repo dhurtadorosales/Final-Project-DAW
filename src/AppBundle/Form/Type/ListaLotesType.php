@@ -16,7 +16,7 @@ class ListaLotesType extends AbstractType
         $builder
             ->add('lotes', CollectionType::class, [
                 'entry_type' => LoteType::class,
-                'label' => 'Lotes',
+                'label' => 'Lotes:',
                 'entry_options' => [
                     'label' => false
                 ]
@@ -27,6 +27,7 @@ class ListaLotesType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ListaLotes::class,
+            'translation_domain' => false
         ]);
     }
 }

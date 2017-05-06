@@ -27,67 +27,52 @@ class FincaType extends AbstractType
                 $data = $event->getData();
                 $form
                     ->add('denominacion', null, [
-                        'label' => 'Denominación:',
-                        'translation_domain' => false
+                        'label' => 'Denominación:'
                     ])
                     ->add('provincia', null, [
-                        'label' => 'Provincia:',
-                        'translation_domain' => false,
+                        'label' => 'Provincia:'
                     ])
                     ->add('municipio', null, [
-                        'label' => 'Municipio:',
-                        'translation_domain' => false
+                        'label' => 'Municipio:'
                     ])
                     ->add('sector', null, [
-                        'label' => 'Sector:',
-                        'translation_domain' => false
+                        'label' => 'Sector:'
                     ])
                     ->add('poligono', null, [
-                        'label' => 'Polígono:',
-                        'translation_domain' => false
+                        'label' => 'Polígono:'
                     ])
                     ->add('parcela', null, [
-                        'label' => 'Parcela:',
-                        'translation_domain' => false
+                        'label' => 'Parcela:'
                     ])
                     ->add('idInmueble', null, [
-                        'label' => 'Identificación del inmueble:',
-                        'translation_domain' => false
+                        'label' => 'Identificación del inmueble:'
                     ])
                     ->add('caracterControl', null, [
-                        'label' => 'Caracteres de control:',
-                        'translation_domain' => false
+                        'label' => 'Caracteres de control:'
                     ])
                     ->add('numPlantas', null , [
-                        'label' => 'Número de plantas:',
-                        'translation_domain' => false
+                        'label' => 'Número de plantas:'
                     ])
                     ->add('regadio', null, [
-                        'label' => 'Regadío',
-                        'translation_domain' => false
+                        'label' => 'Regadío'
                     ])
-                    ->add('partPropietario', null, [
-                        'label' => 'Participación del propietario: (sobre 1)',
-                        'translation_domain' => false
+                    ->add('partPropietario', PercentType::class, [
+                        'label' => 'Participación del propietario:'
                     ])
-                    ->add('partArrend', null, [
-                        'label' => 'Participación del arrendatario: (sobre 1)',
-                        'translation_domain' => false
+                    ->add('partArrend', PercentType::class, [
+                        'label' => 'Participación del arrendatario:'
                     ])
                     ->add('variedad', null, [
                         'label' => 'Variedad de aceituna:',
-                        'placeholder' => '[Ninguna]',
-                        'translation_domain' => false
+                        'placeholder' => '[Ninguna]'
                     ])
                     ->add('propietario', null, [
                         'label' => 'Propietario:',
-                        'placeholder' => '[Ninguno]',
-                        'translation_domain' => false
+                        'placeholder' => '[Ninguno]'
                     ])
                     ->add('arrendatario', null, [
                         'label' => 'Arrendatario:',
-                        'placeholder' => '[Ninguno]',
-                        'translation_domain' => false
+                        'placeholder' => '[Ninguno]'
                     ]);
             });
     }
@@ -95,7 +80,8 @@ class FincaType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Finca::class
+            'data_class' => Finca::class,
+            'translation_domain' => false
         ]);
     }
 }

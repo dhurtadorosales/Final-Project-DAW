@@ -23,6 +23,7 @@ class LineaType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Linea::class,
+            'translation_domain' => false
         ]);
     }
 }

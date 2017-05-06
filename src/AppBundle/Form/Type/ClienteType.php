@@ -26,44 +26,34 @@ class ClienteType extends AbstractType
                 $data = $event->getData();
                 $form
                     ->add('nif', null, [
-                        'label' => 'Nif:',
-                        'translation_domain' => false
+                        'label' => 'Nif:'
                     ])
                     ->add('nombre', null, [
-                        'label' => 'Nombre:',
-                        'translation_domain' => false
+                        'label' => 'Nombre:'
                     ])
                     ->add('apellidos', null, [
-                        'label' => 'Apellidos:',
-                        'translation_domain' => false
+                        'label' => 'Apellidos:'
                     ])
                     ->add('direccion', null, [
-                        'label' => 'Dirección:',
-                        'translation_domain' => false
+                        'label' => 'Dirección:'
                     ])
                     ->add('codigoPostal', null, [
-                        'label' => 'Código postal:',
-                        'translation_domain' => false
+                        'label' => 'Código postal:'
                     ])
                     ->add('localidad', null, [
-                        'label' => 'Localidad:',
-                        'translation_domain' => false
+                        'label' => 'Localidad:'
                     ])
                     ->add('provincia', null, [
-                        'label' => 'Provincia:',
-                        'translation_domain' => false
+                        'label' => 'Provincia:'
                     ])
                     ->add('telefono', null , [
-                        'label' => 'Telefono:',
-                        'translation_domain' => false
+                        'label' => 'Telefono:'
                     ])
                     ->add('email', EmailType::class, [
-                        'label' => 'Correo electrónico:',
-                        'translation_domain' => false
+                        'label' => 'Correo electrónico:'
                     ])
                     ->add('descuento', PercentType::class, [
-                        'label' => 'Descuento:',
-                        'translation_domain' => false
+                        'label' => 'Descuento:'
                     ]);
             });
     }
@@ -71,7 +61,8 @@ class ClienteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Usuario::class
+            'data_class' => Usuario::class,
+            'translation_domain' => false
         ]);
     }
 }

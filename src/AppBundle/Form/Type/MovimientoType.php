@@ -22,7 +22,6 @@ class MovimientoType extends AbstractType
                     ->add('temporada', null, [
                         'label' => 'Temporada:',
                         'data' => $options['temporada'],
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
@@ -31,7 +30,6 @@ class MovimientoType extends AbstractType
                         'label' => 'Fecha:',
                         'data' => $options['fecha'],
                         'widget' => 'single_text',
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
@@ -51,6 +49,7 @@ class MovimientoType extends AbstractType
             'data_class' => Movimiento::class,
             'fecha' => null,
             'temporada' => null,
+            'translation_domain' => false
         ]);
     }
 }

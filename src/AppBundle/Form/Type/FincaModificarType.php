@@ -27,35 +27,28 @@ class FincaModificarType extends AbstractType
                 $data = $event->getData();
                 $form
                     ->add('numPlantas', null , [
-                        'label' => 'Número de plantas:',
-                        'translation_domain' => false
+                        'label' => 'Número de plantas:'
                     ])
                     ->add('regadio', null, [
-                        'label' => 'Regadío',
-                        'translation_domain' => false
+                        'label' => 'Regadío'
                     ])
                     ->add('partPropietario', PercentType::class, [
-                        'label' => 'Participación del propietario: (sobre 1)',
-                        'translation_domain' => false
+                        'label' => 'Participación del propietario: (sobre 1)'
                     ])
                     ->add('partArrend', PercentType::class, [
-                        'label' => 'Participación del arrendatario: (sobre 1)',
-                        'translation_domain' => false
+                        'label' => 'Participación del arrendatario: (sobre 1)'
                     ])
                     ->add('variedad', null, [
                         'label' => 'Variedad de aceituna:',
-                        'placeholder' => '[Ninguna]',
-                        'translation_domain' => false
+                        'placeholder' => '[Ninguna]'
                     ])
                     ->add('propietario', null, [
                         'label' => 'Propietario:',
-                        'placeholder' => '[Ninguno]',
-                        'translation_domain' => false
+                        'placeholder' => '[Ninguno]'
                     ])
                     ->add('arrendatario', null, [
                         'label' => 'Arrendatario:',
-                        'placeholder' => '[Ninguno]',
-                        'translation_domain' => false
+                        'placeholder' => '[Ninguno]'
                     ]);
             });
     }
@@ -63,7 +56,8 @@ class FincaModificarType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Finca::class
+            'data_class' => Finca::class,
+            'translation_domain' => false
         ]);
     }
 }
