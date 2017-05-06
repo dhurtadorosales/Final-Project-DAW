@@ -116,7 +116,8 @@ class FincaController extends Controller
         }
 
         return $this->render('finca/form.html.twig', [
-            'formulario' => $form->createView()
+            'formulario' => $form->createView(),
+            'finca' => $finca
         ]);
     }
 

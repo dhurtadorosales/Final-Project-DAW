@@ -230,7 +230,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
             $envase = new Envase();
             $envase
                 ->setDenominacion($item[1])
-                ->setCapacidadLitros($item[3]);
+                ->setCapacidadLitros($item[2]);
 
             $manager->persist($envase);
             array_push($envases2, $envase);

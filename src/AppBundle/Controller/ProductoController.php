@@ -202,7 +202,7 @@ class ProductoController extends Controller
 
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('principal');
+                return $this->redirectToRoute('productos_principal');
             }
             catch(\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');

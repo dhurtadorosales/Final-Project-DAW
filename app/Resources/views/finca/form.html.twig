@@ -5,6 +5,13 @@
 
 {% block section %}
     <div class="container">
+        <h3 class="well well-lg">
+            {% if finca.id %}
+                Modificar finca
+            {% else %}
+                Nueva finca
+            {% endif %}
+        </h3>
         {{ form_start(formulario) }}
         {{ form_widget(formulario) }}
             <div class="form-group">
