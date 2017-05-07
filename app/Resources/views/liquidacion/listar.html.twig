@@ -4,17 +4,20 @@
 
 {% block section %}
     <div class="container">
-        <h2>Liquidaciones</h2>
-        <h2>Temporada: {{ temporada }}</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <div class="well">
+            <h2>Liquidaciones</h2>
+            <div class="division"></div>
+            <h3>Temporada: {{ temporada }}</h3>
+        </div>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('temporadas_listar') }}" class="btn btn-default">
+        <a href="{{ path('temporadas_listar') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-calendar"></i> Liquidaciones anteriores
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table">
             <thead>
             <tr>
                 <th>Nº</th>
@@ -28,7 +31,7 @@
                     <td>{{ liquidacion.id }}</td>
                     <td>{{ liquidacion.socio }}</td>
                     <td>
-                        <a href="{{ path('liquidaciones_detalle', {'socio' : liquidacion.socio.id, 'temporada' : temporada.id}) }}" class="btn btn-default">
+                        <a href="{{ path('liquidaciones_detalle', {'socio' : liquidacion.socio.id, 'temporada' : temporada.id}) }}" class="btn btn-default btnAceptar">
                             <i class="fa fa-search"></i> Detalle
                         </a>
                     </td>

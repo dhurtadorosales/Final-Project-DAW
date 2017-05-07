@@ -7,16 +7,16 @@
 
 {% block section %}
     <div class="container">
-        <h3>Cambiar contraseña</h3>
+        <h3 class="well">Cambiar contraseña</h3>
         {{ form_start(formulario) }}
         {{ form_widget(formulario) }}
         <div class="form-group">
             <div class="col-sm-2"></div>
             <div class="col-sm-10">
-                <button type="submit" name="enviar" class="btn btn-default">
+                <button type="submit" name="enviar" class="btn btn-default btnAceptar">
                     <i class="fa fa-check"></i> Aceptar
                 </button>
-                <a href="{{ path('principal') }}" class="btn btn-default">
+                <a href="{{ path('principal') }}" class="btn btn-default btnCancelar">
                     <i class="fa fa-times"></i> Cancelar
                 </a>
             </div>

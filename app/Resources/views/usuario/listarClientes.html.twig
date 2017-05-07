@@ -5,13 +5,13 @@
 {% block section %}
     {% include 'flash.html.twig' %}
     <div class="container">
-        <h2>Clientes</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <h2 class="well">Clientes</h2>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover table-responsive">
+        <table class="table table-responsive">
             <thead>
             <tr>
                 <th>NIF</th>
@@ -45,7 +45,7 @@
                         {{ suma }}
                     </td>
                     <td>
-                        <a href="{{ path('clientes_modificar', {'cliente' : cliente.id }) }}" class="btn btn-default">
+                        <a href="{{ path('clientes_modificar', {'cliente' : cliente.id }) }}" class="btn btn-default btnAceptar">
                             <i class="fa fa-pencil"></i> Modificar datos
                         </a>
                     </td>

@@ -5,19 +5,22 @@
 {% block section %}
     {% include 'flash.html.twig' %}
     <div class="container">
-        <h2>Ventas</h2>
-        {% if temporada != null %}
-            <h3>Temporada: {{ temporada }}</h3>
-        {% endif %}
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <div class="well">
+            <h2>Ventas</h2>
+            {% if temporada != null %}
+                <div class="division"></div>
+                <h3>Temporada: {{ temporada }}</h3>
+            {% endif %}
+        </div>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('ventas_nueva') }}" class="btn btn-default">
+        <a href="{{ path('ventas_nueva') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nueva venta
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-responsive">
             <thead>
             <tr>
                 <th>Nº</th>

@@ -137,7 +137,7 @@ class MovimientoController extends Controller
             }
         }
 
-        return $this->render('movimientos/form.html.twig', [
+        return $this->render('movimiento/form.html.twig', [
             'movimiento' => $movimiento,
             'formulario' => $form->createView()
         ]);

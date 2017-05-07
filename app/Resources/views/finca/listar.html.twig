@@ -5,16 +5,18 @@
 {% block section %}
     {% include 'flash.html.twig' %}
     <div class="container">
-        <h2>Fincas</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <div class="well">
+            <h2>Fincas</h2>
+        </div>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('fincas_nueva') }}" class="btn btn-default">
+        <a href="{{ path('fincas_nueva') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nueva finca
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table">
             <thead>
             <tr>
                 <th>Referencia catastral</th>
@@ -63,10 +65,10 @@
                     </td>
                     {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <td>
-                            <a href="{{ path('fincas_modificar', {'finca' : finca.id }) }}" class="btn btn-default">
+                            <a href="{{ path('fincas_modificar', {'finca' : finca.id }) }}" class="btn btn-default btnAceptar">
                                 <i class="fa fa-pencil"></i> Modificar datos
                             </a>
-                            <a href="{{ path('fincas_eliminar', {'finca' : finca.id }) }}" class="btn btn-default">
+                            <a href="{{ path('fincas_eliminar', {'finca' : finca.id }) }}" class="btn btn-default btnAceptar">
                                 <i class="fa fa-trash"></i> Dar de baja
                             </a>
                         </td>

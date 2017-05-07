@@ -137,7 +137,8 @@ class UsuarioController extends Controller
         }
 
         return $this->render('usuario/formEmpleado.html.twig', [
-            'formulario' => $form->createView()
+            'formulario' => $form->createView(),
+            'usuario' => $usuario
         ]);
     }
 
@@ -173,7 +174,8 @@ class UsuarioController extends Controller
         }
 
         return $this->render('usuario/formCliente.html.twig', [
-            'formulario' => $form->createView()
+            'formulario' => $form->createView(),
+            'usuario' => $usuario
         ]);
     }
 

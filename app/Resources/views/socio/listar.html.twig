@@ -5,23 +5,26 @@
 {% block section %}
     {% include 'flash.html.twig' %}
     <div class="container">
-        <h2>Socios</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <div class="well">
+            <h2>Socios</h2>
+        </div>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('socios_nuevo') }}" class="btn btn-default">
+        <a href="{{ path('socios_nuevo') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nuevo socio
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover table-responsive">
+        <table class="table table-responsive">
             <thead>
             <tr>
-                <th>Nº Socio</th>
+                <th>Nº</th>
                 <th>NIF</th>
                 <th>Socio</th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
+                <th>Email</th>
                 <th>Nº Plantas</th>
                 <th>Fecha de alta</th>
                 <th></th>
@@ -37,6 +40,7 @@
                         {{ socio.usuario.direccion }} - {{socio.usuario.localidad}} ({{ socio.usuario.provincia }})
                     </td>
                     <td>{{ socio.usuario.telefono}}</td>
+                    <td>{{ socio.usuario.email }}</td>
                     <td>{% set sum = 0 %}
                         {% for i in socio.fincasPropiedad %}
                             {% set sum = sum + i.numPlantas %}
@@ -44,11 +48,11 @@
                 </td>
                     <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
                     <td>
-                        <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default">
-                            <i class="fa fa-pencil"></i> Modificar datos
+                        <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar" title="Modificar datos">
+                            <i class="fa fa-pencil"></i>
                         </a>
-                        <a href="{{ path('socios_eliminar', {'socio' : socio.id }) }}" class="btn btn-default">
-                            <i class="fa fa-trash"></i> Dar de baja
+                        <a href="{{ path('socios_eliminar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar" title="Dar de baja">
+                            <i class="fa fa-trash"></i>
                         </a>
                     </td>
                 </tr>

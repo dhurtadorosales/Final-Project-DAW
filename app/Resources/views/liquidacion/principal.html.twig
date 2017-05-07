@@ -5,7 +5,7 @@
 {% block section %}
     {% set socio = app.user.socio.id %}
     <div class="container">
-        <h2>Liquidaciones anteriores</h2>
+        <h2 class="well">Liquidaciones anteriores</h2>
         <div class="tiles">
             {% for temporada in temporadas %}
                 {% if is_granted('ROLE_ADMINISTRADOR') %}

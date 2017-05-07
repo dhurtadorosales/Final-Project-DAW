@@ -5,6 +5,13 @@
 
 {% block section %}
     <div class="container">
+        <h3 class="well">
+            {% if socio.id %}
+                Modificar socio
+            {% else %}
+                Nuevo socio
+            {% endif %}
+        </h3>
         {{ form_start(formulario) }}
         {{ form_widget(formulario) }}
             <div class="form-group">

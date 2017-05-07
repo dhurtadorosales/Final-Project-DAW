@@ -4,14 +4,17 @@
 
 {% block section %}
     <div class="container">
-        <h2 class="well well-lg">Lotes</h2>
-        <h3>Temporada: {{ temporada }}</h3>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <div class="well">
+            <h2>Lotes</h2>
+            <div class="division"></div>
+            <h3>Temporada: {{ temporada }}</h3>
+        </div>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table">
             <thead>
             <tr>
                 <th>Lote</th>
@@ -36,7 +39,7 @@
                     </td>
                     <td>
                         {% if lote.cantidad != 0 %}
-                            <a href="{{ path('entregas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default">
+                            <a href="{{ path('entregas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default btnAceptar">
                                 Entregas del lote
                             </a>
                         {% else %}
@@ -45,7 +48,7 @@
                     </td>
                     <td>
                         {% if lote.cantidad != 0 %}
-                            <a href="{{ path('fincas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default">
+                            <a href="{{ path('fincas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default btnAceptar">
                                 Fincas del lote
                             </a>
                         {% else %}

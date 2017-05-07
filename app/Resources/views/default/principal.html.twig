@@ -5,6 +5,9 @@
 {% block section %}
     {% include 'flash.html.twig' %}
     <div class="container">
+        <div class="well">
+            <h2>Inicio</h2>
+        </div>
         <div class="tiles">
             {% if is_granted('ROLE_ADMINISTRADOR') %}
                 <a href="{{ path('temporadas_comenzar') }}" class="btn">

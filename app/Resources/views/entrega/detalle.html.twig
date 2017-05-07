@@ -4,25 +4,28 @@
 
 {% block section %}
     <div class="container">
-    <h2>Entrega Nº {{ entrega.id }}</h2>
-    <h2>Socio: {{ socio }}</h2>
-    <a href="{{ path('principal') }}" class="btn btn-default">
-        <i class="fa fa-chevron-left"></i> Anterior
-    </a>
+        <div class="well">
+            <h2>Entrega Nº {{ entrega.id }}</h2>
+            <div class="division"></div>
+            <h3>Socio: {{ socio }}</h3>
+        </div>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-chevron-left"></i> Anterior
+        </a>
     </div>
     <div class="container">
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table">
         <tr>
-            <td>Temporada</td><td>{{ entrega.temporada }}</td>
+            <td class="col-sm-2">Temporada</td><td>{{ entrega.temporada }}</td>
         </tr>
         <tr>
-            <td>Fecha</td><td>{{ entrega.fecha|date('d/m/Y') }}</td>
+            <td class="col-sm-2">Fecha</td><td>{{ entrega.fecha|date('d/m/Y') }}</td>
         </tr>
         <tr>
-            <td>Hora inicio</td><td>{{ entrega.horaInicio|date('H:i') }}</td>
+            <td class="col-sm-2">Hora inicio</td><td>{{ entrega.horaInicio|date('H:i') }}</td>
         </tr>
         <tr>
-            <td>Hora fin</td><td>{{ entrega.horaFin|date('H:i') }}</td>
+            <td class="col-sm-2">Hora fin</td><td>{{ entrega.horaFin|date('H:i') }}</td>
         </tr>
         <tr>
             <th>Peso aceituna</th>
@@ -35,8 +38,7 @@
             </th>
         </tr>
     </table>
-    <p></p>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered">
         <thead>
         <tr>
             <th>Tipo</th>
@@ -55,7 +57,13 @@
         </tbody>
         <tfoot>
             <tr>
-                <td></td><td></td><td></td><td></td><td>Observaciones</td><td>{{ entrega.observaciones }}</td>
+                <td></td><td></td><td>Observaciones</td><td>
+                {% if entrega.observaciones != null %}
+                    {{ entrega.observaciones }}
+                {% else %}
+                    No
+                {% endif %}
+                </td>
             </tr>
         </tfoot>
     </table>

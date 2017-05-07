@@ -5,16 +5,16 @@
 {% block section %}
     {% include 'flash.html.twig' %}
     <div class="container">
-        <h2>Empleados</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <h2 class="well">Empleados</h2>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('empleados_nuevo') }}" class="btn btn-default">
+        <a href="{{ path('empleados_nuevo') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nuevo Empleado
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover table-responsive">
+        <table class="table table-responsive">
             <thead>
             <tr>
                 <th>NIF</th>
@@ -48,10 +48,10 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default">
+                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar">
                             <i class="fa fa-pencil"></i> Modificar datos
                         </a>
-                        <a href="{{ path('empleados_eliminar', {'id' : empleado.id }) }}" class="btn btn-default">
+                        <a href="{{ path('empleados_eliminar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar">
                             <i class="fa fa-trash"></i> Dar de baja
                         </a>
                     </td>

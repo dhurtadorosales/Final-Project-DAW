@@ -4,23 +4,26 @@
 
 {% block section %}
     <div class="container">
-        <h2>Liquidación</h2>
-        <h3>Socio: {{ socio }}</h3>
+        <div class="well">
+            <h2>Liquidación</h2>
+            <div class="division"></div>
+            <h3>Socio: {{ socio }}</h3>
+        </div>
         {% if app.user.nif == socio.usuario.nif %}
-            <a href="{{ path('principal') }}" class="btn btn-default">
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-home"></i> Ir a principal
             </a>
-            <a href="{{ path('temporadas_listar') }}" class="btn btn-default">
+            <a href="{{ path('temporadas_listar') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-calendar"></i> Liquidaciones anteriores
             </a>
         {% else %}
-            <a href="{{ path('liquidaciones_listar') }}" class="btn btn-default">
+            <a href="{{ path('liquidaciones_listar') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-calculator"></i> Ir a liquidaciones
             </a>
         {% endif %}
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-bordered table-responsive">
             <tr>
                 <td>Temporada</td><td>{{ temporada }}</td>
             </tr>
@@ -36,7 +39,7 @@
         </table>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-bordered table-responsive">
             <thead>
                 <tr>
                     <th colspan="2">GANANCIAS</th>
@@ -93,7 +96,7 @@
         </table>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>IMPORTE TOTAL</th>

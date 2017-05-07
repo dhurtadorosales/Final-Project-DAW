@@ -7,15 +7,15 @@
     <div class="container">
         <h2>Movimientos</h2>
         <h3>Temporada: {{ temporada }}</h3>
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('movimientos_nuevo') }}" class="btn btn-default">
+        <a href="{{ path('movimientos_nuevo') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nuevo movimiento
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Fecha</th>
@@ -42,7 +42,7 @@
             </tbody>
         </table>
 
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Venta Aceite €</th>

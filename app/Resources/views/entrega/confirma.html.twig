@@ -7,10 +7,10 @@
         <h3>Vas a insertar nuevas entregas</h3>
         <h3>¿deseas continuar?</h3>
         <form action="{{ path('entregas_insertar_confirmar') }}" method="post" name="confirmar">
-            <button type="submit" name="aceptar" class="btn btn-default">
+            <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
                 <i class="fa fa-check"></i> Aceptar
             </button>
-            <a href="{{ path('principal') }}" class="btn btn-default" name="cancelar">
+            <a href="{{ path('principal') }}" class="btn btn-default btnCancelar" name="cancelar">
                 <i class="fa fa-times"></i> Cancelar
             </a>
         </form>

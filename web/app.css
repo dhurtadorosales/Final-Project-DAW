@@ -5,7 +5,7 @@ html {
 
 body {
     font-family: Arial;
-    background-color: #E9DEF2;
+    background-color: #EDF0F5;
     background-image: url("images/header.jpg");
     background-repeat: repeat-x;
     margin: 0;
@@ -26,12 +26,13 @@ footer {
     bottom: 0;
     position: absolute;
     height: 90px;
-    background-color: #9998A6;
+    background-color: #7E91A9;
+    color: white;
     border-radius: 0;
 }
 
 footer a {
-    color: #222222;
+    color: white;
 }
 
 footer .container {
@@ -39,11 +40,11 @@ footer .container {
 }
 
 aside {
-    background-color: #E9DEF2;
+    background-color: #EDF0F5;
 }
 
 section {
-    background-color: #E9DEF2;
+    background-color: #EDF0F5;
     z-index: 4;
     margin-top: 0;
 }
@@ -53,8 +54,26 @@ section h2 {
     padding-top: 20px;
 }
 
+table {
+    border: solid 1px #DDDDDD;
+}
+
 thead {
-    background-color: cadetblue;
+    background-color: #BDBDBD;
+    color: #6A6C6F;
+}
+
+tbody, tfoot {
+    background-color: #F5F5F5;
+    color: #6A6C6F;
+}
+
+td a {
+    color: #6A6C6F;
+}
+
+tbody tr:hover {
+    background-color: #E9DEF2;
 }
 
 .navegacion {
@@ -155,6 +174,36 @@ thead {
 .listaEnlacesExteriores img {
     margin-left: 25%;
     max-width: 200px;
+}
+
+.btn-default {
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.btnAceptar {
+    background-color: #7E91A9;
+    color: white;
+}
+
+.btnCancelar {
+    background-color: #BDBDBD;
+    color: white;
+}
+
+.well {
+    margin-top: 3%;
+    color: #6A6C6F;
+}
+
+.division {
+    background-color: #D6D6D6;
+    height: 2px;
+}
+
+.contenedorTabla {
+    background-color: #F5F5F5;
+    border: solid 1px #DDDDDD;
 }
 
 #logo {

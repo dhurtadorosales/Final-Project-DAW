@@ -4,18 +4,20 @@
 
 {% block section %}
     <div class="container">
-        {% if app.request == path('principal') %}
-            <h2>Temporada: {{ temporada }}</h2>
-        {% endif %}
-        {% if app.request == path('lotes_listar') %}
-            <h2>Lote: {{ lote }}</h2>
-        {% endif %}
-        <a href="{{ path('principal') }}" class="btn btn-default">
+        <div class="well">
+            {% if app.request == path('principal') %}
+                <h2>Temporada: {{ temporada }}</h2>
+            {% endif %}
+            {% if app.request == path('lotes_listar') %}
+                <h2>Lote: {{ lote }}</h2>
+            {% endif %}
+        </div>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
     </div>
     <div class="container">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table">
             <thead>
             <tr>
                 <th>Nº</th>
