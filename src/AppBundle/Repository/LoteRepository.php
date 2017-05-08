@@ -28,6 +28,22 @@ class LoteRepository extends EntityRepository
         return $consulta;
     }
 
+    public function getLotesTemporadaQuery(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->addSelect('t')
+            ->from('AppBundle:Lote', 'l')
+            ->join('l.temporada', 't')
+            ->where('t = :temporada')
+            ->setParameter('temporada', $temporada);
+
+        return $consulta;
+    }
+
     public function getLotesTemporadaNoNulos(Temporada $temporada)
     {
         /** @var EntityManager $em */

@@ -32,7 +32,9 @@ class ProductoType extends AbstractType
                             },
                             'placeholder' => '[Ninguno]',
                         ])
-                        ->add('stock');
+                        ->add('stock', null, [
+                            'label' => 'Stock:'
+                        ]);
                 });
 }
 

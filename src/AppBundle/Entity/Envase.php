@@ -42,7 +42,7 @@ class Envase
      */
     public function __toString()
     {
-        return $this->getDenominacion();
+        return $this->getDenominacion() . ' ' . $this->getCapacidadLitros() . ' L';
     }
 
 

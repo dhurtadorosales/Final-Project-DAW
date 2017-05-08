@@ -10,7 +10,7 @@
             <i class="fa fa-home"></i> Ir a principal
         </a>
         {% if is_granted('ROLE_COMERCIAL') %}
-            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+            <a href="{{ path('envases_nuevo') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-plus"></i> Nuevo envase
             </a>
             <a href="{{ path('producto_nuevo') }}" class="btn btn-default btnAceptar">

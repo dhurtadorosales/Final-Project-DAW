@@ -66,7 +66,13 @@ class ProductoController extends Controller
         //stock a 0
         $producto->setStock(0);
 
-        $form = $this->createForm(ProductoNuevoType::class, $producto);
+        //Obtenemos la temporada auxiliar
+        $temporadas = $em->getRepository('AppBundle:Temporada')
+            ->getTemporadaAuxiliar();
+
+        $form = $this->createForm(ProductoNuevoType::class, $producto, [
+            'temporada' => $temporadas[0]
+        ]);
         $form->handleRequest($request);
 
         //Si es válido
@@ -84,8 +90,6 @@ class ProductoController extends Controller
         return $this->render('producto/formNuevo.html.twig', [
             'formulario' => $form->createView()
         ]);
-
-
     }
 
     /**

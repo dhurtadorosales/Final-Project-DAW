@@ -133,7 +133,7 @@ class MovimientoController extends Controller
                 $this->addFlash('estado', 'Movimiento creado con éxito');
                 return $this->redirectToRoute('movimientos_listar');
             } catch (\Exception $e) {
-                $this->addFlash('error', 'No se ha podido crear la venta');
+                $this->addFlash('error', 'No se ha podido crear el movimiento');
             }
         }
 

@@ -2,7 +2,10 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
+use AppBundle\Repository\LoteRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -23,15 +26,17 @@ class ProductoNuevoType extends AbstractType
                         'label' => 'Envase:',
                         'placeholder' => '[Ninguno]'
                     ])
-                    /*->add('aceites', EntityType::class, [
-                        'class' => Aceite::class,
+                    /*->add('lotes', null, [
+                        'label' => 'Aceites:',
+                        'class' => Lote::class,
                         'mapped' => false,
-                        'query_builder' => function(AceiteRepository $aceiteRepository) use ($options) {
-                            return $aceiteRepository->getAceites();
-                        }
+                        'query_builder' => function(LoteRepository $aceiteRepository) use ($options) {
+                            return $aceiteRepository->getLotesTemporadaQuery($options['temporada']);
+                        },
+                        'placeholder' => '[Ninguno]'
                     ])*/
                     ->add('lotes', null, [
-                        'label' => 'Aceites:',
+                        'label' => 'Aceite:'
                     ])
                     ->add('precio', null, [
                         'label' => 'Precio (€/ud):'
@@ -43,6 +48,7 @@ class ProductoNuevoType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Producto::class,
+            'temporada' => null,
             'translation_domain' => false
         ]);
     }

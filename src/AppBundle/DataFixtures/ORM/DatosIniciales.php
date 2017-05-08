@@ -220,9 +220,9 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Envase
         $envases = [
-            [0, "botella pvc 1L", 1],
-            [0, "bidón pvc 5L", 5],
-            [0, "botella vidrio 1L", 1]
+            [0, "botella pvc", 1],
+            [0, "bidón pvc", 5],
+            [0, "botella vidrio", 1]
         ];
 
         $envases2 = [];
