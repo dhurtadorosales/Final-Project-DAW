@@ -119,13 +119,13 @@
             {% endif %}
 
             {% if is_granted('ROLE_COMERCIAL') %}
-                <a href="#" class="btn">
+                <a href="{{ path('aceite_principal') }}" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
-                            <i class="fa fa-eur"></i>
+                            <i class="fa fa-tint"></i>
                         </div>
                         <div class="tile-object">
-                            <div class="number">Precios</div>
+                            <div class="number">Aceite</div>
                         </div>
                     </div>
                 </a>

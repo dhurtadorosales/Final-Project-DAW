@@ -127,17 +127,4 @@ class ProductoController extends Controller
             'formulario' => $form->createView()
         ]);
     }
-
-    /**
-     * @Route("/productos/confirmar/{lote}/{producto}/{cantidad}", name="productos_confirmar")
-     * @Security("is_granted('ROLE_ENCARGADO')")
-     */
-    public function productoConfirmarAction(Lote $lote, Producto $producto, $cantidad)
-    {
-        return $this->render('producto/confirma.html.twig', [
-            'lote' => $lote,
-            'producto' => $producto,
-            'cantidad' => $cantidad
-        ]);
-    }
 }
