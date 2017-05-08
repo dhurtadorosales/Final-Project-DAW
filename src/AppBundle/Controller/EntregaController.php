@@ -17,32 +17,6 @@ use AppBundle\Service\TemporadaActual;
 class EntregaController extends Controller
 {
     /**
-     * @Route("/entregas/listar", name="entregas_listar")
-     * @Route("/entregas/listar/temporada/{temporada}", name="entregas_listar_temporada")
-     * @Security("is_granted('ROLE_ENCARGADO')")
-     */
-    public function listarTemporadaAction(Temporada $temporada = null)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Si no recibe ninguna temporada se obtendrá la actual
-        if (null === $temporada) {
-            //Creamos una instancia del servicio
-            $temporadaActual = new TemporadaActual($em);
-            $temporada = $temporadaActual->temporadaActualAction();
-        }
-
-        $entregas = $em->getRepository('AppBundle:Entrega')
-            ->getEntregasTemporada($temporada);
-
-        return $this->render('entrega/listarTemporada.html.twig', [
-            'entregas' => $entregas,
-            'temporada' => $temporada
-        ]);
-    }
-
-    /**
      * @Route("/entregas/listar/socio/{socio}", name="entregas_listar_socio")
      * @Route("/entregas/listar/socio/{socio}/{temporada}", name="entregas_listar_socio_temporada")
      * @Security("is_granted('ROLE_ENCARGADO') or user.getNif() == socio.getUsuario().getNif()")")
@@ -62,7 +36,7 @@ class EntregaController extends Controller
         $entregas = $em->getRepository('AppBundle:Entrega')
             ->getEntregasSocioTemporada($socio, $temporada);
 
-        return $this->render('entrega/listarSocioTemporada.html.twig', [
+        return $this->render('entrega/listar.html.twig', [
             'entregas' => $entregas,
             'socio' => $socio,
             'temporada' => $temporada

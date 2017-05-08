@@ -10,7 +10,7 @@
         </div>
         <div class="tiles">
             {% if is_granted('ROLE_ADMINISTRADOR') %}
-                <a href="{{ path('temporadas_comenzar') }}" class="btn">
+                <a type="button" class="btn" data-toggle="modal" data-target="#temporadas_comenzar">
                     <div class="tile tile-dark-teal">
                         <div class="tile-body">
                             <i class="fa fa-calendar"></i>
@@ -175,7 +175,7 @@
             {% endif %}
 
             {% if is_granted('ROLE_ENCARGADO') %}
-                <a href="{{ path('entregas_listar') }}" class="btn">
+                <a href="{{ path('socios_listar') }}" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-balance-scale"></i>
@@ -185,7 +185,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('entregas_insertar') }}" class="btn">
+                <a type="button" class="btn" data-toggle="modal" data-target="#entregas_insertar">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
@@ -277,6 +277,56 @@
                     </div>
                 </a>
             {% endif %}
+        </div>
+    </div>
+
+    <!-- Ventana modal -->
+    <div class="modal fade" id="temporadas_comenzar" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Vas a comenzar una nueva temporada</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Deseas continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('temporadas_comenzar_confirmar') }}" method="post" name="confirmar">
+                        <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
+                            <i class="fa fa-check"></i> Aceptar
+                        </button>
+                        <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
+                            <i class="fa fa-times"></i> Cancelar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ventana modal -->
+    <div class="modal fade" id="entregas_insertar" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Vas a insertar nuevas entregas</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Deseas continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('entregas_insertar_confirmar') }}" method="post" name="confirmar">
+                        <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
+                            <i class="fa fa-check"></i> Aceptar
+                        </button>
+                        <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
+                            <i class="fa fa-times"></i> Cancelar
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     {% block javascripts %}

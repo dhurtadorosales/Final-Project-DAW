@@ -9,8 +9,8 @@
             <div class="division"></div>
             <h2>Temporada: {{ temporada }}</h2>
         </div>
-        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
+        <a href="{{ path('socios_listar') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-chevron-left"></i> Volver
         </a>
     </div>
     <div class="container">
@@ -56,6 +56,8 @@
                     <td>
                         {% if entrega.lote != null %}
                             {{ entrega.lote.aceite }}
+                        {% else %}
+                            Sin analizar
                         {% endif %}
                     </td>
                     {% if is_granted('ROLE_SOCIO') %}

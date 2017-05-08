@@ -38,24 +38,6 @@ class EntregaRepository extends EntityRepository
         return $consulta;
     }
 
-    public function getEntregasPartida(Partida $partida)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getEntityManager();
-
-        $consulta = $em->createQueryBuilder()
-            ->select('e')
-            ->addSelect('p')
-            ->from('AppBundle:Entrega', 'e')
-            ->join('e.partida', 'p')
-            ->where('p = :partida')
-            ->setParameter('partida', $partida)
-            ->getQuery()
-            ->getResult();
-
-        return $consulta;
-    }
-
     public function getEntregasLote(Lote $lote)
     {
         /** @var EntityManager $em */
@@ -68,25 +50,6 @@ class EntregaRepository extends EntityRepository
             ->join('e.lote', 'l')
             ->where('l = :lote')
             ->setParameter('lote', $lote)
-            ->getQuery()
-            ->getResult();
-
-        return $consulta;
-    }
-
-    public function getEntregasTemporada(Temporada $temporada)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getEntityManager();
-
-        $consulta = $em->createQueryBuilder()
-            ->select('e')
-            ->addSelect('t')
-            ->from('AppBundle:Entrega', 'e')
-            ->join('e.temporada', 't')
-            ->where('t = :temporada')
-            ->setParameter('temporada', $temporada)
-            ->orderBy('e.id', 'DESC')
             ->getQuery()
             ->getResult();
 

@@ -24,15 +24,20 @@
                 <th>Socio</th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
-                <th>Email</th>
                 <th>Nº Plantas</th>
                 <th>Fecha de alta</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
+            {% set parametro = 0 %}
+            {% set nombre = '' %}
             {% for socio in socios %}
-                <tr>
+                {% if socio.usuario.email != null %}
+                    <tr title="{{ socio.usuario.email }}">
+                {% else %}
+                    <tr title="No tiene email">
+                {% endif %}
                     <td>{{ socio.id }}</td>
                     <td>{{ socio.usuario.nif }}</td>
                     <td>{{ socio.usuario.apellidos }}, {{ socio.usuario.nombre }}</td>
@@ -40,26 +45,61 @@
                         {{ socio.usuario.direccion }} - {{socio.usuario.localidad}} ({{ socio.usuario.provincia }})
                     </td>
                     <td>{{ socio.usuario.telefono}}</td>
-                    <td>{{ socio.usuario.email }}</td>
                     <td>{% set sum = 0 %}
                         {% for i in socio.fincasPropiedad %}
                             {% set sum = sum + i.numPlantas %}
                         {% endfor %}{{ sum }}
                 </td>
                     <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
                     <td>
                         <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar" title="Modificar datos">
                             <i class="fa fa-pencil"></i>
                         </a>
-                        <a href="{{ path('socios_eliminar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar" title="Dar de baja">
+                        {% set parametro = socio.id %}
+                        {% set nombre = socio.usuario %}
+                        <a type="button" class="btn btn-default btnAceptar" data-toggle="modal" data-target="#socios_eliminar">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
+                    {% else %}
+                        <td>
+                            <a href="{{ path('entregas_listar_socio', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar" title="In a las entregas de este socio">
+                                <i class="fa fa-balance-scale"></i> Entregas
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
+
+    <!-- Ventana modal -->
+    <div class="modal fade" id="socios_eliminar" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Vas a eliminar al socio {{ nombre }}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Deseas continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('confirmar_socios_eliminar', {'socio' : parametro}) }}" method="post" name="confirmar">
+                        <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
+                            <i class="fa fa-check"></i> Aceptar
+                        </button>
+                        <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
+                            <i class="fa fa-times"></i> Cancelar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
     {% endblock %}

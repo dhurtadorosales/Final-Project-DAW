@@ -13,29 +13,33 @@
             <i class="fa fa-plus"></i> Nuevo Empleado
         </a>
     </div>
-    <div class="container">
+    <div class="container well">
         <table class="table table-responsive">
             <thead>
             <tr>
-                <th>NIF</th>
-                <th>Empleado</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th></th>
+                <th class="col-sm-1">NIF</th>
+                <th class="col-sm-3">Empleado</th>
+                <th class="col-sm-3">Dirección</th>
+                <th class="col-sm-2">Teléfono</th>
+                <th class="col-sm-1">Roles</th>
+                <th class="col-sm-2"></th>
             </tr>
             </thead>
             <tbody>
+            {% set parametro = 0 %}
+            {% set nombre = '' %}
             {% for empleado in empleados %}
-                <tr>
+                {% if empleado.email != null %}
+                <tr title="{{ empleado.email }}">
+                {% else %}
+                    <tr title="No tiene email">
+                {% endif %}
                     <td>{{ empleado.nif }}</td>
                     <td>{{ empleado.nombre }} {{ empleado.apellidos }}</td>
                     <td>
                         {{ empleado.direccion }} - {{empleado.localidad}} ({{ empleado.provincia }})
                     </td>
                     <td>{{ empleado.telefono}}</td>
-                    <td>{{ empleado.email }}</td>
                     <td>
                         {% if empleado.comercial == true %}
                             Comercial
@@ -47,12 +51,14 @@
                             Encargado
                         {% endif %}
                     </td>
-                    <td>
-                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar">
-                            <i class="fa fa-pencil"></i> Modificar datos
+                    <td hidden>
+                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar" title="modificar datos">
+                            <i class="fa fa-pencil"></i>
                         </a>
-                        <a href="{{ path('empleados_eliminar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar">
-                            <i class="fa fa-trash"></i> Dar de baja
+                        {% set parametro = empleado.id %}
+                        {% set nombre = empleado %}
+                        <a type="button" class="btn btn-default btnAceptar eliminar" data-toggle="modal" data-target="#empleados_eliminar" title="Dar de baja">
+                            <i class="fa fa-trash"></i>
                         </a>
                     </td>
                 </tr>
@@ -60,7 +66,34 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Ventana modal -->
+    <div class="modal fade" id="empleados_eliminar" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Vas a eliminar al empleado {{ nombre }}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>¿Deseas continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ path('confirmar_empleados_eliminar', {'id' : parametro}) }}" method="post" name="confirmar">
+                        <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
+                            <i class="fa fa-check"></i> Aceptar
+                        </button>
+                        <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
+                            <i class="fa fa-times"></i> Cancelar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
     {% endblock %}
 {% endblock %}

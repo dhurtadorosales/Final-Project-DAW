@@ -32,15 +32,6 @@ class TemporadaController extends Controller
     }
 
     /**
-     * @Route("/temporadas/comenzar", name="temporadas_comenzar", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
-     */
-    public function comenzarTemporadaAction()
-    {
-        return $this->render('temporada/confirma.html.twig');
-    }
-
-    /**
      * @Route("/temporadas/comenzar", name="temporadas_comenzar_confirmar", methods={"POST"})
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */

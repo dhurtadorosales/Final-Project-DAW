@@ -18,7 +18,7 @@ class SocioController extends Controller
 {
     /**
      * @Route("/socios/listar", name="socios_listar")
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_ENCARGADO')")
      */
     public function listarAction()
     {
@@ -113,17 +113,6 @@ class SocioController extends Controller
 
         return $this->render('socio/form.html.twig', [
             'formulario' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/socios/eliminar/{socio}", name="socios_eliminar", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
-     */
-    public function borrarAction(Socio $socio)
-    {
-        return $this->render('socio/confirma.html.twig', [
-            'socio' => $socio
         ]);
     }
 

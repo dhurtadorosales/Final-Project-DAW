@@ -54,10 +54,6 @@ section h2 {
     padding-top: 20px;
 }
 
-table {
-    border: solid 1px #DDDDDD;
-}
-
 thead {
     background-color: #BDBDBD;
     color: #6A6C6F;
@@ -74,6 +70,10 @@ td a {
 
 tbody tr:hover {
     background-color: #E9DEF2;
+}
+
+button {
+    padding-left: 0px;
 }
 
 .navegacion {
@@ -176,11 +176,6 @@ tbody tr:hover {
     max-width: 200px;
 }
 
-.btn-default {
-    margin-top: 2%;
-    margin-bottom: 2%;
-}
-
 .btnAceptar {
     background-color: #7E91A9;
     color: white;
@@ -204,6 +199,17 @@ tbody tr:hover {
 .contenedorTabla {
     background-color: #F5F5F5;
     border: solid 1px #DDDDDD;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: inherit;
+}
+
+.seleccionado {
+    background-color: cadetblue;
+    color: white;
 }
 
 #logo {

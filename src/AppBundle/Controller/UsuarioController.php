@@ -191,7 +191,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/empleados/eliminar/{empleado}", name="confirmar_empleados_eliminar", methods={"POST"})
+     * @Route("/empleados/eliminar/{id}", name="confirmar_empleados_eliminar", methods={"POST"})
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function confirmarBorradoAction(Usuario $usuario)
