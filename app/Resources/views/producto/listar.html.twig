@@ -3,11 +3,20 @@
 {% block title %}Productos{% endblock %}
 
 {% block section %}
+    {% include 'flash.html.twig' %}
     <div class="container">
         <h2 class="well">Productos envasados</h2>
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
+        {% if is_granted('ROLE_COMERCIAL') %}
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-plus"></i> Nuevo envase
+            </a>
+            <a href="{{ path('producto_nuevo') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-plus"></i> Nuevo producto
+            </a>
+        {% endif %}
     </div>
     <div class="container">
         <table class="table">
@@ -31,4 +40,7 @@
             </tbody>
         </table>
     </div>
+    {% block javascripts %}
+        <script src="{{ asset('script/flash.js') }}"></script>
+    {% endblock %}
 {% endblock %}

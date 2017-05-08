@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
+use AppBundle\Form\Type\ProductoNuevoType;
 use AppBundle\Form\Type\ProductoType;
 use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
@@ -50,21 +51,41 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/productos/aceite", name="productos_aceite")
-     * @Security("is_granted('ROLE_ENCARGADO')")
+     * @Route("/producto/nuevo", name="producto_nuevo")
+     * @Security("is_granted('ROLE_COMERCIAL')")
      */
-    public function productoAceiteAction()
+    public function formProductoNuevoAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtenemos las calidades de aceite
-        $aceites = $em->getRepository('AppBundle:Aceite')
-            ->findAll();
+        //Nuevo producto
+        $producto = new Producto();
+        $em->persist($producto);
 
-        return $this->render('producto/formAceite.html.twig', [
-            'aceites' => $aceites
+        //stock a 0
+        $producto->setStock(0);
+
+        $form = $this->createForm(ProductoNuevoType::class, $producto);
+        $form->handleRequest($request);
+
+        //Si es válido
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Producto guardado con éxito');
+                return $this->redirectToRoute('productos_listar');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se ha podido guardar el producto');
+            }
+        }
+
+        return $this->render('producto/formNuevo.html.twig', [
+            'formulario' => $form->createView()
         ]);
+
+
     }
 
     /**

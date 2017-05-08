@@ -31,4 +31,20 @@ class TemporadaRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getTemporadaAuxiliar()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('t')
+            ->from('AppBundle:Temporada', 't')
+            ->where('t.denominacion = :denominacion')
+            ->setParameter('denominacion', '00/00')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
 }

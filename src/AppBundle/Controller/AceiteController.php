@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Aceite;
+use AppBundle\Entity\Lote;
 use AppBundle\Form\Model\ListaAceites;
 use AppBundle\Form\Type\AceiteNuevoType;
 use AppBundle\Form\Type\ListaAceitesType;
@@ -42,6 +43,20 @@ class AceiteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                //Obtención de la primera temporada. Ojo, es un array
+                $temporadaAuxiliar = $em->getRepository('AppBundle:Temporada')
+                    ->getTemporadaAuxiliar();
+
+                //Se crea un nuevo lote auxiliar perteneciente a la temporada auxiliar y se le asigna el aceite creado
+                $lote = new Lote();
+                $em->persist($lote);
+                $lote
+                    ->setNumero(0)
+                    ->setTemporada($temporadaAuxiliar[0])
+                    ->setCantidad(0)
+                    ->setStock(0)
+                    ->setAceite($aceite);
+
                 $em->flush();
                 $this->addFlash('estado', 'Aceite guardado con éxito');
                 return $this->redirectToRoute('aceite_principal');
