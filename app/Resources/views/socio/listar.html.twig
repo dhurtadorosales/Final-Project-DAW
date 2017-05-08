@@ -15,7 +15,7 @@
             <i class="fa fa-plus"></i> Nuevo socio
         </a>
     </div>
-    <div class="container">
+    <div class="container well">
         <table class="table table-responsive">
             <thead>
             <tr>
@@ -34,9 +34,9 @@
             {% set nombre = '' %}
             {% for socio in socios %}
                 {% if socio.usuario.email != null %}
-                    <tr title="{{ socio.usuario.email }}">
+                    <tr title="{{ socio.usuario.email }}" class="clickable-row">
                 {% else %}
-                    <tr title="No tiene email">
+                    <tr title="No tiene email" class="clickable-row">
                 {% endif %}
                     <td>{{ socio.id }}</td>
                     <td>{{ socio.usuario.nif }}</td>
@@ -53,18 +53,18 @@
                     <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
                     {% if is_granted('ROLE_ADMINISTRADOR') %}
                     <td>
-                        <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar" title="Modificar datos">
+                        <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                             <i class="fa fa-pencil"></i>
                         </a>
                         {% set parametro = socio.id %}
                         {% set nombre = socio.usuario %}
-                        <a type="button" class="btn btn-default btnAceptar" data-toggle="modal" data-target="#socios_eliminar">
+                        <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#socios_eliminar">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
                     {% else %}
                         <td>
-                            <a href="{{ path('entregas_listar_socio', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar" title="In a las entregas de este socio">
+                            <a href="{{ path('entregas_listar_socio', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las entregas de este socio">
                                 <i class="fa fa-balance-scale"></i> Entregas
                             </a>
                         </td>
@@ -102,5 +102,6 @@
 
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
     {% endblock %}
 {% endblock %}

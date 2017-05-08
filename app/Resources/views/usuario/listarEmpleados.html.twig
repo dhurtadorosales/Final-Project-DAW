@@ -30,9 +30,9 @@
             {% set nombre = '' %}
             {% for empleado in empleados %}
                 {% if empleado.email != null %}
-                <tr title="{{ empleado.email }}">
+                <tr class="clickable-row" title="{{ empleado.email }}">
                 {% else %}
-                    <tr title="No tiene email">
+                    <tr class="clickable-row" title="No tiene email">
                 {% endif %}
                     <td>{{ empleado.nif }}</td>
                     <td>{{ empleado.nombre }} {{ empleado.apellidos }}</td>
@@ -51,13 +51,13 @@
                             Encargado
                         {% endif %}
                     </td>
-                    <td hidden>
-                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar" title="modificar datos">
+                    <td>
+                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar btnOculto" title="modificar datos">
                             <i class="fa fa-pencil"></i>
                         </a>
-                        {% set parametro = empleado.id %}
+                        {% set parametro = empleado.nif %}
                         {% set nombre = empleado %}
-                        <a type="button" class="btn btn-default btnAceptar eliminar" data-toggle="modal" data-target="#empleados_eliminar" title="Dar de baja">
+                        <a type="button" class="btn btn-default btnAceptar eliminar btnOculto" data-toggle="modal" data-target="#empleados_eliminar" title="Dar de baja">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
@@ -79,7 +79,7 @@
                     <p>¿Deseas continuar?</p>
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ path('confirmar_empleados_eliminar', {'id' : parametro}) }}" method="post" name="confirmar">
+                    <form action="{{ path('confirmar_empleados_eliminar', {'nif' : parametro}) }}" method="post" name="confirmar">
                         <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
                             <i class="fa fa-check"></i> Aceptar
                         </button>

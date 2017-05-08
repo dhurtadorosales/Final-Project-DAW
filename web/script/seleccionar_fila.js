@@ -4,13 +4,13 @@ $(function () {
 
 function main() {
 
-    $('tbody tr').on('mouseover', function() {
-        $(this).find('td:eq(5)').show();
-    }).on('mouseleave', function () {
-        $(this).find('td:eq(5)').hide();
+    //Evento click sobre una fila de tabla
+    $('.clickable-row').on('click', function(event) {
+        //Añadimos la clase seleccionado
+        $(this).addClass('seleccionado').siblings().removeClass('seleccionado');
+
+        //Botones de fila visibles
+        $(this).find('.btn').removeClass('btnOculto');
+        $(!this).find('.btn').addClass('btnOculto');
     });
-
-    $('.eliminar').on('click', function () {
-
-    })
 }

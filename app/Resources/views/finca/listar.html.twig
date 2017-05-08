@@ -19,8 +19,8 @@
             <i class="fa fa-plus"></i> Nueva finca
         </a>
     </div>
-    <div class="container">
-        <table class="table">
+    <div class="container well">
+        <table class="table table-responsive">
             <thead>
             <tr>
                 <th>Referencia catastral</th>
@@ -44,7 +44,7 @@
                 {% else %}
                     {% set refCatastral = finca.provincia ~ finca.municipio ~ finca.sector ~ finca.poligono ~ finca.parcela ~ finca.idInmueble ~ finca.caracterControl %}
                 {% endif %}
-                <tr>
+                <tr class="clickable-row">
                     <td>
                         <a href="https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?UrbRus=R&RefC={{ refCatastral }}&esBice=&RCBice1=&RCBice2=&DenoBice=&del={{ finca.provincia }}&mun={{ finca.municipio }}"
                            target="_blank" title="ir a los datos catastrales">
@@ -70,12 +70,12 @@
                     </td>
                     {% if is_granted('ROLE_ADMINISTRADOR') %}
                         <td>
-                            <a href="{{ path('fincas_modificar', {'finca' : finca.id }) }}" class="btn btn-default btnAceptar">
-                                <i class="fa fa-pencil"></i> Modificar datos
+                            <a href="{{ path('fincas_modificar', {'finca' : finca.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
+                                <i class="fa fa-pencil"></i>
                             </a>
                             {% set parametro = finca.id %}
-                            <a type="button" class="btn btn-default btnAceptar" data-toggle="modal" data-target="#fincas_eliminar">
-                                <i class="fa fa-trash"></i> Dar de baja
+                            <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#fincas_eliminar" title="Dar de baja">
+                                <i class="fa fa-trash"></i>
                             </a>
                         </td>
                     {% endif %}
@@ -112,5 +112,6 @@
 
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
     {% endblock %}
 {% endblock %}

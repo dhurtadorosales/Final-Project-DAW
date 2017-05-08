@@ -212,6 +212,10 @@ button {
     color: white;
 }
 
+.btnOculto {
+    visibility: hidden;
+}
+
 #logo {
     width: 10%;
 }

@@ -129,7 +129,7 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Empleado guardado con éxito');
-                return $this->redirectToRoute('principal');
+                return $this->redirectToRoute('empleados_listar');
             }
             catch(\Exception $e) {
                 $this->addFlash('error', 'No se ha podido guardar el empleado');
@@ -166,7 +166,7 @@ class UsuarioController extends Controller
             try {
                 $em->flush();
                 $this->addFlash('estado', 'Cliente guardado con éxito');
-                return $this->redirectToRoute('principal');
+                return $this->redirectToRoute('clientes_listar');
             }
             catch(\Exception $e) {
                 $this->addFlash('error', 'No se ha podido guardar el cliente');
@@ -191,7 +191,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/empleados/eliminar/{id}", name="confirmar_empleados_eliminar", methods={"POST"})
+     * @Route("/empleados/eliminar/{nif}", name="confirmar_empleados_eliminar", methods={"POST"})
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function confirmarBorradoAction(Usuario $usuario)

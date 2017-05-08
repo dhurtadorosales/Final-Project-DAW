@@ -16,8 +16,8 @@
             <i class="fa fa-calendar"></i> Liquidaciones anteriores
         </a>
     </div>
-    <div class="container">
-        <table class="table">
+    <div class="container well">
+        <table class="table table-responsive">
             <thead>
             <tr>
                 <th>Nº</th>
@@ -27,11 +27,11 @@
             </thead>
             <tbody>
             {% for liquidacion in liquidaciones %}
-                <tr>
+                <tr class="clickable-row">
                     <td>{{ liquidacion.id }}</td>
                     <td>{{ liquidacion.socio }}</td>
                     <td>
-                        <a href="{{ path('liquidaciones_detalle_temporada', {'socio' : liquidacion.socio.id, 'temporada' : temporada.id}) }}" class="btn btn-default btnAceptar">
+                        <a href="{{ path('liquidaciones_detalle_temporada', {'socio' : liquidacion.socio.id, 'temporada' : temporada.id}) }}" class="btn btn-default btnAceptar btnOculto">
                             <i class="fa fa-search"></i> Detalle
                         </a>
                     </td>
@@ -40,4 +40,7 @@
             </tbody>
         </table>
     </div>
+    {% block javascripts %}
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
+    {% endblock %}
 {% endblock %}

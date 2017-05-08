@@ -13,8 +13,8 @@
             <i class="fa fa-home"></i> Ir a principal
         </a>
     </div>
-    <div class="container">
-        <table class="table">
+    <div class="container well">
+        <table class="table table-responsive">
             <thead>
             <tr>
                 <th>Lote</th>
@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         {% if lote.cantidad != 0 %}
-                            <a href="{{ path('entregas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default btnAceptar">
+                            <a href="{{ path('entregas_listar_lote', {'lote': lote.id }) }}" class="btn btn-default btnAceptar>
                                 Entregas del lote
                             </a>
                         {% else %}
