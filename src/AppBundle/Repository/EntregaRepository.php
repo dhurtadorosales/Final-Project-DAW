@@ -105,4 +105,23 @@ class EntregaRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getEntregasTemporada(Temporada $temporada)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('e')
+            ->addSelect('t')
+            ->from('AppBundle:Entrega', 'e')
+            ->join('e.temporada', 't')
+            ->where('t = :temporada')
+            ->setParameter('temporada', $temporada)
+            ->orderBy('e.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+     }
 }
