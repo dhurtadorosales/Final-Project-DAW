@@ -205,8 +205,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         $porcentajes = [
             [0, "iva", 0.21],
             [0, "iva reducido", 0.10],
-            [0, "retencion", 0.02],
-            [0, "índice corrector", 0.02]
+            [0, "retencion", 0.02]
         ];
 
         foreach ($porcentajes as $item) {

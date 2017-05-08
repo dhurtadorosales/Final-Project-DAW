@@ -9,7 +9,7 @@
         <div class="tiles">
             {% for temporada in temporadas %}
                 {% if is_granted('ROLE_ADMINISTRADOR') %}
-                    <a href="{{ path('liquidaciones_listar', {'temporada' : temporada.id}) }}" class="btn">
+                    <a href="{{ path('liquidaciones_listar_temporada', {'temporada' : temporada.id}) }}" class="btn">
                 {% else %}
                     <a href="{{ path('liquidaciones_detalle', {'socio' : socio, 'temporada' : temporada.id}) }}" class="btn">
                 {% endif %}

@@ -44,6 +44,10 @@ class TemporadaController extends Controller
         $temporadaActual = new TemporadaActual($em);
         $temporada = $temporadaActual->temporadaActualAction();
 
+        //Obtención de los porcentajes vigentes
+        $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+            ->findAll();
+
         //Si existe la temporada anterior
         if ($temporada != null) {
             //Obtención de las liquidaciones de la temporada aún vigente
@@ -51,10 +55,13 @@ class TemporadaController extends Controller
                 ->getLiquidacionTemporada($temporada);
 
             //Añadimos fecha a la liquidación. Con lo cual está finalizada
+            //Y se le asignan los porcentajes vigentes en este momento
             foreach ($liquidaciones as $item) {
                 $em->persist($item);
                 $item
-                    ->setFecha(new \DateTime('now'));
+                    ->setFecha(new \DateTime('now'))
+                    ->setIva($porcentajes[1]->getCantidad())
+                    ->setRetencion($porcentajes[2]->getCantidad());
             }
         }
 
@@ -67,8 +74,8 @@ class TemporadaController extends Controller
         $fecha = $fecha->format('Y');
         $anio1 = (int)$fecha;
         $anio2 = $anio1 + 1;
-        $denominacion = $anio1 . "/" . $anio2;
-        //$denominacion = '2018/2019';
+        //$denominacion = $anio1 . "/" . $anio2;
+        $denominacion = '2018/2019';
 
         try {
             $nuevaTemporada
@@ -88,7 +95,7 @@ class TemporadaController extends Controller
                 $em->persist($liquidacion);
                 $liquidacion
                     ->setTemporada($nuevaTemporada)
-                    ->setIva($porcentajes[0]->getCantidad())
+                    ->setIva($porcentajes[1]->getCantidad())
                     ->setRetencion($porcentajes[2]->getCantidad())
                     ->setSocio($item)
                     ->setFecha(null);
