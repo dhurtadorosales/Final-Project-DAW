@@ -55,7 +55,7 @@ class EntregaController extends Controller
         $entregas = $em->getRepository('AppBundle:Entrega')
             ->getEntregasLote($lote);
 
-        return $this->render('entrega/listarTemporada.html.twig', [
+        return $this->render('entrega/listarLote.html.twig', [
             'entregas' => $entregas,
             'lote' => $lote
         ]);

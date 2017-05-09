@@ -204,7 +204,7 @@ class UsuarioController extends Controller
                 $this->addFlash('error', 'No se puede dar de baja a este empleado ya que es el administrador');
             }
             else {
-                $usuario->setActivo(false);
+                $em->remove($usuario);
                 $em->flush();
                 $this->addFlash('estado', 'Empleado eliminado con éxito');
             }
@@ -214,5 +214,27 @@ class UsuarioController extends Controller
         }
 
         return $this->redirectToRoute('empleados_listar');
+    }
+
+    /**
+     * @Route("/empleados/listar/baja", name="empleados_listar_baja")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function listarEmpleadosBajaAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtenemos los clientes desactivos
+        $empleados = $em->getRepository('AppBundle:Usuario')
+            ->getSociosBaja();
+
+        //Variable auxiliar
+        $baja = true;
+
+        return $this->render('usuario/listarEmpleados.html.twig', [
+            'empleados' => $empleados,
+            'baja' => $baja
+        ]);
     }
 }

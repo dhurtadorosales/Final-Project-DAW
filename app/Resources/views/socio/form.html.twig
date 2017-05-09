@@ -6,7 +6,7 @@
 {% block section %}
     <div class="container">
         <h3 class="well">
-            {% if socio.id %}
+            {% if socio != false %}
                 Modificar socio
             {% else %}
                 Nuevo socio
@@ -17,10 +17,10 @@
             <div class="form-group">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-10">
-                    <button type="submit" name="enviar" class="btn btn-default">
+                    <button type="submit" name="enviar" class="btn btn-default btnAceptar">
                         <i class="fa fa-check"></i> Aceptar
                     </button>
-                    <a href="{{ path('socios_listar') }}" class="btn btn-default">
+                    <a href="{{ path('socios_listar') }}" class="btn btn-default btnCancelar">
                         <i class="fa fa-times"></i> Cancelar
                     </a>
                 </div>

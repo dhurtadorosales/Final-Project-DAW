@@ -30,7 +30,10 @@ class SocioType extends AbstractType
                 $form
                     ->add('nif', null, [
                         'label' => 'Nif:',
-                        'property_path' => 'usuario.nif'
+                        'property_path' => 'usuario.nif',
+                        'attr' => [
+                            'readonly' => true
+                        ]
                     ])
                     ->add('nombre', null, [
                         'label' => 'Nombre:',

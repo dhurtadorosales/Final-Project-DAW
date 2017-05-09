@@ -32,7 +32,11 @@
             </thead>
             <tbody>
             {% for entrega in entregas %}
-                <tr class="clickable-row">
+                {% if is_granted('ROLE_SOCIO') %}
+                    <tr class="clickable-row">
+                {% else %}
+                    <tr>
+                {% endif %}
                     <td>{{ entrega.id }}</td>
                     <td>{{ entrega.fecha|date('d/m/Y') }}</td>
                     <td>

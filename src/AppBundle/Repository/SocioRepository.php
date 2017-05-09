@@ -31,4 +31,20 @@ class SocioRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getSociosBaja()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('s')
+            ->from('AppBundle:Socio', 's')
+            ->where('s.activo = :activo')
+            ->setParameter('activo', false)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
 }

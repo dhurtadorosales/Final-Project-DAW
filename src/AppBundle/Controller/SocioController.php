@@ -27,8 +27,12 @@ class SocioController extends Controller
         $socios = $em->getRepository('AppBundle:Socio')
             ->getSocios();
 
+        //Variable auxiliar
+        $baja = false;
+
         return $this->render('socio/listar.html.twig', [
-            'socios' => $socios
+            'socios' => $socios,
+            'baja' => $baja
         ]);
     }
 
@@ -111,7 +115,10 @@ class SocioController extends Controller
             }
         }
 
+        $socio = false;
+
         return $this->render('socio/form.html.twig', [
+            'socio' => $socio,
             'formulario' => $form->createView()
         ]);
     }
@@ -124,19 +131,39 @@ class SocioController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+        $em->persist($socio);
         try {
             //Obtenemos el usuario correspondiente al socio
             $usuario = $socio->getUsuario();
+            $em->persist($usuario);
 
             //Desactivamos al socio y al usuario si no es el administrador
             if ($usuario->getAdministrador() == true) {
-                $this->addFlash('error', 'No se puede dar de baja a este empleado ya que es el administrador');
+                $this->addFlash('error', 'No se puede dar de baja a este usuario ya que es el administrador');
             }
             else {
-                $socio->setActivo(false);
-                $socio->setFechaBaja(new \DateTime('now'));
-                $usuario->setActivo(false);
+                //Generación de una clave aleatoria
+                $nuevaClave = random_int(0, 1000000);
+
+                $socio
+                    ->setActivo(false)
+                    ->setFechaBaja(new \DateTime('now'));
+                $usuario
+                    ->setActivo(false)
+                    ->setClave($nuevaClave);
+
                 $em->flush();
+
+                //Obtenemos las fincas de las que era arrendatario
+                $fincasArrendatario = $em->getRepository('AppBundle:Finca')
+                    ->getFincasPorArrendatario($socio);
+                $em->persist($fincasArrendatario);
+
+                foreach ($fincasArrendatario as $item) {
+                    $item->setActiva(true);
+                }
+                $em->flush();
+
                 $this->addFlash('estado', 'Socio eliminado con éxito');
             }
         }
@@ -145,5 +172,78 @@ class SocioController extends Controller
         }
 
         return $this->redirectToRoute('socios_listar');
+    }
+
+    /**
+     * @Route("/socios/listar/baja", name="socios_listar_baja")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function listarBajaAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtenemos los socios desactivos
+        $socios = $em->getRepository('AppBundle:Socio')
+            ->getSociosBaja();
+
+        //Variable auxiliar
+        $baja = true;
+
+        return $this->render('socio/listar.html.twig', [
+            'socios' => $socios,
+            'baja' => $baja
+        ]);
+    }
+
+    /**
+     * @Route("/socios/reactivar/{socio}", name="socios_reactivar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function reactivarAction(Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Activación del socio con fecha de alta hoy y con su dni como clave
+        $socio
+            ->setActivo(true)
+            ->setFechaAlta(new \DateTime('now'))
+            ->getUsuario()->setClave($socio->getUsuario()->getNif());
+        $em->persist($socio);
+        $em->flush();
+
+        //Obtenemos las fincas de las que era propietario
+        $fincasPropietario = $em->getRepository('AppBundle:Finca')
+            ->getFincasPorPropietario($socio);
+        $em->persist($fincasPropietario);
+
+        //Activamos las fincas
+        foreach ($fincasPropietario as $item) {
+            $item->setActiva(true);
+        }
+        $em->flush();
+
+        //Obtenemos las fincas de las que era arrendatario
+        $fincasArrendatario = $em->getRepository('AppBundle:Finca')
+            ->getFincasPorArrendatario($socio);
+        $em->persist($fincasArrendatario);
+
+        foreach ($fincasArrendatario as $item) {
+            $item->setActiva(true);
+        }
+        $em->flush();
+
+        //Obtención de todos los socios activos
+        $socios = $em->getRepository('AppBundle:Socio')
+            ->getSocios();
+
+        //Variable auxiliar
+        $baja = false;
+
+        return $this->render('socio/listar.html.twig', [
+            'socios' => $socios,
+            'baja' => $baja
+        ]);
     }
 }

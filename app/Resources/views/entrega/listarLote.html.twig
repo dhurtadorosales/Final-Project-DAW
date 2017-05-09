@@ -1,0 +1,48 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Entregas{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <div class="well">
+            <h2>Lote: {{ lote }}</h2>
+        </div>
+        <a href="{{ path('lotes_listar') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-chevron-left"></i> Volver
+        </a>
+    </div>
+    <div class="container well">
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>Nº</th>
+                <th>Fecha</th>
+                <th>Kg Aceituna</th>
+                <th>Sanción</th>
+                <th>Rendimiento %</th>
+                <th>Kg Aceite</th>
+                <th>Procedencia %</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entrega in entregas %}
+                <tr>
+                    <td>{{ entrega.id }}</td>
+                    <td>{{ entrega.fecha|date('d/m/Y') }}</td>
+                    <td>{{ entrega.peso }}</td>
+                    <td>{% if entrega.sancion != null %}
+                            {% set sancion = pesoAceituna * entrega.sancion %}
+                        {% else %}
+                            {% set sancion = 0 %}
+                        {% endif %}
+                        - {{ sancion }}
+                    </td>
+                    <td>{{ entrega.rendimiento * 100 }}</td>
+                    <td>{{ (entrega.peso - sancion) * entrega.rendimiento }}</td>
+                    <td>{{ entrega.procedencia}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

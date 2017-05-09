@@ -15,9 +15,11 @@
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('fincas_nueva') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-plus"></i> Nueva finca
-        </a>
+        {% if is_granted('ROLE_ADMINISTRADOR') %}
+            <a href="{{ path('fincas_nueva') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-plus"></i> Nueva finca
+            </a>
+        {% endif %}
     </div>
     <div class="container well">
         <table class="table table-responsive">

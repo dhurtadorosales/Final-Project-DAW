@@ -6,14 +6,23 @@
     {% include 'flash.html.twig' %}
     <div class="container">
         <div class="well">
-            <h2>Socios</h2>
+            {% if baja == true %}
+                <h2>Socios dados de baja</h2>
+            {% else %}
+                <h2>Socios</h2>
+            {% endif %}
         </div>
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('socios_nuevo') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-plus"></i> Nuevo socio
-        </a>
+        {% if is_granted('ROLE_ADMINISTRADOR') %}
+            <a href="{{ path('socios_nuevo') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-plus"></i> Nuevo socio
+            </a>
+            <a href="{{ path('socios_listar_baja') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-recycle"></i> Reactivar socio
+            </a>
+        {% endif %}
     </div>
     <div class="container well">
         <table class="table table-responsive">
@@ -26,6 +35,9 @@
                 <th>Teléfono</th>
                 <th>Nº Plantas</th>
                 <th>Fecha de alta</th>
+                {% if baja == true %}
+                    <th>Fecha de baja</th>
+                {% endif %}
                 <th></th>
             </tr>
             </thead>
@@ -51,7 +63,10 @@
                         {% endfor %}{{ sum }}
                 </td>
                     <td>{{ socio.fechaAlta|date('d/m/Y') }}</td>
-                    {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    {% if baja == true %}
+                        <td>{{ socio.fechaBaja|date('d/m/Y') }}</td>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMINISTRADOR') and baja == false %}
                     <td>
                         <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                             <i class="fa fa-pencil"></i>
@@ -62,13 +77,21 @@
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
-                    {% else %}
+                    {% endif %}
+                    {% if is_granted('ROLE_ENCARGADO') and baja == false %}
                         <td>
                             <a href="{{ path('entregas_listar_socio', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las entregas de este socio">
-                                <i class="fa fa-balance-scale"></i> Entregas
+                                <i class="fa fa-balance-scale"></i>
                             </a>
                         </td>
                     {% endif %}
+                    {% if is_granted('ROLE_ADMINISTRADOR') and baja == true %}
+                    <td>
+                        <a href="{{ path('socios_reactivar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Reactivar">
+                            <i class="fa fa-recycle"></i>
+                        </a>
+                    </td>
+                {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
