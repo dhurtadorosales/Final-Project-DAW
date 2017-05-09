@@ -237,4 +237,57 @@ class UsuarioController extends Controller
             'baja' => $baja
         ]);
     }
+
+    /**
+     * @Route("/usuarios/pass/{usuario}", name="usuarios_pass")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function passAction(Usuario $usuario)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            //Establecimiento de la contraseña con su nif
+            $nif = $usuario->getNif();
+            $clave = $this->get('security.password_encoder')
+                ->encodePassword($usuario, $nif);
+            $usuario
+                ->setClave($clave);
+            $em->persist($usuario);
+
+            $this->addFlash('estado', 'Contraseña reestablecida con éxito');
+            $em->flush();
+        }
+        catch(Exception $e) {
+            $this->addFlash('error', 'No se ha podido reestablecer la contraseña');
+        }
+
+        if ($usuario->getEmpleado() == true) {
+            //Obtención de todos los socios activos
+            $empleados = $em->getRepository('AppBundle:Usuario')
+                ->getEmpleados();
+
+            //Variable auxiliar
+            $baja = false;
+
+            return $this->render('usuario/listarEmpleados.html.twig', [
+                'empleados' => $empleados,
+                'baja' => $baja
+            ]);
+        }
+        if ($usuario->getCliente() == true) {
+            //Obtención de todos los socios activos
+            $clientes = $em->getRepository('AppBundle:Usuario')
+                ->getClientes();
+
+            //Variable auxiliar
+            $baja = false;
+
+            return $this->render('usuario/listarClientes.html.twig', [
+                'clientes' => $clientes,
+                'baja' => $baja
+            ]);
+        }
+    }
 }

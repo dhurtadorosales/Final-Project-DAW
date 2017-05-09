@@ -76,6 +76,9 @@
                         <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#socios_eliminar">
                             <i class="fa fa-trash"></i>
                         </a>
+                        <a href="{{ path('socios_pass', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Restablecer contraseña">
+                            <i class="fa fa-key"></i>
+                        </a>
                     </td>
                     {% endif %}
                     {% if is_granted('ROLE_ENCARGADO') and baja == false %}
@@ -86,12 +89,12 @@
                         </td>
                     {% endif %}
                     {% if is_granted('ROLE_ADMINISTRADOR') and baja == true %}
-                    <td>
-                        <a href="{{ path('socios_reactivar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Reactivar">
-                            <i class="fa fa-recycle"></i>
-                        </a>
-                    </td>
-                {% endif %}
+                        <td>
+                            <a href="{{ path('socios_reactivar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Reactivar">
+                                <i class="fa fa-recycle"></i>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>

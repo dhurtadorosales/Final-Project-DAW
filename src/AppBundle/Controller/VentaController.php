@@ -3,10 +3,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Cliente;
+use AppBundle\Entity\Linea;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Venta;
+use AppBundle\Form\Model\ListaLineas;
+use AppBundle\Form\Type\LineaType;
 use AppBundle\Form\Type\VentaType;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -45,10 +48,10 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
-     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == socio.getUsuario().getNif()")")
+     *
      */
     public function detalleAction(Venta $venta)
-    {
+    {//@Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == socio.getUsuario().getNif()")")
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -212,6 +215,42 @@ class VentaController extends Controller
         }
 
         return $this->render('venta/form.html.twig', [
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/ventas/lineas/nueva/{venta}", name="ventas_lineas_nueva")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
+     */
+    public function formNuevaLineaAction(Request $request, Venta $venta)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Creación de un objeto de la clase Linea
+        $linea = new Linea();
+        $em->persist($linea);
+
+        //Ejecución de formulario
+        $form = $this->createForm(LineaType::class, $linea, [
+            'venta' => $venta
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('ventas_listar');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+
+        return $this->render('venta/formLineas.html.twig', [
+            'venta' => $venta,
             'formulario' => $form->createView()
         ]);
     }

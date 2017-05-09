@@ -10,7 +10,7 @@
         </a>
     </div>
     <div class="container well">
-        <table class="table table-bordered table-responsive">
+        <table class="table table-responsive">
             <tr>
                 <td>Factura Nº</td><td>{{ ventas[0].numero }}-{{ ventas[0].fecha|date('Y') }}</td>
             </tr>
@@ -20,10 +20,8 @@
         </table>
     </div>
     <div class="container well">
-        <h3 class="well">Datos del cliente</h3>
-    </div>
-    <div class="container">
-        <table class="table table-bordered table-responsive">
+        <h3>Datos del cliente</h3>
+        <table class="table table-responsive">
             <tr><td>Nombre/Razón social</td><td>{{ persona }}</td></tr>
             <tr><td>NIF</td><td>{{ persona.nif }}</td></tr>
             <tr><td>Direccion</td><td>{{ persona.direccion }}</td></tr>

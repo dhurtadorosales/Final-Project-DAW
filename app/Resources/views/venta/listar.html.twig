@@ -19,7 +19,7 @@
             <i class="fa fa-plus"></i> Nueva venta
         </a>
     </div>
-    <div class="container">
+    <div class="container well">
         <table class="table table-responsive">
             <thead>
             <tr>
@@ -29,11 +29,18 @@
                 <th>Base Imponible €</th>
                 <th>IVA %</th>
                 <th>Importe €</th>
+                {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
+                    <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for venta in ventas %}
-                <tr>
+                {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
+                    <tr class="clickable-row">
+                {% else %}
+                    <tr>
+                {% endif %}
                     <td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
                     <td>{{ venta.usuario }}</td>
                     <td>{{ venta.fecha|date('d/m/Y') }}</td>
@@ -42,6 +49,16 @@
                     </td>
                     <td>{{ venta.iva * 100 }}</td>
                     <td>{{ baseImponible * (1 + venta.iva) }}</td>
+                    {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
+                        <td>
+                            <a href="{{ path('ventas_lineas_nueva', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Añadir conceptos">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a href="{{ path('ventas_detalle', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Detalle">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
@@ -49,5 +66,6 @@
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
     {% endblock %}
 {% endblock %}

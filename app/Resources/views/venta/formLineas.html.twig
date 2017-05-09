@@ -1,0 +1,36 @@
+{% form_theme formulario 'bootstrap_3_horizontal_layout.html.twig' %}
+{% extends 'layout.html.twig' %}
+
+{% block title %}Ventas{% endblock %}
+
+{% block section %}
+    <div class="container">
+        <h2 class="well">Factura</h2>
+    </div>
+    <div class="container well">
+        <table class="table table-bordered table-responsive">
+            <tr>
+                <td>Factura Nº</td><td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
+            </tr>
+            <tr>
+                <td>Fecha</td><td>{{ venta.fecha|date('d/m/Y') }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="container well">
+        {{ form_start(formulario) }}
+        {{ form_widget(formulario) }}
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-10">
+                    <button type="submit" name="enviar" class="btn btn-default btnAceptar">
+                        <i class="fa fa-check"></i> Aceptar
+                    </button>
+                    <a href="{{ path('ventas_listar') }}" class="btn btn-default btnCancelar">
+                        <i class="fa fa-times"></i> Cancelar
+                    </a>
+                </div>
+            </div>
+        {{ form_end(formulario) }}
+    </div>
+{% endblock %}

@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocioController extends Controller
 {
@@ -143,14 +144,16 @@ class SocioController extends Controller
             }
             else {
                 //Generación de una clave aleatoria
-                $nuevaClave = random_int(0, 1000000);
+                $aleatorio = random_int(0, 1000000);
+                $clave = $this->get('security.password_encoder')
+                    ->encodePassword($usuario, $aleatorio);
 
                 $socio
                     ->setActivo(false)
                     ->setFechaBaja(new \DateTime('now'));
                 $usuario
                     ->setActivo(false)
-                    ->setClave($nuevaClave);
+                    ->setClave($clave);
 
                 $em->flush();
 
@@ -206,10 +209,14 @@ class SocioController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //Activación del socio con fecha de alta hoy y con su dni como clave
+        $nif = $socio->getUsuario()->getNif();
+        $clave = $this->get('security.password_encoder')
+            ->encodePassword($socio, $nif);
+
         $socio
             ->setActivo(true)
             ->setFechaAlta(new \DateTime('now'))
-            ->getUsuario()->setClave($socio->getUsuario()->getNif());
+            ->getUsuario()->setClave($clave);
         $em->persist($socio);
         $em->flush();
 
@@ -233,6 +240,45 @@ class SocioController extends Controller
             $item->setActiva(true);
         }
         $em->flush();
+
+        //Obtención de todos los socios activos
+        $socios = $em->getRepository('AppBundle:Socio')
+            ->getSocios();
+
+        //Variable auxiliar
+        $baja = false;
+
+        return $this->render('socio/listar.html.twig', [
+            'socios' => $socios,
+            'baja' => $baja
+        ]);
+    }
+
+    /**
+     * @Route("/socios/pass/{socio}", name="socios_pass")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function passAction(Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            //Establecimiento de la contraseña con su nif
+            $usuario = $socio->getUsuario();
+            $nif = $usuario->getNif();
+            $clave = $this->get('security.password_encoder')
+                ->encodePassword($usuario, $nif);
+            $socio
+                ->getUsuario()->setClave($clave);
+            $em->persist($socio);
+
+            $this->addFlash('estado', 'Contraseña reestablecida con éxito');
+            $em->flush();
+        }
+        catch(Exception $e) {
+            $this->addFlash('error', 'No se ha podido reestablecer la contraseña');
+        }
 
         //Obtención de todos los socios activos
         $socios = $em->getRepository('AppBundle:Socio')
