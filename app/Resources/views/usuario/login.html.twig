@@ -1,13 +1,14 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}
-    Conexión
+{% block title %}Conexión{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('login.css') }}">
 {% endblock %}
 
 {% block section %}
     <section>
         <div class="container">
-            <h2>Iniciar sesión</h2>
             <div class="form-group">
                 {% if error %}
                     <div class="alert alert-danger">
@@ -15,6 +16,7 @@
                     </div>
                 {% endif %}
                 <form method="post" action="{{ path('comprobar') }}">
+                    <header><h3>Iniciar sesión</h3></header>
                     <label for="_username">Usuario: </label>
                     <input type="text" name="_username" required="required" placeholder="Introduce NIF" value="{{ ultimo_usuario }}"
                            {% if not ultimo_usuario %}
