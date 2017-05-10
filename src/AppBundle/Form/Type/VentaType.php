@@ -2,9 +2,11 @@
 
 namespace AppBundle\Form\Type;
 
+use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Venta;
 use Doctrine\DBAL\Types\IntegerType;
 use Doctrine\DBAL\Types\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -25,7 +27,6 @@ class VentaType extends AbstractType
                     ->add('numero', null, [
                         'data' => $options['numero'],
                         'label' => 'Número de factura',
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
@@ -33,39 +34,33 @@ class VentaType extends AbstractType
                     ->add('fecha', null, [
                         'data' => $options['fecha'],
                         'widget' => 'single_text',
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
                     ])
                     ->add('temporada', null, [
                         'data' => $options['temporada'],
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
                     ])
                     ->add('usuario', null, [
-                        'placeholder' => '[Ninguno]',
-                        'translation_domain' => false
+                        'data' => $options['usuario']
                     ])
                     ->add('descuento', null, [
                         'data' => 0.1,
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
                     ])
                     ->add('iva', null, [
                         'data' => 0.21,
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
                     ])
                     ->add('suma', null, [
                         'data' => 0,
-                        'translation_domain' => false,
                         'attr' => [
                             'readonly' => true
                         ]
@@ -79,7 +74,9 @@ class VentaType extends AbstractType
             'data_class' => Venta::class,
             'numero' => null,
             'fecha' => null,
-            'temporada' => null
+            'temporada' => null,
+            'usuario' => null,
+            'translation_domain' => false
         ]);
     }
 }

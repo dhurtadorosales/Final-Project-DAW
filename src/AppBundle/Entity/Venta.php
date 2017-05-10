@@ -49,6 +49,12 @@ class Venta
     private $descuento;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $cerrada;
+
+    /**
      * @var Usuario
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="ventas")
      */
@@ -65,6 +71,7 @@ class Venta
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="ventas")
      */
     private $temporada;
+
     /**
      * Constructor
      */
@@ -201,6 +208,30 @@ class Venta
     public function getDescuento()
     {
         return $this->descuento;
+    }
+
+    /**
+     * Set cerrada
+     *
+     * @param boolean $cerrada
+     *
+     * @return Venta
+     */
+    public function setCerrada($cerrada)
+    {
+        $this->cerrada = $cerrada;
+
+        return $this;
+    }
+
+    /**
+     * Get cerrada
+     *
+     * @return boolean
+     */
+    public function getCerrada()
+    {
+        return $this->cerrada;
     }
 
     /**

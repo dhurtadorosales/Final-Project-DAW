@@ -15,7 +15,7 @@
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
-        <a href="{{ path('ventas_nueva') }}" class="btn btn-default btnAceptar">
+        <a href="{{ path('ventas_nueva', {'usuario': usuario.id}) }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nueva venta
         </a>
         {% if usuario.rolSocio == true %}
@@ -62,6 +62,11 @@
                             <a href="{{ path('ventas_detalle', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Detalle">
                                 <i class="fa fa-search"></i>
                             </a>
+                            {% if venta.cerrada == false %}
+                                <a href="{{ path('ventas_cerrar', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Cerrar venta">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                            {% endif %}
                         </td>
                     {% endif %}
                 </tr>

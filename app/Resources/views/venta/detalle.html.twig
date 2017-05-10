@@ -3,6 +3,7 @@
 {% block title %}Ventas{% endblock %}
 
 {% block section %}
+    {% include 'flash.html.twig' %}
     <div class="container">
         <h2 class="well">Factura</h2>
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
@@ -12,10 +13,10 @@
     <div class="container well">
         <table class="table table-responsive">
             <tr>
-                <td>Factura Nº</td><td>{{ ventas[0].numero }}-{{ ventas[0].fecha|date('Y') }}</td>
+                <td>Factura Nº</td><td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
             </tr>
             <tr>
-                <td>Fecha</td><td>{{ ventas[0].fecha|date('d/m/Y') }}</td>
+                <td>Fecha</td><td>{{ venta.fecha|date('d/m/Y') }}</td>
             </tr>
         </table>
     </div>
@@ -38,6 +39,9 @@
                 <th>Concepto</th>
                 <th>Precio</th>
                 <th>Importe</th>
+                {% if venta.cerrada == false %}
+                    <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -62,6 +66,13 @@
                         {% set total = total + totalLinea %}
                         {{ totalLinea }}
                     </td>
+                    {% if venta.cerrada == false %}
+                        <td>
+                            <a href="{{ path('lineas_eliminar', {'linea' : linea.id, 'venta' : venta.id }) }}" class="btn btn-default btnAceptar" title="Eliminar línea">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
@@ -91,15 +102,19 @@
                     <td></td>
                     <td></td>
                     <td>IVA %</td>
-                    <td>{{ ventas[0].iva * 100 }}</td>
+                    <td>{{ venta.iva * 100 }}</td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td>Total €</td>
-                    <td>{{ baseImponible * (1 + ventas[0].iva) }}</td>
+                    <td>{{ baseImponible * (1 + venta.iva) }}</td>
                 </tr>
             </tfoot>
         </table>
     </div>
+    {% block javascripts %}
+        <script src="{{ asset('script/flash.js') }}"></script>
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
+    {% endblock %}
 {% endblock %}

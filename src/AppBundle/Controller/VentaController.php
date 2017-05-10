@@ -55,19 +55,15 @@ class VentaController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtención de la venta
-        $ventas = $em->getRepository('AppBundle:Venta')
-            ->getVenta($venta);
-
         //Obtención de las líneas de la venta
         $lineas = $em->getRepository('AppBundle:Linea')
             ->getLineasVenta($venta);
 
 
-        $persona = $ventas[0]->getUsuario();
+        $persona = $venta->getUsuario();
 
         return $this->render('venta/detalle.html.twig', [
-            'ventas' => $ventas,
+            'venta' => $venta,
             'lineas' => $lineas,
             'persona' => $persona
         ]);
@@ -123,7 +119,7 @@ class VentaController extends Controller
         ]);
     }
 
-    /**
+    /*
      * @Route("/ventas/insertar/cliente/{usuario}", name="ventas_insertar_cliente")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
@@ -178,11 +174,11 @@ class VentaController extends Controller
     }*/
 
     /**
-     * @Route("/ventas/nueva", name="ventas_nueva")
+     * @Route("/ventas/nueva/{usuario}", name="ventas_nueva")
      * @Route("/ventas/modificar/{venta}", name="ventas_modificar")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
-    public function formVentaAction(Request $request, Venta $venta = null)
+    public function formVentaAction(Request $request, Usuario $usuario = null, Venta $venta = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -203,61 +199,34 @@ class VentaController extends Controller
             $venta = new Venta();
             $em->persist($venta);
         }
+        else {
+            $usuario = $venta->getUsuario();
+        }
 
         $form = $this->createForm(VentaType::class, $venta, [
             'numero' => $numero,
             'fecha' => $fecha,
-            'temporada' => $temporada
+            'temporada' => $temporada,
+            'usuario' => $usuario
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                //Dejamos la venta abiera para añadir líneas
+                $venta->setCerrada(false);
+
                 $em->flush();
                 $this->addFlash('estado', 'Venta creada con éxito');
-                return $this->redirectToRoute('ventas_listar');
+                return $this->redirectToRoute('ventas_listar_usuario', [
+                    'id' => $usuario->getId()
+                ]);
             } catch (\Exception $e) {
                 $this->addFlash('error', 'No se ha podido crear la venta');
             }
         }
 
         return $this->render('venta/form.html.twig', [
-            'formulario' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/ventas/lineas/nueva/{venta}", name="ventas_lineas_nueva")
-     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
-     */
-    public function formNuevaLineaAction(Request $request, Venta $venta)
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Creación de un objeto de la clase Linea
-        $linea = new Linea();
-        $em->persist($linea);
-
-        //Ejecución de formulario
-        $form = $this->createForm(LineaType::class, $linea, [
-            'venta' => $venta
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $em->flush();
-                $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('ventas_listar');
-            }
-            catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar los cambios');
-            }
-        }
-
-        return $this->render('venta/formLineas.html.twig', [
-            'venta' => $venta,
             'formulario' => $form->createView()
         ]);
     }
@@ -277,6 +246,32 @@ class VentaController extends Controller
         return $this->render('venta/principal.html.twig', [
             'temporadas' => $temporadas,
             'socio' => $socio
+        ]);
+    }
+
+    /**
+     * @Route("/ventas/cerrar/{venta}", name="ventas_cerrar")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
+     */
+    public function eliminarLineaAction(Venta $venta)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            //Obtención de la cantidad
+            $venta->setCerrada(true);
+            $em->persist($venta);
+
+            $em->flush();
+            $this->addFlash('estado', 'Venta cerrada con éxito');
+        }
+        catch(\Exception $e) {
+            $this->addFlash('error', 'No se ha podido cerrar la venta');
+        }
+
+        return $this->redirectToRoute('ventas_listar_usuario', [
+            'id' => $venta->getUsuario()->getId()
         ]);
     }
 }
