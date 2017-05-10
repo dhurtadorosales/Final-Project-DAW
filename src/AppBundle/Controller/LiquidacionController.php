@@ -173,10 +173,10 @@ class LiquidacionController extends Controller
     /**
      * @Route("/liquidaciones/insertar", name="liquidaciones_insertar")
      */
-    public function insertarLiquidacionAction()
+  /*  public function insertarLiquidacionAction()
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+       /* $em = $this->getDoctrine()->getManager();
 
         //Obtenemos la última temporada
         $temporadas = $resultados = $em->getRepository('AppBundle:Temporada')
@@ -209,5 +209,5 @@ class LiquidacionController extends Controller
         return $this->render('liquidacion/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
-    }
+    }*/
 }

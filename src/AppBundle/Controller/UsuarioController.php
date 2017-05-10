@@ -16,6 +16,21 @@ use Symfony\Component\HttpFoundation\Request;
 class UsuarioController extends Controller
 {
     /**
+     * @Route("/usuarios/listar", name="usuarios_listar")
+     */
+    public function listarUsuariosAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $usuarios = $em->getRepository('AppBundle:Usuario')
+            ->findAll();
+
+        return $this->render('usuario/listar.html.twig', [
+            'usuarios' => $usuarios
+        ]);
+    }
+
+    /**
      * @Route("/clientes/listar", name="clientes_listar")
      */
     public function listarClientesAction()

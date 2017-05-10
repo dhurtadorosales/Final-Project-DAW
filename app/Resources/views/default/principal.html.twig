@@ -116,6 +116,16 @@
                         </div>
                     </div>
                 </a>
+                <a href="{{ path('ventas_listar_usuario', {'id' : app.user.id}) }}" class="btn">
+                    <div class="tile tile-dark-orange">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Mis Compras</div>
+                        </div>
+                    </div>
+                </a>
             {% endif %}
 
             {% if is_granted('ROLE_COMERCIAL') %}
@@ -161,30 +171,32 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ path('ventas_listar') }}" class="btn">
+                <a href="{{ path('usuarios_listar') }}" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-shopping-cart"></i>
                         </div>
                         <div class="tile-object">
-                            <div class="number">Ventas</div>
+                            <div class="number">Compras</div>
+                            <div class="number">de aceite</div>
                         </div>
                     </div>
                 </a>
             {% endif %}
 
             {% if is_granted('ROLE_DEPENDIENTE') %}
-                <a href="#" class="btn">
+                <a href="{{ path('ventas_listar') }}" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-shopping-cart"></i>
                         </div>
                         <div class="tile-object">
-                            <div class="number">Ventas</div>
+                            <div class="number">Compras</div>
+                            <div class="number">de aceite</div>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="btn">
+                <a href="{{ path('clientes_listar') }}" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-users"></i>
@@ -242,6 +254,16 @@
             {% endif %}
 
             {% if is_granted('ROLE_CLIENTE') %}
+                <a href="{{ path('ventas_listar_usuario', {'usuario' : app.user.id}) }}" class="btn">
+                    <div class="tile tile-dark-orange">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Mis Compras</div>
+                        </div>
+                    </div>
+                </a>
             {% endif %}
 
             {% if is_granted('ROLE_SOCIO') %}
@@ -295,6 +317,16 @@
                         <div class="tile-object">
                             <div class="number">Estado</div>
                             <div class="number">de cuentas</div>
+                        </div>
+                    </div>
+                </a>
+                <a href="{{ path('ventas_listar_socio', {'socio' : app.user.socio.id}) }}" class="btn">
+                    <div class="tile tile-dark-cyan">
+                        <div class="tile-body">
+                            <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <div class="tile-object">
+                            <div class="number">Mis Compras</div>
                         </div>
                     </div>
                 </a>

@@ -52,9 +52,16 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar btnOculto" title="modificar datos">
-                            <i class="fa fa-pencil"></i>
-                        </a>
+                        {% if is_granted('ROLE_ADMINISTRADOR') %}
+                            <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar btnOculto" title="modificar datos">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        {% endif %}
+                        {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')%}
+                            <a href="{{ path('ventas_listar_usuario', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las compras del cliente">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        {% endif %}
                         {% set parametro = empleado.nif %}
                         {% set nombre = empleado %}
                         <a type="button" class="btn btn-default btnAceptar eliminar btnOculto" data-toggle="modal" data-target="#empleados_eliminar" title="Dar de baja">

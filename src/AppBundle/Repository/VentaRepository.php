@@ -104,18 +104,18 @@ class VentaRepository extends EntityRepository
         return $consulta;
     }
 
-    public function getVentasCliente(Usuario $usuario)
+    public function getVentasUsuario(Usuario $usuario)
     {
         /** @var EntityManager $em */
         $em = $this->getEntityManager();
 
         $consulta = $em->createQueryBuilder()
             ->select('v')
-            ->addSelect('c')
+            ->addSelect('u')
             ->from('AppBundle:Venta', 'v')
-            ->join('v.clien', 'c')
-            ->where('c = :cliente')
-            ->setParameter('cliente', $usuario)
+            ->join('v.usuario', 'u')
+            ->where('u = :usuario')
+            ->setParameter('usuario', $usuario)
             ->getQuery()
             ->getResult();
 

@@ -48,10 +48,10 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
-     *
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == usuario.getNif()")")
      */
     public function detalleAction(Venta $venta)
-    {//@Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == socio.getUsuario().getNif()")")
+    {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -91,28 +91,35 @@ class VentaController extends Controller
         }
 
         $ventas = $em->getRepository('AppBundle:Venta')
-            ->getVentasTemporadaSocio($socio, $temporada);
+            ->getVentasTemporadaSocio($temporada, $socio);
+
+        //Obtención del usuario asociado al socio
+        $usuario = $socio->getUsuario();
 
         return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
-            'temporada' => $temporada
+            'temporada' => $temporada,
+            'usuario' => $usuario
         ]);
     }
 
     /**
-     * @Route("/ventas/listar/cliente/{usuario}", name="ventas_listar_cliente")
+     * @Route("/ventas/listar/usuario/{id}", name="ventas_listar_usuario")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == usuario.getNif()")")
      */
-    public function listarClienteAction(Usuario $usuario)
+    public function listarUsuarioAction(Usuario $usuario)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $ventas = $em->getRepository('AppBundle:Venta')
-            ->getVentasCliente($usuario);
+            ->getVentasUsuario($usuario);
+
+        $temporada = false;
 
         return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
-            'temporada' => null
+            'temporada' => $temporada,
+            'usuario' => $usuario
         ]);
     }
 
@@ -120,10 +127,10 @@ class VentaController extends Controller
      * @Route("/ventas/insertar/cliente/{usuario}", name="ventas_insertar_cliente")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
-    public function insertarClienteAction(Usuario $usuario)
+    /*public function insertarClienteAction(Usuario $usuario)
     {
         /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
+       /* $em = $this->getDoctrine()->getManager();
 
         //Obtenemos la temporada vigente
         //Si no recibe ninguna temporada se obtendrá la actual
@@ -168,7 +175,7 @@ class VentaController extends Controller
         return $this->render('venta/confirma.html.twig', [
             'mensaje' => $mensaje
         ]);
-    }
+    }*/
 
     /**
      * @Route("/ventas/nueva", name="ventas_nueva")
@@ -252,6 +259,24 @@ class VentaController extends Controller
         return $this->render('venta/formLineas.html.twig', [
             'venta' => $venta,
             'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/ventas/principal/{id}", name="ventas_principal")
+     * @Security("is_granted('ROLE_USUARIO')")
+     */
+    public function irPrincipalAction(Socio $socio)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $temporadas = $em->getRepository('AppBundle:Temporada')
+            ->getTemporadas();
+
+        return $this->render('venta/principal.html.twig', [
+            'temporadas' => $temporadas,
+            'socio' => $socio
         ]);
     }
 }

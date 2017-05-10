@@ -1,11 +1,11 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Clientes{% endblock %}
+{% block title %}Clientes/usuarios{% endblock %}
 
 {% block section %}
     {% include 'flash.html.twig' %}
     <div class="container">
-        <h2 class="well">Clientes</h2>
+        <h2 class="well">Clientes/usuarios</h2>
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
@@ -23,22 +23,22 @@
             </tr>
             </thead>
             <tbody>
-            {% for cliente in clientes %}
-                {% if cliente.email != null %}
-                <tr title="{{ cliente.email }}" class="clickable-row">
+            {% for usuario in usuarios %}
+                {% if usuario.email != null %}
+                <tr title="{{ usuario.email }}" class="clickable-row">
                 {% else %}
                     <tr title="No tiene email" class="clickable-row">
                 {% endif %}
-                    <td>{{ cliente.nif }}</td>
-                    <td>{{ cliente.nombre }} {{ cliente.apellidos }}</td>
+                    <td>{{ usuario.nif }}</td>
+                    <td>{{ usuario.nombre }} {{ usuario.apellidos }}</td>
                     <td>
-                        {{ cliente.direccion }} - {{cliente.localidad}} ({{ cliente.provincia }})
+                        {{ usuario.direccion }} - {{usuario.localidad}} ({{ usuario.provincia }})
                     </td>
-                    <td>{{ cliente.telefono}}</td>
+                    <td>{{ usuario.telefono}}</td>
                     <td>
                         {% set suma = 0 %}
                         {% set sumaVenta = 0 %}
-                        {% for venta in cliente.ventas %}
+                        {% for venta in usuario.ventas %}
                             {% for linea in venta %}
                                 {% set sumaVenta = sumaVenta + (linea.cantidad * linea.precio) - (linea.cantidad * linea.precio * linea.descuento) + ((linea.cantidad * linea.precio) - (linea.cantidad * linea.precio * linea.descuento) * linea.iva) %}
                             {% endfor %}
@@ -47,13 +47,8 @@
                         {{ suma }}
                     </td>
                     <td>
-                        {% if is_granted('ROLE_ADMINISTRADOR') %}
-                            <a href="{{ path('clientes_modificar', {'cliente' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                        {% endif %}
                         {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')%}
-                            <a href="{{ path('ventas_listar_usuario', {'id' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las compras del cliente">
+                            <a href="{{ path('ventas_listar_usuario', {'id' : usuario.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las compras del usuario">
                                 <i class="fa fa-shopping-cart"></i>
                             </a>
                         {% endif %}
