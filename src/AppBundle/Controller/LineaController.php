@@ -138,6 +138,7 @@ class LineaController extends Controller
         //Creación de un objeto de la clase Linea
         $linea = new Linea();
         $em->persist($linea);
+
         //Ejecución de formulario
         $form = $this->createForm(LineaType::class, $linea, [
             'venta' => $venta

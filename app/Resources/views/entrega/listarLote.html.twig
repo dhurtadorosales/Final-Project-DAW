@@ -30,8 +30,8 @@
                     <td>{{ entrega.id }}</td>
                     <td>{{ entrega.fecha|date('d/m/Y') }}</td>
                     <td>{{ entrega.peso }}</td>
-                    <td>{% if entrega.sancion != null %}
-                            {% set sancion = pesoAceituna * entrega.sancion %}
+                    <td>{% if not entrega.sancion != null %}
+                            {% set sancion = entrega.peso * entrega.sancion %}
                         {% else %}
                             {% set sancion = 0 %}
                         {% endif %}

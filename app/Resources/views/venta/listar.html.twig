@@ -56,9 +56,11 @@
                     <td>{{ baseImponible * (1 + venta.iva) }}</td>
                     {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
                         <td>
-                            <a href="{{ path('ventas_lineas_nueva', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Añadir conceptos">
-                                <i class="fa fa-pencil"></i>
-                            </a>
+                            {% if venta.cerrada != true %}
+                                <a href="{{ path('ventas_lineas_nueva', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Añadir conceptos">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            {% endif %}
                             <a href="{{ path('ventas_detalle', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Detalle">
                                 <i class="fa fa-search"></i>
                             </a>

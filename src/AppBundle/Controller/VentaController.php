@@ -175,54 +175,98 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/nueva/{usuario}", name="ventas_nueva")
-     * @Route("/ventas/modificar/{venta}", name="ventas_modificar")
-     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
+     * * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
-    public function formVentaAction(Request $request, Usuario $usuario = null, Venta $venta = null)
+    public function nuevaVentaAction(Usuario $usuario)
+    {
+        /** @var EntityManager $em */
+         $em = $this->getDoctrine()->getManager();
+
+         //Obtenemos la temporada vigente
+         $temporadaActual = new TemporadaActual($em);
+         $temporada = $temporadaActual->temporadaActualAction();
+
+         //Obtenemos los porcentajes. Si el usuario es socio solo paga el iva reducido
+         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
+             ->findAll();
+
+         if ($usuario->getRolSocio() == true) {
+             $iva = $porcentajes[1]->getCantidad();
+         }
+         else {
+             $iva = $porcentajes[0]->getCantidad();
+         }
+
+         //Obtenemos el número de ventas de este año
+         $fecha = new \DateTime('now');
+         $anio = $fecha->format('Y');
+         $numero = $em->getRepository('AppBundle:Venta')
+             ->getVentasAnio($anio);
+         $numero ++;
+
+         try {
+             //Creación de nueva venta
+             $venta = new Venta();
+             $em->persist($venta);
+
+             $venta
+                 ->setNumero($numero)
+                 ->setFecha(new \DateTime('now'))
+                 ->setSuma(0)
+                 ->setIva($iva)
+                 ->setUsuario($usuario)
+                 ->setTemporada($temporada)
+                 ->setDescuento($usuario->getDescuento())
+                 ->setCerrada(false);
+
+             $em->flush();
+             $this->addFlash('estado', 'Venta creada con éxito');
+         } catch (\Exception $e) {
+             $this->addFlash('error', 'No se ha podido crear la venta');
+         }
+
+         if ($usuario->getRolSocio() != true) {
+             $temporada = false;
+         }
+
+         //Obtención de todas las ventas de ese usuario
+        $ventas = $em->getRepository('AppBundle:Venta')
+            ->getVentasUsuario($usuario);
+
+         return $this->render('venta/listar.html.twig', [
+             'usuario' => $usuario,
+             'temporada' => $temporada,
+             'ventas' => $ventas
+         ]);
+     }
+
+     /**
+      * @Route("/ventas/modificar/{venta}", name="ventas_modificar")
+      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
+      */
+    public function formVentaAction(Request $request, Venta $venta = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        //Obtenemos la temporada vigente
-        $temporadaActual = new TemporadaActual($em);
-        $temporada = $temporadaActual->temporadaActualAction();
-
-        //Obtenemos el número de ventas de este año
-        $fecha = new \DateTime('now');
-        $anio = $fecha->format('Y');
-        $numero = $em->getRepository('AppBundle:Venta')
-            ->getVentasAnio($anio);
-        $numero ++;
-
-        if (null == $venta) {
-            //Creación de una nueva venta
-            $venta = new Venta();
-            $em->persist($venta);
-        }
-        else {
-            $usuario = $venta->getUsuario();
-        }
-
-        $form = $this->createForm(VentaType::class, $venta, [
-            'numero' => $numero,
-            'fecha' => $fecha,
-            'temporada' => $temporada,
-            'usuario' => $usuario
-        ]);
+        $form = $this->createForm(VentaType::class, $venta);
         $form->handleRequest($request);
+
+        //Obtención del usuario al que pertenece la venta
+        $usuario = $venta->getUsuario();
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                //Dejamos la venta abiera para añadir líneas
+                //Dejamos la venta abierta para añadir líneas
                 $venta->setCerrada(false);
 
                 $em->flush();
-                $this->addFlash('estado', 'Venta creada con éxito');
+                $this->addFlash('estado', 'Venta modificada con éxito');
                 return $this->redirectToRoute('ventas_listar_usuario', [
-                    'id' => $usuario->getId()
+                    'id' => $usuario
                 ]);
             } catch (\Exception $e) {
-                $this->addFlash('error', 'No se ha podido crear la venta');
+                $this->addFlash('error', 'No se ha podido modificar la venta');
             }
         }
 
