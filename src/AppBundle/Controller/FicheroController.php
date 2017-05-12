@@ -52,7 +52,7 @@ class FicheroController extends Controller
             }
         }
 
-        return $this->render('aceite/form.html.twig', [
+        return $this->render('fichero/form.html.twig', [
             'formulario' => $form->createView()
         ]);
     }

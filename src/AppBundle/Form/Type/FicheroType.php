@@ -15,7 +15,7 @@ class FicheroType extends AbstractType
     {
         $builder
             ->add('entregas', FileType::class, [
-                'label' => 'Entregas:',
+                'label' => 'Selecciona un fichero:',
             ]);
     }
 

@@ -50,8 +50,6 @@
             </tr>
             </thead>
             <tbody>
-            {% set parametro = 0 %}
-            {% set nombre = '' %}
             {% for socio in socios %}
                 {% if socio.usuario.email != null %}
                     <tr title="{{ socio.usuario.email }}" class="clickable-row">
@@ -79,8 +77,6 @@
                         <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                             <i class="fa fa-pencil"></i>
                         </a>
-                        {% set parametro = socio.id %}
-                        {% set nombre = socio.usuario %}
                         <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#{{ socio.id }}">
                             <i class="fa fa-trash"></i>
                         </a>
