@@ -5,9 +5,12 @@
 {% block section %}
     <div class="container">
         <h2 class="well">Temporadas</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
-        </a>
+        {% if movimientos == false %}
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-home"></i> Ir a principal
+            </a>
+        {% elseif liquidaciones == false %}
+        {% endif %}
         <ul>
             {% for temporada in temporadas %}
                 <li>{{ temporada }}</li>

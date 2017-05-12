@@ -6,15 +6,27 @@
     {% include 'flash.html.twig' %}
     <div class="container">
         <div class="well">
-            {% if is_granted('ROLE_ADMINISTRADOR') %}
-                <h2>Fincas</h2>
-            {% else %}
-                <h2>Fincas del socio {{ app.user }}</h2>
+            <h2>Fincas</h2>
+            {% if propietario != false %}
+                <div class="division"></div>
+                <h3>Propietario: {{ propietario }}</h3>
+            {% elseif arrendatario != false %}
+                <div class="division"></div>
+                <h3>Arrendatario: {{ arrendatario }}</h3>
+            {% elseif lote != false %}
+                <div class="division"></div>
+                <h3>Lote: {{ lote }}</h3>
             {% endif %}
         </div>
-        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
-        </a>
+        {% if lote == false %}
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-home"></i> Ir a principal
+            </a>
+        {% else %}
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-chevron-left"></i> Volver
+            </a>
+        {% endif %}
         {% if is_granted('ROLE_ADMINISTRADOR') %}
             <a href="{{ path('fincas_nueva') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-plus"></i> Nueva finca

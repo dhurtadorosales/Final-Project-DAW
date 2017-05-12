@@ -210,4 +210,21 @@ class LiquidacionController extends Controller
             'mensaje' => $mensaje
         ]);
     }*/
+
+    /**
+     * @Route("/liquidaciones/temporadas/listar", name="liquidaciones_temporadas_listar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_SOCIO')")
+     */
+    public function listarTemporadasAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $temporadas = $em->getRepository('AppBundle:Temporada')
+            ->getTemporadas();
+
+        return $this->render('liquidacion/principal.html.twig', [
+            'temporadas' => $temporadas
+        ]);
+    }
 }

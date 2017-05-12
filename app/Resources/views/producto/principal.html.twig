@@ -6,9 +6,11 @@
     {% include 'flash.html.twig' %}
     <div class="container">
         <h2 class="well">Envasar productos</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
-        </a>
+        <div class="container">
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-home"></i> Ir a inicio
+            </a>
+        </div>
         <div class="tiles">
             {% for producto in productos %}
                 <a href="{{ path('producto_form', {'producto' : producto.id}) }}" class="btn">

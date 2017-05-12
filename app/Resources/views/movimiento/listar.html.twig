@@ -11,6 +11,9 @@
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
+        <a href="{{ path('movimientos_temporadas_listar') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-calendar"></i> Otras temporadas
+        </a>
         {% if is_granted('ROLE_ADMINISTRADOR') %}
             <a href="{{ path('movimientos_nuevo') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-plus"></i> Nuevo movimiento

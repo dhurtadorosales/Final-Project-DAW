@@ -9,9 +9,15 @@
             <div class="division"></div>
             <h2>Temporada: {{ temporada }}</h2>
         </div>
-        <a href="{{ path('socios_listar') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-chevron-left"></i> Volver
-        </a>
+        {% if is_granted('ROLE_ENCARGADO') %}
+            <a href="{{ path('socios_listar') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-chevron-left"></i> Volver
+            </a>
+        {% else %}
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-home"></i> Ir a inicio
+            </a>
+        {% endif %}
     </div>
     <div class="container well">
         <table class="table table-responsive">

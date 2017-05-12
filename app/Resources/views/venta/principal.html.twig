@@ -6,6 +6,11 @@
     {% set socio = app.user.socio.id %}
     <div class="container">
         <h2 class="well">Liquidaciones anteriores</h2>
+        <div class="container">
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-home"></i> Ir a inicio
+            </a>
+        </div>
         <div class="tiles">
             {% for temporada in temporadas %}
                 {% if is_granted('ROLE_DEPENDIENTE') or is_granted('ROLE_COMERCIAL') %}

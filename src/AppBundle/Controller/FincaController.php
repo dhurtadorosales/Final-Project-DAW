@@ -27,8 +27,16 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincas();
 
+        //Variable auxiliar
+        $lote = false;
+        $propietario = false;
+        $arrendatario = false;
+
         return $this->render('finca/listar.html.twig', [
-            'fincas' => $fincas
+            'fincas' => $fincas,
+            'lote' => $lote,
+            'propietario' => $propietario,
+            'arrendatario' => $arrendatario
         ]);
 
     }
@@ -44,8 +52,15 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincasPorLote($lote);
 
+        //Variable auxiliar
+        $propietario = false;
+        $arrendatario = false;
+
         return $this->render('finca/listar.html.twig', [
-            'fincas' => $fincas
+            'fincas' => $fincas,
+            'lote' => $lote,
+            'propietario' => $propietario,
+            'arrendatario' => $arrendatario
         ]);
     }
 
@@ -60,8 +75,15 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincasPorPropietario($socio);
 
+        //Variable auxiliar
+        $lote = false;
+        $arrendatario = false;
+
         return $this->render('finca/listar.html.twig', [
-            'fincas' => $fincas
+            'fincas' => $fincas,
+            'lote' => $lote,
+            'propietario' => $socio,
+            'arrendatario' => $arrendatario
         ]);
     }
 
@@ -76,8 +98,15 @@ class FincaController extends Controller
         $fincas = $em->getRepository('AppBundle:Finca')
             ->getFincasPorArrendatario($socio);
 
+        //Variable auxiliar
+        $lote = false;
+        $propietario = false;
+
         return $this->render('finca/listar.html.twig', [
-            'fincas' => $fincas
+            'fincas' => $fincas,
+            'lote' => $lote,
+            'propietario' => $propietario,
+            'arrendatario' => $socio
         ]);
     }
 

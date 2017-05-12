@@ -6,7 +6,7 @@ html {
 body {
     font-family: Arial;
     background-color: #EDF0F5;
-    background-image: url("images/header.jpg");
+    background-image: url("../images/header.jpg");
     background-repeat: repeat-x;
     margin: 0;
     padding: 0;

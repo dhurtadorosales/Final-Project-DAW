@@ -15,23 +15,6 @@ use AppBundle\Service\TemporadaActual;
 class TemporadaController extends Controller
 {
     /**
-     * @Route("/temporadas/listar", name="temporadas_listar")
-     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_SOCIO')")
-     */
-    public function listarAction()
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $temporadas = $em->getRepository('AppBundle:Temporada')
-            ->getTemporadas();
-
-        return $this->render('liquidacion/principal.html.twig', [
-            'temporadas' => $temporadas
-        ]);
-    }
-
-    /**
      * @Route("/temporadas/comenzar", name="temporadas_comenzar_confirmar", methods={"POST"})
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */

@@ -1,11 +1,11 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Liquidaciones{% endblock %}
+{% block title %}Movimientos{% endblock %}
 
 {% block section %}
     {% set socio = app.user.socio.id %}
     <div class="container">
-        <h2 class="well">Liquidaciones anteriores</h2>
+        <h2 class="well">Movimientos anteriores</h2>
         <div class="container">
             <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-home"></i> Ir a inicio
@@ -13,11 +13,8 @@
         </div>
         <div class="tiles">
             {% for temporada in temporadas %}
-                {% if is_granted('ROLE_ADMINISTRADOR') %}
-                    <a href="{{ path('liquidaciones_listar_temporada', {'temporada' : temporada.id}) }}" class="btn">
-                {% else %}
-                    <a href="{{ path('liquidaciones_detalle', {'socio' : socio, 'temporada' : temporada.id}) }}" class="btn">
-                {% endif %}
+                    <a href="{{ path('movimientos_listar_temporada', {'temporada' : temporada.id}) }}" class="btn">
+
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-calendar"></i>
