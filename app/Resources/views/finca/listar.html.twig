@@ -51,7 +51,6 @@
             </tr>
             </thead>
             <tbody>
-            {% set parametro = 0 %}
             {% for finca in fincas %}
                 {% if finca.municipio < 100 %}
                     {% set refCatastral = finca.provincia ~ 0 ~ finca.municipio ~ finca.sector ~ finca.poligono ~ finca.parcela ~ finca.idInmueble ~ finca.caracterControl %}
@@ -87,10 +86,7 @@
                             <a href="{{ path('fincas_modificar', {'finca' : finca.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                                 <i class="fa fa-pencil"></i>
                             </a>
-                            {% set parametro = finca.id %}
-                            <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#fincas_eliminar" title="Dar de baja">
-                                <i class="fa fa-trash"></i>
-                            </a>
+
                         </td>
                     {% endif %}
                 </tr>
@@ -98,32 +94,6 @@
             </tbody>
         </table>
     </div>
-
-    <!-- Ventana modal -->
-    <div class="modal fade" id="fincas_eliminar" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Vas a eliminar una finca</h4>
-                </div>
-                <div class="modal-body">
-                    <p>¿Deseas continuar?</p>
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ path('confirmar_fincas_eliminar', {'finca' : parametro}) }}" method="post" name="confirmar">
-                        <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
-                            <i class="fa fa-check"></i> Aceptar
-                        </button>
-                        <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
-                            <i class="fa fa-times"></i> Cancelar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
         <script src="{{ asset('script/seleccionar_fila.js') }}"></script>

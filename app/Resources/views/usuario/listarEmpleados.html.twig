@@ -26,8 +26,6 @@
             </tr>
             </thead>
             <tbody>
-            {% set parametro = 0 %}
-            {% set nombre = '' %}
             {% for empleado in empleados %}
                 {% if empleado.email != null %}
                 <tr class="clickable-row" title="{{ empleado.email }}">
@@ -62,43 +60,39 @@
                                 <i class="fa fa-shopping-cart"></i>
                             </a>
                         {% endif %}
-                        {% set parametro = empleado.nif %}
-                        {% set nombre = empleado %}
-                        <a type="button" class="btn btn-default btnAceptar eliminar btnOculto" data-toggle="modal" data-target="#empleados_eliminar" title="Dar de baja">
+                        <a type="button" class="btn btn-default btnAceptar eliminar btnOculto" data-toggle="modal" data-target="#{{ empleado.id }}" title="Dar de baja">
                             <i class="fa fa-trash"></i>
                         </a>
                     </td>
                 </tr>
+                <!-- Ventana modal -->
+                <div class="modal fade" id="{{ empleado.id }}" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Vas a eliminar al empleado {{ empleado }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Deseas continuar?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{{ path('confirmar_empleados_eliminar', {'nif' : empleado.nif}) }}" method="post" name="confirmar">
+                                    <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
+                                        <i class="fa fa-check"></i> Aceptar
+                                    </button>
+                                    <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
+                                        <i class="fa fa-times"></i> Cancelar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
             </tbody>
         </table>
     </div>
-
-    <!-- Ventana modal -->
-    <div class="modal fade" id="empleados_eliminar" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Vas a eliminar al empleado {{ nombre }}</h4>
-                </div>
-                <div class="modal-body">
-                    <p>¿Deseas continuar?</p>
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ path('confirmar_empleados_eliminar', {'nif' : parametro}) }}" method="post" name="confirmar">
-                        <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
-                            <i class="fa fa-check"></i> Aceptar
-                        </button>
-                        <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
-                            <i class="fa fa-times"></i> Cancelar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
         <script src="{{ asset('script/seleccionar_fila.js') }}"></script>

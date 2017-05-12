@@ -196,17 +196,6 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/empleados/eliminar/{id}", name="empleados_eliminar", methods={"GET"})
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
-     */
-    public function borrarAction(Usuario $usuario)
-    {
-        return $this->render('usuario/confirma.html.twig', [
-            'empleado' => $usuario
-        ]);
-    }
-
-    /**
      * @Route("/empleados/eliminar/{nif}", name="confirmar_empleados_eliminar", methods={"POST"})
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
@@ -214,6 +203,7 @@ class UsuarioController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         try {
             //Desactivamos al usuario si no es el administrador
             if ($usuario->getAdministrador() == true) {
@@ -230,28 +220,6 @@ class UsuarioController extends Controller
         }
 
         return $this->redirectToRoute('empleados_listar');
-    }
-
-    /**
-     * @Route("/empleados/listar/baja", name="empleados_listar_baja")
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
-     */
-    public function listarEmpleadosBajaAction()
-    {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        //Obtenemos los clientes desactivos
-        $empleados = $em->getRepository('AppBundle:Usuario')
-            ->getSociosBaja();
-
-        //Variable auxiliar
-        $baja = true;
-
-        return $this->render('usuario/listarEmpleados.html.twig', [
-            'empleados' => $empleados,
-            'baja' => $baja
-        ]);
     }
 
     /**
