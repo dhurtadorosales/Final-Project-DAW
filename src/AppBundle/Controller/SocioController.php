@@ -62,6 +62,7 @@ class SocioController extends Controller
             //Nuevo usuario que debe ser asignado al nuevo socio
             $usuario = new Usuario();
             $socio->setUsuario($usuario);
+            $usuario->setActivo(true);
             $em->persist($usuario);
 
             $form = $this->createForm(SocioType::class, $socio);
@@ -140,22 +141,16 @@ class SocioController extends Controller
                 $this->addFlash('error', 'No se puede dar de baja a este usuario ya que es el administrador');
             }
             else {
-                //Generación de una clave aleatoria
-                $aleatorio = random_int(0, 1000000);
-                //$clave = $this->get('security.password_encoder')
-                   // ->encodePassword($usuario, $aleatorio);
-
                 $socio
                     ->setActivo(false)
                     ->setFechaBaja(new \DateTime('now'));
                 $usuario
                     ->setActivo(false);
-                    //->setClave($clave);
 
                 //Obtenemos las fincas de las que era arrendatario
                 $fincasArrendatario = $em->getRepository('AppBundle:Finca')
                     ->getFincasPorArrendatario($socio);
-                $em->persist($fincasArrendatario);
+                //$em->persist($fincasArrendatario);
 
                 foreach ($fincasArrendatario as $item) {
                     $item->setActiva(true);
@@ -219,7 +214,7 @@ class SocioController extends Controller
         //Obtenemos las fincas de las que era propietario
         $fincasPropietario = $em->getRepository('AppBundle:Finca')
             ->getFincasPorPropietario($socio);
-        $em->persist($fincasPropietario);
+        //$em->persist($fincasPropietario);
 
         //Activamos las fincas
         foreach ($fincasPropietario as $item) {
@@ -230,12 +225,13 @@ class SocioController extends Controller
         //Obtenemos las fincas de las que era arrendatario
         $fincasArrendatario = $em->getRepository('AppBundle:Finca')
             ->getFincasPorArrendatario($socio);
-        $em->persist($fincasArrendatario);
+        //$em->persist($fincasArrendatario);
 
         foreach ($fincasArrendatario as $item) {
             $item->setActiva(true);
         }
-        //$em->flush();
+
+        $em->flush();
 
         //Obtención de todos los socios activos
         $socios = $em->getRepository('AppBundle:Socio')
@@ -243,8 +239,6 @@ class SocioController extends Controller
 
         //Variable auxiliar
         $baja = false;
-
-        $em->flush();
 
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,

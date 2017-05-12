@@ -9,21 +9,31 @@
         <div class="tiles">
             {% for temporada in temporadas %}
                 {% if is_granted('ROLE_DEPENDIENTE') or is_granted('ROLE_COMERCIAL') %}
-                    <a href="{{ path('ventas_listar_socio_temporada', {'socio' : socio.id, 'temporada' : temporada.id}) }}" class="btn">
+                    <a href="{{ path('ventas_listar_socio_temporada', {'socio' : socio, 'temporada' : temporada.id}) }}" class="btn">
+                        <div class="tile tile-dark-orange">
+                            <div class="tile-body">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div class="tile-object">
+                                <div class="number">Temporada</div>
+                                <div class="number">{{ temporada }}</div>
+                            </div>
+                        </div>
+                    </a>
                 {% endif %}
                 {% if is_granted('ROLE_SOCIO') %}
                     <a href="{{ path('ventas_listar_socio_temporada', {'socio' : app.user.socio.id, 'temporada' : temporada.id}) }}" class="btn">
+                        <div class="tile tile-dark-orange">
+                            <div class="tile-body">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div class="tile-object">
+                                <div class="number">Temporada</div>
+                                <div class="number">{{ temporada }}</div>
+                            </div>
+                        </div>
+                    </a>
                 {% endif %}
-                    <div class="tile tile-dark-orange">
-                        <div class="tile-body">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Temporada</div>
-                            <div class="number">{{ temporada }}</div>
-                        </div>
-                    </div>
-                </a>
             {% endfor %}
         </div>
     </div>
