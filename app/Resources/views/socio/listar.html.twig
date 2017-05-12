@@ -12,16 +12,24 @@
                 <h2>Socios</h2>
             {% endif %}
         </div>
-        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
-        </a>
+        {% if baja != false %}
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-chevron-left"></i> Volver
+            </a>
+        {% else %}
+            <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-home"></i> Ir a inicio
+            </a>
+        {% endif %}
         {% if is_granted('ROLE_ADMINISTRADOR') %}
             <a href="{{ path('socios_nuevo') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-plus"></i> Nuevo socio
             </a>
-            <a href="{{ path('socios_listar_baja') }}" class="btn btn-default btnAceptar">
-                <i class="fa fa-recycle"></i> Reactivar socio
-            </a>
+            {% if baja == false %}
+                <a href="{{ path('socios_listar_baja') }}" class="btn btn-default btnAceptar">
+                    <i class="fa fa-recycle"></i> Reactivar socio
+                </a>
+            {% endif %}
         {% endif %}
     </div>
     <div class="container well">
@@ -73,7 +81,7 @@
                         </a>
                         {% set parametro = socio.id %}
                         {% set nombre = socio.usuario %}
-                        <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#socios_eliminar">
+                        <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#{{ socio.id }}">
                             <i class="fa fa-trash"></i>
                         </a>
                         <a href="{{ path('socios_pass', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Restablecer contraseña">
@@ -96,34 +104,34 @@
                         </td>
                     {% endif %}
                 </tr>
+
+                <!-- Ventana modal -->
+                <div class="modal fade" id="{{ socio.id }}" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Vas a eliminar al socio {{ socio }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Deseas continuar?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{{ path('confirmar_socios_eliminar', {'socio' : socio.id}) }}" method="post" name="confirmar">
+                                    <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
+                                        <i class="fa fa-check"></i> Aceptar
+                                    </button>
+                                    <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
+                                        <i class="fa fa-times"></i> Cancelar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
             </tbody>
         </table>
-    </div>
-
-    <!-- Ventana modal -->
-    <div class="modal fade" id="socios_eliminar" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Vas a eliminar al socio {{ nombre }}</h4>
-                </div>
-                <div class="modal-body">
-                    <p>¿Deseas continuar?</p>
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ path('confirmar_socios_eliminar', {'socio' : parametro}) }}" method="post" name="confirmar">
-                        <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
-                            <i class="fa fa-check"></i> Aceptar
-                        </button>
-                        <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
-                            <i class="fa fa-times"></i> Cancelar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
     {% block javascripts %}

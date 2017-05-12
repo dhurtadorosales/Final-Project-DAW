@@ -147,14 +147,6 @@ class SocioController extends Controller
                 $usuario
                     ->setActivo(false);
 
-                //Obtenemos las fincas de las que era arrendatario
-                $fincasArrendatario = $em->getRepository('AppBundle:Finca')
-                    ->getFincasPorArrendatario($socio);
-                //$em->persist($fincasArrendatario);
-
-                foreach ($fincasArrendatario as $item) {
-                    $item->setActiva(true);
-                }
                 $em->flush();
 
                 $this->addFlash('estado', 'Socio eliminado con éxito');
@@ -199,41 +191,15 @@ class SocioController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //Activación del socio con fecha de alta hoy y con su dni como clave
-        $nif = $socio->getUsuario()->getNif();
-        //$clave = $this->get('security.password_encoder')
-            //->encodePassword($socio, $nif);
-
         $socio
             ->setActivo(true)
             ->setFechaAlta(new \DateTime('now'))
             ->setFechaBaja(null);
-           // ->getUsuario()->setClave($clave);
         $em->persist($socio);
-        //$em->flush();
-
-        //Obtenemos las fincas de las que era propietario
-        $fincasPropietario = $em->getRepository('AppBundle:Finca')
-            ->getFincasPorPropietario($socio);
-        //$em->persist($fincasPropietario);
-
-        //Activamos las fincas
-        foreach ($fincasPropietario as $item) {
-            $item->setActiva(true);
-        }
-        //$em->flush();
-
-        //Obtenemos las fincas de las que era arrendatario
-        $fincasArrendatario = $em->getRepository('AppBundle:Finca')
-            ->getFincasPorArrendatario($socio);
-        //$em->persist($fincasArrendatario);
-
-        foreach ($fincasArrendatario as $item) {
-            $item->setActiva(true);
-        }
 
         $em->flush();
 
-        //Obtención de todos los socios activos
+        //Obtención de todos los socios activos para mostrarlos
         $socios = $em->getRepository('AppBundle:Socio')
             ->getSocios();
 
