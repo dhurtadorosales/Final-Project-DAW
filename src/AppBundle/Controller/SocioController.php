@@ -145,17 +145,15 @@ class SocioController extends Controller
             else {
                 //Generación de una clave aleatoria
                 $aleatorio = random_int(0, 1000000);
-                $clave = $this->get('security.password_encoder')
-                    ->encodePassword($usuario, $aleatorio);
+                //$clave = $this->get('security.password_encoder')
+                   // ->encodePassword($usuario, $aleatorio);
 
                 $socio
                     ->setActivo(false)
                     ->setFechaBaja(new \DateTime('now'));
                 $usuario
-                    ->setActivo(false)
-                    ->setClave($clave);
-
-                $em->flush();
+                    ->setActivo(false);
+                    //->setClave($clave);
 
                 //Obtenemos las fincas de las que era arrendatario
                 $fincasArrendatario = $em->getRepository('AppBundle:Finca')
@@ -210,15 +208,16 @@ class SocioController extends Controller
 
         //Activación del socio con fecha de alta hoy y con su dni como clave
         $nif = $socio->getUsuario()->getNif();
-        $clave = $this->get('security.password_encoder')
-            ->encodePassword($socio, $nif);
+        //$clave = $this->get('security.password_encoder')
+            //->encodePassword($socio, $nif);
 
         $socio
             ->setActivo(true)
             ->setFechaAlta(new \DateTime('now'))
-            ->getUsuario()->setClave($clave);
+            ->setFechaBaja(null);
+           // ->getUsuario()->setClave($clave);
         $em->persist($socio);
-        $em->flush();
+        //$em->flush();
 
         //Obtenemos las fincas de las que era propietario
         $fincasPropietario = $em->getRepository('AppBundle:Finca')
@@ -229,7 +228,7 @@ class SocioController extends Controller
         foreach ($fincasPropietario as $item) {
             $item->setActiva(true);
         }
-        $em->flush();
+        //$em->flush();
 
         //Obtenemos las fincas de las que era arrendatario
         $fincasArrendatario = $em->getRepository('AppBundle:Finca')
@@ -239,7 +238,7 @@ class SocioController extends Controller
         foreach ($fincasArrendatario as $item) {
             $item->setActiva(true);
         }
-        $em->flush();
+        //$em->flush();
 
         //Obtención de todos los socios activos
         $socios = $em->getRepository('AppBundle:Socio')
@@ -247,6 +246,8 @@ class SocioController extends Controller
 
         //Variable auxiliar
         $baja = false;
+
+        $em->flush();
 
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,

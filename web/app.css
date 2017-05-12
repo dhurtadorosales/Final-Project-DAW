@@ -182,7 +182,7 @@ button {
 }
 
 .btnCancelar {
-    background-color: #BDBDBD;
+    background-color: #95A5A6;
     color: white;
 }
 
@@ -214,6 +214,11 @@ button {
 
 .btnOculto {
     visibility: hidden;
+}
+
+.alert {
+    margin-top: 5%;
+    position: fixed;
 }
 
 #logo {
