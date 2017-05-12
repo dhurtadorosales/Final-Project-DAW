@@ -144,6 +144,7 @@ class LineaController extends Controller
             'venta' => $venta
         ]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 //Obtención de la cantidad
@@ -152,9 +153,9 @@ class LineaController extends Controller
 				//Obtención campos producto y lote (si tienen valor)
 				$producto = $form['producto']->getData();
 				$lote = $form['lote']->getData();
-
+dump($lote );
 				//Si la línea es de un producto quitamos cantidad al stock de producto. Si no es así la quitamos del lote
-				if ($producto != '[Ninguno]') {
+				if (!$producto) {
                     $em->persist($producto);
                     $producto
                         ->setStock($producto->getStock() - $cantidad);
@@ -168,7 +169,7 @@ class LineaController extends Controller
                         ->setStock($lote->getStock() - $cantidad);
 
                     //Precio del lote
-                    $precio = $lote->getPrecioKg();
+                    $precio = $lote->getAceite()->getPrecioKg();
                 }
 
 				//Añadimos la cantidad a la base imponible de la venta
@@ -177,7 +178,9 @@ class LineaController extends Controller
 
                 $em->flush();
                 $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('ventas_listar');
+                return $this->redirectToRoute('ventas_listar_usuario', [
+                    'id' => $venta->getUsuario()
+                ]);
             }
             catch(\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');

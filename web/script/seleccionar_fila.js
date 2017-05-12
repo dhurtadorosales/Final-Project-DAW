@@ -13,6 +13,8 @@ function main() {
         //Añadimos la clase seleccionado
         $(this).addClass('seleccionado').siblings().removeClass('seleccionado');
 
+
+
         //Botones de fila visibles
         $(this).find('.btn').removeClass('btnOculto');
         $('.clickable-row').not(this).find('.btn').addClass('btnOculto');

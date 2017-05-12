@@ -212,6 +212,10 @@ button {
     color: white;
 }
 
+.seleccionado:hover {
+    background-color: cadetblue;
+}
+
 .btnOculto {
     visibility: hidden;
 }

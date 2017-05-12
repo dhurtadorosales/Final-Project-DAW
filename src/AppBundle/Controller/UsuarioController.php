@@ -170,6 +170,7 @@ class UsuarioController extends Controller
         if (null == $usuario) {
             $usuario = new Usuario();
             $em->persist($usuario);
+
             $usuario->setCliente(true);
         }
 

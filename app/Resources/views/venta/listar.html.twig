@@ -58,7 +58,7 @@
                         <td>
                             {% if venta.cerrada != true %}
                                 <a href="{{ path('ventas_lineas_nueva', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Añadir conceptos">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-plus"></i>
                                 </a>
                             {% endif %}
                             <a href="{{ path('ventas_detalle', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Detalle">

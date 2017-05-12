@@ -36,7 +36,8 @@ class ProductoNuevoType extends AbstractType
                         'placeholder' => '[Ninguno]'
                     ])*/
                     ->add('lotes', null, [
-                        'label' => 'Aceite:'
+                        'label' => 'Aceite:',
+                        'choice_label' => 'aceite'
                     ])
                     ->add('precio', null, [
                         'label' => 'Precio (€/ud):'

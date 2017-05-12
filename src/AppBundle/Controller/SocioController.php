@@ -46,8 +46,6 @@ class SocioController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $em2 = $this->getDoctrine()->getManager();
-        $em3 = $this->getDoctrine()->getManager();
 
         //Obtenemos la fecha actual
         $fecha = new \DateTime('now');
@@ -64,7 +62,7 @@ class SocioController extends Controller
             //Nuevo usuario que debe ser asignado al nuevo socio
             $usuario = new Usuario();
             $socio->setUsuario($usuario);
-            $em2->persist($usuario);
+            $em->persist($usuario);
 
             $form = $this->createForm(SocioType::class, $socio);
             $form->handleRequest($request);
@@ -83,16 +81,15 @@ class SocioController extends Controller
 
                     //Crear la liquidación del socio
                     $liquidacion = new  Liquidacion();
-                    $em3->persist($liquidacion);
+                    $em->persist($liquidacion);
                     $liquidacion
                         ->setTemporada($temporada)
                         ->setFecha($fecha)
                         ->setIva(0.1)
                         ->setRetencion(0.02)
                         ->setSocio($socio);
+
                     $em->flush();
-                   // $em2->flush();
-                    //$em3->flush();
                     $this->addFlash('estado', 'Socio guardado con éxito');
                     return $this->redirectToRoute('socios_listar');
                 } catch (\Exception $e) {
