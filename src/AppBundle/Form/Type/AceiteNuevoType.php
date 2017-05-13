@@ -21,13 +21,13 @@ class AceiteNuevoType extends AbstractType
                 $data = $event->getData();
                 $form
                     ->add('denominacion', null, [
-                        'label' => 'Denominación:',
+                        'label' => 'Denominación:'
                     ])
                     ->add('densidadKgLitro', null, [
-                        'label' => 'Densidad:',
+                        'label' => 'Densidad:'
                     ])
                     ->add('precioKg', null, [
-                        'label' => 'Precio (€/kg):',
+                        'label' => 'Precio (€/kg):'
                     ]);
             });
     }

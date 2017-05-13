@@ -3,10 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Aceite
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AceiteRepository")
+ * @UniqueEntity("denominacion")
  */
 class Aceite
 {
@@ -21,18 +24,23 @@ class Aceite
     /**
      * @var string
      * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
      */
     private $denominacion;
 
     /**
      * @var float
      * @ORM\Column(type="float", precision=3)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]+(\.[0-9]+)?$/")
      */
     private $densidadKgLitro;
 
     /**
      * @var float
      * @ORM\Column(type="float", precision=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]+(\.[0-9]+)?$/")
      */
     private $precioKg;
 
