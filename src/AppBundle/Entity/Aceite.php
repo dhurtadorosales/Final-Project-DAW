@@ -25,6 +25,7 @@ class Aceite
      * @var string
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $denominacion;
 

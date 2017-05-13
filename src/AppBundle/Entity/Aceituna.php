@@ -3,10 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class Aceituna
  * @ORM\Entity()
+ * @UniqueEntity("denominacion")
  */
 class Aceituna
 {
@@ -21,6 +24,8 @@ class Aceituna
     /**
      * @var string
      * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $denominacion;
 

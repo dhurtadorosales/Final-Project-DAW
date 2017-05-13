@@ -3,10 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextFactoryInterface;
 
 /**
  * Class Envase
  * @ORM\Entity()
+ * @Assert\Callback
  */
 class Envase
 {
@@ -20,13 +23,17 @@ class Envase
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $denominacion;
 
     /**
      * @var float
      * @ORM\Column(type="float", precision=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]+(\.[0-9]+)?$/")
      */
     private $capacidadLitros;
 
@@ -36,6 +43,11 @@ class Envase
      * @ORM\JoinColumn(nullable=true)
      */
     private $productos;
+
+    public function validate(ExecutionContextFactoryInterface $context)
+    {
+
+    }
 
     /**
      * Convierte a string
