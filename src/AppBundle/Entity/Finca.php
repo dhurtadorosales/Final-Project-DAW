@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Finca
@@ -21,54 +22,72 @@ class Finca
     /**
      * @var string
      * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $denominacion;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]{2}$/", message="Formato no válido")
      */
     private $provincia;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]{2}$/", message="Formato no válido")
      */
     private $municipio;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=1)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z]{1}$/", message="Formato no válido")
      */
     private $sector;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=3)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]{3}$/", message="Formato no válido")
      */
     private $poligono;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=5)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]{5}$/", message="Formato no válido")
      */
     private $parcela;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=4)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]{4}$/", message="Formato no válido")
      */
     private $idInmueble;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z]{2}$/", message="Formato no válido")
      */
     private $caracterControl;
 
     /**
      * @var integer
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]$/", message="Formato no válido")
      */
     private $numPlantas;
 
@@ -81,12 +100,16 @@ class Finca
     /**
      * @var float
      * @ORM\Column(type="float", precision=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]$/", message="Formato no válido")
      */
     private $partPropietario;
 
     /**
      * @var float
-     * @ORM\Column(type="float", precision=2, nullable=true)
+     * @ORM\Column(type="float", precision=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]$/", message="Formato no válido")
      */
     private $partArrend;
 
@@ -94,6 +117,7 @@ class Finca
      * @var Aceituna
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Aceituna", inversedBy="fincas")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
      */
     private $variedad;
 
@@ -114,6 +138,7 @@ class Finca
      * @var Socio
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Socio", inversedBy="fincasPropiedad")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
      */
     private $propietario;
 

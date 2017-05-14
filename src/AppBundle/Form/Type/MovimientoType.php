@@ -39,6 +39,9 @@ class MovimientoType extends AbstractType
                     ])
                     ->add('cantidad', null, [
                         'label' => 'Cantidad:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: -3000 si es pago, 3000 si es ingreso'
+                        ]
                     ]);
             });
     }

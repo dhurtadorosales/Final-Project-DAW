@@ -86,6 +86,20 @@ class LoteRepository extends EntityRepository
         return $consulta;
     }
 
+    public function getLotesNoNulosQuery()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->from('AppBundle:Lote', 'l')
+            ->andWhere('l.cantidad != :cantidad')
+            ->setParameter('cantidad', 0);
+
+        return $consulta;
+    }
+
     public function getLoteUnico(Lote $lote)
     {
         /** @var EntityManager $em */
@@ -114,6 +128,28 @@ class LoteRepository extends EntityRepository
             ->andWhere('l.stock != :stock')
             ->setParameter('aceite', $aceite)
             ->setParameter('stock', 0)
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function getLoteAuxiliarDenominacion($denominacion)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->addSelect('a')
+            ->addSelect('t')
+            ->from('AppBundle:Lote', 'l')
+            ->join('l.aceite', 'a')
+            ->join('l.temporada', 't')
+            ->where('a = :denominacion')
+            ->andWhere('t.denominacion != :temp')
+            ->setParameter('denominacion', $denominacion)
+            ->setParameter('temp', '00/00')
             ->getQuery()
             ->getResult();
 

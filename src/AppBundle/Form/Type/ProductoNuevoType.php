@@ -26,19 +26,20 @@ class ProductoNuevoType extends AbstractType
                         'label' => 'Envase:',
                         'placeholder' => '[Ninguno]'
                     ])
-                    /*->add('lotes', null, [
+                    ->add('lotes', null, [
                         'label' => 'Aceites:',
                         'class' => Lote::class,
                         'mapped' => false,
                         'query_builder' => function(LoteRepository $aceiteRepository) use ($options) {
                             return $aceiteRepository->getLotesTemporadaQuery($options['temporada']);
                         },
-                        'placeholder' => '[Ninguno]'
-                    ])*/
-                    ->add('lotes', null, [
-                        'label' => 'Aceite:',
+                        'placeholder' => '[Ninguno]',
                         'choice_label' => 'aceite'
                     ])
+                    /*->add('lotes', null, [
+                        'label' => 'Aceite:',
+                        'choice_label' => 'aceite'
+                    ])*/
                     ->add('precio', null, [
                         'label' => 'Precio (€/ud):'
                     ]);

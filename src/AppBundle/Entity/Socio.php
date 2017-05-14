@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Socio
@@ -21,6 +22,7 @@ class Socio
     /**
      * @var \DateTime
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
      */
     private $fechaAlta;
 

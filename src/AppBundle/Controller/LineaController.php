@@ -153,7 +153,7 @@ class LineaController extends Controller
 				//Obtención campos producto y lote (si tienen valor)
 				$producto = $form['producto']->getData();
 				$lote = $form['lote']->getData();
-dump($lote );
+
 				//Si la línea es de un producto quitamos cantidad al stock de producto. Si no es así la quitamos del lote
 				if (!$producto) {
                     $em->persist($producto);

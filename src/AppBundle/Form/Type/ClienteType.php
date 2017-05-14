@@ -32,7 +32,8 @@ class ClienteType extends AbstractType
                         'label' => 'Nombre:'
                     ])
                     ->add('apellidos', null, [
-                        'label' => 'Apellidos:'
+                        'label' => 'Apellidos:',
+                        'required' => false
                     ])
                     ->add('direccion', null, [
                         'label' => 'Dirección:'
@@ -47,10 +48,12 @@ class ClienteType extends AbstractType
                         'label' => 'Provincia:'
                     ])
                     ->add('telefono', null , [
-                        'label' => 'Telefono:'
+                        'label' => 'Telefono:',
+                        'required' => false
                     ])
                     ->add('email', EmailType::class, [
-                        'label' => 'Correo electrónico:'
+                        'label' => 'Correo electrónico:',
+                        'required' => false
                     ])
                     ->add('descuento', PercentType::class, [
                         'label' => 'Descuento:'

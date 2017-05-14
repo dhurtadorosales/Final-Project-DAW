@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Porcentaje
@@ -27,6 +28,8 @@ class Porcentaje
     /**
      * @var float
      * @ORM\Column(type="float", precision=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]+(\.[0-9]+)?$/")
      */
     private $cantidad;
 

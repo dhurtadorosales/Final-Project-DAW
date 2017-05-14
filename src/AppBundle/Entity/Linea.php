@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Linea
@@ -21,6 +22,7 @@ class Linea
     /**
      * @var float
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Inserta el fichero con las entregas de hoy")
      */
     private $cantidad;
 

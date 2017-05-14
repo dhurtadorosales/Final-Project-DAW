@@ -78,6 +78,19 @@ class ProductoController extends Controller
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $aceite = $form['lotes']->getData();
+
+                //Obtenemos el aceite que tiene esa denominacion
+                /*$aceite = $em->getRepository('AppBundle:Aceite')
+                    ->getTemporadaAuxiliar($datosAceite);*/
+
+                //Obtenemos el lote auxiliar que tiene ese aceite
+                $lotes = $em->getRepository('AppBundle:Lote')
+                    ->getLoteAuxiliarDenominacion($aceite);
+
+                //Asignamos al producto nuevo el lote auxiliar obtenido
+                $producto->addLote($lotes[0]);
+
                 $em->flush();
                 $this->addFlash('estado', 'Producto guardado con éxito');
                 return $this->redirectToRoute('productos_listar');

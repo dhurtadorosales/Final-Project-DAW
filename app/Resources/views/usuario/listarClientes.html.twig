@@ -9,6 +9,9 @@
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a principal
         </a>
+        <a href="{{ path('clientes_nuevo') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-plus"></i> Nuevo cliente
+        </a>
     </div>
     <div class="container well">
         <table class="table table-responsive">
@@ -48,7 +51,7 @@
                     </td>
                     <td>
                         {% if is_granted('ROLE_ADMINISTRADOR') %}
-                            <a href="{{ path('clientes_modificar', {'cliente' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
+                            <a href="{{ path('clientes_modificar', {'cliente' : cliente }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                                 <i class="fa fa-pencil"></i>
                             </a>
                         {% endif %}

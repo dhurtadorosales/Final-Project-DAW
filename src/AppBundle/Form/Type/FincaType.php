@@ -27,40 +27,73 @@ class FincaType extends AbstractType
                 $data = $event->getData();
                 $form
                     ->add('denominacion', null, [
-                        'label' => 'Denominación:'
+                        'label' => 'Denominación:',
+                        'attr' => [
+                            'placeholder' => 'Denominación'
+                        ]
                     ])
                     ->add('provincia', null, [
-                        'label' => 'Provincia:'
+                        'label' => 'Provincia:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: 13'
+                        ]
                     ])
                     ->add('municipio', null, [
-                        'label' => 'Municipio:'
+                        'label' => 'Municipio:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: 77'
+                        ]
                     ])
                     ->add('sector', null, [
-                        'label' => 'Sector:'
+                        'label' => 'Sector:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: A'
+                        ]
                     ])
                     ->add('poligono', null, [
-                        'label' => 'Polígono:'
+                        'label' => 'Polígono:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: 018'
+                        ]
                     ])
                     ->add('parcela', null, [
-                        'label' => 'Parcela:'
+                        'label' => 'Parcela:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: 00039'
+                        ]
                     ])
                     ->add('idInmueble', null, [
-                        'label' => 'Identificación del inmueble:'
+                        'label' => 'Identificación del inmueble:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: 0000'
+                        ]
                     ])
                     ->add('caracterControl', null, [
-                        'label' => 'Caracteres de control:'
+                        'label' => 'Caracteres de control:',
+                        'attr' => [
+                            'placeholder' => 'Ejemplo: FP'
+                        ]
                     ])
                     ->add('numPlantas', null , [
-                        'label' => 'Número de plantas:'
+                        'label' => 'Número de plantas:',
+                        'attr' => [
+                            'placeholder' => 'Número de plantas'
+                        ]
                     ])
                     ->add('regadio', null, [
                         'label' => 'Regadío'
                     ])
                     ->add('partPropietario', PercentType::class, [
-                        'label' => 'Participación del propietario:'
+                        'label' => 'Participación del propietario:',
+                        'attr' => [
+                            'placeholder' => 'Participación del propietario'
+                        ]
                     ])
                     ->add('partArrend', PercentType::class, [
-                        'label' => 'Participación del arrendatario:'
+                        'label' => 'Participación del arrendatario:',
+                        'attr' => [
+                            'placeholder' => 'Participación del arrendatario'
+                        ]
                     ])
                     ->add('variedad', null, [
                         'label' => 'Variedad de aceituna:',
@@ -72,7 +105,8 @@ class FincaType extends AbstractType
                     ])
                     ->add('arrendatario', null, [
                         'label' => 'Arrendatario:',
-                        'placeholder' => '[Ninguno]'
+                        'placeholder' => '[Ninguno]',
+                        'required' => false
                     ]);
             });
     }

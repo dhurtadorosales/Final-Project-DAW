@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Movimiento
@@ -21,12 +22,16 @@ class Movimiento
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $concepto;
 
     /**
      * @var float
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^{-}[0-9]+(\.[0-9]+)?$/")
      */
     private $cantidad;
 

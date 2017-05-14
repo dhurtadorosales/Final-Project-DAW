@@ -24,68 +24,84 @@ class Usuario implements AdvancedUserInterface
     /**
      * @var string
      * @ORM\Column(type="string", length=9, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Este campo es obligatorio")
      */
     private $nif;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Este campo es obligatorio")
      */
     private $clave;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ , . /]*$/", message="Formato no válido")
      */
     private $nombre;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $apellidos;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ , . /]*$/", message="Formato no válido")
      */
     private $direccion;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=5)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]{5}$/", message="Formato no válido")
      */
     private $codigoPostal;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $localidad;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $provincia;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=9, nullable=true)
+     * @Assert\Regex("/^[0-9]{9}$/", message="Formato no válido")
      */
     private $telefono;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Email(message="Formato no válido")
      */
     private $email;
 
     /**
      * @var float
-     * @ORM\Column(type="float", precision=2, nullable=true)
+     * @ORM\Column(type="float", precision=2)
+     * @Assert\NotBlank(message="Este campo es obligatorio")
+     * @Assert\Regex("/^[0-9]+(\.[0-9]+)?$/")
      */
     private $descuento;
 
