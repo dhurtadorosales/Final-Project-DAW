@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,6 +57,16 @@ class DefaultController extends Controller
      */
     public function principalAction()
     {
-        return $this->render('default/principal.html.twig');
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtención del número de temporadas
+        $temporadas = $em->getRepository('AppBundle:Temporada')
+            ->getNumeroTemporadas();
+        dump($temporadas);
+
+        return $this->render('default/principal.html.twig', [
+            'temporadas' => $temporadas
+        ]);
     }
 }

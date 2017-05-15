@@ -28,7 +28,8 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "twig/twig": "^1.0||^2.0"
+        "twig/twig": "^1.0||^2.0",
+        "liuggio/ExcelBundle": "^2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

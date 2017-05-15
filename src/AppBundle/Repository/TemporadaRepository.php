@@ -47,4 +47,18 @@ class TemporadaRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getNumeroTemporadas()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('COUNT(t)')
+            ->from('AppBundle:Temporada', 't')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $consulta;
+    }
 }

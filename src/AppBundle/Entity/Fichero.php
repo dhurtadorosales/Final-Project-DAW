@@ -27,7 +27,6 @@ class Fichero
     private $entregas;
 
 
-
     /**
      * Get id
      *

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FicheroController extends Controller
 {
     /**
-     * @Route("/subir/fichero", name="subir_fichero")
+     * @Route("/fichero/subir", name="fichero_subir")
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
     public function indexAction(Request $request)
@@ -43,12 +43,34 @@ class FicheroController extends Controller
                 $file->move($entregasDir, $fileName);
                 $fichero->setEntregas($entregasDir.'/'.$fileName);
 
+                //Creación de un objeto de la clase phpexcel con el fichero subido
+                $objetoXls = $this->get('phpexcel')->createPHPExcelObject($entregasDir . '/'  . $fileName);
+
+                //Se recorren las hojas
+                $hojas = $objetoXls->getWorksheetIterator();
+                foreach ($hojas as $hoja) {
+                    echo 'Hoja ', $hoja->getTitle();
+                    //Se recorren las filas
+                    $filas = $hoja->getRowIterator();
+                    foreach ($filas as $fila) {
+                        echo '    Row number - ' , $fila->getRowIndex();
+                        //Se recorren las columnas de cada fila
+                        $celdas = $fila->getCellIterator();
+                        $celdas->setIterateOnlyExistingCells(false);
+                        foreach ($celdas as $celda) {
+                            if (!is_null($celda)) {
+                                echo '        Cell - ' , $celda->getCoordinate() , ' - ' , $celda->getCalculatedValue();
+                            }
+                        }
+                    }
+                }
+
                 $em->flush();
-                $this->addFlash('estado', 'Precios guardados con éxito');
+                $this->addFlash('estado', 'Entradas insertadas correctamente');
                 return $this->redirectToRoute('principal');
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar los precios');
+                $this->addFlash('error', 'No se han podido insertar las entradas');
             }
         }
 
