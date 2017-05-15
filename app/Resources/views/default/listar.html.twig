@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Fincas{% endblock %}
+
+{% block section %}
+    {% include 'flash.html.twig' %}
+    <div class="container">
+    <table class="table">
+        {% for entregas in entrega %}
+            <tr>
+                {% for i in 0..entrega.length %}
+                    <td>{{ entrega[i] }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+    {% block javascripts %}
+        <script src="{{ asset('script/flash.js') }}"></script>
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
+    {% endblock %}
+{% endblock %}
