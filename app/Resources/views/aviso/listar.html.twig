@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Aceites{% endblock %}
+
+{% block section %}
+    {% include 'flash.html.twig' %}
+    <div class="container">
+        <h2 class="well">Avisos</h2>
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-home"></i> Ir a principal
+        </a>
+        <div class="container well">
+            {% for aviso in avisos %}
+                <div class="btn-danger container alert-dismissible">
+                    {{ aviso.denominacion }}
+                </div>
+                <a href="{{ path('avisos_eliminar', {'aviso' : aviso.id }) }}" title="Si se ha solucionado el problema pincha aquí para no volver a mostrar este mensaje">
+                    <i class="fa fa-lightbulb-o"></i> Solucionado
+                </a>
+                <br/>
+            {% endfor %}
+        </div>
+{% endblock %}

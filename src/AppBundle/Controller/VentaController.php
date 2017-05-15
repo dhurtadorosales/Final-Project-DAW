@@ -287,7 +287,7 @@ class VentaController extends Controller
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->getTemporadas();
 
-        return $this->render('venta/principal.html.twig', [
+        return $this->render('venta/listar.html.twig', [
             'temporadas' => $temporadas,
             'socio' => $socio
         ]);

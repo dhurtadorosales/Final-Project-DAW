@@ -59,6 +59,13 @@ class Temporada
      */
     private $movimientos;
 
+    /**
+     * @var Aviso[]
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Aviso", mappedBy="temporada")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $avisos;
+
 
     /**
      * Convierte a string
@@ -67,7 +74,6 @@ class Temporada
     {
         return $this->getDenominacion();
     }
-
 
     /**
      * Constructor
@@ -79,6 +85,7 @@ class Temporada
         $this->entregas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ventas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->movimientos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->avisos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -283,5 +290,39 @@ class Temporada
     public function getMovimientos()
     {
         return $this->movimientos;
+    }
+
+    /**
+     * Add aviso
+     *
+     * @param \AppBundle\Entity\Aviso $aviso
+     *
+     * @return Temporada
+     */
+    public function addAviso(\AppBundle\Entity\Aviso $aviso)
+    {
+        $this->avisos[] = $aviso;
+
+        return $this;
+    }
+
+    /**
+     * Remove aviso
+     *
+     * @param \AppBundle\Entity\Aviso $aviso
+     */
+    public function removeAviso(\AppBundle\Entity\Aviso $aviso)
+    {
+        $this->avisos->removeElement($aviso);
+    }
+
+    /**
+     * Get avisos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAvisos()
+    {
+        return $this->avisos;
     }
 }

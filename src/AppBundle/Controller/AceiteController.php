@@ -21,7 +21,7 @@ class AceiteController extends Controller
      */
     public function principalAceiteAction()
     {
-        return $this->render('aceite/principal.html.twig');
+        return $this->render('aceite/listar.html.twig');
     }
 
     /**

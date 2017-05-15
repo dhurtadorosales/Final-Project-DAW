@@ -8,6 +8,11 @@
         <div class="well">
             <h2>Inicio</h2>
         </div>
+        {% if is_granted('ROLE_ENCARGADO') and numeroAvisos != 0 %}
+            <a href="{{ path('avisos_listar') }}" class="alert-danger">
+                <i class="fa fa-exclamation-triangle"></i> Avisos
+            </a>
+        {% endif %}
         <div class="tiles">
             {% if is_granted('ROLE_ADMINISTRADOR') %}
                 <a type="button" class="btn" data-toggle="modal" data-target="#temporadas_comenzar">

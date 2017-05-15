@@ -16,7 +16,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USUARIO')){
-            return $this->render('default/principal.html.twig', [
+            return $this->render('default/listar.html.twig', [
                 'temporadas' => false
             ]);
         }
@@ -65,10 +65,14 @@ class DefaultController extends Controller
         //Obtención del número de temporadas
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->getNumeroTemporadas();
-        dump($temporadas);
+
+        //Obtención del número de avisos
+        $numeroAvisos = $em->getRepository('AppBundle:Aviso')
+            ->getNumeroAvisos();
 
         return $this->render('default/principal.html.twig', [
-            'temporadas' => $temporadas
+            'temporadas' => $temporadas,
+            'numeroAvisos' => $numeroAvisos
         ]);
     }
 }

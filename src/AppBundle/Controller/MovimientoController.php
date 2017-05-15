@@ -155,7 +155,7 @@ class MovimientoController extends Controller
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->getTemporadas();
 
-        return $this->render('movimiento/principal.html.twig', [
+        return $this->render('movimiento/listar.html.twig', [
             'temporadas' => $temporadas
         ]);
     }
