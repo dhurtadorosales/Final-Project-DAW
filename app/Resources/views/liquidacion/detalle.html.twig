@@ -3,6 +3,7 @@
 {% block title %}Liquidaciones{% endblock %}
 
 {% block section %}
+    <div class="pdf"><a href="{{ path('pdf') }}" id="pdf">enlace</a></div>
     <div class="container">
         <div class="well">
             <h2>Liquidación</h2>
@@ -117,4 +118,7 @@
             </thead>
         </table>
     </div>
+    {##% block javascripts %#}
+        <!--<script src="{#{ asset('script/pdf.js') }#}"></script>-->
+    {#% endblock %#}
 {% endblock %}

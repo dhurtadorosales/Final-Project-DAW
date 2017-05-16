@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class DefaultController extends Controller
@@ -102,5 +103,57 @@ class DefaultController extends Controller
         }
 
         return $this->redirectToRoute('principal');
+    }
+
+    /**
+     * @Route("/pdf", name="pdf")
+     * @Security("is_granted('ROLE_USUARIO')")
+     */
+    public function pdfAction(Request $request)
+    {
+        if('POST' === $request->getMethod()) {
+            //$html = $request->get('html');
+        dump($request);
+        $html = '<h2>hola</h2>';
+
+            $mpdf = new \mPDF('es-ES', 'A4', '', '', 32, 25, 27, 25, 16, 13);
+            $mpdf->onlyCoreFonts = true;
+            //$stylesheet = file_get_contents('web/styles/main.css');
+            //$mpdf->WriteHTML($stylesheet, 1); //Solo contenido css y no html
+            $mpdf->WriteHTML($html, 2);
+            $mpdf->Output('liquidacion_2017_2018.pdf', 'D');
+        }
+
+
+
+        $titulos = [
+            "Aceite Virgen Extra",
+            "Aceite Virgen",
+            "Aceite Lampante",
+            "Aceituna Picual",
+            "Un mar de olivos..."
+        ];
+
+        $subtitulos = [
+            "La joya de la corona",
+            "El segundo de a bordo",
+            "El gran subestimado",
+            "Nuestra principal materia prima",
+            "La tierra que nos da sus frutos"
+        ];
+
+        $fotos = [
+            "virgen_extra.jpg",
+            "virgen.jpg",
+            "lampante.jpg",
+            "picual.jpg",
+            "paisaje2.jpg"
+        ];
+
+        return $this->render('default/index.html.twig', [
+            'titulos' => $titulos,
+            'subtitulos' => $subtitulos,
+            'fotos' => $fotos
+        ]);
     }
 }
