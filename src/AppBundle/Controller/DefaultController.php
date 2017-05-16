@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class DefaultController extends Controller
 {
@@ -74,5 +75,32 @@ class DefaultController extends Controller
             'temporadas' => $temporadas,
             'numeroAvisos' => $numeroAvisos
         ]);
+    }
+
+    /**
+     * @Route("/correo", name="correo")
+     * @Security("is_granted('ROLE_USUARIO')")
+     */
+    public function correoAction()
+    {
+        try {
+            $mensaje = \Swift_Message::newInstance()
+                ->setSubject('Hello Email')
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo('dhurtadorosales@gmail.com')
+                ->setBody(
+                    $this->renderView(
+                        'default/email.html.twig'
+                    ),
+                    'text/html'
+                );
+            $this->get('mailer')->send($mensaje);
+            $this->addFlash('estado', 'Correo mandado correctamente');
+        }
+        catch (Exception $e) {
+            $this->addFlash('error', 'Error al enviar el correo');
+        }
+
+        return $this->redirectToRoute('principal');
     }
 }
