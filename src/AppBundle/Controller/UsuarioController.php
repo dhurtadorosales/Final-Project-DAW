@@ -49,15 +49,22 @@ class UsuarioController extends Controller
      * @Route("/empleados/listar", name="empleados_listar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $empleados = $em->getRepository('AppBundle:Usuario')
             ->getEmpleados();
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $empleados,
+            $request->query->getInt('page', 1), 2
+        );
+
         return $this->render('usuario/listarEmpleados.html.twig', [
-            'empleados' => $empleados
+            'empleados' => $empleados,
+            'pagination' =>$pagination
         ]);
     }
 

@@ -31,7 +31,8 @@
         "twig/twig": "^1.0||^2.0",
         "liuggio/ExcelBundle": "^2.1",
         "swiftmailer/swiftmailer": "^5.4",
-        "mpdf/mpdf": "^6.1"
+        "mpdf/mpdf": "^6.1",
+        "knplabs/knp-paginator-bundle": "^2.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
