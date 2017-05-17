@@ -223,7 +223,7 @@ class LiquidacionController extends Controller
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->getTemporadas();
 
-        return $this->render('liquidacion/listar.html.twig', [
+        return $this->render('liquidacion/principal.html.twig', [
             'temporadas' => $temporadas
         ]);
     }

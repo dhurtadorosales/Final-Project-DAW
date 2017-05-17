@@ -64,9 +64,9 @@ class TemporadaController extends Controller
             $nuevaTemporada
                 ->setDenominacion($denominacion);
 
-            //Obtención de todos los socios
+            //Obtención de todos los socios dados de alta
             $socios = $em->getRepository('AppBundle:Socio')
-                ->findAll();
+                ->getSocios();
 
             //Obtención de los porcentajes vigentes
             $porcentajes = $em->getRepository('AppBundle:Porcentaje')
@@ -99,6 +99,27 @@ class TemporadaController extends Controller
             }
 
             $em->flush();
+
+            //Si la temporada no es la auxiliar se envía un email a cada socio informando de que la liquidación está cerrada
+            if ($temporada->getId() != 0) {
+                foreach ($socios as $socio) {
+                    $mensaje = \Swift_Message::newInstance()
+                        ->setSubject('Liquidación temporada ' . $temporada)
+                        ->setFrom($this->getParameter('mailer_user'))
+                        ->setTo($socio->getUsuario()->getEmail())
+                        ->setBody(
+                            $this->renderView(
+                                'default/email.html.twig', [
+                                    'socio' => $socio,
+                                    'temporada' => $temporada
+                                ]
+                            ),
+                            'text/html'
+                        );
+                    $this->get('mailer')->send($mensaje);
+                    //$this->addFlash('estado', 'Correo mandado correctamente');
+                }
+            }
 
             $this->addFlash('estado', 'Temporada comenzada');
         } catch (UniqueConstraintViolationException $exception) {

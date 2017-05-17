@@ -1,2 +1,4 @@
-<h3>Hola Diego</h3>
-<a href="http://localhost:8000/movimientos/listar">enlace</a>
+<h3>Socio: {{ socio }}</h3>
+<p>Hola {{ socio.usuario.nombre }}, </p>
+<p>Le informamos que se ha procedido al cierre de la campaña {{ temporada }} y que se ha calculado su liquidación definitiva. Ya puede visualizarla conectándose a nuestra aplicación.</p>
+<a href="http://localhost:8000/liquidaciones/detalle/{{ socio.id }}/{{ temporada.id }}">Ver liquidación</a>

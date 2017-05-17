@@ -3,7 +3,6 @@
 {% block title %}Liquidaciones{% endblock %}
 
 {% block section %}
-    <div class="pdf"><a href="{{ path('pdf') }}" id="pdf">enlace</a></div>
     <div class="container">
         <div class="well">
             <h2>Liquidación</h2>
@@ -20,6 +19,11 @@
         {% else %}
             <a href="{{ path('liquidaciones_listar') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-calculator"></i> Ir a liquidaciones
+            </a>
+        {% endif %}
+        {% if liquidacion[0].fecha != null and app.user.nif == socio.usuario.nif %}
+            <a href="{{ path('pdf') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-file-pdf-o"></i> Descargar PDF
             </a>
         {% endif %}
     </div>
