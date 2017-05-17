@@ -18,7 +18,9 @@
             <thead>
             <tr>
                 <th class="col-sm-1">NIF</th>
-                <th class="col-sm-3">{{ knp_pagination_sortable(pagination, 'Empleado', 'a.Empleado') }}</th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'Empleado', 'a.apellidos') }}
+                </th>
                 <th class="col-sm-3 select2">Dirección</th>
                 <th class="col-sm-2">Teléfono</th>
                 <th class="col-sm-1">Roles</th>

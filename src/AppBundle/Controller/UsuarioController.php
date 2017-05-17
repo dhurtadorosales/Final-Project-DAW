@@ -59,7 +59,7 @@ class UsuarioController extends Controller
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $empleados,
-            $request->query->getInt('page', 1), 2
+            $request->query->getInt('page', 1), 4
         );
 
         return $this->render('usuario/listarEmpleados.html.twig', [

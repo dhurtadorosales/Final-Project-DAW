@@ -225,6 +225,15 @@ button {
     position: fixed;
 }
 
+.sortable {
+    color: #6A6C6F;
+}
+
+.sortable:hover {
+    color: #6A6C6F;
+    text-decoration: none;
+}
+
 #logo {
     width: 10%;
 }
