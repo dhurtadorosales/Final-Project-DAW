@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class DefaultController extends Controller
@@ -106,10 +106,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/pdf", name="pdf")
+     * @Route("/pdf2", name="pdf2")
      * @Security("is_granted('ROLE_USUARIO')")
      */
-    public function pdfAction(Request $request)
+    public function pd2fAction(Request $request)
     {
         if('POST' === $request->getMethod()) {
             //$html = $request->get('html');

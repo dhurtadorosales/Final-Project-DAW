@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "01f27e1a1e5e6cb2167607af50b1273a",
+    "content-hash": "3ddde63a0b8eed63ade8fbd1c735f00d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1400,6 +1400,59 @@
                 "psr-3"
             ],
             "time": "2016-10-10T12:19:37+00:00"
+        },
+        {
+            "name": "sasedev/mpdf-bundle",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sasedev/mpdf-bundle.git",
+                "reference": "451b98043a18ba80ae7f7c028aa767bdb19400b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sasedev/mpdf-bundle/zipball/451b98043a18ba80ae7f7c028aa767bdb19400b9",
+                "reference": "451b98043a18ba80ae7f7c028aa767bdb19400b9",
+                "shasum": ""
+            },
+            "require": {
+                "mpdf/mpdf": "~6.0|~7.0",
+                "php": ">=5.5",
+                "symfony/config": "~2.8|~3.0",
+                "symfony/dependency-injection": "~2.8|~3.0",
+                "symfony/http-foundation": "~2.8|~3.0",
+                "symfony/http-kernel": "~2.8|~3.0",
+                "symfony/monolog-bridge": "~2.8|~3.0",
+                "symfony/twig-bridge": "~2.8|~3.0",
+                "symfony/yaml": "~2.8|~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Salah Abdelkader Seif Eddine",
+                    "email": "seif.salah@gmail.com"
+                }
+            ],
+            "description": "Mpdf for Symfony2 (3.0)",
+            "keywords": [
+                "Symfony2",
+                "form"
+            ],
+            "time": "2017-04-28T07:56:29+00:00"
         },
         {
             "name": "sensio/distribution-bundle",

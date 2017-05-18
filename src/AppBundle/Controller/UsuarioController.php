@@ -18,30 +18,44 @@ class UsuarioController extends Controller
     /**
      * @Route("/usuarios/listar", name="usuarios_listar")
      */
-    public function listarUsuariosAction()
+    public function listarUsuariosAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $usuarios = $em->getRepository('AppBundle:Usuario')
             ->findAll();
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $usuarios,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('usuario/listar.html.twig', [
-            'usuarios' => $usuarios
+            'usuarios' => $usuarios,
+            'pagination' => $pagination
         ]);
     }
 
     /**
      * @Route("/clientes/listar", name="clientes_listar")
      */
-    public function listarClientesAction()
+    public function listarClientesAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $clientes = $em->getRepository('AppBundle:Usuario')
             ->getClientes();
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $clientes,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('usuario/listarClientes.html.twig', [
-            'clientes' => $clientes
+            'clientes' => $clientes,
+            'pagination' => $pagination
         ]);
     }
 

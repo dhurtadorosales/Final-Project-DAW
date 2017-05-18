@@ -170,7 +170,7 @@ class LiquidacionController extends Controller
         ]);
     }
 
-    /**
+    /*
      * @Route("/liquidaciones/insertar", name="liquidaciones_insertar")
      */
   /*  public function insertarLiquidacionAction()
@@ -226,5 +226,42 @@ class LiquidacionController extends Controller
         return $this->render('liquidacion/principal.html.twig', [
             'temporadas' => $temporadas
         ]);
+    }
+
+    /**
+     * @Route("/liquidaciones/imprimir/{socio}/{temporada}", name="liquidaciones_imprimir")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function pdfAction(Socio $socio, Temporada $temporada)
+    {
+
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init('', 'A4');
+
+        $objeto = $mpdf->getMpdf();
+        $objeto->SetImportUse();
+        $objeto->SetDocTemplate('uploads/a4_vacio.pdf', true);
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $lotes = $em->getRepository('AppBundle:Lote')
+            ->getLotesTemporada($temporada);
+
+        $mpdf->useTwigTemplate('lote/listar.html.twig', [
+            'lotes' => $lotes,
+            'temporada' => $temporada,
+        /*    'sumaEntregas' => $sumaEntregas,
+            'sumaVentas' => $sumaVentas,
+            'pesoAceituna' => $pesoAceituna,
+            'pesoAceite' => $pesoAceite,
+            'rendimientoMedio' => $rendimientoMedio,
+            'porcentajes' => $porcentajes,
+            'sumaBonificacion' => $sumaBonificacion,
+            'precioLiquidacion' => $precioLiquidacion*/
+        ]);
+
+
+        return $mpdf->generateInlineFileResponse('liquidacion_2017_2018.pdf');
     }
 }

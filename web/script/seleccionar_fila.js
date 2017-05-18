@@ -13,29 +13,4 @@ function main() {
         $(this).find('.btn').removeClass('btnOculto');
         $('.clickable-row').not(this).find('.btn').addClass('btnOculto');
     });
-
-    $(".desplegable").hide();
-
-    if((screen.width>=992) && (screen.height>=768)){
-        $("#usuario").mouseenter(function() {
-            $(".desplegable").show();
-        }).mouseleave(function() {
-            $(".desplegable").hide();
-        });
-
-        $(".desplegable").mouseenter(function() {
-            $(".desplegable").show();
-        }).mouseleave(function() {
-            $(".desplegable").hide();
-        });
-    }
-    else{
-        $("#usuario").click(function() {
-            $(".desplegable").toggle();
-        });
-    }
-
-    $('select').select2()({
-        theme: "bootstrap"
-    });
 }
