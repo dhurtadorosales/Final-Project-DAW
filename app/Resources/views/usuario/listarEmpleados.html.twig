@@ -14,6 +14,12 @@
         </a>
     </div>
     <div class="container well">
+        <form action="{{ path('empleados_buscar') }}" id="buscar">
+            <input type="text" name="buscar" placeholder="Buscar...">
+            <button type="submit" class="btn btn-default btnAceptar" title="Buscar">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
         <table class="table table-responsive">
             <thead>
             <tr>

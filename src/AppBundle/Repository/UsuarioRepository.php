@@ -51,4 +51,26 @@ class UsuarioRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getEmpleadosNombre($parametro)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('u')
+            ->from('AppBundle:Usuario', 'u')
+            ->where('u.empleado = :valor')
+            ->andWhere('u.activo = :activo')
+            ->andWhere('u.nombre LIKE :parametro')
+            ->orWhere('u.apellidos LIKE :parametro')
+            ->orWhere('u.nif LIKE :parametro')
+            ->setParameter('valor', true)
+            ->setParameter('activo', true)
+            ->setParameter('parametro', '%' . $parametro . '%')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
 }

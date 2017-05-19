@@ -234,6 +234,11 @@ button {
     text-decoration: none;
 }
 
+/*.botonera {
+    display: flex;
+    flex-wrap: wrap;
+}*/
+
 #logo {
     width: 10%;
 }

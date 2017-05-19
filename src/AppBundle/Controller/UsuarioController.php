@@ -63,7 +63,7 @@ class UsuarioController extends Controller
      * @Route("/empleados/listar", name="empleados_listar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function listarAction(Request $request)
+    public function listarEmpleadosAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -75,6 +75,34 @@ class UsuarioController extends Controller
             $empleados,
             $request->query->getInt('page', 1), 4
         );
+
+        return $this->render('usuario/listarEmpleados.html.twig', [
+            'empleados' => $empleados,
+            'pagination' =>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/empleados/buscar", name="empleados_buscar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function buscarAction(Request $request)
+    {
+        if ('' === $request) {
+            return $this->listarEmpleadosAction($request);
+        }
+        else {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+            $empleados = $em->getRepository('AppBundle:Usuario')
+                ->getEmpleadosNombre($request->get('buscar'));
+
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $empleados,
+                $request->query->getInt('page', 1), 4
+            );
+        }
 
         return $this->render('usuario/listarEmpleados.html.twig', [
             'empleados' => $empleados,
