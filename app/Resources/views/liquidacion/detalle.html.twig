@@ -82,23 +82,23 @@
             </tr>
             <tr>
                 <td>{% if liquidacion[0].fecha != null %}
-                        {% set iva = liquidacion[0].iva * 100 %}
+                        {% set iva = liquidacion[0].iva %}
                     {% else %}
-                        {% set iva = porcentajes[1].cantidad * 100 %}
+                        {% set iva = porcentajes[1].cantidad %}
                     {% endif %}
-                    IVA {{ iva }}%
+                    IVA {{ iva * 100 }}%
                 </td>
                 <td>{{ baseImponible * iva }}</td>
-                <td>IVA {{ iva }}%</td>
+                <td>IVA {{ iva * 100 }}%</td>
                 <td>{{ sumaVentas * iva }}</td>
             </tr>
             <tr>
                 <td>{% if liquidacion[0].fecha != null %}
-                        {% set retencion = liquidacion[0].retencion * 100 %}
+                        {% set retencion = liquidacion[0].retencion %}
                     {% else %}
-                        {% set retencion = porcentajes[2].cantidad * 100 %}
+                        {% set retencion = porcentajes[2].cantidad %}
                     {% endif %}
-                    Retención {{ retencion }}%
+                    Retención {{ retencion * 100 }}%
                 </td>
                 <td>- {{ baseImponible * retencion }}</td>
             </tr>

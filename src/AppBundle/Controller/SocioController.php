@@ -30,7 +30,7 @@ class SocioController extends Controller
 
         //Variable auxiliar
         $baja = false;
-dump($socios);
+
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,
             'baja' => $baja

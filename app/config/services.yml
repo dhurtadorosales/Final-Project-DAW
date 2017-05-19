@@ -8,3 +8,6 @@ services:
         class: AppBundle\Service\TemporadaActual
         arguments: ["@doctrine.orm.entity_manager"]
         #arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    calculo_liquidacion:
+        class: AppBundle\Service\CalculoLiquidacion
+        arguments: ["@doctrine.orm.entity_manager"]

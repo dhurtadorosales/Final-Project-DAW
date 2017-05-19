@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Liquidacion;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
+use AppBundle\Service\CalculoLiquidacion;
 use Doctrine\ORM\EntityManager;
 use Sasedev\MpdfBundle\Service\MpdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -58,6 +59,11 @@ class LiquidacionController extends Controller
             $temporada = $temporadaActual->temporadaActualAction();
         }
 
+        $objeto = new CalculoLiquidacion($em);
+        $calculo = $objeto->calculoLiquidacionAction($socio, $temporada);
+        dump($temporada);
+
+/*
         //Obtención de los porcentajes
         $porcentajes = $em->getRepository('AppBundle:Porcentaje')
             ->findAll();
@@ -169,6 +175,20 @@ class LiquidacionController extends Controller
             'sumaBonificacion' => $sumaBonificacion,
             'precioLiquidacion' => $precioLiquidacion
         ]);
+*/
+        return $this->render('liquidacion/detalle.html.twig', [
+            'socio' => $socio,
+            'temporada' => $temporada,
+            'liquidacion' => $calculo[0],
+            'sumaEntregas' => $calculo[1],
+            'sumaVentas' => $calculo[2],
+            'pesoAceituna' => $calculo[3],
+            'pesoAceite' => $calculo[4],
+            'rendimientoMedio' => $calculo[5],
+            'porcentajes' => $calculo[6],
+            'sumaBonificacion' => $calculo[7],
+            'precioLiquidacion' => $calculo[8]
+        ]);
     }
 
     /*
@@ -240,29 +260,9 @@ class LiquidacionController extends Controller
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init('', 'A4');
 
-        $objeto = $mpdf->getMpdf();
-        //$objeto->SetImportUse();
-        //$objeto->SetDocTemplate('uploads/a4_vacio.pdf', true);
+        $mpdf->getMpdf();
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $lotes = $em->getRepository('AppBundle:Lote')
-            ->getLotesTemporada($temporada);
-
-        $mpdf->useTwigTemplate('lote/listar.html.twig', [
-            'lotes' => $lotes,
-            'temporada' => $temporada,
-        /*    'sumaEntregas' => $sumaEntregas,
-            'sumaVentas' => $sumaVentas,
-            'pesoAceituna' => $pesoAceituna,
-            'pesoAceite' => $pesoAceite,
-            'rendimientoMedio' => $rendimientoMedio,
-            'porcentajes' => $porcentajes,
-            'sumaBonificacion' => $sumaBonificacion,
-            'precioLiquidacion' => $precioLiquidacion*/
-        ]);
-
+        $mpdf->useTwigTemplate('liquidacion/pdf.html');
 
         return $mpdf->generateInlineFileResponse('liquidacion_2017_2018.pdf');
     }
