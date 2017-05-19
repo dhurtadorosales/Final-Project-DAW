@@ -13,73 +13,103 @@
                 <i class="fa fa-exclamation-triangle"></i> Avisos
             </a>
         {% endif %}
-        <div class="tiles">
+
             {% if is_granted('ROLE_ADMINISTRADOR') %}
-                <a type="button" class="btn" data-toggle="modal" data-target="#temporadas_comenzar">
-                    <div class="tile tile-dark-teal">
-                        <div class="tile-body">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        <div class="tile-object">
-                            <div class="number">Comenzar</div>
-                            <div class="number">temporada</div>
-                        </div>
-                    </div>
-                </a>
-                {% if temporadas != 1 %}
-                    <a href="{{ path('socios_listar') }}" class="btn">
-                        <div class="tile tile-dark-teal">
+                <h4 class="well">Tareas de administrador</h4>
+                <div class="tiles">
+                    <a type="button" class="btn" data-toggle="modal" data-target="#temporadas_comenzar">
+                        <div class="tile tile-dark-green">
                             <div class="tile-body">
-                                <i class="fa fa-users"></i>
+                                <i class="fa fa-calendar"></i>
                             </div>
                             <div class="tile-object">
-                                <div class="number">Socios</div>
+                                <div class="number">Comenzar</div>
+                                <div class="number">temporada</div>
                             </div>
                         </div>
                     </a>
-                    <a href="{{ path('empleados_listar') }}" class="btn">
-                        <div class="tile tile-dark-teal">
-                            <div class="tile-body">
-                                <i class="fa fa-users"></i>
+                    {% if temporadas != 1 %}
+                        <a href="{{ path('socios_listar') }}" class="btn">
+                            <div class="tile tile-dark-green">
+                                <div class="tile-body">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Socios</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Empleados</div>
+                        </a>
+                        <a href="{{ path('empleados_listar') }}" class="btn">
+                            <div class="tile tile-dark-green">
+                                <div class="tile-body">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Empleados</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('fincas_listar') }}" class="btn">
-                        <div class="tile tile-dark-teal">
-                            <div class="tile-body">
-                                <i class="fa fa-map"></i>
+                        </a>
+                        <a href="{{ path('fincas_listar') }}" class="btn">
+                            <div class="tile tile-dark-green">
+                                <div class="tile-body">
+                                    <i class="fa fa-map"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Fincas</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Fincas</div>
+                        </a>
+                        <a href="{{ path('movimientos_listar') }}" class="btn">
+                            <div class="tile tile-dark-green">
+                                <div class="tile-body">
+                                    <i class="fa fa-exchange"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Movimientos</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('movimientos_listar') }}" class="btn">
-                        <div class="tile tile-dark-teal">
-                            <div class="tile-body">
-                                <i class="fa fa-exchange"></i>
+                        </a>
+                        <a href="{{ path('liquidaciones_listar') }}" class="btn">
+                            <div class="tile tile-dark-green">
+                                <div class="tile-body">
+                                    <i class="fa fa-calculator"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Liquidaciones</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Movimientos</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('liquidaciones_listar') }}" class="btn">
-                        <div class="tile tile-dark-teal">
-                            <div class="tile-body">
-                                <i class="fa fa-calculator"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Liquidaciones</div>
-                            </div>
-                        </div>
-                    </a>
-                    {% if app.user.comercial == false %}
+                        </a>
+                        {% if app.user.comercial == false %}
+                            <a href="{{ path('lotes_listar') }}" class="btn">
+                                <div class="tile tile-dark-green">
+                                    <div class="tile-body">
+                                        <i class="fa fa-barcode"></i>
+                                    </div>
+                                    <div class="tile-object">
+                                        <div class="number">Lotes</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="{{ path('productos_listar') }}" class="btn">
+                                <div class="tile tile-dark-green">
+                                    <div class="tile-body">
+                                        <i class="fa fa-shopping-basket"></i>
+                                    </div>
+                                    <div class="tile-object">
+                                        <div class="number">Productos</div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if temporadas != 1 %}
+                {% if is_granted('ROLE_EMPLEADO') %}
+                    <h4 class="well">Tareas de empleado</h4>
+                    <div class="tiles">
                         <a href="{{ path('lotes_listar') }}" class="btn">
-                            <div class="tile tile-dark-teal">
+                            <div class="tile tile-dark-crimson">
                                 <div class="tile-body">
                                     <i class="fa fa-barcode"></i>
                                 </div>
@@ -89,7 +119,7 @@
                             </div>
                         </a>
                         <a href="{{ path('productos_listar') }}" class="btn">
-                            <div class="tile tile-dark-teal">
+                            <div class="tile tile-dark-crimson">
                                 <div class="tile-body">
                                     <i class="fa fa-shopping-basket"></i>
                                 </div>
@@ -98,245 +128,236 @@
                                 </div>
                             </div>
                         </a>
-                    {% endif %}
-                {% endif %}
-            {% endif %}
-            {% if temporadas != 1 %}
-                {% if is_granted('ROLE_EMPLEADO') %}
-                    <a href="{{ path('lotes_listar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-barcode"></i>
+                        <a href="{{ path('ventas_listar_usuario', {'id' : app.user.id}) }}" class="btn">
+                            <div class="tile tile-dark-crimson">
+                                <div class="tile-body">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Mis Compras</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Lotes</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('productos_listar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-shopping-basket"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Productos</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('ventas_listar_usuario', {'id' : app.user.id}) }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-shopping-cart"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Mis Compras</div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 {% endif %}
 
                 {% if is_granted('ROLE_COMERCIAL') %}
-                    <a href="{{ path('aceite_principal') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-tint"></i>
+                    <h4 class="well">Tareas de comercial</h4>
+                    <div class="tiles">
+                        <a href="{{ path('aceite_principal') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-tint"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Aceite</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Aceite</div>
+                        </a>
+                        <a href="{{ path('aceituna_nueva') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Variedad</div>
+                                    <div class="number">nueva</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('aceituna_nueva') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-plus"></i>
+                        </a>
+                        <a href="{{ path('porcentajes_modificar') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-percent"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Editar</div>
+                                    <div class="number">porcentajes</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Variedad</div>
-                                <div class="number">nueva</div>
+                        </a>
+                        <a href="{{ path('clientes_listar') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Clientes</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('porcentajes_modificar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-percent"></i>
+                        </a>
+                        <a href="{{ path('usuarios_listar') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Compras</div>
+                                    <div class="number">de aceite</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Editar</div>
-                                <div class="number">porcentajes</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('clientes_listar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Clientes</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('usuarios_listar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-shopping-cart"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Compras</div>
-                                <div class="number">de aceite</div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 {% endif %}
 
                 {% if is_granted('ROLE_DEPENDIENTE') %}
-                    <a href="{{ path('ventas_listar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-shopping-cart"></i>
+                    <h4 class="well">Tareas de dependiente</h4>
+                    <div class="tiles">
+                        <a href="{{ path('ventas_listar') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Compras</div>
+                                    <div class="number">de aceite</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Compras</div>
-                                <div class="number">de aceite</div>
+                        </a>
+                        <a href="{{ path('clientes_listar') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Clientes</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('clientes_listar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Clientes</div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 {% endif %}
 
                 {% if is_granted('ROLE_ENCARGADO') %}
-                    <a href="{{ path('socios_listar') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-balance-scale"></i>
+                    <h4 class="well">Tareas de encargado</h4>
+                    <div class="tiles">
+                        <a href="{{ path('socios_listar') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-balance-scale"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Entregas</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Entregas</div>
+                        </a>
+                        <a href="{{ path('fichero_subir') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Actualiza</div>
+                                    <div class="number">Entregas</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('fichero_subir') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-users"></i>
+                        </a>
+                        <a href="{{ path('modificar_lote') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-flask"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Resultados</div>
+                                    <div class="number">Calidad</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Actualiza</div>
-                                <div class="number">Entregas</div>
+                        </a>
+                        <a href="{{ path('productos_principal') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-industry"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Envasar</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('modificar_lote') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-flask"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Resultados</div>
-                                <div class="number">Calidad</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('productos_principal') }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-industry"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Envasar</div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 {% endif %}
 
                 {% if is_granted('ROLE_CLIENTE') %}
-                    <a href="{{ path('ventas_listar_usuario', {'usuario' : app.user.id}) }}" class="btn">
-                        <div class="tile tile-dark-orange">
-                            <div class="tile-body">
-                                <i class="fa fa-shopping-cart"></i>
+                    <h4 class="well">Tareas de cliente</h4>
+                    <div class="tiles">
+                        <a href="{{ path('ventas_listar_usuario', {'usuario' : app.user.id}) }}" class="btn">
+                            <div class="tile tile-dark-pink">
+                                <div class="tile-body">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Mis Compras</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Mis Compras</div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 {% endif %}
 
                 {% if is_granted('ROLE_SOCIO') %}
-                    <a href="{{ path('fincas_listar_propietario', {'socio': app.user.socio.id }) }}" class="btn">
-                        <div class="tile tile-dark-cyan">
-                            <div class="tile-body">
-                                <i class="fa fa-map"></i>
+                    <h4 class="well">Tareas de socio</h4>
+                    <div class="tiles">
+                        <a href="{{ path('fincas_listar_propietario', {'socio': app.user.socio.id }) }}" class="btn">
+                            <div class="tile tile-dark-cyan">
+                                <div class="tile-body">
+                                    <i class="fa fa-map"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Fincas</div>
+                                    <div class="number">en propiedad</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Fincas</div>
-                                <div class="number">en propiedad</div>
+                        </a>
+                        <a href="{{ path('fincas_listar_arrendatario', {'socio': app.user.socio.id }) }}" class="btn">
+                            <div class="tile tile-dark-cyan">
+                                <div class="tile-body">
+                                    <i class="fa fa-map"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Fincas</div>
+                                    <div class="number">arrendadas</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('fincas_listar_arrendatario', {'socio': app.user.socio.id }) }}" class="btn">
-                        <div class="tile tile-dark-cyan">
-                            <div class="tile-body">
-                                <i class="fa fa-map"></i>
+                        </a>
+                        <a href="{{ path('liquidaciones_detalle', {'socio': app.user.socio.id }) }}" class="btn">
+                            <div class="tile tile-dark-cyan">
+                                <div class="tile-body">
+                                    <i class="fa fa-calculator"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Liquidaciones</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Fincas</div>
-                                <div class="number">arrendadas</div>
+                        </a>
+                        <a href="{{ path('entregas_listar_socio', {'socio': app.user.socio.id}) }}" class="btn">
+                            <div class="tile tile-dark-cyan">
+                                <div class="tile-body">
+                                    <i class="fa fa-balance-scale"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Entregas</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('liquidaciones_detalle', {'socio': app.user.socio.id }) }}" class="btn">
-                        <div class="tile tile-dark-cyan">
-                            <div class="tile-body">
-                                <i class="fa fa-calculator"></i>
+                        </a>
+                        <a href="{{ path('movimientos_listar') }}" class="btn">
+                            <div class="tile tile-dark-cyan">
+                                <div class="tile-body">
+                                    <i class="fa fa-exchange"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Estado</div>
+                                    <div class="number">de cuentas</div>
+                                </div>
                             </div>
-                            <div class="tile-object">
-                                <div class="number">Liquidaciones</div>
+                        </a>
+                        <a href="{{ path('ventas_listar_socio', {'socio' : app.user.socio.id}) }}" class="btn">
+                            <div class="tile tile-dark-cyan">
+                                <div class="tile-body">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Mis Compras</div>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('entregas_listar_socio', {'socio': app.user.socio.id}) }}" class="btn">
-                        <div class="tile tile-dark-cyan">
-                            <div class="tile-body">
-                                <i class="fa fa-balance-scale"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Entregas</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('movimientos_listar') }}" class="btn">
-                        <div class="tile tile-dark-cyan">
-                            <div class="tile-body">
-                                <i class="fa fa-exchange"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Estado</div>
-                                <div class="number">de cuentas</div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{ path('ventas_listar_socio', {'socio' : app.user.socio.id}) }}" class="btn">
-                        <div class="tile tile-dark-cyan">
-                            <div class="tile-body">
-                                <i class="fa fa-shopping-cart"></i>
-                            </div>
-                            <div class="tile-object">
-                                <div class="number">Mis Compras</div>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 {% endif %}
             {% endif %}
         </div>

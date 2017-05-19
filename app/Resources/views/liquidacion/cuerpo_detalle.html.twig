@@ -16,8 +16,7 @@
             <i class="fa fa-calculator"></i> Ir a liquidaciones
         </a>
     {% endif %}
-    {#% if liquidacion[0].fecha != null and is_granted('ROLE_ADMINISTRADOR') %#}
-    {% if is_granted('ROLE_ADMINISTRADOR') %}
+    {% if (is_granted('ROLE_ADMINISTRADOR') or app.user.nif == socio.usuario.nif) and liquidacion[0].fecha != null %}
         <a href="{{ path('liquidaciones_imprimir', {'socio' : socio.id, 'temporada' : temporada.id}) }}" class="btn btn-default btnAceptar">
             <i class="fa fa-file-pdf-o"></i> Descargar PDF
         </a>
