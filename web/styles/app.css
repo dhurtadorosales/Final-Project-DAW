@@ -239,6 +239,12 @@ button {
 }
 
 @media screen and (max-width: 480px)  {
+    .tiles {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     .menuOculto {
         display: block;
     }
@@ -273,7 +279,7 @@ button {
         margin-right: 0;
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (max-width: 768px) {
         .menuOculto {
             display: block;
         }

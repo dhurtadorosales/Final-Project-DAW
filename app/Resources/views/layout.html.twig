@@ -7,18 +7,19 @@
             <nav class="navbar navbar-inverse navegacion">
                 <div class="container">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
-                            <span class="sr-only">Desplegar</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+
                         <div class="contenedorLogoSesion">
                             <div class="logotipo">
                                 <img src="{{ asset('icon.png') }}" alt="logotipo" id="logo">
                                 <h3 class="eslogan"> Sociedad Cooperativa</h3>
                                 <h3 class="tituloResponsive"></h3>
                             </div>
+                            <button id="botonPequeno" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
+                                <span class="sr-only">Desplegar</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                             <ul class="nav navbar-nav navbar-right contenedorSesion">
                                 {% if app.user %}
                                     <li class="dropdown desplegable">

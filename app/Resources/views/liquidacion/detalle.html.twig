@@ -47,83 +47,83 @@
     <div class="container well">
         <table class="table table-bordered table-responsive">
             <thead>
-                <tr>
-                    <th colspan="2">GANANCIAS</th>
-                    <th colspan="2">DEDUCCIONES</th>
-                </tr>
+            <tr>
+                <th colspan="2">GANANCIAS</th>
+                <th colspan="2">DEDUCCIONES</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Kg Aceituna</td>
-                    <td>{{ pesoAceituna }}</td>
-                    <td>Base imponible €</td>
-                    <td>{{ sumaVentas }}</td>
-                </tr>
-                <tr>
-                    <td>Rendimiento medio %</td>
-                    <td>{{ rendimientoMedio * 100 }}</td>
-                <tr>
-                    <td>Kg Aceite</td>
-                    <td>{{ pesoAceite }}</td>
-                </tr>
-                <tr>
-                    <td>€/kg Aceite</td>
-                    <td>{{ precioLiquidacion }}</td>
-                </tr>
-                <tr>
-                    <td>Bonificaciones €</td>
-                    <td>{{ sumaBonificacion }}</td>
-                </tr>
-                <tr>
-                    <td>Base imponible €</td>
-                    <td>{% set baseImponible = (pesoAceite * precioLiquidacion) + sumaBonificacion %}
-                        {{ baseImponible }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>{% if liquidacion[0].fecha != null %}
-                            {% set iva = liquidacion[0].iva * 100 %}
-                        {% else %}
-                            {% set iva = porcentajes[1].cantidad * 100 %}
-                        {% endif %}
-                        IVA {{ iva }}%
-                    </td>
-                    <td>{{ baseImponible * iva }}</td>
-                    <td>IVA {{ iva }}%</td>
-                    <td>{{ sumaVentas * iva }}</td>
-                </tr>
-                <tr>
-                    <td>{% if liquidacion[0].fecha != null %}
-                            {% set retencion = liquidacion[0].retencion * 100 %}
-                        {% else %}
-                            {% set retencion = porcentajes[2].cantidad * 100 %}
-                        {% endif %}
-                        Retención {{ retencion }}%
-                    </td>
-                    <td>- {{ baseImponible * retencion }}</td>
-                </tr>
-                <tr>
-                    <td>Importe €</td>
-                    <td>{% set importe = (baseImponible) * (1 + porcentajes[1].cantidad) - (baseImponible * porcentajes[2].cantidad) %}
-                        {{ importe }}
-                    </td>
-                    <td>A deducir</td>
-                    <td>{{ sumaVentas * (1 + porcentajes[1].cantidad) }}</td>
-                </tr>
+            <tr>
+                <td>Kg Aceituna</td>
+                <td>{{ pesoAceituna }}</td>
+                <td>Base imponible €</td>
+                <td>{{ sumaVentas }}</td>
+            </tr>
+            <tr>
+                <td>Rendimiento medio %</td>
+                <td>{{ rendimientoMedio * 100 }}</td>
+            <tr>
+                <td>Kg Aceite</td>
+                <td>{{ pesoAceite }}</td>
+            </tr>
+            <tr>
+                <td>€/kg Aceite</td>
+                <td>{{ precioLiquidacion }}</td>
+            </tr>
+            <tr>
+                <td>Bonificaciones €</td>
+                <td>{{ sumaBonificacion }}</td>
+            </tr>
+            <tr>
+                <td>Base imponible €</td>
+                <td>{% set baseImponible = (pesoAceite * precioLiquidacion) + sumaBonificacion %}
+                    {{ baseImponible }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% if liquidacion[0].fecha != null %}
+                        {% set iva = liquidacion[0].iva * 100 %}
+                    {% else %}
+                        {% set iva = porcentajes[1].cantidad * 100 %}
+                    {% endif %}
+                    IVA {{ iva }}%
+                </td>
+                <td>{{ baseImponible * iva }}</td>
+                <td>IVA {{ iva }}%</td>
+                <td>{{ sumaVentas * iva }}</td>
+            </tr>
+            <tr>
+                <td>{% if liquidacion[0].fecha != null %}
+                        {% set retencion = liquidacion[0].retencion * 100 %}
+                    {% else %}
+                        {% set retencion = porcentajes[2].cantidad * 100 %}
+                    {% endif %}
+                    Retención {{ retencion }}%
+                </td>
+                <td>- {{ baseImponible * retencion }}</td>
+            </tr>
+            <tr>
+                <td>Importe €</td>
+                <td>{% set importe = (baseImponible) * (1 + porcentajes[1].cantidad) - (baseImponible * porcentajes[2].cantidad) %}
+                    {{ importe }}
+                </td>
+                <td>A deducir</td>
+                <td>{{ sumaVentas * (1 + porcentajes[1].cantidad) }}</td>
+            </tr>
             </tbody>
         </table>
     </div>
     <div class="container well">
         <table class="table table-bordered table-responsive">
             <thead>
-                <tr>
-                    <th>IMPORTE TOTAL</th>
-                    <td>{{ importe - sumaVentas * (1 + porcentajes[1].cantidad) }} €</td>
-                </tr>
+            <tr>
+                <th>IMPORTE TOTAL</th>
+                <td>{{ importe - sumaVentas * (1 + porcentajes[1].cantidad) }} €</td>
+            </tr>
             </thead>
         </table>
     </div>
     {##% block javascripts %#}
-        <!--<script src="{#{ asset('script/pdf.js') }#}"></script>-->
+    <!--<script src="{#{ asset('script/pdf.js') }#}"></script>-->
     {#% endblock %#}
 {% endblock %}

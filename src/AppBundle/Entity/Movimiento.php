@@ -31,7 +31,7 @@ class Movimiento
      * @var float
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^{-}[0-9]+(\.[0-9]+)?$/")
+
      */
     private $cantidad;
 

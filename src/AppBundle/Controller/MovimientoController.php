@@ -120,11 +120,14 @@ class MovimientoController extends Controller
         //Creación de un nuevo movimiento
         $movimiento = new Movimiento();
         $em->persist($movimiento);
+        $movimiento->setTemporada($temporada);
+        $movimiento->setFecha($fecha);
 
         $form = $this->createForm(MovimientoType::class, $movimiento, [
             'fecha' => $fecha,
             'temporada' => $temporada,
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

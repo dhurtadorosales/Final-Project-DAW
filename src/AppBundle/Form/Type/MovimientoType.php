@@ -15,35 +15,26 @@ class MovimientoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
-                $form = $event->getForm();
-                $data = $event->getData();
-                $form
-                    ->add('temporada', null, [
-                        'label' => 'Temporada:',
-                        'data' => $options['temporada'],
-                        'attr' => [
-                            'readonly' => true
-                        ]
-                    ])
-                    ->add('fecha', null, [
-                        'label' => 'Fecha:',
-                        'data' => $options['fecha'],
-                        'widget' => 'single_text',
-                        'attr' => [
-                            'readonly' => true
-                        ]
-                    ])
-                    ->add('concepto', null, [
-                        'label' => 'Concepto:'
-                    ])
-                    ->add('cantidad', null, [
-                        'label' => 'Cantidad:',
-                        'attr' => [
-                            'placeholder' => 'Ejemplo: -3000 si es pago, 3000 si es ingreso'
-                        ]
-                    ]);
-            });
+        ->add('temporada', null, [
+            'label' => 'Temporada:',
+            'disabled' => true
+        ])
+        ->add('fecha', null, [
+            'label' => 'Fecha:',
+            'widget' => 'single_text',
+            'attr' => [
+                'readonly' => true
+            ]
+        ])
+        ->add('concepto', null, [
+            'label' => 'Concepto:'
+        ])
+        ->add('cantidad', null, [
+            'label' => 'Cantidad:',
+            'attr' => [
+                'placeholder' => 'Ejemplo: -3000 si es pago, 3000 si es ingreso'
+            ]
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

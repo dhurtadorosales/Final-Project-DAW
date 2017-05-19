@@ -6,6 +6,7 @@ use AppBundle\Entity\Liquidacion;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Temporada;
 use Doctrine\ORM\EntityManager;
+use Sasedev\MpdfBundle\Service\MpdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -235,12 +236,13 @@ class LiquidacionController extends Controller
     public function pdfAction(Socio $socio, Temporada $temporada)
     {
 
+        /** @var MpdfService $mpdf */
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init('', 'A4');
 
         $objeto = $mpdf->getMpdf();
-        $objeto->SetImportUse();
-        $objeto->SetDocTemplate('uploads/a4_vacio.pdf', true);
+        //$objeto->SetImportUse();
+        //$objeto->SetDocTemplate('uploads/a4_vacio.pdf', true);
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
