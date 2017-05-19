@@ -59,9 +59,9 @@ class LiquidacionController extends Controller
             $temporada = $temporadaActual->temporadaActualAction();
         }
 
+        //Para el cálculo de la liquidación creamos un objeto del servicio
         $objeto = new CalculoLiquidacion($em);
         $calculo = $objeto->calculoLiquidacionAction($socio, $temporada);
-        dump($temporada);
 
 /*
         //Obtención de los porcentajes
@@ -255,15 +255,35 @@ class LiquidacionController extends Controller
      */
     public function pdfAction(Socio $socio, Temporada $temporada)
     {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Para el cálculo de la liquidación creamos un objeto del servicio
+        $objeto = new CalculoLiquidacion($em);
+        $calculo = $objeto->calculoLiquidacionAction($socio, $temporada);
+
+        $filename = 'liquidacion' . '_' . $socio->getId() . '_' . $temporada . '.pdf';
+        $filename = str_replace('/', '_', $filename);
 
         /** @var MpdfService $mpdf */
         $mpdf = $this->get('sasedev_mpdf');
         $mpdf->init('', 'A4');
-
         $mpdf->getMpdf();
+        $mpdf->useTwigTemplate('liquidacion/informe.html.twig', [
+            'titulo' => $filename,
+            'socio' => $socio,
+            'temporada' => $temporada,
+            'liquidacion' => $calculo[0],
+            'sumaEntregas' => $calculo[1],
+            'sumaVentas' => $calculo[2],
+            'pesoAceituna' => $calculo[3],
+            'pesoAceite' => $calculo[4],
+            'rendimientoMedio' => $calculo[5],
+            'porcentajes' => $calculo[6],
+            'sumaBonificacion' => $calculo[7],
+            'precioLiquidacion' => $calculo[8]
+        ]);
 
-        $mpdf->useTwigTemplate('liquidacion/pdf.html');
-
-        return $mpdf->generateInlineFileResponse('liquidacion_2017_2018.pdf');
+        return $mpdf->generateInlineFileResponse($filename);
     }
 }

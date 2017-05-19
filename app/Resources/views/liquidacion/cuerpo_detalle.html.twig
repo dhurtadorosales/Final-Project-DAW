@@ -1,0 +1,120 @@
+<div class="container">
+    <div class="well">
+        <h2>Liquidación</h2>
+        <div class="division"></div>
+        <h3>Socio: {{ socio }}</h3>
+    </div>
+    {% if app.user.nif == socio.usuario.nif %}
+        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-home"></i> Ir a inicio
+        </a>
+        <a href="{{ path('liquidaciones_temporadas_listar') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-calendar"></i> Otras temporadas
+        </a>
+    {% else %}
+        <a href="{{ path('liquidaciones_listar') }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-calculator"></i> Ir a liquidaciones
+        </a>
+    {% endif %}
+    {#% if liquidacion[0].fecha != null and is_granted('ROLE_ADMINISTRADOR') %#}
+    {% if is_granted('ROLE_ADMINISTRADOR') %}
+        <a href="{{ path('liquidaciones_imprimir', {'socio' : socio.id, 'temporada' : temporada.id}) }}" class="btn btn-default btnAceptar">
+            <i class="fa fa-file-pdf-o"></i> Descargar PDF
+        </a>
+    {% endif %}
+</div>
+<div class="container well">
+    <table class="table table-bordered table-responsive">
+        <tr>
+            <td>Temporada</td><td>{{ temporada }}</td>
+        </tr>
+        <tr>
+            <td>Fecha</td>
+            <td>{% if liquidacion[0].fecha != null %}
+                    {{ liquidacion[0].fecha|date('d/m/Y') }}
+                {% else %}
+                    Provisional
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="container well">
+    <table class="table table-bordered table-responsive">
+        <thead>
+        <tr>
+            <th colspan="2">GANANCIAS</th>
+            <th colspan="2">DEDUCCIONES</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Kg Aceituna</td>
+            <td>{{ pesoAceituna }}</td>
+            <td>Base imponible €</td>
+            <td>{{ sumaVentas }}</td>
+        </tr>
+        <tr>
+            <td>Rendimiento medio %</td>
+            <td>{{ rendimientoMedio * 100 }}</td>
+        <tr>
+            <td>Kg Aceite</td>
+            <td>{{ pesoAceite }}</td>
+        </tr>
+        <tr>
+            <td>€/kg Aceite</td>
+            <td>{{ precioLiquidacion }}</td>
+        </tr>
+        <tr>
+            <td>Bonificaciones €</td>
+            <td>{{ sumaBonificacion }}</td>
+        </tr>
+        <tr>
+            <td>Base imponible €</td>
+            <td>{% set baseImponible = (pesoAceite * precioLiquidacion) + sumaBonificacion %}
+                {{ baseImponible }}
+            </td>
+        </tr>
+        <tr>
+            <td>{% if liquidacion[0].fecha != null %}
+                    {% set iva = liquidacion[0].iva %}
+                {% else %}
+                    {% set iva = porcentajes[1].cantidad %}
+                {% endif %}
+                IVA {{ iva * 100 }}%
+            </td>
+            <td>{{ baseImponible * iva }}</td>
+            <td>IVA {{ iva * 100 }}%</td>
+            <td>{{ sumaVentas * iva }}</td>
+        </tr>
+        <tr>
+            <td>{% if liquidacion[0].fecha != null %}
+                    {% set retencion = liquidacion[0].retencion %}
+                {% else %}
+                    {% set retencion = porcentajes[2].cantidad %}
+                {% endif %}
+                Retención {{ retencion * 100 }}%
+            </td>
+            <td>- {{ baseImponible * retencion }}</td>
+        </tr>
+        <tr>
+            <td>Importe €</td>
+            <td>{% set importe = (baseImponible) * (1 + porcentajes[1].cantidad) - (baseImponible * porcentajes[2].cantidad) %}
+                {{ importe }}
+            </td>
+            <td>A deducir</td>
+            <td>{{ sumaVentas * (1 + porcentajes[1].cantidad) }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container well">
+    <table class="table table-bordered table-responsive">
+        <thead>
+        <tr>
+            <th>IMPORTE TOTAL</th>
+            <td>{{ importe - sumaVentas * (1 + porcentajes[1].cantidad) }} €</td>
+        </tr>
+        </thead>
+    </table>
+</div>
