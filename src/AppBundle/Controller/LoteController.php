@@ -21,7 +21,7 @@ class LoteController extends Controller
      * @Route("/lotes/listar/{temporada}", name="lotes_listar_temporada")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO')")
      */
-    public function listarLotesAction(Temporada $temporada = null)
+    public function listarLotesAction(Request $request, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -36,9 +36,16 @@ class LoteController extends Controller
         $lotes = $em->getRepository('AppBundle:Lote')
             ->getLotesTemporada($temporada);
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $lotes,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('lote/listar.html.twig', [
             'lotes' => $lotes,
-            'temporada' => $temporada
+            'temporada' => $temporada,
+            'pagination' => $pagination
         ]);
     }
 

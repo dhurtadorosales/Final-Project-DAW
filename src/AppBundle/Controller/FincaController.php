@@ -20,7 +20,7 @@ class FincaController extends Controller
      * @Route("/fincas/listar", name="fincas_listar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -32,11 +32,18 @@ class FincaController extends Controller
         $propietario = false;
         $arrendatario = false;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $fincas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas,
             'lote' => $lote,
             'propietario' => $propietario,
-            'arrendatario' => $arrendatario
+            'arrendatario' => $arrendatario,
+            'pagination' => $pagination
         ]);
 
     }
@@ -45,7 +52,7 @@ class FincaController extends Controller
      * @Route("/fincas/listar/lote/{lote}", name="fincas_listar_lote")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO') or is_granted('ROLE_SOCIO')")
      */
-    public function listarPorLoteAction(Lote $lote)
+    public function listarPorLoteAction(Request $request, Lote $lote)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -56,11 +63,18 @@ class FincaController extends Controller
         $propietario = false;
         $arrendatario = false;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $fincas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas,
             'lote' => $lote,
             'propietario' => $propietario,
-            'arrendatario' => $arrendatario
+            'arrendatario' => $arrendatario,
+            'pagination' => $pagination
         ]);
     }
 
@@ -68,7 +82,7 @@ class FincaController extends Controller
      * @Route("/fincas/listar/propietario/{socio}", name="fincas_listar_propietario")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or user.getNif() == socio.getUsuario().getNif()")
      */
-    public function listarPorPropietarioAction(Socio $socio)
+    public function listarPorPropietarioAction(Request $request, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -79,11 +93,18 @@ class FincaController extends Controller
         $lote = false;
         $arrendatario = false;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $fincas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas,
             'lote' => $lote,
             'propietario' => $socio,
-            'arrendatario' => $arrendatario
+            'arrendatario' => $arrendatario,
+            'pagination' => $pagination
         ]);
     }
 
@@ -91,7 +112,7 @@ class FincaController extends Controller
      * @Route("/fincas/listar/arrendatario/{socio}", name="fincas_listar_arrendatario")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or user.getNif() == socio.getUsuario().getNif()")
      */
-    public function listarPorArrendatarioAction(Socio $socio)
+    public function listarPorArrendatarioAction(Request $request, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -102,11 +123,54 @@ class FincaController extends Controller
         $lote = false;
         $propietario = false;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $fincas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas,
             'lote' => $lote,
             'propietario' => $propietario,
-            'arrendatario' => $socio
+            'arrendatario' => $socio,
+            'pagination' => $pagination
+        ]);
+    }
+
+    /**
+     * @Route("/fincas/buscar", name="fincas_buscar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function buscarFincasAction(Request $request)
+    {
+        //Variable auxiliar
+        $lote = false;
+        $propietario = false;
+        $arrendatario = false;
+
+        if ('' === $request) {
+            return $this->listarAction($request);
+        }
+        else {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+            $fincas = $em->getRepository('AppBundle:Finca')
+                ->buscarFincas($request->get('buscar'));
+
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $fincas,
+                $request->query->getInt('page', 1), 4
+            );
+        }
+
+        return $this->render('finca/listar.html.twig', [
+            'fincas' => $fincas,
+            'lote' => $lote,
+            'propietario' => $propietario,
+            'arrendatario' => $arrendatario,
+            'pagination' => $pagination
         ]);
     }
 

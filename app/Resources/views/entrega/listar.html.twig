@@ -24,7 +24,9 @@
             <thead>
             <tr>
                 <th>Nº</th>
-                <th>Fecha</th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'Fecha', 'a.fecha') }}
+                </th>
                 <th>Kg Aceituna</th>
                 <th>Sanción</th>
                 <th>Rendimiento %</th>
@@ -37,7 +39,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for entrega in entregas %}
+            {% for entrega in pagination %}
                 {% if is_granted('ROLE_SOCIO') %}
                     <tr class="clickable-row">
                 {% else %}
@@ -81,6 +83,11 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/seleccionar_fila.js') }}"></script>

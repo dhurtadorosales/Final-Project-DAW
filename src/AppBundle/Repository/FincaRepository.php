@@ -94,4 +94,31 @@ class FincaRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function buscarFincas($parametro)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('f')
+            ->addSelect('p')
+            ->addSelect('a')
+            ->addSelect('u1')
+            ->addSelect('u2')
+            ->from('AppBundle:Finca', 'f')
+            ->join('f.propietario', 'p')
+            ->join('f.arrendatario', 'a')
+            ->join('p.usuario', 'u1')
+            ->join('a.usuario', 'u2')
+            ->where('u1.nombre LIKE :parametro')
+            ->orWhere('u2.nombre LIKE :parametro')
+            ->orWhere('u1.apellidos LIKE :parametro')
+            ->orWhere('u2.apellidos LIKE :parametro')
+            ->setParameter('parametro', '%' . $parametro . '%')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
 }

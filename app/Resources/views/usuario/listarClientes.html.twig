@@ -7,18 +7,29 @@
     <div class="container">
         <h2 class="well">Clientes</h2>
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
+            <i class="fa fa-home"></i> Ir a inicio
         </a>
         <a href="{{ path('clientes_nuevo') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nuevo cliente
         </a>
     </div>
     <div class="container well">
+        <form action="{{ path('clientes_buscar') }}" id="buscar">
+            <input type="text" name="buscar" placeholder="Buscar...">
+            <button type="submit" class="btn btn-default btnAceptar" title="Buscar">
+                <i class="fa fa-search"></i>
+            </button>
+            <a href="{{ path('clientes_listar') }}" class="btn btn-default btnAceptar" title="Mostrar todos">
+                <i class="fa fa-list-ul"></i>
+            </a>
+        </form>
         <table class="table table-responsive">
             <thead>
             <tr>
                 <th>NIF</th>
-                <th>Cliente</th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'Cliente', 'a.nombre') }}
+                </th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
                 <th>Total facturado €</th>
@@ -26,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for cliente in clientes %}
+            {% for cliente in pagination %}
                 {% if cliente.email != null %}
                 <tr title="{{ cliente.email }}" class="clickable-row">
                 {% else %}
@@ -65,6 +76,11 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>

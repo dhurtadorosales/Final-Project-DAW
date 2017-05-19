@@ -86,7 +86,7 @@ class UsuarioController extends Controller
      * @Route("/empleados/buscar", name="empleados_buscar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function buscarAction(Request $request)
+    public function buscarEmpleadosAction(Request $request)
     {
         if ('' === $request) {
             return $this->listarEmpleadosAction($request);
@@ -95,7 +95,7 @@ class UsuarioController extends Controller
             /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
             $empleados = $em->getRepository('AppBundle:Usuario')
-                ->getEmpleadosNombre($request->get('buscar'));
+                ->buscarEmpleados($request->get('buscar'));
 
             $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
@@ -106,6 +106,34 @@ class UsuarioController extends Controller
 
         return $this->render('usuario/listarEmpleados.html.twig', [
             'empleados' => $empleados,
+            'pagination' =>$pagination
+        ]);
+    }
+
+    /**
+     * @Route("/clientes/buscar", name="clientes_buscar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function buscarClientesAction(Request $request)
+    {
+        if ('' === $request) {
+            return $this->listarClientesAction($request);
+        }
+        else {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+            $clientes = $em->getRepository('AppBundle:Usuario')
+                ->buscarClientes($request->get('buscar'));
+
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $clientes,
+                $request->query->getInt('page', 1), 4
+            );
+        }
+
+        return $this->render('usuario/listarClientes.html.twig', [
+            'empleados' => $clientes,
             'pagination' =>$pagination
         ]);
     }

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Service\TemporadaActual;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class EntregaController extends Controller
@@ -21,7 +22,7 @@ class EntregaController extends Controller
      * @Route("/entregas/listar/socio/{socio}/{temporada}", name="entregas_listar_socio_temporada")
      * @Security("is_granted('ROLE_ENCARGADO') or user.getNif() == socio.getUsuario().getNif()")")
      */
-    public function listarPorSocioAction(Socio $socio, Temporada $temporada = null)
+    public function listarPorSocioAction(Request $request, Socio $socio, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -36,10 +37,17 @@ class EntregaController extends Controller
         $entregas = $em->getRepository('AppBundle:Entrega')
             ->getEntregasSocioTemporada($socio, $temporada);
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $entregas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('entrega/listar.html.twig', [
             'entregas' => $entregas,
             'socio' => $socio,
-            'temporada' => $temporada
+            'temporada' => $temporada,
+            'pagination' => $pagination
         ]);
     }
 
@@ -47,7 +55,7 @@ class EntregaController extends Controller
      * @Route("/entregas/listar/lote/{lote}", name="entregas_listar_lote")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO') or is_granted('ROLE_SOCIO')")
      */
-    public function listarEntregasLoteAction(Lote $lote)
+    public function listarEntregasLoteAction(Request $request, Lote $lote)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -55,9 +63,16 @@ class EntregaController extends Controller
         $entregas = $em->getRepository('AppBundle:Entrega')
             ->getEntregasLote($lote);
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $entregas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('entrega/listarLote.html.twig', [
             'entregas' => $entregas,
-            'lote' => $lote
+            'lote' => $lote,
+            'pagination' => $pagination
         ]);
     }
 
