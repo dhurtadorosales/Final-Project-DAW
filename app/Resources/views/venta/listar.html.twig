@@ -30,7 +30,9 @@
             <tr>
                 <th>Nº</th>
                 <th>Comprador</th>
-                <th>Fecha</th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'Fecha', 'a.fecha') }}
+                </th>
                 <th>Base Imponible €</th>
                 <th>IVA %</th>
                 <th>Importe €</th>
@@ -40,7 +42,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for venta in ventas %}
+            {% for venta in pagination %}
                 {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
                     <tr class="clickable-row">
                 {% else %}
@@ -75,6 +77,11 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>

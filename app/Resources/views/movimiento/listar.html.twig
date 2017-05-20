@@ -24,7 +24,9 @@
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Fecha</th>
+                    <th class="col-sm-3 sortable">
+                        {{ knp_pagination_sortable(pagination, 'Fecha', 'a.fecha') }}
+                    </th>
                     <th>Concepto</th>
                     <th>Cantidad</th>
                 </tr>
@@ -32,7 +34,7 @@
             <tbody>
             {% set sumaGastos = 0 %}
             {% set sumaGanancias = 0 %}
-            {% for movimiento in movimientos %}
+            {% for movimiento in pagination %}
                 <tr>
                     <td>{{ movimiento.fecha|date('d/m/Y')}}</td>
                     <td>{{ movimiento.concepto }}</td>
@@ -66,6 +68,11 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>

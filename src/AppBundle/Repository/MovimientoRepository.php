@@ -28,6 +28,7 @@ class MovimientoRepository extends EntityRepository
             ->join('m.temporada', 't')
             ->where('t = :temporada')
             ->setParameter('temporada', $temporada)
+            ->orderBy('m.id', 'DESC')
             ->getQuery()
             ->getResult();
 

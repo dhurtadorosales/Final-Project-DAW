@@ -111,4 +111,21 @@ class LoteController extends Controller
             'formulario' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/lotes/temporadas/listar", name="lotes_temporadas_listar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO')")
+     */
+    public function listarTemporadasAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $temporadas = $em->getRepository('AppBundle:Temporada')
+            ->getTemporadas();
+
+        return $this->render('lote/principal.html.twig', [
+            'temporadas' => $temporadas
+        ]);
+    }
 }

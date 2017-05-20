@@ -15,7 +15,9 @@
             <thead>
             <tr>
                 <th>NIF</th>
-                <th>Cliente</th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'Cliente', 'a.nombre') }}
+                </th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
                 <th>Total facturado €</th>
@@ -23,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for usuario in usuarios %}
+            {% for usuario in pagination %}
                 {% if usuario.email != null %}
                 <tr title="{{ usuario.email }}" class="clickable-row">
                 {% else %}
@@ -57,6 +59,11 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>

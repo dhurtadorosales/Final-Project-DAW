@@ -57,8 +57,8 @@ class TemporadaController extends Controller
         $fecha = $fecha->format('Y');
         $anio1 = (int)$fecha;
         $anio2 = $anio1 + 1;
-        $denominacion = $anio1 . "/" . $anio2;
-        //$denominacion = '2018/2019';
+        //$denominacion = $anio1 . "/" . $anio2;
+        $denominacion = '2018/2019';
 
         try {
             $nuevaTemporada

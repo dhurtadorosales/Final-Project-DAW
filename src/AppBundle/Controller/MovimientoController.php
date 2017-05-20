@@ -19,7 +19,7 @@ class MovimientoController extends Controller
      * @Route("/movimientos/listar/temporada/{temporada}", name="movimientos_listar_temporada")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_SOCIO')")
      */
-    public function listarMovimientosTemporadaAction(Temporada $temporada = null)
+    public function listarMovimientosTemporadaAction(Request $request, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -49,10 +49,17 @@ class MovimientoController extends Controller
             $sumaVentas = $sumaVentas + $totalVenta;
         }
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $movimientos,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('movimiento/listar.html.twig', [
             'movimientos' => $movimientos,
             'temporada' => $temporada,
-            'sumaVentas' => $sumaVentas
+            'sumaVentas' => $sumaVentas,
+            'pagination' => $pagination
         ]);
     }
 
@@ -150,7 +157,7 @@ class MovimientoController extends Controller
      * @Route("/movimientos/temporadas/listar", name="movimientos_temporadas_listar")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_SOCIO')")
      */
-    public function listarTemporadasAction()
+    public function listarTemporadasAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -158,8 +165,15 @@ class MovimientoController extends Controller
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->getTemporadas();
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $temporadas,
+            $request->query->getInt('page', 1), 10
+        );
+
         return $this->render('movimiento/principal.html.twig', [
-            'temporadas' => $temporadas
+            'temporadas' => $temporadas,
+            'pagination' => $pagination
         ]);
     }
 }

@@ -25,7 +25,7 @@ class VentaController extends Controller
      * @Route("/ventas/listar/temporada/{temporada}", name="ventas_listar_temporada")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
-    public function listarTemporadaAction(Temporada $temporada = null)
+    public function listarTemporadaAction(Request $request, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -40,9 +40,16 @@ class VentaController extends Controller
         $ventas = $em->getRepository('AppBundle:Venta')
             ->getVentasTemporada($temporada);
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $ventas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
-            'temporada' => $temporada
+            'temporada' => $temporada,
+            'pagination' => $pagination
         ]);
     }
 
@@ -74,7 +81,7 @@ class VentaController extends Controller
      * @Route("/ventas/listar/socio/temporada/{socio}/{temporada}", name="ventas_listar_socio_temporada")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == socio.getUsuario().getNif()")")
      */
-    public function listarTemporadaSocioAction(Socio $socio, Temporada $temporada = null)
+    public function listarTemporadaSocioAction(Request $request, Socio $socio, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -92,10 +99,17 @@ class VentaController extends Controller
         //Obtención del usuario asociado al socio
         $usuario = $socio->getUsuario();
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $ventas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
             'temporada' => $temporada,
-            'usuario' => $usuario
+            'usuario' => $usuario,
+            'pagination' => $pagination
         ]);
     }
 
@@ -103,7 +117,7 @@ class VentaController extends Controller
      * @Route("/ventas/listar/usuario/{id}", name="ventas_listar_usuario")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == usuario.getNif()")")
      */
-    public function listarUsuarioAction(Usuario $usuario)
+    public function listarUsuarioAction(Request $request, Usuario $usuario)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -112,10 +126,17 @@ class VentaController extends Controller
 
         $temporada = false;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $ventas,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
             'temporada' => $temporada,
-            'usuario' => $usuario
+            'usuario' => $usuario,
+            'pagination' => $pagination
         ]);
     }
 
@@ -279,7 +300,7 @@ class VentaController extends Controller
      * @Route("/ventas/principal/{id}", name="ventas_principal")
      * @Security("is_granted('ROLE_USUARIO')")
      */
-    public function irPrincipalAction(Socio $socio)
+    public function irPrincipalAction(Request $request, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -287,9 +308,16 @@ class VentaController extends Controller
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->getTemporadas();
 
-        return $this->render('venta/listar.html.twig', [
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $temporadas,
+            $request->query->getInt('page', 1), 4
+        );
+
+        return $this->render('venta/principal.html.twig', [
             'temporadas' => $temporadas,
-            'socio' => $socio
+            'socio' => $socio,
+            'pagination' => $pagination
         ]);
     }
 

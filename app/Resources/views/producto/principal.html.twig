@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="tiles">
-            {% for producto in productos %}
+            {% for producto in pagination %}
                 <a href="{{ path('producto_form', {'producto' : producto.id}) }}" class="btn">
                     <div class="tile tile-dark-teal double">
                         <div class="tile-body">
@@ -25,6 +25,11 @@
                     </div>
                 </a>
             {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
         </div>
     </div>
     {% block javascripts %}

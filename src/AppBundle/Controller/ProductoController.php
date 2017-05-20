@@ -36,7 +36,7 @@ class ProductoController extends Controller
      * @Route("/productos/principal", name="productos_principal")
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
-    public function productosPrincipalAction()
+    public function productosPrincipalAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -45,8 +45,15 @@ class ProductoController extends Controller
         $productos = $em->getRepository('AppBundle:Producto')
             ->findAll();
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $productos,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('producto/principal.html.twig', [
-            'productos' => $productos
+            'productos' => $productos,
+            'pagination' => $pagination
         ]);
     }
 

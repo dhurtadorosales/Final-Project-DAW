@@ -21,7 +21,7 @@ class SocioController extends Controller
      * @Route("/socios/listar", name="socios_listar")
      * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_ENCARGADO')")
      */
-    public function listarAction()
+    public function listarAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -31,9 +31,54 @@ class SocioController extends Controller
         //Variable auxiliar
         $baja = false;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $socios,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,
-            'baja' => $baja
+            'baja' => $baja,
+            'pagination' => $pagination
+        ]);
+    }
+
+    /**
+     * @Route("/socios/buscar", name="socios_buscar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_ENCARGADO')")
+     */
+    public function buscarSociosAction(Request $request)
+    {
+        if ('' === $request) {
+            return $this->listarAction($request);
+        }
+        else {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+            if ($request->get('baja') == false) {
+                $socios = $em->getRepository('AppBundle:Socio')
+                    ->buscarSocios($request->get('buscar'));
+            }
+            else {
+                $socios = $em->getRepository('AppBundle:Socio')
+                    ->buscarSociosBaja($request->get('buscar'));
+            }
+
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $socios,
+                $request->query->getInt('page', 1), 4
+            );
+        }
+
+        //Variable auxiliar
+        $baja = $request->get('baja');
+
+        return $this->render('socio/listar.html.twig', [
+            'socios' => $socios,
+            'baja' => $baja,
+            'pagination' => $pagination
         ]);
     }
 
@@ -175,7 +220,7 @@ class SocioController extends Controller
      * @Route("/socios/listar/baja", name="socios_listar_baja")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function listarBajaAction()
+    public function listarBajaAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -187,9 +232,16 @@ class SocioController extends Controller
         //Variable auxiliar
         $baja = true;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $socios,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,
-            'baja' => $baja
+            'baja' => $baja,
+            'pagination' => $pagination
         ]);
     }
 
@@ -197,7 +249,7 @@ class SocioController extends Controller
      * @Route("/socios/reactivar/{socio}", name="socios_reactivar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function reactivarAction(Socio $socio)
+    public function reactivarAction(Request $request, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -218,9 +270,16 @@ class SocioController extends Controller
         //Variable auxiliar
         $baja = false;
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $socios,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,
-            'baja' => $baja
+            'baja' => $baja,
+            'pagination' => $pagination
         ]);
     }
 
@@ -228,7 +287,7 @@ class SocioController extends Controller
      * @Route("/socios/pass/{socio}", name="socios_pass")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function passAction(Socio $socio)
+    public function passAction(Request $request, Socio $socio)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -254,12 +313,19 @@ class SocioController extends Controller
         $socios = $em->getRepository('AppBundle:Socio')
             ->getSocios();
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $socios,
+            $request->query->getInt('page', 1), 4
+        );
+
         //Variable auxiliar
         $baja = false;
 
         return $this->render('socio/listar.html.twig', [
             'socios' => $socios,
-            'baja' => $baja
+            'baja' => $baja,
+            'pagination' => $pagination
         ]);
     }
 }

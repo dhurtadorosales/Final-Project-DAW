@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Service\TemporadaActual;
+use Symfony\Component\HttpFoundation\Request;
 
 class LiquidacionController extends Controller
 {
@@ -20,7 +21,7 @@ class LiquidacionController extends Controller
      * @Route("/liquidaciones/listar/{temporada}", name="liquidaciones_listar_temporada")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
-    public function listarAction(Temporada $temporada = null)
+    public function listarAction(Request $request, Temporada $temporada = null)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -36,9 +37,16 @@ class LiquidacionController extends Controller
         $liquidaciones = $em->getRepository('AppBundle:Liquidacion')
             ->getLiquidacionTemporada($temporada);
 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $liquidaciones,
+            $request->query->getInt('page', 1), 4
+        );
+
         return $this->render('liquidacion/listar.html.twig', [
             'liquidaciones' => $liquidaciones,
-            'temporada' => $temporada
+            'temporada' => $temporada,
+            'pagination' => $pagination
         ]);
     }
 

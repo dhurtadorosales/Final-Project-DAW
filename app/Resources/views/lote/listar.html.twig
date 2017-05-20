@@ -12,6 +12,11 @@
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a inicio
         </a>
+        {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_EMPLEADO') %}
+            <a href="{{ path('lotes_temporadas_listar') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-calendar"></i> Otras temporadas
+            </a>
+        {% endif %}
     </div>
     <div class="container well">
         <table class="table table-responsive">

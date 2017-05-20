@@ -1,20 +1,19 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Movimientos{% endblock %}
+{% block title %}Lotes{% endblock %}
 
 {% block section %}
     {% set socio = app.user.socio.id %}
     <div class="container">
-        <h2 class="well">Movimientos anteriores</h2>
+        <h2 class="well">Lotes anteriores</h2>
         <div class="container">
             <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-home"></i> Ir a inicio
             </a>
         </div>
         <div class="tiles">
-            {% for temporada in pagination %}
-                    <a href="{{ path('movimientos_listar_temporada', {'temporada' : temporada.id}) }}" class="btn">
-
+            {% for temporada in temporadas %}
+                <a href="{{ path('lotes_listar_temporada', {'temporada' : temporada.id}) }}" class="btn">
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
                             <i class="fa fa-calendar"></i>
@@ -26,11 +25,6 @@
                     </div>
                 </a>
             {% endfor %}
-        </div>
-    </div>
-    <div class="container">
-        <div class="col-md-6 col-md-offset-3">
-            {{ knp_pagination_render(pagination) }}
         </div>
     </div>
 {% endblock %}

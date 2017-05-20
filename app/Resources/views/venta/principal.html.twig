@@ -12,7 +12,7 @@
             </a>
         </div>
         <div class="tiles">
-            {% for temporada in temporadas %}
+            {% for temporada in pagination %}
                 {% if is_granted('ROLE_DEPENDIENTE') or is_granted('ROLE_COMERCIAL') %}
                     <a href="{{ path('ventas_listar_socio_temporada', {'socio' : socio, 'temporada' : temporada.id}) }}" class="btn">
                         <div class="tile tile-dark-orange">
@@ -40,6 +40,11 @@
                     </a>
                 {% endif %}
             {% endfor %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
         </div>
     </div>
 {% endblock %}

@@ -47,4 +47,48 @@ class SocioRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function buscarSocios($parametro)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('s')
+            ->addSelect('u')
+            ->from('AppBundle:Socio', 's')
+            ->join('s.usuario', 'u')
+            ->where('s.activo = :activo')
+            ->andWhere('u.nombre LIKE :parametro')
+            ->orWhere('u.apellidos LIKE :parametro')
+            ->orWhere('u.nif LIKE :parametro')
+            ->setParameter('activo', true)
+            ->setParameter('parametro', '%' . $parametro . '%')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
+
+    public function buscarSociosBaja($parametro)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('s')
+            ->select('u')
+            ->from('AppBundle:Socio', 's')
+            ->join('s.usuario', 'u')
+            ->where('s.activo = :activo')
+            ->andWhere('u.nombre LIKE :parametro')
+            ->orWhere('u.apellidos LIKE :parametro')
+            ->orWhere('u.nif LIKE :parametro')
+            ->setParameter('activo', false)
+            ->setParameter('parametro', '%' . $parametro . '%')
+            ->getQuery()
+            ->getResult();
+
+        return $consulta;
+    }
 }

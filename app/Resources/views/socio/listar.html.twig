@@ -33,12 +33,27 @@
         {% endif %}
     </div>
     <div class="container well">
+        <form action="{{ path('socios_buscar', {'baja' : baja}) }}" id="buscar">
+            <input type="text" name="buscar" placeholder="Buscar...">
+            <button type="submit" class="btn btn-default btnAceptar" title="Buscar">
+                <i class="fa fa-search"></i>
+            </button>
+            <a href="{{ path('socios_listar') }}" class="btn btn-default btnAceptar" title="Mostrar todos">
+                <i class="fa fa-list-ul"></i>
+            </a>
+        </form>
         <table class="table table-responsive">
             <thead>
             <tr>
-                <th>Nº</th>
-                <th>NIF</th>
-                <th>Socio</th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'Nº Socio', 'a.id') }}
+                </th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'NIF', 'a.usuario.nif') }}
+                </th>
+                <th class="col-sm-3 sortable">
+                    {{ knp_pagination_sortable(pagination, 'Socio', 'a.usuario.apellidos') }}
+                </th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
                 <th>Nº Plantas</th>
@@ -50,7 +65,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for socio in socios %}
+            {% for socio in pagination %}
                 {% if socio.usuario.email != null %}
                     <tr title="{{ socio.usuario.email }}" class="clickable-row">
                 {% else %}
@@ -129,7 +144,11 @@
             </tbody>
         </table>
     </div>
-
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
         <script src="{{ asset('script/seleccionar_fila.js') }}"></script>

@@ -26,6 +26,7 @@ class TemporadaRepository extends EntityRepository
             ->from('AppBundle:Temporada', 't')
             ->where('t.denominacion != :denominacion')
             ->setParameter('denominacion', '00/00')
+            ->orderBy('t.id', 'DESC')
             ->getQuery()
             ->getResult();
 
