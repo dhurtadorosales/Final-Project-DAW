@@ -3,13 +3,19 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextFactoryInterface;
+
 
 /**
  * Class Envase
  * @ORM\Entity()
- * @Assert\Callback
+ * @UniqueEntity(
+ *     fields={"denominacion", "capacidadLitros"},
+ *     errorPath="denominacion",
+ *     message="Ya existe un envase con esta denominación y esta capacidad"
+ * )
  */
 class Envase
 {
@@ -23,7 +29,7 @@ class Envase
 
     /**
      * @var string
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Este campo es obligatorio")
      * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */

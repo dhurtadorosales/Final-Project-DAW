@@ -39,7 +39,7 @@ class Usuario implements AdvancedUserInterface
      * @var string
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ , . /]*$/", message="Formato no válido")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $nombre;
 
@@ -55,7 +55,7 @@ class Usuario implements AdvancedUserInterface
      * @var string
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ , . /]*$/", message="Formato no válido")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $direccion;
 

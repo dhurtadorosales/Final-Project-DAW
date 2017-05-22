@@ -28,6 +28,11 @@ class Movimiento
     private $concepto;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $tipo;
+
+    /**
      * @var float
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Este campo es obligatorio")
@@ -46,6 +51,7 @@ class Movimiento
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Temporada", inversedBy="movimientos")
      */
     private $temporada;
+
 
 
     /**
@@ -80,6 +86,30 @@ class Movimiento
     public function getConcepto()
     {
         return $this->concepto;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param boolean $tipo
+     *
+     * @return Movimiento
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return boolean
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 
     /**

@@ -16,7 +16,6 @@ class UsuarioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('antigua', PasswordType::class, [
                 'label' => 'Contraseña antigua:',
@@ -41,9 +40,7 @@ class UsuarioType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Usuario::class,
-            'translation_domain' => 'usuario',
-            'es_administrador' => false,
-            'el_mismo' => false
+            'translation_domain' => 'usuario'
         ]);
     }
 }

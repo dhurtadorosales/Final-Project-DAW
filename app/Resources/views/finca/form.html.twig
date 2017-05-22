@@ -4,6 +4,7 @@
 {% block title %}Fincas{% endblock %}
 
 {% block section %}
+    {% include 'flash.html.twig' %}
     <div class="container">
         <h3 class="well">
             {% if finca.id %}
@@ -27,4 +28,7 @@
             </div>
         {{ form_end(formulario) }}
     </div>
+    {% block javascripts %}
+        <script src="{{ asset('script/flash.js') }}"></script>
+    {% endblock %}
 {% endblock %}

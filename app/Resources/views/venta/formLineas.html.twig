@@ -4,6 +4,7 @@
 {% block title %}Ventas{% endblock %}
 
 {% block section %}
+    {% include 'flash.html.twig' %}
     <div class="container">
         <h2 class="well">Añadir concepto</h2>
     </div>
@@ -33,4 +34,7 @@
             </div>
         {{ form_end(formulario) }}
     </div>
+    {% block javascripts %}
+        <script src="{{ asset('script/flash.js') }}"></script>
+    {% endblock %}
 {% endblock %}

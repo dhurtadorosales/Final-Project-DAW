@@ -17,6 +17,7 @@ class UsuarioController extends Controller
 {
     /**
      * @Route("/usuarios/listar", name="usuarios_listar")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function listarUsuariosAction(Request $request)
     {
@@ -39,6 +40,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/clientes/listar", name="clientes_listar")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
     public function listarClientesAction(Request $request)
     {
@@ -112,7 +114,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/clientes/buscar", name="clientes_buscar")
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE)'")
      */
     public function buscarClientesAction(Request $request)
     {

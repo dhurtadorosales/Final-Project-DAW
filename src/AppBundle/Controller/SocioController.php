@@ -261,6 +261,8 @@ class SocioController extends Controller
             ->setFechaBaja(null);
         $em->persist($socio);
 
+        $usuario = $socio->getUsuario()->setActivo(true);
+
         $em->flush();
 
         //Obtención de todos los socios activos para mostrarlos
