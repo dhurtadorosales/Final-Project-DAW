@@ -212,7 +212,16 @@ class UsuarioController extends Controller
         if (null == $usuario) {
             $usuario = new Usuario();
             $em->persist($usuario);
-            $usuario->setEmpleado(true);
+            $usuario
+                ->setAdministrador(false)
+                ->setEmpleado(true)
+                ->setComercial(false)
+                ->setDependiente(false)
+                ->setEncargado(false)
+                ->setCliente(false)
+                ->setRolSocio(false)
+                ->setActivo(true)
+                ->setclave(0);
         }
 
         $form = $this->createForm(EmpleadoType::class, $usuario);
@@ -221,6 +230,11 @@ class UsuarioController extends Controller
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $clave = $this->get('security.password_encoder')
+                    ->encodePassword($usuario, $usuario->getNif());
+
+                $usuario->setClave($clave);
+
                 $em->flush();
                 $this->addFlash('estado', 'Empleado guardado con éxito');
                 return $this->redirectToRoute('empleados_listar');
@@ -250,15 +264,29 @@ class UsuarioController extends Controller
             $usuario = new Usuario();
             $em->persist($usuario);
 
-            $usuario->setCliente(true);
+            $usuario
+                ->setAdministrador(false)
+                ->setEmpleado(false)
+                ->setComercial(false)
+                ->setDependiente(false)
+                ->setEncargado(false)
+                ->setCliente(true)
+                ->setRolSocio(false)
+                ->setActivo(true)
+                ->setclave(0);
         }
-        dump($usuario);
+
         $form = $this->createForm(ClienteType::class, $usuario);
         $form->handleRequest($request);
 
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $clave = $this->get('security.password_encoder')
+                    ->encodePassword($usuario, $usuario->getNif());
+
+                $usuario->setClave($clave);
+
                 $em->flush();
                 $this->addFlash('estado', 'Cliente guardado con éxito');
                 return $this->redirectToRoute('clientes_listar');

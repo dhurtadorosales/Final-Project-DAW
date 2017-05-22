@@ -278,7 +278,7 @@
                 {% if is_granted('ROLE_CLIENTE') %}
                     <h4 class="well">Tareas de cliente</h4>
                     <div class="tiles">
-                        <a href="{{ path('ventas_listar_usuario', {'usuario' : app.user.id}) }}" class="btn">
+                        <a href="{{ path('ventas_listar_usuario', {'id' : app.user.id}) }}" class="btn">
                             <div class="tile tile-dark-pink">
                                 <div class="tile-body">
                                     <i class="fa fa-shopping-cart"></i>

@@ -33,10 +33,10 @@ class FincaModificarType extends AbstractType
                         'label' => 'Regadío'
                     ])
                     ->add('partPropietario', PercentType::class, [
-                        'label' => 'Participación del propietario: (sobre 1)'
+                        'label' => 'Participación del propietario:'
                     ])
                     ->add('partArrend', PercentType::class, [
-                        'label' => 'Participación del arrendatario: (sobre 1)'
+                        'label' => 'Participación del arrendatario:'
                     ])
                     ->add('variedad', null, [
                         'label' => 'Variedad de aceituna:',
