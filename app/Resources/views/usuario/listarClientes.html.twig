@@ -62,7 +62,7 @@
                     </td>
                     <td>
                         {% if is_granted('ROLE_ADMINISTRADOR') %}
-                            <a href="{{ path('clientes_modificar', {'cliente' : cliente }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
+                            <a href="{{ path('clientes_modificar', {'id' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                                 <i class="fa fa-pencil"></i>
                             </a>
                         {% endif %}

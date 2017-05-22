@@ -238,7 +238,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/clientes/nuevo", name="clientes_nuevo")
-     * @Route("/clientes/modificar/{cliente}", name="clientes_modificar")
+     * @Route("/clientes/modificar/{id}", name="clientes_modificar")
      * @Security("is_granted('ROLE_ADMINISTRADOR')")
      */
     public function formClienteAction(Request $request, Usuario $usuario = null)

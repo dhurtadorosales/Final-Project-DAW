@@ -39,14 +39,13 @@ class Usuario implements AdvancedUserInterface
      * @var string
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
+     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ , .]*$/", message="Formato no válido")
      */
     private $nombre;
 
     /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-     * @Assert\NotBlank(message="Este campo es obligatorio")
      * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
      */
     private $apellidos;
@@ -55,7 +54,7 @@ class Usuario implements AdvancedUserInterface
      * @var string
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/", message="Formato no válido")
+     * @Assert\Regex("/[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)/", message="Formato no válido")
      */
     private $direccion;
 
