@@ -104,38 +104,39 @@ class SocioController extends Controller
             $socio = new Socio();
             $em->persist($socio);
 
+            //Nuevo usuario que debe ser asignado al nuevo socio
+            $usuario = new  Usuario();
+            $em->persist($usuario);
+
+            $usuario
+                ->setAdministrador(false)
+                ->setEmpleado(false)
+                ->setComercial(false)
+                ->setDependiente(false)
+                ->setEncargado(false)
+                ->setCliente(false)
+                ->setRolSocio(true)
+                ->setActivo(true)
+                ->setclave(0)
+                ->setSocio($socio);
+
+            //Asignación fecha de alta, activo y usuario
+            $socio
+                ->setFechaAlta($fecha)
+                ->setActivo(true)
+                ->setUsuario($usuario);
+
             $form = $this->createForm(SocioType::class, $socio);
             $form->handleRequest($request);
 
             //Si es válido
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    //Nuevo usuario que debe ser asignado al nuevo socio
-                    $usuario = new Usuario();
-                    $socio->setUsuario($usuario);
-                    $usuario->setActivo(true);
-                    $em->persist($usuario);
-
-                    //Asignación fecha de alta y activo
-                    $socio
-                        ->setFechaAlta($fecha)
-                        ->setActivo(true);
-
                     //Asignación de la clave. Será la misma que su nif
                     $nif = $socio->getUsuario()->getNif();
                     $clave = $this->get('security.password_encoder')
                         ->encodePassword($socio->getUsuario(), $nif);
                     $socio->getUsuario()->setClave($clave);
-
-                    //asignación de roles
-                    $socio->getUsuario()
-                        ->setAdministrador(false)
-                        ->setComercial(false)
-                        ->setDependiente(false)
-                        ->setEncargado(false)
-                        ->setEmpleado(false)
-                        ->setCliente(false)
-                        ->setRolSocio(true);
 
                     //Crear la liquidación del socio
                     $liquidacion = new  Liquidacion();

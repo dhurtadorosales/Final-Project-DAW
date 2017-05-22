@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Usuario
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
+ * @UniqueEntity("nif")
  */
 class Usuario implements AdvancedUserInterface
 {

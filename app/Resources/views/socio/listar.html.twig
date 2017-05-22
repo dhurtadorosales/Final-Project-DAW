@@ -92,7 +92,7 @@
                         <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                             <i class="fa fa-pencil"></i>
                         </a>
-                        <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#{{ socio.id }}">
+                        <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#{{ socio.id }}" title="Eliminar">
                             <i class="fa fa-trash"></i>
                         </a>
                         <a href="{{ path('socios_pass', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Restablecer contraseña">
