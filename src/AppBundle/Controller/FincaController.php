@@ -199,9 +199,20 @@ class FincaController extends Controller
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $em->flush();
-                $this->addFlash('estado', 'Finca guardada con éxito');
-                return $this->redirectToRoute('fincas_listar');
+                if ($form['partArrend']->getData() != 0 and $form['arrendatario']->getData() == null) {
+                    $this->addFlash('error', 'El arrendatario no puede ser nulo si su participación es mayor que 0');
+                }
+                else {
+                    if ($form['partPropietario']->getData() == 1) {
+                        $finca
+                            ->setPartArrend(0)
+                            ->setArrendatario(null)
+                            ->setActiva(true);
+                    }
+                    $em->flush();
+                    $this->addFlash('estado', 'Finca guardada con éxito');
+                    return $this->redirectToRoute('fincas_listar');
+                }
             }
             catch(\Exception $e) {
                 $this->addFlash('error', 'No se ha podido guardar la finca');

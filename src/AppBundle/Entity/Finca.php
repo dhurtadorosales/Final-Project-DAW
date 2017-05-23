@@ -87,7 +87,6 @@ class Finca
      * @var integer
      * @ORM\Column(type="integer")
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[0-9]$/", message="Formato no válido")
      */
     private $numPlantas;
 
@@ -101,7 +100,6 @@ class Finca
      * @var float
      * @ORM\Column(type="float", precision=2)
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[0-9]$/", message="Formato no válido")
      */
     private $partPropietario;
 
@@ -109,7 +107,6 @@ class Finca
      * @var float
      * @ORM\Column(type="float", precision=2)
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[0-9]$/", message="Formato no válido")
      */
     private $partArrend;
 

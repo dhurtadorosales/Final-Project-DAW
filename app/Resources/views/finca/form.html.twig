@@ -30,5 +30,10 @@
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
+        {% if finca.id %}
+            <script src="{{ asset('script/finca_modificar.js') }}"></script>
+        {% else %}
+            <script src="{{ asset('script/finca.js') }}"></script>
+        {% endif %}
     {% endblock %}
 {% endblock %}

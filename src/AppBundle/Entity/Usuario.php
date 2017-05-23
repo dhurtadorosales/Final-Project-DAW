@@ -102,7 +102,6 @@ class Usuario implements AdvancedUserInterface
      * @var float
      * @ORM\Column(type="float", precision=2)
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex("/^[0-9]+(\.[0-9]+)?$/")
      */
     private $descuento;
 
