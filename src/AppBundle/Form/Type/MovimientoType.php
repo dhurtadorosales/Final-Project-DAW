@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Movimiento;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -26,14 +27,18 @@ class MovimientoType extends AbstractType
                 'readonly' => true
             ]
         ])
+        ->add('tipo', ChoiceType::class, [
+            'label' => 'Tipo:',
+            'choices' => [
+                'pago' => true,
+                'ingreso' => false
+            ]
+        ])
         ->add('concepto', null, [
             'label' => 'Concepto:'
         ])
         ->add('cantidad', null, [
-            'label' => 'Cantidad:',
-            'attr' => [
-                'placeholder' => 'Ejemplo: -3000 si es pago, 3000 si es ingreso'
-            ]
+            'label' => 'Cantidad:'
         ]);
     }
 

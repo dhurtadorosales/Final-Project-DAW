@@ -139,6 +139,19 @@ class MovimientoController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $concepto = $form['concepto']->getData();
+                $tipo = $form['tipo']->getData();
+                $cantidad = $form['cantidad']->getData();
+
+                //Concepto se pasa a mayúscula
+                $concepto = strtoupper($concepto);
+                $movimiento->setConcepto($concepto);
+
+                //La cantidad es negativa si es un pago
+                if ($tipo == 'pago') {
+                    $cantidad = 0 - $cantidad;
+                    $movimiento->setCantidad($cantidad);
+                }
                 $em->flush();
                 $this->addFlash('estado', 'Movimiento creado con éxito');
                 return $this->redirectToRoute('movimientos_listar');

@@ -28,7 +28,8 @@ class Movimiento
     private $concepto;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @var string
+     * @ORM\Column(type="string")
      */
     private $tipo;
 
@@ -36,7 +37,6 @@ class Movimiento
      * @var float
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Este campo es obligatorio")
-
      */
     private $cantidad;
 

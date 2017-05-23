@@ -57,12 +57,14 @@ class SocioType extends AbstractType
                         'property_path' => 'usuario.provincia'
                     ])
                     ->add('telefono', null , [
-                        'label' => 'Telefono:',
-                        'property_path' => 'usuario.telefono'
+                        'label' => 'Telefono: (opcional)',
+                        'property_path' => 'usuario.telefono',
+                        'required' => false
                     ])
                     ->add('email', EmailType::class, [
-                        'label' => 'Correo electrónico:',
-                        'property_path' => 'usuario.email'
+                        'label' => 'Correo electrónico: (opcional)',
+                        'property_path' => 'usuario.email',
+                        'required' => false
                     ])
                     ->add('descuento', PercentType::class, [
                         'label' => 'Descuento:',

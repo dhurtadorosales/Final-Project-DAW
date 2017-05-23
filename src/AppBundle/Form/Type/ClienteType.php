@@ -48,11 +48,11 @@ class ClienteType extends AbstractType
                         'label' => 'Provincia:'
                     ])
                     ->add('telefono', null , [
-                        'label' => 'Telefono:',
+                        'label' => 'Telefono: (opcional)',
                         'required' => false
                     ])
                     ->add('email', EmailType::class, [
-                        'label' => 'Correo electrónico:',
+                        'label' => 'Correo electrónico: (opcional)',
                         'required' => false
                     ])
                     ->add('descuento', PercentType::class, [
