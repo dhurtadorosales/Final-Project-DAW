@@ -46,7 +46,7 @@
                             {% endfor %}
                             {% set suma = suma + sumaVenta  %}
                         {% endfor %}
-                        {{ suma }}
+                        {{ suma|number_format(2, ',', '.') }}
                     </td>
                     <td>
                         {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')%}

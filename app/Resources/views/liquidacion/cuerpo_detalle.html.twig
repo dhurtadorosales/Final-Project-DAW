@@ -25,7 +25,7 @@
 <div class="container well">
     <table class="table table-bordered table-responsive">
         <tr>
-            <td>Temporada</td><td>{{ temporada }}</td>
+            <td class="col-sm-2">Temporada</td><td>{{ temporada }}</td>
         </tr>
         <tr>
             <td>Fecha</td>
@@ -49,29 +49,29 @@
         <tbody>
         <tr>
             <td>Kg Aceituna</td>
-            <td>{{ pesoAceituna }}</td>
+            <td>{{ pesoAceituna|number_format(2, ',', '.') }}</td>
             <td>Base imponible €</td>
-            <td>{{ sumaVentas }}</td>
+            <td>{{ sumaVentas|number_format(2, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Rendimiento medio %</td>
-            <td>{{ rendimientoMedio * 100 }}</td>
+            <td>{{ (rendimientoMedio * 100)|number_format(2, ',', '.') }}</td>
         <tr>
             <td>Kg Aceite</td>
-            <td>{{ pesoAceite }}</td>
+            <td>{{ pesoAceite|number_format(2, ',', '.') }}</td>
         </tr>
         <tr>
             <td>€/kg Aceite</td>
-            <td>{{ precioLiquidacion }}</td>
+            <td>{{ precioLiquidacion|number_format(10, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Bonificaciones €</td>
-            <td>{{ sumaBonificacion }}</td>
+            <td>{{ sumaBonificacion|number_format(2, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Base imponible €</td>
             <td>{% set baseImponible = (pesoAceite * precioLiquidacion) + sumaBonificacion %}
-                {{ baseImponible }}
+                {{ baseImponible|number_format(2, ',', '.') }}
             </td>
         </tr>
         <tr>
@@ -80,11 +80,11 @@
                 {% else %}
                     {% set iva = porcentajes[1].cantidad %}
                 {% endif %}
-                IVA {{ iva * 100 }}%
+                IVA {{ (iva * 100) }}%
             </td>
-            <td>{{ baseImponible * iva }}</td>
+            <td>{{ (baseImponible * iva)|number_format(2, ',', '.') }}</td>
             <td>IVA {{ iva * 100 }}%</td>
-            <td>{{ sumaVentas * iva }}</td>
+            <td>{{ (sumaVentas * iva)|number_format(2, ',', '.') }}</td>
         </tr>
         <tr>
             <td>{% if liquidacion[0].fecha != null %}
@@ -94,15 +94,15 @@
                 {% endif %}
                 Retención {{ retencion * 100 }}%
             </td>
-            <td>- {{ baseImponible * retencion }}</td>
+            <td>- {{ (baseImponible * retencion)|number_format(2, ',', '.') }}</td>
         </tr>
         <tr>
             <td>Importe €</td>
             <td>{% set importe = (baseImponible) * (1 + porcentajes[1].cantidad) - (baseImponible * porcentajes[2].cantidad) %}
-                {{ importe }}
+                {{ importe|number_format(2, ',', '.') }}
             </td>
             <td>A deducir</td>
-            <td>{{ sumaVentas * (1 + porcentajes[1].cantidad) }}</td>
+            <td>{{ (sumaVentas * (1 + porcentajes[1].cantidad))|number_format(2, ',', '.') }}</td>
         </tr>
         </tbody>
     </table>
@@ -112,7 +112,7 @@
         <thead>
         <tr>
             <th>IMPORTE TOTAL</th>
-            <td>{{ importe - sumaVentas * (1 + porcentajes[1].cantidad) }} €</td>
+            <td>{{ (importe - sumaVentas * (1 + porcentajes[1].cantidad))|number_format(2, ',', '.') }} €</td>
         </tr>
         </thead>
     </table>

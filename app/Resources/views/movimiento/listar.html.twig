@@ -28,7 +28,7 @@
                         {{ knp_pagination_sortable(pagination, 'Fecha', 'a.fecha') }}
                     </th>
                     <th>Concepto</th>
-                    <th>Cantidad</th>
+                    <th>Cantidad €</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,7 +43,7 @@
                         {% else %}
                             {% set sumaGanancias = sumaGanancias + movimiento.cantidad %}
                         {% endif %}
-                        {{ movimiento.cantidad }}
+                        {{ movimiento.cantidad|number_format(2, ',', '.') }}
                     </td>
                 </tr>
             {% endfor %}
@@ -61,10 +61,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ sumaVentas }}</td>
-                    <td>{{ sumaGastos }}</td>
-                    <td>{{ sumaGanancias }}</td>
-                    <td>{{ sumaVentas - sumaGastos + sumaGanancias }}</td>
+                    <td>{{ sumaVentas|number_format(2, ',', '.') }}</td>
+                    <td>{{ sumaGastos|number_format(2, ',', '.') }}</td>
+                    <td>{{ sumaGanancias|number_format(2, ',', '.') }}</td>
+                    <td>{{ (sumaVentas - sumaGastos + sumaGanancias)|number_format(2, ',', '.') }}</td>
                 </tr>
             </tbody>
         </table>

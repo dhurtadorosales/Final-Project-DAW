@@ -34,7 +34,7 @@
                 {% else %}
                     {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
                 {% endif %}
-                    {{ pesoAceituna }} kg</h4>
+                    {{ pesoAceituna|number_format(0, ',', '.') }} kg</h4>
             </th>
         </tr>
     </table>
@@ -50,9 +50,9 @@
         <tbody>
             <tr>
                 <td>{{ entrega.procedencia }}</td>
-                <td>{{ pesoAceituna * entrega.sancion }}</td>
+                <td>{{ (pesoAceituna * entrega.sancion)|number_format(2, ',', '.') }}</td>
                 <td>{{ entrega.rendimiento * 100 }}</td>
-                <td>{{ (pesoAceituna - pesoAceituna * entrega.sancion) * entrega.rendimiento }}</td>
+                <td>{{ ((pesoAceituna - pesoAceituna * entrega.sancion) * entrega.rendimiento)|number_format(2, ',', '.') }}</td>
             </tr>
         </tbody>
         <tfoot>

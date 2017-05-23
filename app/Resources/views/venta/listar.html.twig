@@ -52,10 +52,10 @@
                     <td>{{ venta.usuario }}</td>
                     <td>{{ venta.fecha|date('d/m/Y') }}</td>
                     <td>{% set baseImponible = venta.suma - (venta.suma * venta.descuento) %}
-                        {{ baseImponible}}
+                        {{ baseImponible|number_format(2, ',', '.') }}
                     </td>
                     <td>{{ venta.iva * 100 }}</td>
-                    <td>{{ baseImponible * (1 + venta.iva) }}</td>
+                    <td>{{ (baseImponible * (1 + venta.iva))|number_format(2, ',', '.') }}</td>
                     {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
                         <td>
                             {% if venta.cerrada != true %}

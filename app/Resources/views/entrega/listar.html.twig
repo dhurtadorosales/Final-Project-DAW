@@ -53,17 +53,17 @@
                         {% else %}
                             {%  set pesoAceituna = entrega.peso * entrega.finca.partArrend %}
                         {% endif %}
-                        {{ pesoAceituna }}
+                        {{ pesoAceituna|number_format(0, ',', '.') }}
                     </td>
                     <td>{% if entrega.sancion != null %}
                             {% set sancion = pesoAceituna * entrega.sancion %}
                         {% else %}
                             {% set sancion = 0 %}
                         {% endif %}
-                        - {{ sancion }}
+                        - {{ sancion|number_format(2, ',', '.') }}
                     </td>
                     <td>{{ entrega.rendimiento * 100 }}</td>
-                    <td>{{ (pesoAceituna - sancion) * entrega.rendimiento }}</td>
+                    <td>{{ ((pesoAceituna - sancion) * entrega.rendimiento)|number_format(2, ',', '.') }}</td>
                     <td>{{ entrega.procedencia}}</td>
                     <td>
                         {% if entrega.lote != null %}
