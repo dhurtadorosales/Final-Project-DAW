@@ -12,11 +12,13 @@ use AppBundle\Form\Model\ListaLineas;
 use AppBundle\Form\Type\LineaType;
 use AppBundle\Form\Type\VentaType;
 use Doctrine\ORM\EntityManager;
+use Sasedev\MpdfBundle\Service\MpdfService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Service\TemporadaActual;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class VentaController extends Controller
 {
@@ -348,5 +350,36 @@ class VentaController extends Controller
         return $this->redirectToRoute('ventas_listar_usuario', [
             'id' => $venta->getUsuario()->getId()
         ]);
+    }
+
+    /**
+     * @Route("/ventas/imprimir/{venta}", name="ventas_imprimir")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == venta.getUsuario().getNif()")")
+     */
+    public function pdfAction(Venta $venta)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //Obtención de las líneas de la venta
+        $lineas = $em->getRepository('AppBundle:Linea')
+            ->getLineasVenta($venta);
+
+        $persona = $venta->getUsuario();
+
+        $filename = 'factura' . '_' . $venta->getNumero() . '_' . $venta->getFecha()->format('Y') . '.pdf';
+
+        /** @var MpdfService $mpdf */
+        $mpdf = $this->get('sasedev_mpdf');
+        $mpdf->init('', 'A4');
+        $mpdf->getMpdf();
+        $mpdf->useTwigTemplate('venta/informe.html.twig', [
+            'titulo' => $filename,
+            'venta' => $venta,
+            'lineas' => $lineas,
+            'persona' => $persona
+        ]);
+
+        return $mpdf->generateInlineFileResponse($filename);
     }
 }
