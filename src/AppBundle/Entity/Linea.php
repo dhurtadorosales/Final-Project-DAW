@@ -22,7 +22,7 @@ class Linea
     /**
      * @var float
      * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Inserta el fichero con las entregas de hoy")
+     * @Assert\NotBlank(message="Este campo es obligatorio")
      */
     private $cantidad;
 

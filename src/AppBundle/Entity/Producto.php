@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Producto
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductoRepository")
- * @UniqueEntity("envase")
  */
 class Producto
 {

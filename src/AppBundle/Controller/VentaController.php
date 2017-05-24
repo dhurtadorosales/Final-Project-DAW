@@ -55,7 +55,7 @@ class VentaController extends Controller
 
     /**
      * @Route("/ventas/detalle/{venta}", name="ventas_detalle")
-     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == usuario.getNif()")")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') or user.getNif() == venta.getUsuario().getNif()")")
      */
     public function detalleAction(Venta $venta)
     {
@@ -65,7 +65,6 @@ class VentaController extends Controller
         //Obtención de las líneas de la venta
         $lineas = $em->getRepository('AppBundle:Linea')
             ->getLineasVenta($venta);
-
 
         $persona = $venta->getUsuario();
 
@@ -198,7 +197,7 @@ class VentaController extends Controller
      * @Route("/ventas/nueva/{usuario}", name="ventas_nueva")
      * * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
-    public function nuevaVentaAction(Usuario $usuario)
+    public function nuevaVentaAction(Request $request, Usuario $usuario)
     {
         /** @var EntityManager $em */
          $em = $this->getDoctrine()->getManager();
@@ -251,13 +250,17 @@ class VentaController extends Controller
          }
 
          //Obtención de todas las ventas de ese usuario
-        $ventas = $em->getRepository('AppBundle:Venta')
-            ->getVentasUsuario($usuario);
+         $ventas = $em->getRepository('AppBundle:Venta')
+             ->getVentasUsuario($usuario);
 
-         return $this->render('venta/listar.html.twig', [
-             'usuario' => $usuario,
-             'temporada' => $temporada,
-             'ventas' => $ventas
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $ventas,
+                $request->query->getInt('page', 1), 4
+            );
+
+         return $this->redirectToRoute('ventas_listar_usuario', [
+             'id' => $usuario->getId()
          ]);
      }
 

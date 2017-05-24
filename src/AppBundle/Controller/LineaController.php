@@ -133,63 +133,88 @@ class LineaController extends Controller
      */
     public function formNuevaLineaAction(Request $request, Venta $venta)
     {
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        //Creación de un objeto de la clase Linea
-        $linea = new Linea();
-        $em->persist($linea);
-
-        //Ejecución de formulario
-        $form = $this->createForm(LineaType::class, $linea, [
-            'venta' => $venta
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                //Obtención de la cantidad
-                $cantidad = $form['cantidad']->getData();
-
-				//Obtención campos producto y lote (si tienen valor)
-				$producto = $form['producto']->getData();
-				$lote = $form['lote']->getData();
-
-				//Si la línea es de un producto quitamos cantidad al stock de producto. Si no es así la quitamos del lote
-				if (!$producto) {
-                    $em->persist($producto);
-                    $producto
-                        ->setStock($producto->getStock() - $cantidad);
-
-                    //Precio del producto
-                    $precio = $producto->getPrecio();
-                }
-                else {
-                    $em->persist($lote);
-                    $lote
-                        ->setStock($lote->getStock() - $cantidad);
-
-                    //Precio del lote
-                    $precio = $lote->getAceite()->getPrecioKg();
-                }
-
-				//Añadimos la cantidad a la base imponible de la venta
-				$suma = $venta->getSuma();
-				$venta->setSuma($suma + ($cantidad * $precio));
-
-                $em->flush();
-                $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('ventas_listar_usuario', [
-                    'id' => $venta->getUsuario()
-                ]);
-            }
-            catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar los cambios');
-            }
+        if ($venta->getCerrada() == true) {
+            $this->addFlash('error', 'No se puede modificar esta venta');
+            return $this->redirectToRoute('ventas_listar_usuario', [
+                'id' => $venta->getUsuario()->getId()
+            ]);
         }
-        return $this->render('venta/formLineas.html.twig', [
-            'venta' => $venta,
-            'formulario' => $form->createView()
-        ]);
+        else {
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+            //Creación de un objeto de la clase Linea
+            $linea = new Linea();
+            $em->persist($linea);
+            $em->persist($venta);
+
+            //Ejecución de formulario
+            $form = $this->createForm(LineaType::class, $linea, [
+                'venta' => $venta
+            ]);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                try {
+                    //Obtención de la cantidad
+                    $cantidad = $form['cantidad']->getData();
+
+                    //Obtención campos producto y lote (si tienen valor)
+                    $producto = $form['producto']->getData();
+                    $lote = $form['lote']->getData();
+
+                    dump($linea);
+                    //Si no se ha seleccionado ninguno
+                    if ($producto == null and $lote == null) {
+                        $this->addFlash('error', 'No se ha selecciondo ningún producto o lote');
+                    } else {
+                        //Si la línea es de un producto quitamos cantidad al stock de producto. Si no es así la quitamos del lote
+                        if ($producto != null) {
+                            //Precio del producto
+                            $precio = $producto->getPrecio();
+
+                            $linea
+                                ->setPrecio($precio)
+                                ->setVenta($venta)
+                                ->setLote(null);
+
+                            $em->persist($producto);
+                            $producto
+                                ->setStock($producto->getStock() - $cantidad);
+
+                        } else {
+                            //Precio del lote
+                            $precio = $lote->getAceite()->getPrecioKg();
+
+                            $linea
+                                ->setPrecio($precio)
+                                ->setVenta($venta)
+                                ->setProducto(null);
+
+                            $em->persist($lote);
+                            $lote
+                                ->setStock($lote->getStock() - $cantidad);
+
+                        }
+
+                        //Añadimos la cantidad a la base imponible de la venta
+                        $suma = $venta->getSuma();
+                        $venta->setSuma($suma + ($cantidad * $precio));
+
+                        $em->flush();
+                        $this->addFlash('estado', 'Cambios guardados con éxito');
+                        return $this->redirectToRoute('ventas_detalle', [
+                            'venta' => $venta->getId()
+                        ]);
+                    }
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'No se han podido guardar los cambios');
+                }
+            }
+            return $this->render('venta/formLineas.html.twig', [
+                'venta' => $venta,
+                'formulario' => $form->createView()
+            ]);
+        }
     }
 
     /**
@@ -244,7 +269,7 @@ class LineaController extends Controller
         }
 
         return $this->redirectToRoute('ventas_detalle', [
-            'venta' => $venta
+            'venta' => $venta->getId()
         ]);
     }
 }

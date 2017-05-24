@@ -19,22 +19,18 @@ class LineaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('cantidad', null, [
-                'label' => 'Cantidad:',
-            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
                 $form = $event->getForm();
                 $data = $event->getData();
                 $form
-                    /*->add('producto', EntityType::class, [
-                        'class' => Producto::class,
+                    ->add('cantidad', null, [
+                        'label' => 'Cantidad:',
+                    ])
+                    ->add('producto', null, [
                         'label' => 'Producto:',
-                        'query_builder' => function (ProductoRepository $productoRepository) use ($options) {
-                            return $productoRepository->findAll();
-                        },
-                        'mapped' => false,
-                        'required' => false
-                    ])*/
+                        'required' => false,
+                        'placeholder' => '[Ninguno]'
+                    ])
                     ->add('lote', EntityType::class, [
                         'class' => Lote::class,
                         'label' => 'Lote:',
@@ -42,18 +38,8 @@ class LineaType extends AbstractType
                             return $loteRepository->getLotesNoNulosQuery();
                         },
                         'mapped' => false,
-                        'required' => false
-                    ]);
-            })
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
-                $form = $event->getForm();
-                $data = $event->getData();
-                $form
-                    ->add('precio', null, [
-                        'label' => 'Precio:',
-                        'attr' => [
-                            'readonly' => true
-                        ]
+                        'required' => false,
+                        'placeholder' => '[Ninguno]'
                     ]);
             });
     }

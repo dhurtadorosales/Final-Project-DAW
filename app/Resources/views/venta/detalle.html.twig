@@ -6,9 +6,15 @@
     {% include 'flash.html.twig' %}
     <div class="container">
         <h2 class="well">Factura</h2>
-        <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
-        </a>
+        {% if venta.cerrada == true %}
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-chevron-left"></i> Volver
+            </a>
+        {% else %}
+            <a href="{{ path('ventas_listar_usuario', {'id' : persona.id }) }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-cart-arrow-down"></i> Ir a ventas
+            </a>
+        {% endif %}
     </div>
     <div class="container well">
         <table class="table table-responsive">
@@ -38,6 +44,11 @@
         </table>
     </div>
     <div class="container well">
+        {% if venta.cerrada == false %}
+            <a href="{{ path('ventas_lineas_nueva', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar" title="Añadir conceptos">
+                <i class="fa fa-plus"></i>
+            </a>
+        {% endif %}
         <table class="table table-bordered table-responsive">
             <thead>
             <tr>
@@ -114,7 +125,7 @@
                     <td></td>
                     <td></td>
                     <td>Total €</td>
-                    <td>{{ baseImponible * (1 + venta.iva) }}</td>
+                    <td>{{ (baseImponible * (1 + venta.iva))|number_format(2, ',', '.') }}</td>
                 </tr>
             </tfoot>
         </table>

@@ -13,7 +13,7 @@
             {% endif %}
         </div>
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-home"></i> Ir a principal
+            <i class="fa fa-home"></i> Ir a inicio
         </a>
         <a href="{{ path('ventas_nueva', {'usuario': usuario.id}) }}" class="btn btn-default btnAceptar">
             <i class="fa fa-plus"></i> Nueva venta
@@ -48,7 +48,12 @@
                 {% else %}
                     <tr>
                 {% endif %}
-                    <td>{{ venta.numero }}-{{ venta.fecha|date('Y') }}</td>
+                    <td>{% if venta.numero < 10 %}
+                         0{{ venta.numero }}-{{ venta.fecha|date('Y') }}
+                        {% else %}
+                            {{ venta.numero }}-{{ venta.fecha|date('Y') }}
+                        {% endif %}
+                    </td>
                     <td>{{ venta.usuario }}</td>
                     <td>{{ venta.fecha|date('d/m/Y') }}</td>
                     <td>{% set baseImponible = venta.suma - (venta.suma * venta.descuento) %}
