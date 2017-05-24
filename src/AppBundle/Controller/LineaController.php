@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\Tests\Compiler\Lille;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -162,38 +163,59 @@ class LineaController extends Controller
                     $producto = $form['producto']->getData();
                     $lote = $form['lote']->getData();
 
-                    dump($linea);
                     //Si no se ha seleccionado ninguno
                     if ($producto == null and $lote == null) {
                         $this->addFlash('error', 'No se ha selecciondo ningún producto o lote');
                     } else {
                         //Si la línea es de un producto quitamos cantidad al stock de producto. Si no es así la quitamos del lote
                         if ($producto != null) {
-                            //Precio del producto
-                            $precio = $producto->getPrecio();
+                            //Se obtiene el stock de ese producto
+                            $stock = $producto->getStock();
 
-                            $linea
-                                ->setPrecio($precio)
-                                ->setVenta($venta)
-                                ->setLote(null);
+                            //Si cantidad es mayor que el stock mensaje de error
+                            if ($cantidad <= $stock) {
+                                //Precio del producto
+                                $precio = $producto->getPrecio();
 
-                            $em->persist($producto);
-                            $producto
-                                ->setStock($producto->getStock() - $cantidad);
+                                $linea
+                                    ->setPrecio($precio)
+                                    ->setVenta($venta)
+                                    ->setLote(null);
 
-                        } else {
-                            //Precio del lote
-                            $precio = $lote->getAceite()->getPrecioKg();
+                                $em->persist($producto);
+                                $producto
+                                    ->setStock($producto->getStock() - $cantidad);
+                            }
+                            else {
+                                throw new Exception(
+                                    $this->addFlash('error', 'No hay suficiente stock')
+                                );
+                            }
 
-                            $linea
-                                ->setPrecio($precio)
-                                ->setVenta($venta)
-                                ->setProducto(null);
+                        }
+                        else {
+                            //Se obtiene el stock de es lote
+                            $stock = $lote->getStock();
 
-                            $em->persist($lote);
-                            $lote
-                                ->setStock($lote->getStock() - $cantidad);
+                            //Si cantidad es mayor que el stock mensaje de error
+                            if ($cantidad <= $stock) {
+                                //Precio del lote
+                                $precio = $lote->getAceite()->getPrecioKg();
 
+                                $linea
+                                    ->setPrecio($precio)
+                                    ->setVenta($venta)
+                                    ->setProducto(null);
+
+                                $em->persist($lote);
+                                $lote
+                                    ->setStock($lote->getStock() - $cantidad);
+                            }
+                            else {
+                                throw new Exception(
+                                    $this->addFlash('error', 'No hay suficiente stock')
+                                );
+                            }
                         }
 
                         //Añadimos la cantidad a la base imponible de la venta
@@ -207,7 +229,7 @@ class LineaController extends Controller
                         ]);
                     }
                 } catch (\Exception $e) {
-                    $this->addFlash('error', 'No se han podido guardar los cambios');
+                    $this->addFlash('error', 'No se han podido guardar los cambios. Comprueba que hay suficiente stock');
                 }
             }
             return $this->render('venta/formLineas.html.twig', [

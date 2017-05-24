@@ -132,8 +132,12 @@ class SocioController extends Controller
             //Si es válido
             if ($form->isSubmitted() && $form->isValid()) {
                 try {
-                    //Asignación de la clave. Será la misma que su nif
+                    //Letra del socio a mayúscula
                     $nif = $socio->getUsuario()->getNif();
+                    $nif = strtoupper($nif);
+                    $socio->getUsuario()->setNif($nif);
+
+                    //Asignación de la clave. Será la misma que su nif
                     $clave = $this->get('security.password_encoder')
                         ->encodePassword($socio->getUsuario(), $nif);
                     $socio->getUsuario()->setClave($clave);
@@ -143,7 +147,7 @@ class SocioController extends Controller
                     $em->persist($liquidacion);
                     $liquidacion
                         ->setTemporada($temporada)
-                        ->setFecha($fecha)
+                        ->setFecha(null)
                         ->setIva(0.1)
                         ->setRetencion(0.02)
                         ->setSocio($socio);

@@ -97,25 +97,25 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
 
         //Usuario
         $usuarios = [
-            [0, "75111567F", "Diego", "Hurtado Rosales", "C/ España, 23", "23320", "Torreperogil",
+            [0, "75111567F", "Diego", "Hurtado Rosales", "C/ España nº23", "23320", "Torreperogil",
                 "Jaén", "651378790", "dhurtadorosales@gmail.com", 0.10, true, true, true, false, false, false, true, $socios2[0]],
-            [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes, 9", "23700", "Linares",
+            [0, "26354843H", "Valentín", "González Molina", "C/ Cervantes nº9", "23700", "Linares",
                 "Jaén", "625782462", null, 0.10, false, false, false, false, false, false, true, $socios2[1]],
-            [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti, 15-2ºB", "23700", "Linares",
+            [0, "29478215Z", "Luis", "López Martínez", "C/ Rafael Alberti  nº15 2ºB", "23700", "Linares",
                 "Jaén", "614783565", null, 0.10, false, false, false, false, false, false, true, $socios2[2]],
-            [0, "26983645J", "Joaquín", "Hernández Mota", "C/ Picasso, 26", "23700", "Linares",
+            [0, "26983645J", "Joaquín", "Hernández Mota", "C/ Picasso nº26", "23700", "Linares",
                 "Jaén", "614783835", null, 0.10, false, true, true, false, false, false, false, null],
-            [0, "26471698H", "Pedro", "Román López", "C/ Lope de Vega, 34", "23700", "Linares",
+            [0, "26471698H", "Pedro", "Román López", "C/ Lope de Vega nº34", "23700", "Linares",
                 "Jaén", "618785365", null, 0.10, false, true, false, true, false, false, false, null],
-            [0, "26456123A", "Antonio", "Martínez Huertas", "C/ Ramón y Cajal, 83","23700", "Linares",
+            [0, "26456123A", "Antonio", "Martínez Huertas", "C/ Ramón y Cajal nº83","23700", "Linares",
                 "Jaén", "614783565", null, 0.10, false, true, false, false, true, false, false, null],
-            [0, "A23548796", "Koipe, S.A.", null, "Ctra/ Arjona, s/n", "24740", "Andújar",
+            [0, "A23548796", "Koipe, S.A.", null, "Ctra/ Arjona s/n", "24740", "Andújar",
                 "Jaén", "953510065", "atencion.cliente@koipe.com", 0.07, false, false, false, false, false, true, false, null],
-            [0, "A23548756", "Carbonell, S.A.", null, "C/ Marie Curie, 20", "28521", "Rivas Vaciamacrid",
+            [0, "A23548756", "Carbonell, S.A.", null, "C/ Marie Curie nº20", "28521", "Rivas Vaciamacrid",
                 "Madrid", "902202107", "atencion.cliente@carbonell.com", 0.05, false, false, false, false, false, true, false, null],
-            [0, "B41584732", "Grupo Ybarra, S.L.", null, "Ctra/ Isla Menorca, s/n", "41703", "Dos Hermanas",
+            [0, "B41584732", "Grupo Ybarra, S.L.", null, "Ctra/ Isla Menorca s/n", "41703", "Dos Hermanas",
                 "Sevilla", "902014555", "consumidor@grupoybarra.com", 0.06, false, false, false, false, false, true, false, null],
-            [0, "A23846985", "Coosur, S.A.", null, "Ctra/ La Carolina, s/n", "23220", "Vilches",
+            [0, "A23846985", "Coosur, S.A.", null, "Ctra/ La Carolina s/n", "23220", "Vilches",
                 "Jaén", "953631165", "info@coosur.com", 0, false, false, false, false, false, true, false, null]
 
         ];
