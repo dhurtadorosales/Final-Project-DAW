@@ -48,6 +48,11 @@
             <a href="{{ path('ventas_lineas_nueva', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar" title="Añadir conceptos">
                 <i class="fa fa-plus"></i>
             </a>
+            {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
+                <a href="{{ path('ventas_cerrar', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar" title="Cerrar venta">
+                    <i class="fa fa-check"></i>
+                </a>
+            {% endif %}
         {% endif %}
         <table class="table table-bordered table-responsive">
             <thead>
@@ -72,14 +77,8 @@
                             {{ linea.lote.aceite }} - Lote: {{ linea.lote }}
                         {% endif %}
                     </td>
-                    <td>{% if linea.producto != null %}
-                            {% set precio = linea.producto.precio %}
-                        {% else %}
-                            {% set precio = linea.lote.aceite.precioKg * linea.lote.aceite.densidadKgLitro %}
-                        {% endif %}
-                        {{ precio|number_format(2, ',', '.') }}
-                    </td>
-                    <td>{% set totalLinea = linea.cantidad * precio %}
+                    <td>{{ linea.precio|number_format(2, ',', '.') }}</td>
+                    <td>{% set totalLinea = linea.cantidad * linea.precio %}
                         {% set total = total + totalLinea %}
                         {{ totalLinea|number_format(2, ',', '.') }}
                     </td>
@@ -99,7 +98,7 @@
                     <td></td>
                     <td></td>
                     <td>Suma €</td>
-                    <td>{{ total }}</td>
+                    <td>{{ total|number_format(2, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -112,7 +111,7 @@
                     <td></td>
                     <td>Base Imponible €</td>
                     <td>{% set baseImponible = total - (total * persona.descuento) %}
-                        {{ baseImponible }}
+                        {{ baseImponible|number_format(2, ',', '.') }}
                     </td>
                 </tr>
                 <tr>

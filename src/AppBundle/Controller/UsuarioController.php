@@ -46,6 +46,7 @@ class UsuarioController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         $clientes = $em->getRepository('AppBundle:Usuario')
             ->getClientes();
 

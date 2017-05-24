@@ -191,7 +191,6 @@ class LineaController extends Controller
                                     $this->addFlash('error', 'No hay suficiente stock')
                                 );
                             }
-
                         }
                         else {
                             //Se obtiene el stock de es lote
@@ -199,13 +198,14 @@ class LineaController extends Controller
 
                             //Si cantidad es mayor que el stock mensaje de error
                             if ($cantidad <= $stock) {
-                                //Precio del lote
-                                $precio = $lote->getAceite()->getPrecioKg();
+                                //Precio del lote (se redondea a 2 decimales)
+                                $precio = round($lote->getAceite()->getPrecioKg(), 2);
 
                                 $linea
                                     ->setPrecio($precio)
                                     ->setVenta($venta)
-                                    ->setProducto(null);
+                                    ->setProducto(null)
+                                    ->setLote($lote);
 
                                 $em->persist($lote);
                                 $lote
@@ -273,7 +273,7 @@ class LineaController extends Controller
                     ->setStock($lote->getStock() + $cantidad);
 
                 //Precio del lote
-                $precio = $lote->getPrecioKg();
+                $precio = $lote->getAceite()->getPrecioKg();
             }
 
             //Restamos la cantidad a la base imponible de la venta
