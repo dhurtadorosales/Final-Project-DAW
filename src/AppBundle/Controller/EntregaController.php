@@ -43,7 +43,7 @@ class EntregaController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('entrega/listar.html.twig', [
+        return $this->render('entrega/virgen_extra.html.twig', [
             'entregas' => $entregas,
             'socio' => $socio,
             'temporada' => $temporada,

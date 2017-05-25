@@ -27,7 +27,7 @@ class ProductoController extends Controller
         $productos = $em->getRepository('AppBundle:Producto')
             ->findAll();
 
-        return $this->render('producto/listar.html.twig', [
+        return $this->render('producto/virgen_extra.html.twig', [
             'productos' => $productos
         ]);
     }

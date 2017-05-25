@@ -37,7 +37,7 @@ class SocioController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('socio/listar.html.twig', [
+        return $this->render('socio/virgen_extra.html.twig', [
             'socios' => $socios,
             'baja' => $baja,
             'pagination' => $pagination
@@ -75,7 +75,7 @@ class SocioController extends Controller
         //Variable auxiliar
         $baja = $request->get('baja');
 
-        return $this->render('socio/listar.html.twig', [
+        return $this->render('socio/virgen_extra.html.twig', [
             'socios' => $socios,
             'baja' => $baja,
             'pagination' => $pagination
@@ -243,7 +243,7 @@ class SocioController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('socio/listar.html.twig', [
+        return $this->render('socio/virgen_extra.html.twig', [
             'socios' => $socios,
             'baja' => $baja,
             'pagination' => $pagination
@@ -283,7 +283,7 @@ class SocioController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('socio/listar.html.twig', [
+        return $this->render('socio/virgen_extra.html.twig', [
             'socios' => $socios,
             'baja' => $baja,
             'pagination' => $pagination
@@ -329,7 +329,7 @@ class SocioController extends Controller
         //Variable auxiliar
         $baja = false;
 
-        return $this->render('socio/listar.html.twig', [
+        return $this->render('socio/virgen_extra.html.twig', [
             'socios' => $socios,
             'baja' => $baja,
             'pagination' => $pagination

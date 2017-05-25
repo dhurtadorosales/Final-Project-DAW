@@ -42,7 +42,7 @@ class LoteController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('lote/listar.html.twig', [
+        return $this->render('lote/virgen_extra.html.twig', [
             'lotes' => $lotes,
             'temporada' => $temporada,
             'pagination' => $pagination

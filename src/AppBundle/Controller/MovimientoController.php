@@ -55,7 +55,7 @@ class MovimientoController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('movimiento/listar.html.twig', [
+        return $this->render('movimiento/virgen_extra.html.twig', [
             'movimientos' => $movimientos,
             'temporada' => $temporada,
             'sumaVentas' => $sumaVentas,

@@ -43,7 +43,7 @@ class LiquidacionController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('liquidacion/listar.html.twig', [
+        return $this->render('liquidacion/virgen_extra.html.twig', [
             'liquidaciones' => $liquidaciones,
             'temporada' => $temporada,
             'pagination' => $pagination
