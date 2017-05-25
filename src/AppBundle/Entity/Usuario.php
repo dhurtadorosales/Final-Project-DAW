@@ -27,13 +27,12 @@ class Usuario implements AdvancedUserInterface
      * @var string
      * @ORM\Column(type="string", length=9, unique=true)
      * @Assert\NotBlank(message="Este campo es obligatorio")
-     * @Assert\Regex(
-     *     pattern="/([A-Z a-z]{1}\d{8})|(\d{8}[A-Z a-z]{1})/",
-     *     message="Formato no válido"
-     * )
      */
     private $nif;
-
+/*     * @Assert\Regex(
+     *     pattern="/([A-Z a-z]{1}\d{8})|(\d{8}[A-Z a-z]{1})/",
+     *     message="Formato no válido"
+     * )*/
     /**
      * @var string
      * @ORM\Column(type="string")
