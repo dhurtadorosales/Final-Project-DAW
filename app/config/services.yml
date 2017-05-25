@@ -11,3 +11,8 @@ services:
     calculo_liquidacion:
         class: AppBundle\Service\CalculoLiquidacion
         arguments: ["@doctrine.orm.entity_manager"]
+    app.locale_listener:
+        class: AppBundle\EventListener\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_suscriber }

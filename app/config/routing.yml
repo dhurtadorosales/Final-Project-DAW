@@ -1,3 +1,6 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+app_default:
+    path: /{_language}/default
+    defaults: { _controle: AppBundle:Default:index }

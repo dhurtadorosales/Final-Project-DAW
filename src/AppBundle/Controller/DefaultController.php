@@ -15,7 +15,7 @@ class DefaultController extends Controller
      * @Route("/", name="inicio")
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USUARIO')){
             return $this->render('default/listar.html.twig', [
@@ -46,8 +46,11 @@ class DefaultController extends Controller
                 "picual.jpg",
                 "paisaje2.jpg"
             ];
+            $this->get('translator')->trans('layout.inicio');
 
             return $this->render('default/index.html.twig', [
+                'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
+                'locale' => $request->getLocale(),
                 'titulos' => $titulos,
                 'subtitulos' => $subtitulos,
                 'fotos' => $fotos
