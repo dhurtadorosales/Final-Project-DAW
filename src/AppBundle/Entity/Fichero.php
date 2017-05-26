@@ -24,6 +24,7 @@ class Fichero
      * @var string
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Inserta el fichero con las entregas de hoy")
+     * @Assert\File(mimeTypes={"application/vnd.ms-office"})
      */
     private $entregas;
 

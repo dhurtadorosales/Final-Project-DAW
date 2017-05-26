@@ -129,7 +129,7 @@ class FincaController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('finca/virgen_extra.html.twig', [
+        return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas,
             'lote' => $lote,
             'propietario' => $propietario,
@@ -165,7 +165,7 @@ class FincaController extends Controller
             );
         }
 
-        return $this->render('finca/virgen_extra.html.twig', [
+        return $this->render('finca/listar.html.twig', [
             'fincas' => $fincas,
             'lote' => $lote,
             'propietario' => $propietario,

@@ -34,30 +34,26 @@ class FicheroController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //Creación de los arrays que recogerán los datos
+            $entregas = [[]];
+            $entrega = [];
+
+            //fichero guarda el xls subido
+            /** @var UploadedFile $file */
+            $file =$form['entregas']->getData();
+
+            //Se genera un nombre único para el fichero antes de guardarlo y se obtiene su extensión
+            $fileName = $file->getClientOriginalName();
+
+            //Se mueve el fichero a la ruta donde se guardan los ficheros
+            $entregasDir = 'uploads/entregas';
+            $file->move($entregasDir, $fileName);
+            $fichero->setEntregas($entregasDir . '/' . $fileName);
+
+            //Creación de un objeto de la clase phpexcel con el fichero subido
+            $objetoXls = $this->get('phpexcel')->createPHPExcelObject($entregasDir . '/' . $fileName);
             try {
-                //Creación de los arrays que recogerán los datos
-                $entregas = [[]];
-                $entrega = [];
-
-                //fichero guarda el xls subido
-                /** @var UploadedFile $file */
-                $file =$form['entregas']->getData();
-
-                //Se genera un nombre único para el fichero antes de guardarlo y se obtiene su extensión
-                $fileName = $file->getClientOriginalName();
-                $extension = explode('.', $fileName);
-
-                //Si la extensión del fichero es la correcta
-                if ($extension[1] == 'xls') {
-
-                    //Se mueve el fichero a la ruta donde se guardan los ficheros
-                    $entregasDir = 'uploads/entregas';
-                    $file->move($entregasDir, $fileName);
-                    $fichero->setEntregas($entregasDir . '/' . $fileName);
-
-                    //Creación de un objeto de la clase phpexcel con el fichero subido
-                    $objetoXls = $this->get('phpexcel')->createPHPExcelObject($entregasDir . '/' . $fileName);
-
                     //Comprobamos si el fichero existe
                     $numeroFicheros = $em->getRepository('AppBundle:Fichero')
                         ->getNumeroFicherosNombre($entregasDir . '/' . $fileName);
@@ -226,9 +222,11 @@ class FicheroController extends Controller
                         $this->addFlash('estado', 'Entradas insertadas correctamente');
                         return $this->redirectToRoute('principal');
                     }
-                }
+                //}
             }
             catch(\Exception $e) {
+                //Se borra el fichero
+                unlink($entregasDir . '/' . $fileName);
                 $this->addFlash('error', 'Error. Verifica el formato del fichero');
             }
         }
