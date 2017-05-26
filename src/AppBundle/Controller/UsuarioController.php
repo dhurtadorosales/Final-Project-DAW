@@ -32,7 +32,7 @@ class UsuarioController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('usuario/virgen_extra.html.twig', [
+        return $this->render('usuario/listar.html.twig', [
             'usuarios' => $usuarios,
             'pagination' => $pagination
         ]);

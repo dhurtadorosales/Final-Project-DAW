@@ -27,7 +27,7 @@ class ProductoController extends Controller
         $productos = $em->getRepository('AppBundle:Producto')
             ->findAll();
 
-        return $this->render('producto/virgen_extra.html.twig', [
+        return $this->render('producto/listar.html.twig', [
             'productos' => $productos
         ]);
     }
@@ -140,28 +140,34 @@ class ProductoController extends Controller
         //Si es válido
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                //Obtención de la cantidad en peso que se ha envasado
+                //Obtención de la cantidad en peso que se va a envasar
                 $pesoEnvasar = $form['stock']->getData();
-
-                //Pasamos ese peso a unidades de producto
-                $cantidadEnvasar = (int)(($pesoEnvasar * $producto->getLotes()[0]->getAceite()->getDensidadKgLitro()) / ($producto->getEnvase()->getCapacidadLitros()));
 
                 //Obtención del lote del que procede
                 $lote = $form['lotes']->getData();
 
-                //Suma cantidad al producto
-                $em->persist($producto);
-                $producto
-                     ->setStock($cantidadProducto + $cantidadEnvasar);
+                //Obtención stock de ese lote
+                $lote->getStock();
 
-                //Restamos la cantidad del stock del lote del que procede
-                $em->persist($lote);
-                $lote
-                    ->setStock($lote->getStock() - $pesoEnvasar);
+                //Si la cantidad a envasar no es superior a las existencias del lote
+                if ($pesoEnvasar <= $lote->getStock()) {
+                    //Pasamos ese peso a unidades de producto
+                    $cantidadEnvasar = (int)(($pesoEnvasar * $producto->getLotes()[0]->getAceite()->getDensidadKgLitro()) / ($producto->getEnvase()->getCapacidadLitros()));
 
-                $em->flush();
-                $this->addFlash('estado', 'Cambios guardados con éxito');
-                return $this->redirectToRoute('productos_principal');
+                    //Suma cantidad al producto
+                    $em->persist($producto);
+                    $producto
+                        ->setStock($cantidadProducto + $cantidadEnvasar);
+
+                    //Restamos la cantidad del stock del lote del que procede
+                    $em->persist($lote);
+                    $lote
+                        ->setStock($lote->getStock() - $pesoEnvasar);
+
+                    $em->flush();
+                    $this->addFlash('estado', 'Cambios guardados con éxito');
+                    return $this->redirectToRoute('productos_principal');
+                }
             }
             catch(\Exception $e) {
                 $this->addFlash('error', 'No se han podido guardar los cambios');

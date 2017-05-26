@@ -36,7 +36,7 @@ class AvisoController extends Controller
         $avisos = $em->getRepository('AppBundle:Aviso')
             ->getAvisosTemporada($temporada);
 
-        return $this->render('aviso/virgen_extra.html.twig', [
+        return $this->render('aviso/listar.html.twig', [
             'avisos' => $avisos
         ]);
     }

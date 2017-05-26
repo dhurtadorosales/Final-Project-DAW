@@ -48,7 +48,7 @@ class VentaController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('venta/virgen_extra.html.twig', [
+        return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
             'temporada' => $temporada,
             'pagination' => $pagination
@@ -106,7 +106,7 @@ class VentaController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('venta/virgen_extra.html.twig', [
+        return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
             'temporada' => $temporada,
             'usuario' => $usuario,
@@ -133,7 +133,7 @@ class VentaController extends Controller
             $request->query->getInt('page', 1), 4
         );
 
-        return $this->render('venta/virgen_extra.html.twig', [
+        return $this->render('venta/listar.html.twig', [
             'ventas' => $ventas,
             'temporada' => $temporada,
             'usuario' => $usuario,

@@ -18,7 +18,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USUARIO')){
-            return $this->render('default/virgen_extra.html.twig', [
+            return $this->render('default/principal.html.twig', [
                 'temporadas' => false
             ]);
         }

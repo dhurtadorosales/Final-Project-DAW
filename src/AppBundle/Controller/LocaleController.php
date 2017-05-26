@@ -21,7 +21,7 @@ class LocaleController extends Controller
         dump($request->getLocale());
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_USUARIO')){
-            return $this->render('default/virgen_extra.html.twig', [
+            return $this->render('default/index.html.twig', [
                 'temporadas' => false
             ]);
         }
