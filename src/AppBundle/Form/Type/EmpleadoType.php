@@ -6,14 +6,12 @@ use AppBundle\Entity\Movimiento;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\Tests\Extension\Core\Type\PasswordTypeTest;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class EmpleadoType extends AbstractType
@@ -26,13 +24,17 @@ class EmpleadoType extends AbstractType
                 $data = $event->getData();
                 $form
                     ->add('nif', null, [
-                        'label' => 'Nif:'
+                        'label' => 'Nif:',
+                        'constraints' => [
+                            new Assert\Regex('/^[0-9]{8}[A-Z a-z]{1}$/')
+                        ]
                     ])
                     ->add('nombre', null, [
                         'label' => 'Nombre:'
                     ])
                     ->add('apellidos', null, [
-                        'label' => 'Apellidos:'
+                        'label' => 'Apellidos:',
+                        'required' => true
                     ])
                     ->add('direccion', null, [
                         'label' => 'Dirección:'

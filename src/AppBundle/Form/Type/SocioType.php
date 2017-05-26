@@ -2,21 +2,15 @@
 
 namespace AppBundle\Form\Type;
 
-use AppBundle\Entity\Movimiento;
 use AppBundle\Entity\Socio;
-use AppBundle\Entity\Usuario;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\Tests\Extension\Core\Type\PasswordTypeTest;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class SocioType extends AbstractType
@@ -30,7 +24,10 @@ class SocioType extends AbstractType
                 $form
                     ->add('nif', null, [
                         'label' => 'Nif:',
-                        'property_path' => 'usuario.nif'
+                        'property_path' => 'usuario.nif',
+                        'constraints' => [
+                            new Assert\Regex('/^[0-9]{8}[A-Z a-z]{1}$/')
+                        ]
                     ])
                     ->add('nombre', null, [
                         'label' => 'Nombre:',
@@ -38,7 +35,8 @@ class SocioType extends AbstractType
                     ])
                     ->add('apellidos', null, [
                         'label' => 'Apellidos:',
-                        'property_path' => 'usuario.apellidos'
+                        'property_path' => 'usuario.apellidos',
+                        'required' => true
                     ])
                     ->add('direccion', null, [
                         'label' => 'Dirección:',

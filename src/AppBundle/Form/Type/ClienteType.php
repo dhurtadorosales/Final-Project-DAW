@@ -21,14 +21,11 @@ class ClienteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /*$builder
+        $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
                 $form = $event->getForm();
-                $data = $event->getData();*/
-        Forms::createFormFactoryBuilder()
-            ->addExtension(new ValidatorExtension((Validation::createValidator())))
-            ->getFormFactory();
-                $builder
+                $data = $event->getData();
+                $form
                     ->add('nif', null, [
                         'label' => 'Nif:',
                         'constraints' => [
@@ -65,7 +62,7 @@ class ClienteType extends AbstractType
                     ->add('descuento', PercentType::class, [
                         'label' => 'Descuento:'
                     ]);
-           // });
+            });
     }
 
     public function configureOptions(OptionsResolver $resolver)
