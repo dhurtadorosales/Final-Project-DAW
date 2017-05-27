@@ -13,7 +13,7 @@
         </div>
         <div class="tiles">
             {% for producto in pagination %}
-                <a href="{{ path('producto_form', {'producto' : producto.id}) }}" class="btn">
+                <a href="{{ path('productos_form', {'producto' : producto.id}) }}" class="btn">
                     <div class="tile tile-dark-teal double">
                         <div class="tile-body">
                             <i class="fa fa-filter"></i>

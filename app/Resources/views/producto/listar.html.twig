@@ -26,15 +26,29 @@
                 <th>Envase</th>
                 <th>Unidades</th>
                 <th>Precio €/ud</th>
+                {% if is_granted('ROLE_COMERCIAL') %}
+                    <th></th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for producto in productos %}
-                <tr>
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    <tr class="clickable-row">
+                {% else %}
+                    <tr>
+                {% endif %}
                     <td>{{ producto.lotes[0].aceite }}</td>
                     <td>{{ producto.envase }}</td>
                     <td>{{ producto.stock }}</td>
-                    <td>{{ (producto.lotes[0].aceite.precioKg * producto.lotes[0].aceite.densidadKgLitro)|number_format(2, ',', '.') }}</td>
+                    <td>{{ producto.precio|number_format(2, ',', '.') }}</td>
+                    {% if is_granted('ROLE_ADMINISTRADOR') %}
+                        <td>
+                            <a href="{{ path('productos_precio_modificar', {'producto' : producto.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Editar precio">
+                                <i class="fa fa-euro"></i>
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
@@ -42,5 +56,6 @@
     </div>
     {% block javascripts %}
         <script src="{{ asset('script/flash.js') }}"></script>
+        <script src="{{ asset('script/seleccionar_fila.js') }}"></script>
     {% endblock %}
 {% endblock %}

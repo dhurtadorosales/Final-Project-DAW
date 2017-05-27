@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Lote;
 use AppBundle\Entity\Producto;
 use AppBundle\Form\Type\ProductoNuevoType;
+use AppBundle\Form\Type\ProductoPrecioType;
 use AppBundle\Form\Type\ProductoType;
 use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
@@ -105,7 +106,7 @@ class ProductoController extends Controller
     }
 
     /**
-     * @Route("/producto/form/{producto}", name="producto_form")
+     * @Route("/productos/form/{producto}", name="productos_form")
      * @Security("is_granted('ROLE_ENCARGADO')")
      */
     public function formProductoAction(Request $request, Producto $producto)
@@ -167,6 +168,35 @@ class ProductoController extends Controller
         }
 
         return $this->render('producto/form.html.twig', [
+            'formulario' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/productos/precio/modificar/{producto}", name="productos_precio_modificar")
+     * @Security("is_granted('ROLE_COMERCIAL')")
+     */
+    public function precioProductoAction(Request $request, Producto $producto)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(ProductoPrecioType::class, $producto);
+        $form->handleRequest($request);
+
+        //Si es válido
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->flush();
+                $this->addFlash('estado', 'Cambios guardados con éxito');
+                return $this->redirectToRoute('productos_listar');
+            }
+            catch(\Exception $e) {
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+
+        return $this->render('producto/formPrecio.html.twig', [
             'formulario' => $form->createView()
         ]);
     }
