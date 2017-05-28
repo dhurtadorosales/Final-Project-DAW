@@ -33,27 +33,48 @@ class ClienteType extends AbstractType
                         ]
                     ])
                     ->add('nombre', null, [
-                        'label' => 'Nombre:'
+                        'label' => 'Nombre:',
+                        'constraints' => [
+                            new Assert\Regex('/^[A-Z a-zÑñáéíóúÁÉÍÓÚ , .]*$/')
+                        ]
                     ])
                     ->add('apellidos', null, [
                         'label' => 'Apellidos:',
-                        'required' => false
+                        'required' => false,
+                        'constraints' => [
+                            new Assert\Regex('/^[A-Z a-zÑñáéíóúÁÉÍÓÚ , .]*$/')
+                        ]
                     ])
                     ->add('direccion', null, [
-                        'label' => 'Dirección:'
+                        'label' => 'Dirección:',
+                        'constraints' => [
+                            new Assert\Regex('/[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)/')
+                        ]
                     ])
                     ->add('codigoPostal', null, [
-                        'label' => 'Código postal:'
+                        'label' => 'Código postal:',
+                        'constraints' => [
+                            new Assert\Regex('/^[0-9]{5}$/')
+                        ]
                     ])
                     ->add('localidad', null, [
-                        'label' => 'Localidad:'
+                        'label' => 'Localidad:',
+                        'constraints' => [
+                            new Assert\Regex('/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/')
+                        ]
                     ])
                     ->add('provincia', null, [
-                        'label' => 'Provincia:'
+                        'label' => 'Provincia:',
+                        'constraints' => [
+                            new Assert\Regex('/^[A-Z a-zÑñáéíóúÁÉÍÓÚ]*$/')
+                        ]
                     ])
                     ->add('telefono', null , [
                         'label' => 'Telefono: (opcional)',
-                        'required' => false
+                        'required' => false,
+                        'constraints' => [
+                            new Assert\Regex('/^[0-9]{9}$/')
+                        ]
                     ])
                     ->add('email', EmailType::class, [
                         'label' => 'Correo electrónico: (opcional)',
