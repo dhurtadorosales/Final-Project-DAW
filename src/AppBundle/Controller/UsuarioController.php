@@ -356,30 +356,10 @@ class UsuarioController extends Controller
         }
 
         if ($usuario->getEmpleado() == true) {
-            //Obtención de todos los socios activos
-            $empleados = $em->getRepository('AppBundle:Usuario')
-                ->getEmpleados();
-
-            //Variable auxiliar
-            $baja = false;
-
-            return $this->render('usuario/listarEmpleados.html.twig', [
-                'empleados' => $empleados,
-                'baja' => $baja
-            ]);
+            return $this->redirectToRoute('empleados_listar');
         }
         if ($usuario->getCliente() == true) {
-            //Obtención de todos los socios activos
-            $clientes = $em->getRepository('AppBundle:Usuario')
-                ->getClientes();
-
-            //Variable auxiliar
-            $baja = false;
-
-            return $this->render('usuario/listarClientes.html.twig', [
-                'clientes' => $clientes,
-                'baja' => $baja
-            ]);
+            return $this->redirectToRoute('clientes_listar');
         }
     }
 }

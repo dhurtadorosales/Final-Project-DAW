@@ -74,6 +74,9 @@
                         <a type="button" class="btn btn-default btnAceptar eliminar btnOculto" data-toggle="modal" data-target="#{{ empleado.id }}" title="Dar de baja">
                             <i class="fa fa-trash"></i>
                         </a>
+                        <a href="{{ path('usuarios_pass', {'usuario' : empleado.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Restablecer contraseña">
+                            <i class="fa fa-key"></i>
+                        </a>
                     </td>
                 </tr>
                 <!-- Ventana modal -->
