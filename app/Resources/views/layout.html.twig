@@ -74,51 +74,41 @@
                             </ul>
 
                             {% if not is_granted('ROLE_USUARIO') and ruta != 'entrar' %}
-                                <li {% if ruta == 'inicio' %} class="activo" {% endif %}>
+                                <li {% if ruta == 'inicio' %}
+                                        class="activo"
+                                    {% endif %}>
                                     <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>
                                 </li>
-                                <li class="dropdown desplegable">
+                                <li {% if ruta == 'virgen_extra' or ruta == 'virgen' or ruta== 'lampante' %}
+                                        class="dropdown desplegable activo"
+                                    {% else %}
+                                        class="dropdown desplegable"
+                                    {% endif %}>
                                     <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
                                     <ul class="dropdown-menu">
-                                            <li><a href="#">{{ 'layout.extra'|trans }}</a></li>
+                                            <li class="noActivo"><a href="{{ path('virgen_extra') }}">{{ 'layout.extra'|trans }}</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="#">{{ 'layout.virgen'|trans }}</a></li>
+                                            <li class="noActivo"><a href="{{ path('virgen') }}">{{ 'layout.virgen'|trans }}</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="#">{{ 'layout.lampante'|trans }}</a></li>
+                                            <li class="noActivo"><a href="{{ path('lampante') }}">{{ 'layout.lampante'|trans }}</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown desplegable">
+                                <li class="{% if ruta == 'picual' or ruta == 'alberquina' or ruta == 'gordal' or ruta == 'hojiblanca' or ruta == 'lechin' %}
+                                        dropdown desplegable activo
+                                    {% else %}
+                                        dropdown desplegable
+                                    {% endif %}">
                                     <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.variedades'|trans }}</a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Picual</a></li>
+                                        <li class="noActivo"><a href="{{ path('picual') }}">Picual</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">Alberquina</a></li>
+                                        <li class="noActivo"><a href="{{ path('alberquina') }}">Alberquina</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">Gordal</a></li>
+                                        <li class="noActivo"><a href="{{ path('gordal') }}">Gordal</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">Hojiblanca</a></li>
+                                        <li class="noActivo"><a href="{{ path('hojiblanca') }}">Hojiblanca</a></li>
                                         <li class="divider"></li>
-                                        <li><a href="#">Lechín</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#" class="listaInicio">{{ 'layout.venta'|trans }}</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="listaInicio">{{ 'layout.contacto'|trans }}</a>
-                                </li>
-                                <li class="dropdown desplegable">
-                                    <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">
-                                        <i class="fa fa-language"></i>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="#">{{ 'layout.espanol'|trans }}</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a href="#">{{ 'layout.ingles'|trans }}</a>
-                                        </li>
+                                        <li class="noActivo"><a href="{{ path('lechin') }}">Lechín</a></li>
                                     </ul>
                                 </li>
                             {% endif %}

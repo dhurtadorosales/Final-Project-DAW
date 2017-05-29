@@ -163,6 +163,10 @@ button {
     border-bottom: 5px solid #978B2A;
 }
 
+.noActivo a {
+    border-bottom: 5px solid #222222;
+}
+
 .listaEnlacesExteriores {
     display: flex;
     list-style: none;
