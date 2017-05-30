@@ -111,6 +111,15 @@
                                         <li class="noActivo"><a href="{{ path('lechin') }}">Lechín</a></li>
                                     </ul>
                                 </li>
+                                {% if ruta == 'inicio' or ruta == 'inicio_locale' %}
+                                    <li>
+                                        {% if ruta == 'inicio' %}
+                                            <a href="{{ path('inicio_locale', {'_locale' : 'en'}) }}" class="listaInicio">{{ 'layout.idioma'|trans }}</a>
+                                        {% else %}
+                                            <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.idioma'|trans }}</a>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
                             {% endif %}
                         </ul>
                     </div>
