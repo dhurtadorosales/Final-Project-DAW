@@ -67,7 +67,7 @@ class VentaController extends Controller
         //Obtención de las líneas de la venta
         $lineas = $em->getRepository('AppBundle:Linea')
             ->getLineasVenta($venta);
-        dump($lineas);
+
         $persona = $venta->getUsuario();
 
         return $this->render('venta/detalle.html.twig', [

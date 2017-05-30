@@ -260,7 +260,7 @@ class UsuarioController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        dump($usuario);
+
         if (null == $usuario) {
             $usuario = new Usuario();
             $em->persist($usuario);
