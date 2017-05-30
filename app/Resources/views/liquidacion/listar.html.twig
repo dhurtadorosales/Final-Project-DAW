@@ -41,7 +41,7 @@
                 <tr class="clickable-row">
                     <td>{{ liquidacion.id }}</td>
                     <td>{{ liquidacion.socio }}</td>
-                    <td>
+                    <td class="celdaBoton">
                         <a href="{{ path('liquidaciones_detalle_temporada', {'socio' : liquidacion.socio.id, 'temporada' : temporada.id}) }}" class="btn btn-default btnAceptar btnOculto">
                             <i class="fa fa-search"></i> Detalle
                         </a>

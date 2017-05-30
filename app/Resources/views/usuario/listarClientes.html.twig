@@ -26,12 +26,12 @@
         <table class="table table-responsive">
             <thead>
             <tr>
-                <th>NIF</th>
+                <th class="col-sm-1">NIF</th>
                 <th class="col-sm-3 sortable">
                     {{ knp_pagination_sortable(pagination, 'Cliente', 'a.nombre') }}
                 </th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
+                <th class="col-sm-3">Dirección</th>
+                <th class="col-sm-2">Teléfono</th>
                 <th></th>
             </tr>
             </thead>
@@ -48,7 +48,7 @@
                         {{ cliente.direccion }} - {{cliente.localidad}} ({{ cliente.provincia }})
                     </td>
                     <td>{{ cliente.telefono}}</td>
-                    <td>
+                    <td class="celdaBoton">
                         {% if is_granted('ROLE_ADMINISTRADOR') %}
                             <a href="{{ path('clientes_modificar', {'id' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                                 <i class="fa fa-pencil"></i>

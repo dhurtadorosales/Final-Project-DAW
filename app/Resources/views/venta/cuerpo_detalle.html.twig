@@ -18,7 +18,7 @@
 <div class="container well">
     <table class="table table-responsive">
         <tr>
-            <td>Factura Nº</td>
+            <td class="col-sm-2">Factura Nº</td>
             <td>{% if venta.numero < 10 %}
                     0{{ venta.numero }}-{{ venta.fecha|date('Y') }}
                 {% else %}
@@ -27,14 +27,14 @@
             </td>
         </tr>
         <tr>
-            <td>Fecha</td><td>{{ venta.fecha|date('d/m/Y') }}</td>
+            <td class="col-sm-2">Fecha</td><td>{{ venta.fecha|date('d/m/Y') }}</td>
         </tr>
     </table>
 </div>
 <div class="container well">
     <h3>Datos del cliente</h3>
     <table class="table table-responsive">
-        <tr><td>Nombre/Razón social</td><td>{{ persona }}</td></tr>
+        <tr><td class="col-sm-2">Nombre/Razón social</td><td>{{ persona }}</td></tr>
         <tr><td>NIF</td><td>{{ persona.nif }}</td></tr>
         <tr><td>Direccion</td><td>{{ persona.direccion }}</td></tr>
         <tr><td>Localidad</td><td>{{ persona.localidad }}</td></tr>

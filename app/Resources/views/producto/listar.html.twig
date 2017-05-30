@@ -43,7 +43,7 @@
                     <td>{{ producto.stock }}</td>
                     <td>{{ producto.precio|number_format(2, ',', '.') }}</td>
                     {% if is_granted('ROLE_ADMINISTRADOR') %}
-                        <td>
+                        <td class="celdaBoton">
                             <a href="{{ path('productos_precio_modificar', {'producto' : producto.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Editar precio">
                                 <i class="fa fa-euro"></i>
                             </a>

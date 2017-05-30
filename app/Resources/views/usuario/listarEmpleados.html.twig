@@ -30,7 +30,7 @@
                 <th class="col-sm-3 sortable">
                     {{ knp_pagination_sortable(pagination, 'Empleado', 'a.apellidos') }}
                 </th>
-                <th class="col-sm-3 select2">Dirección</th>
+                <th class="col-sm-3">Dirección</th>
                 <th class="col-sm-2">Teléfono</th>
                 <th class="col-sm-1">Roles</th>
                 <th class="col-sm-2"></th>
@@ -60,7 +60,7 @@
                             Encargado
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="celdaBoton">
                         {% if is_granted('ROLE_ADMINISTRADOR') %}
                             <a href="{{ path('empleados_modificar', {'id' : empleado.id }) }}" class="btn btn-default btnAceptar btnOculto" title="modificar datos">
                                 <i class="fa fa-pencil"></i>

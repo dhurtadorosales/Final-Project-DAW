@@ -93,7 +93,7 @@
                         {% endif %}
                     </td>
                     {% if is_granted('ROLE_ADMINISTRADOR') %}
-                        <td>
+                        <td class="celdaBoton">
                             <a href="{{ path('fincas_modificar', {'finca' : finca.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                                 <i class="fa fa-pencil"></i>
                             </a>

@@ -27,7 +27,7 @@
             </a>
             {% if baja == false %}
                 <a href="{{ path('socios_listar_baja') }}" class="btn btn-default btnAceptar">
-                    <i class="fa fa-recycle"></i> Reactivar socio
+                    <i class="fa fa-recycle"></i> Reactivar socios
                 </a>
             {% endif %}
         {% endif %}
@@ -45,21 +45,21 @@
         <table class="table table-responsive">
             <thead>
             <tr>
-                <th class="col-sm-3 sortable">
-                    {{ knp_pagination_sortable(pagination, 'Nº Socio', 'a.id') }}
+                <th>
+                    {{ knp_pagination_sortable(pagination, 'Nº', 'a.id') }}
                 </th>
-                <th class="col-sm-3 sortable">
+                <th class="col-sm-1 sortable">
                     {{ knp_pagination_sortable(pagination, 'NIF', 'a.usuario.nif') }}
                 </th>
-                <th class="col-sm-3 sortable">
+                <th class="col-sm-2 sortable">
                     {{ knp_pagination_sortable(pagination, 'Socio', 'a.usuario.apellidos') }}
                 </th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Nº Plantas</th>
-                <th>Fecha de alta</th>
+                <th class="col-sm-3">Dirección</th>
+                <th class="col-sm-2">Teléfono</th>
+                <th class="col-sm-1">Nº Plantas</th>
+                <th class="col-sm-1">Fecha de alta</th>
                 {% if baja == true %}
-                    <th>Fecha de baja</th>
+                    <th class="col-sm-1">Fecha de baja</th>
                 {% endif %}
                 <th></th>
             </tr>
@@ -88,7 +88,7 @@
                         <td>{{ socio.fechaBaja|date('d/m/Y') }}</td>
                     {% endif %}
                     {% if is_granted('ROLE_ADMINISTRADOR') and baja == false %}
-                    <td>
+                    <td class="celdaBoton">
                         <a href="{{ path('socios_modificar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
                             <i class="fa fa-pencil"></i>
                         </a>
@@ -101,14 +101,14 @@
                     </td>
                     {% endif %}
                     {% if is_granted('ROLE_ENCARGADO') and baja == false %}
-                        <td>
+                        <td class="celdaBoton">
                             <a href="{{ path('entregas_listar_socio', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las entregas de este socio">
                                 <i class="fa fa-balance-scale"></i>
                             </a>
                         </td>
                     {% endif %}
                     {% if is_granted('ROLE_ADMINISTRADOR') and baja == true %}
-                        <td>
+                        <td class="celdaBoton">
                             <a href="{{ path('socios_reactivar', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Reactivar">
                                 <i class="fa fa-recycle"></i>
                             </a>

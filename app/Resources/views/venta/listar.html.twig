@@ -62,7 +62,7 @@
                     <td>{{ venta.iva * 100 }}</td>
                     <td>{{ (baseImponible * (1 + venta.iva))|number_format(2, ',', '.') }}</td>
                     {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
-                        <td>
+                        <td class="celdaBoton">
                             {% if venta.cerrada != true %}
                                 <a href="{{ path('ventas_lineas_nueva', {'venta' : venta.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Añadir conceptos">
                                     <i class="fa fa-plus"></i>

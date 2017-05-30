@@ -24,7 +24,7 @@
             <thead>
             <tr>
                 <th>Nº</th>
-                <th class="col-sm-3 sortable">
+                <th class="col-sm-2 sortable">
                     {{ knp_pagination_sortable(pagination, 'Fecha', 'a.fecha') }}
                 </th>
                 <th>Kg Aceituna</th>
@@ -73,7 +73,7 @@
                         {% endif %}
                     </td>
                     {% if is_granted('ROLE_SOCIO') %}
-                    <td>
+                    <td class="celdaBoton">
                         <a href="{{ path('entregas_detalle', {'entrega' : entrega.id, 'socio' : socio.id}) }}" class="btn btn-default btnAceptar btnOculto">
                             <i class="fa fa-balance-scale"></i> Detalle
                         </a>

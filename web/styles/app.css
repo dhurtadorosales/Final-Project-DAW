@@ -238,6 +238,10 @@ button {
     text-decoration: none;
 }
 
+.celdaBoton {
+    text-align: end;
+}
+
 /*.botonera {
     display: flex;
     flex-wrap: wrap;
