@@ -3,11 +3,10 @@
 {% block title %}Virgen{% endblock %}
 
 {% block aside %}
+    {% trans_default_domain 'pagina' %}
     <div class="container">
-    <h3>Aceite de oliva virgen</h3>
-        <p>
-            El aceite de oliva virgen se extrae de la misma forma que el virgen extra, con la diferencia de que su grado de acidez suele estar por encima del 0,8%, no pudiendo superar el 2%. Es decir, que su contenido en ácidos grasos libres suele ser más elevado, principalmente porque la aceituna esté en peor estado. No obstante, se puede dar la circunstancia de que la analítica físico-química anterior dé como resultado unos parámetros que cumplan con todos los requisitos para ser un aceite de oliva virgen extra, y sin embargo, un análisis organoléptico por parte de la cata de expertos determine que no cumple con estos requisitos, y por tanto deba venderse en el mercado como aceite de oliva virgen. Es decir, un aceite de oliva virgen se diferencia básicamente de un virgen extra, en que el aceite virgen presenta defectos en su sabor u olor. Sin embargo, en principio, un aceite de este tipo tiene calidad suficiente para ser consumido sin ningún temor, ya que sigue siendo zumo de aceitunas, aunque las aceitunas con las que se haya producido, no tuvieran una calidad óptima. Por ello, suele utilizarse más para cocinar que para su uso en crudo, porque su sabor suele ser más suave y contiene una menor cantidad de compuestos orgánicos y antioxidantes naturales beneficiosos para la salud.
-        </p>
+        <h3>{{ 'pagina.titulo2'|trans }}</h3>
+        <p>{{ 'pagina.cuerpo2'|trans }}</p>
     </div>
 {% endblock %}
 

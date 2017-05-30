@@ -77,20 +77,32 @@
                                 <li {% if ruta == 'inicio' or ruta == 'inicio_locale' %}
                                         class="activo"
                                     {% endif %}>
-                                    <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>
+                                    {% if app.request.locale == 'es' %}
+                                        <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>
+                                    {% else%}
+                                        <a href="{{ path('inicio_locale', {'_locale' : 'en'}) }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>
+                                    {% endif %}
                                 </li>
-                                <li {% if ruta == 'virgen_extra' or ruta == 'virgen' or ruta== 'lampante' %}
+                                <li {% if ruta == 'virgen_extra' or ruta == 'virgen' or ruta == 'lampante' %}
                                         class="dropdown desplegable activo"
                                     {% else %}
                                         class="dropdown desplegable"
                                     {% endif %}>
                                     <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.productos'|trans }}</a>
                                     <ul class="dropdown-menu">
+                                        {% if app.request.locale == 'es' %}
                                             <li class="noActivo"><a href="{{ path('virgen_extra') }}">{{ 'layout.extra'|trans }}</a></li>
                                             <li class="divider"></li>
                                             <li class="noActivo"><a href="{{ path('virgen') }}">{{ 'layout.virgen'|trans }}</a></li>
                                             <li class="divider"></li>
                                             <li class="noActivo"><a href="{{ path('lampante') }}">{{ 'layout.lampante'|trans }}</a></li>
+                                        {% else %}
+                                            <li class="noActivo"><a href="{{ path('virgen_extra_locale', {'_locale' : 'en'}) }}">{{ 'layout.extra'|trans }}</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('virgen_locale', {'_locale' : 'en'}) }}">{{ 'layout.virgen'|trans }}</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('lampante_locale', {'_locale' : 'en'}) }}">{{ 'layout.lampante'|trans }}</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 <li class="{% if ruta == 'picual' or ruta == 'alberquina' or ruta == 'gordal' or ruta == 'hojiblanca' or ruta == 'lechin' %}
@@ -100,15 +112,27 @@
                                     {% endif %}">
                                     <a href="#" class="dropdown-toggle listaInicio" data-toggle="dropdown" data-hover="dropdown">{{ 'layout.variedades'|trans }}</a>
                                     <ul class="dropdown-menu">
-                                        <li class="noActivo"><a href="{{ path('picual') }}">Picual</a></li>
-                                        <li class="divider"></li>
-                                        <li class="noActivo"><a href="{{ path('alberquina') }}">Alberquina</a></li>
-                                        <li class="divider"></li>
-                                        <li class="noActivo"><a href="{{ path('gordal') }}">Gordal</a></li>
-                                        <li class="divider"></li>
-                                        <li class="noActivo"><a href="{{ path('hojiblanca') }}">Hojiblanca</a></li>
-                                        <li class="divider"></li>
-                                        <li class="noActivo"><a href="{{ path('lechin') }}">Lechín</a></li>
+                                        {% if app.request.locale == 'es' %}
+                                            <li class="noActivo"><a href="{{ path('picual') }}">Picual</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('alberquina') }}">Alberquina</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('gordal') }}">Gordal</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('hojiblanca') }}">Hojiblanca</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('lechin') }}">Lechín</a></li>
+                                        {% else %}
+                                            <li class="noActivo"><a href="{{ path('picual_locale', {'_locale' : 'en'}) }}">Picual</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('alberquina_locale', {'_locale' : 'en'}) }}">Alberquina</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('gordal_locale', {'_locale' : 'en'}) }}">Gordal</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('hojiblanca_locale', {'_locale' : 'en'}) }}">Hojiblanca</a></li>
+                                            <li class="divider"></li>
+                                            <li class="noActivo"><a href="{{ path('lechin_locale', {'_locale' : 'en'}) }}">Lechín</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                                 {% if ruta == 'inicio' or ruta == 'inicio_locale' %}
