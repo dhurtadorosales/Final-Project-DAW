@@ -248,6 +248,9 @@ button {
 }
 
 @media screen and (max-width: 480px)  {
+    footer .navbar-right {
+        display: none;
+    }
     .tiles {
         display: flex;
         flex-wrap: wrap;
@@ -275,9 +278,18 @@ button {
         display: none;
     }
 
+    .listaEnlacesExteriores {
+        display: block;
+    }
+
     .listaEnlacesExteriores img {
-        margin-left: 25%;
-        max-width: 50px;
+        min-width: 200px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .glyphicon {
+        visibility: hidden;
     }
 
     #logo {
@@ -289,6 +301,9 @@ button {
     }
 
     @media screen and (max-width: 768px) {
+        footer .navbar-right {
+            display: none;
+        }
         .menuOculto {
             display: block;
         }

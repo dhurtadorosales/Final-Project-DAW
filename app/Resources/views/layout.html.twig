@@ -74,7 +74,7 @@
                             </ul>
 
                             {% if not is_granted('ROLE_USUARIO') and ruta != 'entrar' %}
-                                <li {% if ruta == 'inicio' %}
+                                <li {% if ruta == 'inicio' or ruta == 'inicio_locale' %}
                                         class="activo"
                                     {% endif %}>
                                     <a href="{{ path('inicio') }}" class="listaInicio">{{ 'layout.inicio'|trans }}</a>

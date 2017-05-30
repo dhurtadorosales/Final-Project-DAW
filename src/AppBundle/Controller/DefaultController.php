@@ -12,8 +12,8 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="inicio")
-     *
+     * @Route("/", name="inicio", defaults={"_locale"="es"}, requirements={"_locale"="%app.locales%"})
+     * @Route("/{_locale}", name="inicio_locale", requirements={"_locale" = "%app.locales%"})
      */
     public function indexAction(Request $request)
     {
@@ -23,37 +23,12 @@ class DefaultController extends Controller
             ]);
         }
         else {
-            $titulos = [
-                "Aceite Virgen Extra",
-                "Aceite Virgen",
-                "Aceite Lampante",
-                "Aceituna Picual",
-                "Un mar de olivos..."
-            ];
 
-            $subtitulos = [
-                "La joya de la corona",
-                "El segundo de a bordo",
-                "El gran subestimado",
-                "Nuestra principal materia prima",
-                "La tierra que nos da sus frutos"
-            ];
-
-            $fotos = [
-                "virgen_extra.jpg",
-                "virgen.jpg",
-                "lampante.jpg",
-                "picual.jpg",
-                "paisaje2.jpg"
-            ];
             $this->get('translator')->trans('layout.inicio');
 
             return $this->render('default/index.html.twig', [
                 'base_dir' => realpath($this->container->getParameter('kernel.root_dir') . '/..'),
-                'locale' => $request->getLocale(),
-                'titulos' => $titulos,
-                'subtitulos' => $subtitulos,
-                'fotos' => $fotos
+                'locale' => $request->getLocale()
             ]);
         }
     }
