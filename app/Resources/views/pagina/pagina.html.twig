@@ -1,9 +1,8 @@
 {% extends 'layout.html.twig' %}
-{% trans_default_domain 'layout' %}
+{% trans_default_domain 'pagina' %}
 {% block title %}{{ titulo|trans }}{% endblock %}
 
 {% block aside %}
-    {% trans_default_domain 'pagina' %}
     <div class="container">
         <h3>{{ titulo|trans }}</h3>
         {{ cuerpo|trans|raw }}
