@@ -57,8 +57,8 @@ class TemporadaController extends Controller
         $fecha = $fecha->format('Y');
         $anio1 = (int)$fecha;
         $anio2 = $anio1 + 1;
-        $denominacion = $anio1 . "/" . $anio2;
-        //$denominacion = '2018/2019';
+        //$denominacion = $anio1 . "/" . $anio2;
+        $denominacion = '2018/2019';
 
         try {
             $nuevaTemporada
@@ -101,7 +101,7 @@ class TemporadaController extends Controller
             $em->flush();
 
             //Si la temporada no es la auxiliar se envía un email a cada socio informando de que la liquidación está cerrada
-            if ($temporada->getDenominacion() != '00/00') {
+            //if ($temporada->getId() != 0) {
                 foreach ($socios as $socio) {
                     $mensaje = \Swift_Message::newInstance()
                         ->setSubject('Liquidación temporada ' . $temporada)
@@ -119,7 +119,7 @@ class TemporadaController extends Controller
                     $this->get('mailer')->send($mensaje);
                     //$this->addFlash('estado', 'Correo mandado correctamente');
                 }
-            }
+            //}
 
             $this->addFlash('estado', 'Temporada comenzada');
         } catch (UniqueConstraintViolationException $exception) {
