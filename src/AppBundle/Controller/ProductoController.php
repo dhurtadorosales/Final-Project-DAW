@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductoController extends Controller
@@ -154,16 +155,45 @@ class ProductoController extends Controller
 
                     //Restamos la cantidad del stock del lote del que procede
                     $em->persist($lote);
+                    $nuevoStock = $lote->getStock() - $pesoEnvasar;
                     $lote
-                        ->setStock($lote->getStock() - $pesoEnvasar);
+                        ->setStock($nuevoStock);
+
+                    //Si el nuevo stock es 0 se crea un lote nuevo
+                    if ($nuevoStock == 0) {
+                        //Obtención temporada actual
+                        $temporadaActual = new TemporadaActual($em);
+                        $temporada = $temporadaActual->temporadaActualAction();
+
+                        //Obtención de los lotes de esta temporada que contienen aceite
+                        $lotes = $em->getRepository('AppBundle:Lote')
+                            ->getLotesTemporada($temporada);
+
+                        //Obtención del id del último lote de la temporada
+                        $numero = $lotes[sizeof($lotes)-1]->getNumero();
+                        $numero ++;
+
+                        $nuevoLote = new Lote();
+                        $em->persist($nuevoLote);
+                        $nuevoLote
+                            ->setNumero($numero)
+                            ->setTemporada($temporada)
+                            ->setCantidad(0)
+                            ->setStock(0);
+                    }
 
                     $em->flush();
                     $this->addFlash('estado', 'Cambios guardados con éxito');
                     return $this->redirectToRoute('productos_principal');
                 }
+                else {
+                    throw new Exception(
+                        $this->addFlash('error', 'No hay suficiente stock')
+                    );
+                }
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar los cambios');
+                $this->addFlash('error', 'No se han podido guardar los cambios. Comprueba que hay suficiente stock');
             }
         }
 
