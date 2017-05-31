@@ -9,6 +9,7 @@ use AppBundle\Entity\Producto;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Venta;
 use AppBundle\Form\Type\LineaType;
+use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -96,38 +97,6 @@ class LineaController extends Controller
         ]);
     }
 
-    /*
-     * @Route("/lineas/nueva/{venta}", name="lineas_nueva")
-     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
-     */
-    /*public function formLineaAction(Request $request)
-    {
-        /** @var EntityManager $em */
-        /*$em = $this->getDoctrine()->getManager();
-
-        $venta = new Linea();
-        $em->persist($venta);
-
-        $form = $this->createForm(LineaType::class, $venta);
-        $form->handleRequest($request);
-
-        //Si es válido
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $em->flush();
-                $this->addFlash('estado', 'Línea insertada con éxito');
-                return $this->redirectToRoute('ventas_modificar');
-            } catch (\Exception $e) {
-                $this->addFlash('error', 'No se ha podido crear la venta');
-            }
-
-            return $this->render('venta/form.html.twig', [
-                'venta' => $venta,
-                'formulario' => $form->createView()
-            ]);
-        }
-    }*/
-
     /**
      * @Route("/ventas/lineas/nueva/{venta}", name="ventas_lineas_nueva")
      * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
@@ -193,7 +162,7 @@ class LineaController extends Controller
                             }
                         }
                         else {
-                            //Se obtiene el stock de es lote
+                            //Se obtiene el stock de ese lote
                             $stock = $lote->getStock();
 
                             //Si cantidad es mayor que el stock mensaje de error
@@ -208,8 +177,32 @@ class LineaController extends Controller
                                     ->setLote($lote);
 
                                 $em->persist($lote);
+                                $nuevoStock = $lote->getStock() - $cantidad;
                                 $lote
-                                    ->setStock($lote->getStock() - $cantidad);
+                                    ->setStock($nuevoStock);
+
+                                //Si el nuevo stock es 0 se crea un lote nuevo
+                                if ($nuevoStock == 0) {
+                                    //Obtención temporada actual
+                                    $temporadaActual = new TemporadaActual($em);
+                                    $temporada = $temporadaActual->temporadaActualAction();
+
+                                    //Obtención de los lotes de esta temporada que contienen aceite
+                                    $lotes = $em->getRepository('AppBundle:Lote')
+                                        ->getLotesTemporada($temporada);
+
+                                    //Obtención del id del último lote de la temporada
+                                    $numero = $lotes[sizeof($lotes)-1]->getNumero();
+                                    $numero ++;
+
+                                    $nuevoLote = new Lote();
+                                    $em->persist($nuevoLote);
+                                    $nuevoLote
+                                        ->setNumero($numero)
+                                        ->setTemporada($temporada)
+                                        ->setCantidad(0)
+                                        ->setStock(0);
+                                }
                             }
                             else {
                                 throw new Exception(
