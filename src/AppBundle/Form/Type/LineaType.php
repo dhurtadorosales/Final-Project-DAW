@@ -26,8 +26,12 @@ class LineaType extends AbstractType
                     ->add('cantidad', null, [
                         'label' => 'Cantidad:',
                     ])
-                    ->add('producto', null, [
+                    ->add('producto', EntityType::class, [
+                        'class' => Producto::class,
                         'label' => 'Producto:',
+                        'query_builder' => function (ProductoRepository $productoRepository) use ($options) {
+                            return $productoRepository->getProductoStockQuery();
+                        },
                         'required' => false,
                         'placeholder' => '[Ninguno]'
                     ])

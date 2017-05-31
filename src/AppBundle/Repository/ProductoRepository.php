@@ -31,4 +31,18 @@ class ProductoRepository extends EntityRepository
 
         return $consulta;
     }
+
+    public function getProductoStockQuery()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle:Producto', 'p')
+            ->where('p.stock != :stock')
+            ->setParameter('stock', 0);
+
+        return $consulta;
+    }
 }

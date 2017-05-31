@@ -101,7 +101,7 @@ class TemporadaController extends Controller
             $em->flush();
 
             //Si la temporada no es la auxiliar se envía un email a cada socio informando de que la liquidación está cerrada
-            if ($temporada->getId() != 0) {
+            if ($temporada->getDenominacion() != '00/00') {
                 foreach ($socios as $socio) {
                     $mensaje = \Swift_Message::newInstance()
                         ->setSubject('Liquidación temporada ' . $temporada)
