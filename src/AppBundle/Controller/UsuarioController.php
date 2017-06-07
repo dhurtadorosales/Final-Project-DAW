@@ -17,7 +17,7 @@ class UsuarioController extends Controller
 {
     /**
      * @Route("/usuarios/listar", name="usuarios_listar")
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     * @Security("is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
     public function listarUsuariosAction(Request $request)
     {
@@ -254,7 +254,7 @@ class UsuarioController extends Controller
     /**
      * @Route("/clientes/nuevo", name="clientes_nuevo")
      * @Route("/clientes/modificar/{id}", name="clientes_modificar")
-     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     * @Security("is_granted('ROLE_COMERCIAL')")
      */
     public function formClienteAction(Request $request, Usuario $usuario = null)
     {

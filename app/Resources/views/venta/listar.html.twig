@@ -19,7 +19,7 @@
             <i class="fa fa-plus"></i> Nueva venta
         </a>
         {% if usuario.rolSocio == true %}
-            <a href="{{ path('ventas_principal', {'id' : app.user.socio.id}) }}" class="btn btn-default btnAceptar">
+            <a href="{{ path('ventas_principal', {'id' : usuario.socio.id}) }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-calendar"></i> Temporadas anteriores
             </a>
         {% endif %}

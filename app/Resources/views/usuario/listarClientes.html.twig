@@ -50,9 +50,6 @@
                     <td>{{ cliente.telefono}}</td>
                     <td class="celdaBoton">
                         {% if is_granted('ROLE_ADMINISTRADOR') %}
-                            <a href="{{ path('clientes_modificar', {'id' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
-                                <i class="fa fa-pencil"></i>
-                            </a>
                             <a href="{{ path('usuarios_pass', {'usuario' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Restablecer contraseña">
                                 <i class="fa fa-key"></i>
                             </a>
@@ -60,6 +57,9 @@
                         {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')%}
                             <a href="{{ path('ventas_listar_usuario', {'id' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las compras del cliente">
                                 <i class="fa fa-shopping-cart"></i>
+                            </a>
+                            <a href="{{ path('clientes_modificar', {'id' : cliente.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Modificar datos">
+                                <i class="fa fa-pencil"></i>
                             </a>
                         {% endif %}
                     </td>
