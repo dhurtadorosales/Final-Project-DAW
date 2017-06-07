@@ -20,7 +20,6 @@
                 </th>
                 <th>Dirección</th>
                 <th>Teléfono</th>
-                <th>Total facturado €</th>
                 <th></th>
             </tr>
             </thead>
@@ -37,17 +36,6 @@
                         {{ usuario.direccion }} - {{usuario.localidad}} ({{ usuario.provincia }})
                     </td>
                     <td>{{ usuario.telefono}}</td>
-                    <td>
-                        {% set suma = 0 %}
-                        {% set sumaVenta = 0 %}
-                        {% for venta in usuario.ventas %}
-                            {% for linea in venta %}
-                                {% set sumaVenta = sumaVenta + (linea.cantidad * linea.precio) - (linea.cantidad * linea.precio * linea.descuento) + ((linea.cantidad * linea.precio) - (linea.cantidad * linea.precio * linea.descuento) * linea.iva) %}
-                            {% endfor %}
-                            {% set suma = suma + sumaVenta  %}
-                        {% endfor %}
-                        {{ suma|number_format(2, ',', '.') }}
-                    </td>
                     <td>
                         {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')%}
                             <a href="{{ path('ventas_listar_usuario', {'id' : usuario.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Ir a las compras del usuario">
