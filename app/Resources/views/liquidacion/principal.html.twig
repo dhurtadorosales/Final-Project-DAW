@@ -16,7 +16,7 @@
                 {% if is_granted('ROLE_ADMINISTRADOR') %}
                     <a href="{{ path('liquidaciones_listar_temporada', {'temporada' : temporada.id}) }}" class="btn">
                 {% else %}
-                    <a href="{{ path('liquidaciones_detalle', {'socio' : socio, 'temporada' : temporada.id}) }}" class="btn">
+                    <a href="{{ path('liquidaciones_detalle_temporada', {'socio' : socio, 'temporada' : temporada.id}) }}" class="btn">
                 {% endif %}
                     <div class="tile tile-dark-orange">
                         <div class="tile-body">
