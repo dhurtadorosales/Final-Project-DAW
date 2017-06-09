@@ -62,7 +62,7 @@ class EntregaRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $consulta = $em->createQueryBuilder()
-            ->select('e')
+            ->select('e')e
             ->addSelect('f')
             ->addSelect('p')
             ->addSelect('t')
