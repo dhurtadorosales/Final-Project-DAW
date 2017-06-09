@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class UsuarioType extends AbstractType
@@ -32,6 +33,9 @@ class UsuarioType extends AbstractType
                 ],
                 'second_options' => [
                     'label' => 'Repite la nueva contraseña:'
+                ],
+                'constraints' => [
+                    new Assert\Regex('/^[A-Z a-z 0-9]{4}/')
                 ]
             ]);
     }
