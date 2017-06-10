@@ -32,7 +32,8 @@ class MovimientoType extends AbstractType
             'choices' => [
                 'pago' => true,
                 'ingreso' => false
-            ]
+            ],
+            'expanded' => true
         ])
         ->add('concepto', null, [
             'label' => 'Concepto:'

@@ -55,7 +55,7 @@
                     {{ knp_pagination_sortable(pagination, 'Socio', 'a.usuario.apellidos') }}
                 </th>
                 <th class="col-sm-3">Dirección</th>
-                <th class="col-sm-2">Teléfono</th>
+                <th class="col-sm-1">Teléfono</th>
                 <th class="col-sm-1">Nº Plantas</th>
                 <th class="col-sm-1">Fecha de alta</th>
                 {% if baja == true %}
@@ -97,6 +97,9 @@
                         </a>
                         <a href="{{ path('socios_pass', {'socio' : socio.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Restablecer contraseña">
                             <i class="fa fa-key"></i>
+                        </a>
+                        <a type="button" class="btn btn-default btnAceptar btnOculto" data-toggle="modal" data-target="#administrador_{{ socio.id }}_{{ app.user.socio.id }}"  title="Designar como Administrador">
+                            <i class="fa fa-hand-o-left"></i>
                         </a>
                     </td>
                     {% endif %}
@@ -140,6 +143,33 @@
                         </div>
                     </div>
                 </div>
+
+                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                <!-- Ventana modal -->
+                <div class="modal fade" id="administrador_{{ socio.id }}_{{ app.user.socio.id }}" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Vas a designar como Administrador al socio {{ socio }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Deseas continuar?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{{ path('socios_designar_administrador', {'socio' : socio.id, 'administrador' : app.user.socio.id}) }}" method="post" name="confirmar">
+                                    <button type="submit" name="aceptar" class="btn btn-default btnAceptar">
+                                        <i class="fa fa-check"></i> Aceptar
+                                    </button>
+                                    <button type="button" name="cancelar" class="btn btn-default btnCancelar" data-dismiss="modal">
+                                        <i class="fa fa-times"></i> Cancelar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             {% endfor %}
             </tbody>
         </table>

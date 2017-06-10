@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Socio;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,10 +47,7 @@ class SocioType extends AbstractType
                     ])
                     ->add('direccion', null, [
                         'label' => 'Dirección:',
-                        'property_path' => 'usuario.direccion',
-                        'constraints' => [
-                            new Assert\Regex('/[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)/')
-                        ]
+                        'property_path' => 'usuario.direccion'
                     ])
                     ->add('codigoPostal', null, [
                         'label' => 'Código postal:',

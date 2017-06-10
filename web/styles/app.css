@@ -274,6 +274,10 @@ button {
         display: none;
     }
 
+    footer ul li {
+        margin-left: 20px;
+    }
+
     .container {
         width:100%;
         max-width:100%;
@@ -345,6 +349,10 @@ button {
 
     footer .navbar-right {
         display: none;
+    }
+
+    footer ul li {
+        margin-left: 20px;
     }
 
     .menuOculto {

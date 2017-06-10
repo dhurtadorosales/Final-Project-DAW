@@ -125,7 +125,6 @@ class SocioController extends Controller
                 ->setFechaAlta($fecha)
                 ->setActivo(true)
                 ->setUsuario($usuario);
-
             $form = $this->createForm(SocioType::class, $socio);
             $form->handleRequest($request);
 
@@ -334,5 +333,36 @@ class SocioController extends Controller
             'baja' => $baja,
             'pagination' => $pagination
         ]);
+    }
+
+    /**
+     * @Route("/socios/designar/administrador/{socio}/{administrador}", name="socios_designar_administrador")
+     * @Security("is_granted('ROLE_ADMINISTRADOR')")
+     */
+    public function adminAction(Request $request, Socio $socio, Socio $administrador)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        try {
+            $socio->getUsuario()
+                ->setAdministrador(true)
+                ->setComercial(true)
+                ->setEmpleado(true);
+
+            $administrador->getUsuario()
+                ->setAdministrador(false)
+                ->setComercial(false)
+                ->setEmpleado(false);
+
+
+            $em->flush();
+            $this->addFlash('estado', 'Administrador asignado. Ya no eres administrador');
+            return $this->redirectToRoute('entrar');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'No se ha podido ejecutar la operación');
+        }
+
+        return $this->redirectToRoute('entrar');
     }
 }

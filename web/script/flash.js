@@ -3,6 +3,6 @@ $(function () {
     setTimeout(function () {
     $('.alert')
     .slideUp('slow');
-    }, 2000);
+    }, 5000);
 });
 

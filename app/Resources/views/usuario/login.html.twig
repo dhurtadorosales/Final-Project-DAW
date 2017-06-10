@@ -8,6 +8,7 @@
 
 {% block section %}
     <section>
+        {% include 'flash.html.twig' %}
         <div class="container">
             <div class="form-group">
                 {% if error %}
@@ -36,4 +37,7 @@
             </div>
         </div>
     </section>
+    {% block javascripts %}
+        <script src="{{ asset('script/flash.js') }}"></script>
+    {% endblock %}
 {% endblock %}

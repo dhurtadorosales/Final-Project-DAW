@@ -46,10 +46,7 @@ class ClienteType extends AbstractType
                         ]
                     ])
                     ->add('direccion', null, [
-                        'label' => 'Dirección:',
-                        'constraints' => [
-                            new Assert\Regex('/[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?(( |\-)[a-zA-Z1-9À-ÖØ-öø-ÿ]+\.?)* (((#|[nN][oO]\.?) ?)?\d{1,4}(( ?[a-zA-Z0-9\-]+)+)?)/')
-                        ]
+                        'label' => 'Dirección:'
                     ])
                     ->add('codigoPostal', null, [
                         'label' => 'Código postal:',
