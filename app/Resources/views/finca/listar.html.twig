@@ -48,7 +48,7 @@
         <table class="table table-responsive">
             <thead>
             <tr>
-                <th>Referencia catastral</th>
+                <th>Denominación</th>
                 <th>Propietario</th>
                 <th>% prop.</th>
                 <th>Arrendatario</th>
@@ -68,11 +68,11 @@
                 {% else %}
                     {% set refCatastral = finca.provincia ~ finca.municipio ~ finca.sector ~ finca.poligono ~ finca.parcela ~ finca.idInmueble ~ finca.caracterControl %}
                 {% endif %}
-                <tr class="clickable-row">
+                <tr class="clickable-row" title="Ref. Catastral: {{ refCatastral }}">
                     <td>
                         <a href="https://www1.sedecatastro.gob.es/CYCBienInmueble/OVCConCiud.aspx?UrbRus=R&RefC={{ refCatastral }}&esBice=&RCBice1=&RCBice2=&DenoBice=&del={{ finca.provincia }}&mun={{ finca.municipio }}"
                            target="_blank" title="ir a los datos catastrales">
-                            {{ refCatastral }}
+                            {{ finca.denominacion }}
                         </a>
                     </td>
                     <td>

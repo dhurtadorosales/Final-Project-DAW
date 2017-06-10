@@ -15,9 +15,11 @@
         <a href="{{ path('principal') }}" class="btn btn-default btnAceptar">
             <i class="fa fa-home"></i> Ir a inicio
         </a>
-        <a href="{{ path('ventas_nueva', {'usuario': usuario.id}) }}" class="btn btn-default btnAceptar">
-            <i class="fa fa-plus"></i> Nueva venta
-        </a>
+        {% if is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE') %}
+            <a href="{{ path('ventas_nueva', {'usuario': usuario.id}) }}" class="btn btn-default btnAceptar">
+                <i class="fa fa-plus"></i> Nueva venta
+            </a>
+        {% endif %}
         {% if usuario.rolSocio == true %}
             <a href="{{ path('ventas_principal', {'id' : usuario.socio.id}) }}" class="btn btn-default btnAceptar">
                 <i class="fa fa-calendar"></i> Temporadas anteriores
@@ -27,7 +29,7 @@
     <div class="container well">
         <table class="table table-responsive">
             <thead>
-            <tr>
+            <tr class="clickable-row">
                 <th>Nº</th>
                 <th>Comprador</th>
                 <th class="col-sm-3 sortable">

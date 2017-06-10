@@ -219,6 +219,10 @@ button {
     color: white;
 }
 
+.seleccionado a {
+    color: white;
+}
+
 .seleccionado:hover {
     background-color: cadetblue;
 }

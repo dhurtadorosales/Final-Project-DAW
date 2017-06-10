@@ -160,7 +160,7 @@ class DatosIniciales extends ContainerAwareFixture implements FixtureInterface
         $fincas = [
             [0, "Cañada de los Prados", "23", "88", "A", "016", "00078", "0000", "XK", 200, true, 0.30, 0.70, $variedades2[4], $socios2[0], $socios2[1]],
             [0, "Fuente del Ciervo", "13", "77", "A", "018", "00040", "0001", "FP", 300, true, 1, 0, $variedades2[4], $socios2[0], null],
-            [0, "Montesina", "13", "77", "A", "018", "00041", "0002", "FP", 600, true, 1, 0, $variedades2[4], $socios2[2], null]
+            [0, "El Tiradero", "13", "77", "A", "018", "00041", "0002", "FP", 600, true, 1, 0, $variedades2[4], $socios2[2], null]
         ];
 
         foreach ($fincas as $item) {
