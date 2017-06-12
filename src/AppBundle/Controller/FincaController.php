@@ -209,13 +209,17 @@ class FincaController extends Controller
                             ->setArrendatario(null)
                             ->setActiva(true);
                     }
+                    if ($form['partPropietario']->getData() != 1) {
+                        $finca
+                            ->setActiva(true);
+                    }
                     $em->flush();
                     $this->addFlash('estado', 'Finca guardada con éxito');
                     return $this->redirectToRoute('fincas_listar');
                 }
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se ha podido guardar la finca');
+                $this->addFlash('error', 'No se ha podido guardar la finca. Puede que ya exista con el mismo nombre');
             }
         }
 
