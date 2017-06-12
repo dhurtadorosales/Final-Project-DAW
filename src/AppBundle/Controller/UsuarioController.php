@@ -6,6 +6,7 @@ use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\ClienteType;
 use AppBundle\Form\Type\EmpleadoType;
 use AppBundle\Form\Type\UsuarioType;
+use AppBundle\Service\Provincias;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -225,7 +226,13 @@ class UsuarioController extends Controller
                 ->setclave(0);
         }
 
-        $form = $this->createForm(EmpleadoType::class, $usuario);
+        //Creamos una instancia del servicio de provincias
+        $provincias = new Provincias();
+        $provincias = $provincias->provinciasAction();
+
+        $form = $this->createForm(EmpleadoType::class, $usuario, [
+            'provincias' => $provincias
+        ]);
         $form->handleRequest($request);
 
         //Si es válido
@@ -277,7 +284,13 @@ class UsuarioController extends Controller
                 ->setclave(0);
         }
 
-        $form = $this->createForm(ClienteType::class, $usuario);
+        //Creamos una instancia del servicio de provincias
+        $provincias = new Provincias();
+        $provincias = $provincias->provinciasAction();
+
+        $form = $this->createForm(ClienteType::class, $usuario, [
+            'provincias' => $provincias
+        ]);
         $form->handleRequest($request);
 
         //Si es válido

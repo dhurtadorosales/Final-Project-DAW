@@ -6,6 +6,7 @@ use AppBundle\Entity\Liquidacion;
 use AppBundle\Entity\Socio;
 use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\SocioType;
+use AppBundle\Service\Provincias;
 use AppBundle\Service\TemporadaActual;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -125,7 +126,14 @@ class SocioController extends Controller
                 ->setFechaAlta($fecha)
                 ->setActivo(true)
                 ->setUsuario($usuario);
-            $form = $this->createForm(SocioType::class, $socio);
+
+            //Creamos una instancia del servicio de provincias
+            $provincias = new Provincias();
+            $provincias = $provincias->provinciasAction();
+
+            $form = $this->createForm(SocioType::class, $socio, [
+                'provincias' => $provincias
+            ]);
             $form->handleRequest($request);
 
             //Si es válido
