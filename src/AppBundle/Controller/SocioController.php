@@ -100,6 +100,10 @@ class SocioController extends Controller
         $temporadaActual = new TemporadaActual($em);
         $temporada = $temporadaActual->temporadaActualAction();
 
+        //Creamos una instancia del servicio de provincias
+        $provincias = new Provincias();
+        $provincias = $provincias->provinciasAction();
+
         if (null == $socio) {
             //Nuevo socio
             $socio = new Socio();
@@ -168,7 +172,9 @@ class SocioController extends Controller
             }
         }
         else {
-            $form = $this->createForm(SocioType::class, $socio);
+            $form = $this->createForm(SocioType::class, $socio, [
+                'provincias' => $provincias
+            ]);
             $form->handleRequest($request);
 
             //Si es válido
