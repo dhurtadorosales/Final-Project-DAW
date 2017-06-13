@@ -75,6 +75,10 @@ class ProductoController extends Controller
         //stock a 0
         $producto->setStock(0);
 
+        //Obtenemos todos los productos
+        $productos = $em->getRepository('AppBundle:Producto')
+            ->findAll();
+
         //Obtenemos la temporada auxiliar
         $temporadas = $em->getRepository('AppBundle:Temporada')
             ->getTemporadaAuxiliar();
@@ -89,6 +93,12 @@ class ProductoController extends Controller
             try {
                 $loteAuxiliar = $form['lotes']->getData();
 
+                //Se comprueba que no exista un producto con ese envase y ese aceite
+                foreach ($productos as $item) {
+                    if ($item->getLotes()[0]->getAceite()->getId() == $loteAuxiliar[0]->getAceite()->getId() && $item->getEnvase()->getId() == $form['envase']->getData()->getId()) {
+                        throw new Exception();
+                    }
+                }
                 //Asignamos al producto nuevo el lote auxiliar obtenido
                 $producto->addLote($loteAuxiliar[0]);
 

@@ -33,7 +33,7 @@
             </thead>
             <tbody>
             {% for producto in productos %}
-                {% if is_granted('ROLE_ADMINISTRADOR') %}
+                {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_COMERCIAL') %}
                     <tr class="clickable-row">
                 {% else %}
                     <tr>
@@ -42,7 +42,7 @@
                     <td>{{ producto.envase }}</td>
                     <td>{{ producto.stock }}</td>
                     <td>{{ producto.precio|number_format(2, ',', '.') }}</td>
-                    {% if is_granted('ROLE_ADMINISTRADOR') %}
+                    {% if is_granted('ROLE_ADMINISTRADOR') or is_granted('ROLE_COMERCIAL') %}
                         <td class="celdaBoton">
                             <a href="{{ path('productos_precio_modificar', {'producto' : producto.id }) }}" class="btn btn-default btnAceptar btnOculto" title="Editar precio">
                                 <i class="fa fa-euro"></i>

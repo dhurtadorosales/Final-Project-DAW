@@ -93,11 +93,14 @@ class LoteRepository extends EntityRepository
 
         $consulta = $em->createQueryBuilder()
             ->select('l')
+            ->addSelect('t')
             ->addSelect('a')
             ->from('AppBundle:Lote', 'l')
             ->join('l.aceite', 'a')
-            ->where('a = :aceite')
+
+            ->andwhere('a = :aceite')
             ->andWhere('l.cantidad != :cantidad')
+            ->setParameter('temporada', $temporada)
             ->setParameter('aceite', $aceite)
             ->setParameter('cantidad', 0);
 
