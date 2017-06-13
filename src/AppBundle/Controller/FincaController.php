@@ -222,7 +222,7 @@ class FincaController extends Controller
                 }
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'Error. Revise los nombres de propietario y/o arrendatario');
+                $this->addFlash('error', 'Error. Revise los nombres (finca repetida, propietario y/o arrendatario...)');
             }
         }
 

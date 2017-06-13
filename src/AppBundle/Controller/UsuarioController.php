@@ -116,7 +116,7 @@ class UsuarioController extends Controller
 
     /**
      * @Route("/clientes/buscar", name="clientes_buscar")
-     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE)'")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
     public function buscarClientesAction(Request $request)
     {
