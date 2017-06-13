@@ -28,7 +28,7 @@ class ProductoType extends AbstractType
                             'class' => Lote::class,
                             'mapped' => false,
                             'query_builder' => function(LoteRepository $loteRepository) use ($options) {
-                                return $loteRepository->getLotesTemporadaNoNulosQuery($options['temporada'], $options['aceite']);
+                                return $loteRepository->getLotesAceiteNoNulosQuery($options['aceite']);
                             },
                             'placeholder' => '[Ninguno]',
                         ])

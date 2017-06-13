@@ -86,6 +86,24 @@ class LoteRepository extends EntityRepository
         return $consulta;
     }
 
+    public function getLotesAceiteNoNulosQuery(Aceite $aceite)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getEntityManager();
+
+        $consulta = $em->createQueryBuilder()
+            ->select('l')
+            ->addSelect('a')
+            ->from('AppBundle:Lote', 'l')
+            ->join('l.aceite', 'a')
+            ->where('a = :aceite')
+            ->andWhere('l.cantidad != :cantidad')
+            ->setParameter('aceite', $aceite)
+            ->setParameter('cantidad', 0);
+
+        return $consulta;
+    }
+
     public function getLotesNoNulosQuery()
     {
         /** @var EntityManager $em */

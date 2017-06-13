@@ -202,6 +202,9 @@ class FincaController extends Controller
                 if ($form['partArrend']->getData() != 0 and $form['arrendatario']->getData() == null) {
                     $this->addFlash('error', 'El arrendatario no puede ser nulo si su participación es mayor que 0');
                 }
+                if ($form['propietario']->getData() == $form['arrendatario']->getData()) {
+                    $this->addFlash('error', 'El propietario y el arrendatario no pueden ser la misma persona');
+                }
                 else {
                     if ($form['partPropietario']->getData() == 1) {
                         $finca
@@ -219,7 +222,7 @@ class FincaController extends Controller
                 }
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se ha podido guardar la finca. Puede que ya exista con el mismo nombre');
+                $this->addFlash('error', 'Error. Revise los nombres de propietario y/o arrendatario');
             }
         }
 

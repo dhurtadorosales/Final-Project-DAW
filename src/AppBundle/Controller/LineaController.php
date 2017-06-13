@@ -167,9 +167,11 @@ class LineaController extends Controller
 
                             //Si cantidad es mayor que el stock mensaje de error
                             if ($cantidad <= $stock) {
+                                if ($lote->getAceite() == null) {
+                                    throw new Exception();
+                                }
                                 //Precio del lote (se redondea a 2 decimales)
                                 $precio = round($lote->getAceite()->getPrecioKg(), 2);
-
                                 $linea
                                     ->setPrecio($precio)
                                     ->setVenta($venta)
@@ -222,7 +224,7 @@ class LineaController extends Controller
                         ]);
                     }
                 } catch (\Exception $e) {
-                    $this->addFlash('error', 'No se han podido guardar los cambios. Comprueba que hay suficiente stock');
+                    $this->addFlash('error', 'Error. Comprueba el stock o si está analizado el lote');
                 }
             }
             return $this->render('venta/formLineas.html.twig', [

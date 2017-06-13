@@ -193,7 +193,7 @@ class ProductoController extends Controller
                 }
             }
             catch(\Exception $e) {
-                $this->addFlash('error', 'No se han podido guardar los cambios. Comprueba que hay suficiente stock');
+                $this->addFlash('error', 'Error. Comprueba que hay suficiente stock');
             }
         }
 

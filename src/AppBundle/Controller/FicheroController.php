@@ -226,7 +226,7 @@ class FicheroController extends Controller
             catch(\Exception $e) {
                 //Se borra el fichero
                 unlink($entregasDir . '/' . $fileName);
-                $this->addFlash('error', 'Error. Verifica el formato del fichero');
+                $this->addFlash('error', 'Error. Fichero no válido');
             }
         }
 
