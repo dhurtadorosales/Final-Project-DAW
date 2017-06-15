@@ -98,11 +98,21 @@
         </tr>
         <tr>
             <td>Importe €</td>
-            <td>{% set importe = (baseImponible) * (1 + porcentajes[1].cantidad) - (baseImponible * porcentajes[2].cantidad) %}
+            <td>{% if liquidacion[0].fecha != null %}
+                    {% set importe = (baseImponible) * (1 + liquidacion[0].iva) - (baseImponible * liquidacion[0].retencion) %}
+                {% else %}
+                    {% set importe = (baseImponible) * (1 + porcentajes[1].cantidad) - (baseImponible * porcentajes[2].cantidad) %}
+                {% endif %}
                 {{ importe|number_format(2, ',', '.') }}
             </td>
             <td>A deducir</td>
-            <td>{{ (sumaVentas * (1 + porcentajes[1].cantidad))|number_format(2, ',', '.') }}</td>
+            <td>{% if liquidacion[0].fecha != null %}
+                    {% set deducir = (sumaVentas * (1 + liquidacion[0].iva)) %}
+                {% else %}
+                    {% set deducir = (sumaVentas * (1 + porcentajes[1].cantidad)) %}
+                {% endif %}
+                {{ deducir|number_format(2, ',', '.') }}
+            </td>
         </tr>
         </tbody>
     </table>
@@ -112,7 +122,7 @@
         <thead>
         <tr>
             <th>IMPORTE TOTAL</th>
-            <td>{{ (importe - sumaVentas * (1 + porcentajes[1].cantidad))|number_format(2, ',', '.') }} €</td>
+            <td>{{ (importe - deducir)|number_format(2, ',', '.') }} €</td>
         </tr>
         </thead>
     </table>
