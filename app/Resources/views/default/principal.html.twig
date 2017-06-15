@@ -203,6 +203,16 @@
                 {% if is_granted('ROLE_DEPENDIENTE') %}
                     <h4 class="well">Tareas de dependiente</h4>
                     <div class="tiles">
+                        <a href="{{ path('clientes_listar') }}" class="btn">
+                            <div class="tile tile-dark-orange">
+                                <div class="tile-body">
+                                    <i class="fa fa-handshake-o"></i>
+                                </div>
+                                <div class="tile-object">
+                                    <div class="number">Clientes</div>
+                                </div>
+                            </div>
+                        </a>
                         <a href="{{ path('usuarios_listar') }}" class="btn">
                             <div class="tile tile-dark-orange">
                                 <div class="tile-body">

@@ -261,7 +261,7 @@ class UsuarioController extends Controller
     /**
      * @Route("/clientes/nuevo", name="clientes_nuevo")
      * @Route("/clientes/modificar/{id}", name="clientes_modificar")
-     * @Security("is_granted('ROLE_COMERCIAL')")
+     * @Security("is_granted('ROLE_COMERCIAL') or is_granted('ROLE_DEPENDIENTE')")
      */
     public function formClienteAction(Request $request, Usuario $usuario = null)
     {
