@@ -1,29 +1,31 @@
 
 ## Índice
 - [1. Introducción](#introduccion) 						 
-- [2. Objetivos](##objetivos)  												  
-- [3. Tecnologías escogidas y justificación]()  						       	   	  
-  - [3.1. Tecnologías escogidas y justificación]()  			          	     		  
-  - [3.2. Motor de bases de datos]()   						    		  
+- [2. Objetivos](#objetivos)  												  
+- [3. Tecnologías escogidas y justificación](#tecnologias_escogidas)  						       	   	  
+  - [3.1. Tecnologías escogidas y justificación](#tecnologias_escogidas_2)  			          	     		  
+  - [3.2. Motor de bases de datos](#bases_datos)   						    		  
   - [3.3. Frameworks seleccionados](#frameworks_seleccionados)  						    		  
-- [4. Diseño de la aplicación]()  										  
-  - [4.1. Casos de uso]() 								     	  
-  - [4.2. Bocetos de la interfaz de usuario]()  						    	  						  
-- [5. Arquitectura de la aplicación]()   						         	   		 
-  - [5.1. Estructura del proyecto]()  						         		 
-  - [5.2. Recursos externos]()  							        		  
-- [6. Manual de despliegue](#6.Manual de despliegue)   										 
-  - [6.1. Requisitos hardware y software aplicables]()  			   		  
-  - [6.2. Instrucciones de despliegue en Linux]()   			 		    	 
-  - [6.3. Instrucciones de despliegue en Windows, Mac y en un proveedor en la nube]()   		  									       
-  - [6.4. Configuración inicial]() 
+- [4. Diseño de la aplicación](#diseno)  										  
+  - [4.1. Casos de uso](#casos_uso) 								     	  
+  - [4.2. Modelo de dominio](#modelo)  						    	  						  
+- [5. Arquitectura de la aplicación](#arquitectura)   						         	   		 
+  - [5.1. Estructura del proyecto](#estructura)  						         		 
+  - [5.2. Recursos externos](#recursos)  							        		  
+- [6. Manual de despliegue](#despliegue)   										 
+  - [6.1. Requisitos hardware y software aplicables](#requisitos)  			   		  
+  - [6.2. Instrucciones de despliegue en Linux](#despliegue_linux)   			 		    	 
+  - [6.3. Instrucciones de despliegue en Windows, Mac y en un proveedor en la nube](#despliegue_resto)   		  									       
+  - [6.4. Configuración inicial](#configuracion) 
 <a name="introduccion"></a>						     		
 ## 1. Introducción 	
 Este proyecto consiste en el desarrollo de una aplicación web destinada a la sociedad cooperativa “Sociedad Cooperativa” cuyo trabajo está orientado a la producción de aceite de oliva. La aplicación consta de varias interfaces principales, cuyo aspecto y funcionalidad dependerán del rol del usuario registrado. 
 
 La aplicación se desarrolla en web, de forma que los usuarios podrán acceder a ella sin necesidad de instalar software en su equipo informático y con el único requisito de tener un navegador web y una conexión a internet. Algo que a día del desarrollo de esta aplicación está muy extendido en nuestro país. 										  
 ## 2. Objetivos 
+<a name="objetivos"></a>
 La razón de la elaboración de este proyecto viene dada por la necesidad que tienen los agentes intervinientes en la elaboración de aceite de estar informados en todo momento y en tiempo real de los datos propios de la actividad principal de constantes. Con la introducción de esta aplicación en la empresa se obtendrán múltiples beneficios tales como una mayor facilidad para el almacenamiento y gestión de los datos tanto de los socios como de los empleados, una mayor posibilidad de dar a conocer sus servicios, más comodidad para los usuarios, etc.												 
+<a name="tecnologias_escogidas"></a>
 ## 3. Tecnologías escogidas y justificación 
 La aplicación dará servicio a distintos tipos distintos de usuarios:
 - `Anónimo`: Podrán acceder a la página principal de la aplicación dentro de la cuál podrán conocer los servicios ofrecidos por la empresa, así como otros datos referentes a la misma.
@@ -35,12 +37,14 @@ La aplicación dará servicio a distintos tipos distintos de usuarios:
     - `Dependiente:` Es el encargado de realizar ventas, generalmente en la tienda de la almazara, aunque esta aplicación no le restringe el acceso a ningún tipo de clientes ni ventas.
     - `Encargado:` Es el responsable de almazara y como tal el encargado de insertar los datos derivados del trabajo en la misma (descargas de aceituna, análisis de aceite, stock de productos…).
   - `Cliente:` Todos los usuarios pueden realizar compras de aceite. Pero existen usuarios externos a la almazara que no son ni socios ni empleados. Estos son clientes.						       	   	  
+<a name="tecnologias_escogidas_2"></a>
 ### 3.1. Tecnologías escogidas y justificación 
 La aplicación se desarrolla en su mayor parte usando lenguaje de servidor PHP. No obstante, existen partes de la misma realizadas en lenguaje cliente Javascript y su biblioteca multiplataforma `Jquery.` 			          	     		 
 
 Cabe mencionar que todo el software utilizado es libre, con lo que la empresa tendrá un considerable ahorro en concepto de licencias. El software seleccionado no lo ha sido sólo por  gratuito, sino porque además es unas de las tecnologías más utilizada en la actualidad en el desarrollo de aplicaciones web debido a su fiabilidad y a su versatilidad. 
 
 Pero lo más importante a destacar es que el lenguaje de programación escogido va asociado al framework. La selección del framework se desarrolla en el punto [3.3]()
+<a name="bases_datos"></a>
 ### 3.2. Motor de bases de datos 
 El motor de bases de datos usado es `MySql`. Las razones de su elección son las siguientes:
 - Su adquisición es gratuita, lo que permite reducción de costes para el cliente.
@@ -64,8 +68,9 @@ El framework usado es `Symfony3.2.4`. Las razones de su elección son las siguie
   - `Doctrine:` Es un ORM (Object Relational Mapping) consistente en la equivalencia entre tablas de la base de datos y entidades. Esto permite al desarrollador olvidarse del lenguaje SQL y centrarse en su aplicación.
   - `Swiftmailer:` Es una librería para el envío de correos electrónicos. Permite usar varios transporters como SMTP o GMAIL.
   - `Monolog:` Es una librería para el registro de la actividad de una aplicación en ficheros.
- 						    		  
-## 4. Diseño de la aplicación 										  
+<a name="diseno"></a>						    		  
+## 4. Diseño de la aplicación 	
+<a name="casos_uso"></a>									  
 ### 4.1. Casos de uso 
 ![Texto alternativo](web/images/135.jpg)
 ![Texto alternativo](web/images/136.jpg)
@@ -74,10 +79,13 @@ El framework usado es `Symfony3.2.4`. Las razones de su elección son las siguie
 ![Texto alternativo](web/images/139.jpg)
 ![Texto alternativo](web/images/140.jpg)
 ![Texto alternativo](web/images/141.jpg)
-![Texto alternativo](web/images/142.jpg)									     	  						    	 
+![Texto alternativo](web/images/142.jpg)
+<a name="modelo"></a>									     	  						    	 
 ### 4.2. Modelo de dominio 			
-![Texto alternativo](web/images/143.jpg)					   	 
-## 5. Arquitectura de la aplicación  						         	   		  
+![Texto alternativo](web/images/143.jpg)
+<a name="arquitectura"></a>					   	 
+## 5. Arquitectura de la aplicación  	
+<a name="estructura"></a>					         	   		  
 ### 5.1. Estructura del proyecto 
 La estructura de la aplicación es la típica de un proyecto Symfony3. Las principales carpetas son:
 - `app`: contiene la configuración de la aplicación, vistas y traducciones
@@ -105,7 +113,8 @@ La estructura de la aplicación es la típica de un proyecto Symfony3. Las princ
   - `squery`: contiene todos los ficheros de Jquery.
   - `script`: contiene todos los ficheros Javascript usados en la aplicación.
   - `styles`: contiene todas las hojas de estilos de la aplicación.
-  - `uploads`: contiene todos los ficheros subidos a la aplicación.						         		  
+  - `uploads`: contiene todos los ficheros subidos a la aplicación.	
+<a name="recursos"></a>					         		  
 ### 5.2. Recursos externos 
 En esta aplicación se han usado diversos recursos externos, es decir, librerías y código no escrito por el desarrollador de esta aplicación. Los recursos externos usados son:
 - `Bootstrap`: para el aspecto visual de la aplicación.
@@ -114,19 +123,22 @@ En esta aplicación se han usado diversos recursos externos, es decir, librería
 - `FixturesBundle`: bundle de Symfony para la introducción de registros en la base de datos. En este caso, se usa para tener datos iniciales en la aplicación.
 - `LiuggioExcelBundle`: bundle de Symfony para la lectura de datos en ficheros xls.
 - `KnpPaginatorBundle`: bundle de Symfony para la paginación y ordenación de tablas.
-- `MpdfBundle`: bundle de Symfony para generar ficheros formato pdf desde código html.							        		 
-## 6. Manual de despliegue 										 
+- `MpdfBundle`: bundle de Symfony para generar ficheros formato pdf desde código html.
+<a name="despliegue"></a>							        		 
+## 6. Manual de despliegue
+<a name="requisitos"></a> 										 
 ### 6.1. Requisitos hardware y software aplicables 	
 - Hardware:
   - 2.00 GB de RAM.
   - 3.00 GB de espacio libre en disco duro.
 - Software:
-  - Navegadores soportados en móviles* 
+  - Navegadores soportados en móviles[^1^](#1) 
   
     |         | Chrome | Firefox | Safari |
     | :------ |:------:| :-----: | :----: |
     | Android | X      | X       | -      |
     | iOS     | X      | X       | X      |
+    
     `* También Windows Phone 8`
 
   - Navegadores soportados en Pc 
@@ -137,7 +149,7 @@ En esta aplicación se han usado diversos recursos externos, es decir, librería
     | Windows | X      | X       | X     | -      |
     | Linux   | X      | X       | X     | -      |
     `* También Internet Explorer 9 o superior`
-		   		  
+<a name="despliegue_linux"></a>	   		  
 ### 6.2. Instrucciones de despliegue en Linux  	
 Esta aplicación se despliega mediante Docker (contenedor). Este sistema usa el kernel de Linux, así que no tendremos ningún problema en desplegarla en este sistema operativo.
  
@@ -254,12 +266,14 @@ De esta forma ya tenemos nuestra aplicación desplegada. Sólo queda conectarse 
 
     <dirección ip del servidor>:8888
 ![Texto alternativo](web/images/153.png)
+<a name="despliegue_resto"></a>
 ### 6.3. Instrucciones de despliegue en Windows, Mac y en un proveedor en la nube
 Como se ha dicho dicho antes, Docker usa el kernel de Linux. De forma que, si queremos
 que nuestro servidor web tenga un sistema operativo distinto de Linux o en un proveedor
 en la nube, bastará con crear máquinas virtuales con Linux. En estas máquinas se
 instalará Docker y se ejecutarán los comandos necesarios como se ha explicado
 anteriormente.
+<a name="configuracion"></a>
 ### 6.4. Configuración inicial 
 Esta aplicación tiene unos datos de inicio que son necesarios para que ciertas acciones
 se puedan llevar a cabo (por ejemplo, autenticarse en la aplicación). Estos datos son:
@@ -283,4 +297,10 @@ lote. De forma que si definimos aceites, se deben definir lotes. Se define un lo
 auxilar por cada tipo de aceite.
 - `Temporada auxiliar`: Lo mismo ocurre con la temporada. Cada lote debe estar
 asociado a una temporada. De este modo se crea una temporada auxiliar 00/00 y
-los lotes auxiliares pertenecen a ella							     		  
+los lotes auxiliares pertenecen a ella		
+
+<a name="1"></a>
+^1^También Windows Phone 8
+
+<a name="2"></a>
+^2^También Internet Explorer 9 o superior					     		  
