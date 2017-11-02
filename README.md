@@ -298,7 +298,7 @@ auxilar por cada tipo de aceite.
 asociado a una temporada. De este modo se crea una temporada auxiliar 00/00 y
 los lotes auxiliares pertenecen a ella		
 
-####Notas
+#### Notas
 
 <a name="1"></a>
 1: También Windows Phone 8
