@@ -43,7 +43,7 @@ La aplicación se desarrolla en su mayor parte usando lenguaje de servidor PHP. 
 
 Cabe mencionar que todo el software utilizado es libre, con lo que la empresa tendrá un considerable ahorro en concepto de licencias. El software seleccionado no lo ha sido sólo por  gratuito, sino porque además es unas de las tecnologías más utilizada en la actualidad en el desarrollo de aplicaciones web debido a su fiabilidad y a su versatilidad. 
 
-Pero lo más importante a destacar es que el lenguaje de programación escogido va asociado al framework. La selección del framework se desarrolla en el punto [3.3]()
+Pero lo más importante a destacar es que el lenguaje de programación escogido va asociado al framework. La selección del framework se desarrolla en el punto [3.3](#frameworks_seleccionados)
 <a name="bases_datos"></a>
 ### 3.2. Motor de bases de datos 
 El motor de bases de datos usado es `MySql`. Las razones de su elección son las siguientes:
@@ -131,24 +131,23 @@ En esta aplicación se han usado diversos recursos externos, es decir, librería
 - Hardware:
   - 2.00 GB de RAM.
   - 3.00 GB de espacio libre en disco duro.
-- Software:
-  - Navegadores soportados en móviles[^1^](#1) 
+
+- Navegadores soportados en móviles ([1](#1)) 
   
     |         | Chrome | Firefox | Safari |
     | :------ |:------:| :-----: | :----: |
     | Android | X      | X       | -      |
     | iOS     | X      | X       | X      |
     
-    `* También Windows Phone 8`
 
-  - Navegadores soportados en Pc 
+  - Navegadores soportados en Pc ([2](#2))
   
     |         | Chrome | Firefox | Opera | Safari |
     | :------ |:------:| :-----: | :---: | :----: |
     | Mac     | X      | X       | X     | X      |
     | Windows | X      | X       | X     | -      |
     | Linux   | X      | X       | X     | -      |
-    `* También Internet Explorer 9 o superior`
+
 <a name="despliegue_linux"></a>	   		  
 ### 6.2. Instrucciones de despliegue en Linux  	
 Esta aplicación se despliega mediante Docker (contenedor). Este sistema usa el kernel de Linux, así que no tendremos ningún problema en desplegarla en este sistema operativo.
@@ -299,8 +298,9 @@ auxilar por cada tipo de aceite.
 asociado a una temporada. De este modo se crea una temporada auxiliar 00/00 y
 los lotes auxiliares pertenecen a ella		
 
+####Notas
 <a name="1"></a>
-^1^También Windows Phone 8
+1: También Windows Phone 8
 
 <a name="2"></a>
-^2^También Internet Explorer 9 o superior					     		  
+2: También Internet Explorer 9 o superior					     		  
