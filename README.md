@@ -1,23 +1,23 @@
 
 ## Índice
-- [1. Introducción](##1.Introducción) 						 
+- [1. Introducción](#introduccion) 						 
 - [2. Objetivos](##objetivos)  												  
 - [3. Tecnologías escogidas y justificación]()  						       	   	  
   - [3.1. Tecnologías escogidas y justificación]()  			          	     		  
   - [3.2. Motor de bases de datos]()   						    		  
-  - [3.3. Frameworks seleccionados](###3.3.Frameworks seleccionados)  						    		  
+  - [3.3. Frameworks seleccionados](#frameworks_seleccionados)  						    		  
 - [4. Diseño de la aplicación]()  										  
   - [4.1. Casos de uso]() 								     	  
   - [4.2. Bocetos de la interfaz de usuario]()  						    	  						  
 - [5. Arquitectura de la aplicación]()   						         	   		 
   - [5.1. Estructura del proyecto]()  						         		 
   - [5.2. Recursos externos]()  							        		  
-- [6. Manual de despliegue]()   										 
+- [6. Manual de despliegue](#6.Manual de despliegue)   										 
   - [6.1. Requisitos hardware y software aplicables]()  			   		  
   - [6.2. Instrucciones de despliegue en Linux]()   			 		    	 
   - [6.3. Instrucciones de despliegue en Windows, Mac y en un proveedor en la nube]()   		  									       
   - [6.4. Configuración inicial]() 
- 							     		
+<a name="introduccion"></a>						     		
 ## 1. Introducción 	
 Este proyecto consiste en el desarrollo de una aplicación web destinada a la sociedad cooperativa “Sociedad Cooperativa” cuyo trabajo está orientado a la producción de aceite de oliva. La aplicación consta de varias interfaces principales, cuyo aspecto y funcionalidad dependerán del rol del usuario registrado. 
 
@@ -48,6 +48,7 @@ El motor de bases de datos usado es `MySql`. Las razones de su elección son las
 - Es un motor muy extendido en la comunidad de desarrolladores, con lo que conseguir ayuda es muy sencillo.
 - La labor de mantenimiento de una base de datos MySql es muy fácil debido a que presenta menos funciones frente a otros sistemas gestores. Esto, aunque pueda parecer una desventaja, tiene a su favor que el mantenimiento de la aplicación lo puede llevar el propio desarrollador, sin tener que recurrir a un administrador de bases de datos.
 - Es escalable, lo cual nos da una ventaja con vistas al futuro. 						    		  
+<a name="frameworks_seleccionados"></a>
 ### 3.3. Frameworks seleccionados
 El framework usado es `Symfony3.2.4`. Las razones de su elección son las siguiente:
 - Es un framework gratuito.
@@ -114,13 +115,13 @@ En esta aplicación se han usado diversos recursos externos, es decir, librería
 - `LiuggioExcelBundle`: bundle de Symfony para la lectura de datos en ficheros xls.
 - `KnpPaginatorBundle`: bundle de Symfony para la paginación y ordenación de tablas.
 - `MpdfBundle`: bundle de Symfony para generar ficheros formato pdf desde código html.							        		 
-## 6. Manual de despliegue  										 
+## 6. Manual de despliegue 										 
 ### 6.1. Requisitos hardware y software aplicables 	
 - Hardware:
   - 2.00 GB de RAM.
   - 3.00 GB de espacio libre en disco duro.
 - Software:
-  - Navegadores soportados en móviles[^1]
+  - Navegadores soportados en móviles* 
   
     |         | Chrome | Firefox | Safari |
     | :------ |:------:| :-----: | :----: |
@@ -283,6 +284,3 @@ auxilar por cada tipo de aceite.
 - `Temporada auxiliar`: Lo mismo ocurre con la temporada. Cada lote debe estar
 asociado a una temporada. De este modo se crea una temporada auxiliar 00/00 y
 los lotes auxiliares pertenecen a ella							     		  
-
-
-[^1]: Hola
